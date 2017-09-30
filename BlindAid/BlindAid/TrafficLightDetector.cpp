@@ -7,12 +7,11 @@ TrafficLightDetector::TrafficLightDetector(StreetLightParams params): _h(_hsvCha
   _params = params;
 }
 
-void TrafficLightDetector::DetectTrafficLight(string path)
+void TrafficLightDetector::DetectTrafficLight(cv::Mat image)
 {
-  _path = path;
+  _bgrImage = image;
 
   Clear();
-  Load();
   PreProcess();
 
   switch (_params._mode)
@@ -38,12 +37,6 @@ void TrafficLightDetector::Clear()
   _streetLights.clear();
 }
 
-void TrafficLightDetector::Load()
-{
-  _bgrImage = cv::imread(_path);
-  
-  if (_bgrImage.cols == 0 || _bgrImage.rows == 0) throw("could not open image.");
-}
 
 void TrafficLightDetector::PreProcess()
 {

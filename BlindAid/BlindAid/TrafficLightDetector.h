@@ -11,7 +11,6 @@
 
 using namespace std;
 
-
 struct StreetLight
 {
   StreetLight(cv::Point point, float radius)
@@ -29,9 +28,8 @@ class TrafficLightDetector
 public:
   TrafficLightDetector(StreetLightParams params);
 
-  void DetectTrafficLight(string path);
+  void DetectTrafficLight(cv::Mat image);
   void Clear();
-  void Load();
   void PreProcess();
   void FindCountoursApproach();
   void HoughCirclesApproach();
@@ -43,7 +41,6 @@ public:
 private:
   StreetLightParams _params;
 
-  string _path;
   cv::Mat _bgrImage;
   cv::Mat _hsvImage;
   cv::Mat _hsvChannels[3];

@@ -22,14 +22,21 @@
     <ClCompile Include="Capture.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="DepthObstacleDetection.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="StopSignDetector.cpp" />
+    <ClCompile Include="TrafficLightDetector.cpp" />
     <ClCompile Include="Vision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Capture.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="Core.h" />
+    <ClInclude Include="DepthObstacleDetection.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="Parameters.h" />
+    <ClInclude Include="StopSignDetector.h" />
+    <ClInclude Include="TrafficLightDetector.h" />
     <ClInclude Include="Vision.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -82,7 +89,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Projects\BlindAid\BlindAid\StopSignDetection;C:\Projects\BlindAid\BlindAid\TrafficLightDetection;$(IncludePath);$(ProjectDir)..\..\opencv\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(ProjectDir)..\..\opencv\x64\vc14\lib</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -95,7 +105,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Projects\BlindAid\BlindAid\StopSignDetection;C:\Projects\BlindAid\BlindAid\TrafficLightDetection;%(AdditionalIncludeDirectories);$(ProjectDir)..\..\opencv\include</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\opencv\x64\vc14\lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);;opencv_core330d.lib;opencv_highgui330d.lib;opencv_imgcodecs330d.lib;opencv_imgproc330d.lib;opencv_objdetect330d.lib;opencv_features2d330d.lib</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

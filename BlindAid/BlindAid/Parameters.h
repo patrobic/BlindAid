@@ -1,5 +1,17 @@
 #pragma once
 
+class DepthObstacleParams
+{
+public:
+  DepthObstacleParams()
+  {
+
+  }
+
+private:
+
+};
+
 class StreetLightParams
 {
 public:
@@ -21,10 +33,24 @@ private:
 
 };
 
+class StopSignParams
+{
+public:
+  StopSignParams()
+  {
+
+  }
+
+private:
+
+};
+
 class Parameters
 {
 public:
+  DepthObstacleParams _depthObstacleParams;
   StreetLightParams _streetLightParams;
+  StopSignParams _stopSignParams;
 
 private:
 
