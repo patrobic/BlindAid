@@ -19,26 +19,36 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Capture.cpp" />
-    <ClCompile Include="Control.cpp" />
+    <ClCompile Include="ModuleCapture.cpp" />
+    <ClCompile Include="SimulateCapture.cpp" />
+    <ClCompile Include="ModuleControl.cpp" />
+    <ClCompile Include="SimulateControl.cpp" />
     <ClCompile Include="Core.cpp" />
-    <ClCompile Include="DepthObstacleDetection.cpp" />
+    <ClCompile Include="DetectDepthObstacle.cpp" />
+    <ClCompile Include="ModuleDisplay.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="StopSignDetector.cpp" />
-    <ClCompile Include="TrafficLightDetector.cpp" />
-    <ClCompile Include="Vision.cpp" />
+    <ClCompile Include="DetectStopSign.cpp" />
+    <ClCompile Include="DetectTrafficLight.cpp" />
+    <ClCompile Include="Settings.cpp" />
+    <ClCompile Include="ModuleVision.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Capture.h" />
-    <ClInclude Include="Control.h" />
+    <ClInclude Include="ModuleCapture.h" />
+    <ClInclude Include="SimulateCapture.h" />
+    <ClInclude Include="ModuleControl.h" />
+    <ClInclude Include="SimulateControl.h" />
     <ClInclude Include="Core.h" />
-    <ClInclude Include="DepthObstacleDetection.h" />
+    <ClInclude Include="DetectDepthObstacle.h" />
+    <ClInclude Include="ModuleDisplay.h" />
     <ClInclude Include="IDetector.h" />
+    <ClInclude Include="IModule.h" />
     <ClInclude Include="Main.h" />
-    <ClInclude Include="Parameters.h" />
-    <ClInclude Include="StopSignDetector.h" />
-    <ClInclude Include="TrafficLightDetector.h" />
-    <ClInclude Include="Vision.h" />
+    <ClInclude Include="IParameters.h" />
+    <ClInclude Include="DetectStopSign.h" />
+    <ClInclude Include="DetectTrafficLight.h" />
+    <ClInclude Include="IResults.h" />
+    <ClInclude Include="Settings.h" />
+    <ClInclude Include="ModuleVision.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DD1BF88B-B634-46C9-A80F-FFA17C02A6F0}</ProjectGuid>

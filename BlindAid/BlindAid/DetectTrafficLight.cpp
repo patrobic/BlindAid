@@ -1,26 +1,26 @@
-#include "TrafficLightDetector.h"
+#include "DetectTrafficLight.h"
 
 using namespace cv;
 
-TrafficLightDetector::TrafficLightDetector() : _h(_hsvChannels[0]), _s(_hsvChannels[1]), _v(_hsvChannels[2]), _b(_bgrChannels[0]), _g(_bgrChannels[1]), _r(_bgrChannels[2])
+DetectTrafficLight::DetectTrafficLight() : _h(_hsvChannels[0]), _s(_hsvChannels[1]), _v(_hsvChannels[2]), _b(_bgrChannels[0]), _g(_bgrChannels[1]), _r(_bgrChannels[2])
 {
 
 }
 
-void TrafficLightDetector::Init(const IDetectorParams *params, const cv::Mat *image, IDetectorResults *results)
+void DetectTrafficLight::Init(VisionParams *params, const cv::Mat *image, VisionResults *results)
 {
-  _params = static_cast<const TrafficLightParams*>(params);
+  _params = &params->GetTrafficLightParams();
   _image = image;
-  _results = static_cast<TrafficLightResults*>(results);
+  _results = &results->GetTrafficLightResults();
 }
 
-void TrafficLightDetector::Start()
+void DetectTrafficLight::Start()
 {
   Clear();
   Process();
 }
 
-void TrafficLightDetector::Process()
+void DetectTrafficLight::Process()
 {
   PreProcess();
 
@@ -42,7 +42,7 @@ void TrafficLightDetector::Process()
   Display();
 }
 
-void TrafficLightDetector::PreProcess()
+void DetectTrafficLight::PreProcess()
 {
   cvtColor(*_image, _hsvImage, CV_BGR2HSV);
 
@@ -60,7 +60,7 @@ void TrafficLightDetector::PreProcess()
   //dilate(_rMask, _rMask, Mat(), Point(-1, -1), 1);
 }
 
-void TrafficLightDetector::FindCountoursApproach()
+void DetectTrafficLight::FindCountoursApproach()
 {
   vector<vector<cv::Point>> contours;
   vector<Vec4i> hierarchy;
@@ -94,7 +94,7 @@ void TrafficLightDetector::FindCountoursApproach()
   }
 }
 
-void TrafficLightDetector::HoughCirclesApproach()
+void DetectTrafficLight::HoughCirclesApproach()
 {
   vector<vector<cv::Point>> contours;
   vector<Vec4i> hierarchy;
@@ -118,7 +118,7 @@ void TrafficLightDetector::HoughCirclesApproach()
     _results->PushBack(Result(Point(cvRound(circles[i][0]), cvRound(circles[i][1])), (int)cvRound(circles[i][2])));
 }
 
-void TrafficLightDetector::BlobDetectorApproach()
+void DetectTrafficLight::BlobDetectorApproach()
 {
   SimpleBlobDetector::Params params;
 
@@ -143,7 +143,7 @@ void TrafficLightDetector::BlobDetectorApproach()
     _results->PushBack(Result(keypoints[i].pt, (int)keypoints[i].size));
 }
 
-void TrafficLightDetector::DetectRectangle()
+void DetectTrafficLight::DetectRectangle()
 {
   int sizeFactor = 12;
   Mat box;
@@ -181,13 +181,13 @@ void TrafficLightDetector::DetectRectangle()
   }
 }
 
-void TrafficLightDetector::Draw()
+void DetectTrafficLight::Draw()
 {
   for(int i = 0; i<_results->Size(); ++i)
     circle(*_image, _results->At(i)._center, (int)_results->At(i)._radius + 2, Scalar(0, 255, 255), 2, 8, 0);
 }
 
-void TrafficLightDetector::Display()
+void DetectTrafficLight::Display()
 {
   //namedWindow("Color");
   //moveWindow("Color", 20, 20);
@@ -205,7 +205,7 @@ void TrafficLightDetector::Display()
   //waitKey();
 }
 
-void TrafficLightDetector::Clear()
+void DetectTrafficLight::Clear()
 {
   _results->Clear();
 }

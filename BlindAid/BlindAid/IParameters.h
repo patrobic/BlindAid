@@ -57,13 +57,15 @@ private:
 
 };
 
-class Parameters
+class VisionParams
 {
 public:
-  DepthObstacleParams _depthObstacleParams;
-  TrafficLightParams _streetLightParams;
-  StopSignParams _stopSignParams;
+  DepthObstacleParams &GetDepthObstacleParams() { return _dodParams; }
+  TrafficLightParams &GetTrafficLightParams() { return _sldParams; }
+  StopSignParams &GetStopSignParams() { return _ssdParams; }
 
 private:
-
+  DepthObstacleParams _dodParams;
+  TrafficLightParams _sldParams;
+  StopSignParams _ssdParams;
 };

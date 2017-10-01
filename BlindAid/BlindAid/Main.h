@@ -1,11 +1,12 @@
 #pragma once
 
-#include "DepthObstacleDetection.h"
-#include "TrafficLightDetector.h"
-#include "StopSignDetector.h"
-#include "opencv2\videoio.hpp"
 #include <mutex>
 #include <thread>
+
+#include "opencv2\videoio.hpp"
+
+#include "IDetector.h"
+#include "Core.h"
 
 class Main
 {
@@ -19,22 +20,22 @@ private:
   void TestTld();
   void TestSsd();
   void TestVideo();
-  void TLoadVideo();
-  void TProcessFrames();
 
-  Parameters _params;
+  VisionParams _params;
+  VisionResults _results;
+
   cv::Mat _image;
-  cv::Mat _currentImage;
   bool _processingActive;
   mutex _bufferMutex;
 
-  cv::VideoCapture _cap;
+  Core _core;
 
-  StopSignDetector _ssd;
-  TrafficLightDetector _tld;
-  DepthObstacleDetector _dod;
+  // OLD: for individual modules.
+  DetectStopSign _ssd;
+  DetectTrafficLight _tld;
+  DetectDepthObstacle _dod;
 
-  TrafficLightResults _tldResults;
-  StopSignResults _ssdResults;
-  DepthObstacleResults _dodResults;
+  CaptureSim _captureSim;
+  Vision _vision;
+  ControlSim _controlSim;
 };

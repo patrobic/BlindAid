@@ -1,20 +1,20 @@
-#include "DepthObstacleDetection.h"
+#include "DetectDepthObstacle.h"
 
 using namespace cv;
 
-void DepthObstacleDetector::Init(const IDetectorParams *params, const cv::Mat *image, IDetectorResults *results)
+void DetectDepthObstacle::Init(VisionParams *params, const cv::Mat *image, VisionResults *results)
 {
-  _params = static_cast<const DepthObstacleParams*>(params);
+  _params = &params->GetDepthObstacleParams();
   _image = image;
-  _results = static_cast<DepthObstacleResults*>(results);
+  _results = &results->GetDepthObstacleResults();
 }
 
-void DepthObstacleDetector::Start()
+void DetectDepthObstacle::Start()
 {
   Process();
 }
 
-void DepthObstacleDetector::Process()
+void DetectDepthObstacle::Process()
 {
   cvtColor(*_image, _grayImage, CV_BGR2GRAY);
 
@@ -34,11 +34,11 @@ void DepthObstacleDetector::Process()
   _rowRegion = Mat::zeros(ROW_REGIONS, COL_REGIONS, CV_8UC1);
 }
 
-void DepthObstacleDetector::PreProcess()
+void DetectDepthObstacle::PreProcess()
 {
 }
 
-void DepthObstacleDetector::SeparateRegions()
+void DetectDepthObstacle::SeparateRegions()
 {
   int width = _grayImage.cols / COL_REGIONS;
   int height = _grayImage.rows / ROW_REGIONS;
@@ -55,7 +55,7 @@ void DepthObstacleDetector::SeparateRegions()
   }
 }
 
-void DepthObstacleDetector::FindMaxInRegions()
+void DetectDepthObstacle::FindMaxInRegions()
 {
   double minVal = 0;
   double maxVal = 0;
@@ -84,7 +84,7 @@ void DepthObstacleDetector::FindMaxInRegions()
   }
 }
 
-void DepthObstacleDetector::FindRowMax()
+void DetectDepthObstacle::FindRowMax()
 {
   _rowMax = Mat::zeros(1, _grayImage.rows, CV_8UC1);
   int pixel = 0;
@@ -106,7 +106,7 @@ void DepthObstacleDetector::FindRowMax()
   }
 }
 
-void DepthObstacleDetector::FindColMax()
+void DetectDepthObstacle::FindColMax()
 {
   _colMax = Mat::zeros(1, _grayImage.cols, CV_8UC1);
   int pixel = 0;
@@ -128,7 +128,7 @@ void DepthObstacleDetector::FindColMax()
   }
 }
 
-void DepthObstacleDetector::SplitRowRegions()
+void DetectDepthObstacle::SplitRowRegions()
 {
   _rowRegion = Mat::zeros(1, ROW_REGIONS, CV_8UC1);
   int numPixels = _rowMax.cols / ROW_REGIONS;
@@ -151,7 +151,7 @@ void DepthObstacleDetector::SplitRowRegions()
   }
 }
 
-void DepthObstacleDetector::SplitColRegions()
+void DetectDepthObstacle::SplitColRegions()
 {
   _colRegion = Mat::zeros(1, COL_REGIONS, CV_8UC1);
   int numPixels = _colMax.cols / COL_REGIONS;
@@ -174,15 +174,15 @@ void DepthObstacleDetector::SplitColRegions()
   }
 }
 
-void DepthObstacleDetector::Draw()
+void DetectDepthObstacle::Draw()
 {
 }
 
-void DepthObstacleDetector::Display()
+void DetectDepthObstacle::Display()
 {
 }
 
-void DepthObstacleDetector::Clear()
+void DetectDepthObstacle::Clear()
 {
 }
 

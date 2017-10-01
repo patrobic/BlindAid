@@ -12,12 +12,12 @@ void main()
 
 void Main::Init()
 {
-  _dod.Init(&_params._depthObstacleParams, &_image, &_dodResults);
+  _dod.Init(&_params, &_image, &_results);
  
-  _params._streetLightParams.SetMode(TrafficLightParams::BlobDetectorMode);
-  _tld.Init(&_params._streetLightParams, &_image, &_tldResults);
+  _params.GetTrafficLightParams().SetMode(TrafficLightParams::BlobDetectorMode);
+  _tld.Init(&_params, &_image, &_results);
 
-  _ssd.Init(&_params._stopSignParams, &_image, &_ssdResults);
+  _ssd.Init(&_params, &_image, &_results);
 }
 
 void Main::Start()
@@ -107,62 +107,8 @@ void Main::TestVideo()
 
   for (int i = 0; i < 4; ++i)
   {
-    //_cap.open(PATH + string("tlight") + std::to_string(i) + string(".avi"));
-    _cap.open(PATH + sample);
-
-    _processingActive = true;
-    thread loadVideo(&Main::TLoadVideo, this);
-    thread processFrames(&Main::TProcessFrames, this);
-
-    loadVideo.join();
-    processFrames.join();
-  }
-}
-
-void Main::TLoadVideo()
-{
-  int frame = 0;
-  while (_processingActive)
-  {
-    frame++;
-    _bufferMutex.lock();
-    chrono::time_point<chrono::steady_clock> start = chrono::steady_clock::now();
-    _processingActive = _cap.read(_image);
-    chrono::time_point<chrono::steady_clock> end = chrono::steady_clock::now();
-    chrono::duration<double> time_span = chrono::duration_cast<chrono::duration<double>>(end - start);
-
-    cout << "Frame " << to_string(frame) << " load time : " << time_span.count()*1000 << "ms.\n";
-
-    _bufferMutex.unlock();
-    this_thread::sleep_for(std::chrono::milliseconds(33));
-  }
-
-  _processingActive = false;
-}
-
-void Main::TProcessFrames()
-{
-  int frame = 0;
-  while (_processingActive)
-  {
-    if (_bufferMutex.try_lock())
-    {
-      frame++;
-      _currentImage = _image.clone();
-      _bufferMutex.unlock();
-
-      chrono::time_point<chrono::steady_clock> start = chrono::steady_clock::now();
-      _ssd.Start();
-      _tld.Start();
-      _dod.Start();
-      chrono::time_point<chrono::steady_clock> end = chrono::steady_clock::now();
-      chrono::duration<double> time_span = chrono::duration_cast<chrono::duration<double>>(end - start);
-
-      cout << "Frame " << to_string(frame) << " process time : " << time_span.count() * 1000 << "ms.\n";
-
-      cv::imshow("Video Results", _image);
-      cv::waitKey(1);
-      this_thread::sleep_for(std::chrono::milliseconds(33));
-    }
+    _core.InitSimulation(PATH + sample);
+    //_core.Init(PATH + string("tlight") + std::to_string(i) + string(".avi"));
+    _core.StartSimulation();
   }
 }
