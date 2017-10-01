@@ -2,46 +2,58 @@
 
 #include<iostream>
 
-#include "Parameters.h"
-#include "opencv2\core.hpp"
-#include "opencv2\imgcodecs.hpp"
-#include "opencv2\highgui.hpp"
-#include "opencv2\imgproc.hpp"
-#include "opencv2\features2d.hpp"
+#include "IDetector.h"
 
 using namespace std;
 
-struct StreetLight
+struct Result
 {
-  StreetLight(cv::Point point, float radius)
+  Result(cv::Point center, int radius)
   {
-    _point = point;
+    _center = center;
     _radius = radius;
   }
 
-  cv::Point _point;
+  cv::Point _center;
   int _radius;
 };
 
-class TrafficLightDetector
+class TrafficLightResults : public IDetectorResults
 {
 public:
-  TrafficLightDetector(StreetLightParams params);
+  vector<Result>* GetResults() { return &_results; }
 
-  void DetectTrafficLight(cv::Mat image);
-  void Clear();
+  void PushBack(Result &result) { _results.push_back(result); }
+  int Size() { return _results.size(); }
+  Result& At(int i) { return _results.at(i); }
+  void Clear() { _results.clear(); }
+private:
+  vector<Result> _results;
+};
+
+class TrafficLightDetector : public IDetector
+{
+public:
+  TrafficLightDetector();
+
+  void Init(const IDetectorParams *params, const cv::Mat *image, IDetectorResults *results);
+  void Start();
   void PreProcess();
+  void Process();
+
   void FindCountoursApproach();
   void HoughCirclesApproach();
   void BlobDetectorApproach();
   void DetectRectangle();
-  void DrawLights();
+
+  void Draw();
   void Display();
+  void Clear();
 
 private:
-  StreetLightParams _params;
+  const TrafficLightParams *_params;
+  TrafficLightResults *_results;
 
-  cv::Mat _bgrImage;
   cv::Mat _hsvImage;
   cv::Mat _hsvChannels[3];
   cv::Mat _bgrChannels[3];
@@ -54,6 +66,4 @@ private:
   cv::Mat _hMask;
   cv::Mat _rMask;
   cv::Mat _edges;
-
-  vector<StreetLight> _streetLights;
 };

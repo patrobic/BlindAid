@@ -1,36 +1,35 @@
 #pragma once
 
-#include<iostream>
+#include "IDetector.h"
 
-#include "Parameters.h"
-#include "opencv2\core.hpp"
-#include "opencv2\imgcodecs.hpp"
-#include "opencv2\highgui.hpp"
-#include "opencv2\imgproc.hpp"
-#include "opencv2\features2d.hpp"
-
-using namespace std;
-
-struct StopSign
-{
-  StopSign(cv::Point point, float radius)
-  {
-    _point = point;
-    _radius = radius;
-  }
-
-  cv::Point _point;
-  int _radius;
-};
-
-class StopSignDetector
+class StopSignResults : public IDetectorResults
 {
 public:
-  StopSignDetector(StopSignParams params);
-  void DetectStopSign(cv::Mat image);
+  cv::Point GetPoint() { return _center; }
+  int GetSize() { return _size; }
+
+  void SetPoint(cv::Point point) { _center = point; }
+  void SetSize(int size) { _size = size; }
 
 private:
-  StopSignParams _params;
-  cv::Mat _rgbImage;
+  cv::Point _center;
+  int _size;
+};
+
+class StopSignDetector : public IDetector
+{
+public:
+  void Init(const IDetectorParams *params, const cv::Mat *image, IDetectorResults *results);
+  void Start();
+  void PreProcess();
+  void Process();
+
+  void Draw();
+  void Display();
+  void Clear();
+ 
+private:
+  const StopSignParams *_params;
+  StopSignResults *_results;
 
 };

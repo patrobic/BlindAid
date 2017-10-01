@@ -2,25 +2,25 @@
 
 using namespace cv;
 
-DepthObstacleDetector::DepthObstacleDetector(DepthObstacleParams params)
+void DepthObstacleDetector::Init(const IDetectorParams *params, const cv::Mat *image, IDetectorResults *results)
 {
-  _params = params;
+  _params = static_cast<const DepthObstacleParams*>(params);
+  _image = image;
+  _results = static_cast<DepthObstacleResults*>(results);
 }
 
-void DepthObstacleDetector::CalculateRegionDepth(Mat image)
+void DepthObstacleDetector::Start()
 {
-  _depthImage = image;
-
   Process();
 }
 
 void DepthObstacleDetector::Process()
 {
-  cvtColor(_depthImage, _depthImage, CV_BGR2GRAY);
+  cvtColor(*_image, _grayImage, CV_BGR2GRAY);
 
-  threshold(_depthImage, _maskImage, 0, 255, THRESH_BINARY);
+  threshold(_grayImage, _maskImage, 0, 255, THRESH_BINARY);
 
-  GaussianBlur(_depthImage, _depthImage, Size(-1, -1), 3);  
+  GaussianBlur(_grayImage, _grayImage, Size(-1, -1), 3);
 
   SeparateRegions();
   FindMaxInRegions();
@@ -34,10 +34,14 @@ void DepthObstacleDetector::Process()
   _rowRegion = Mat::zeros(ROW_REGIONS, COL_REGIONS, CV_8UC1);
 }
 
+void DepthObstacleDetector::PreProcess()
+{
+}
+
 void DepthObstacleDetector::SeparateRegions()
 {
-  int width = _depthImage.cols / COL_REGIONS;
-  int height = _depthImage.rows / ROW_REGIONS;
+  int width = _grayImage.cols / COL_REGIONS;
+  int height = _grayImage.rows / ROW_REGIONS;
 
   for (int i = 0; i < ROW_REGIONS; ++i)
   {
@@ -47,8 +51,6 @@ void DepthObstacleDetector::SeparateRegions()
       _regions[i * COL_REGIONS + j].y = i * height;
       _regions[i * COL_REGIONS + j].width = width;
       _regions[i * COL_REGIONS + j].height = height;
-
-      Mat test = _depthImage(_regions[i * COL_REGIONS + j]);
     }
   }
 }
@@ -61,10 +63,10 @@ void DepthObstacleDetector::FindMaxInRegions()
   {
     for (int j = 0; j < COL_REGIONS; ++j)
     {
-      minMaxLoc(_depthImage(_regions[i * COL_REGIONS + j]), &minVal, &maxVal);
+      minMaxLoc(_grayImage(_regions[i * COL_REGIONS + j]), &minVal, &maxVal);
      
       _nearestDistance._regions[j][i] = minVal;
-      _nearestDistanceMat._regionsMat.at<char>(i, j) = minVal;
+      _results->SetRegion(i, j, minVal);
 
       // Histogram Calculation
       Mat hist;
@@ -72,7 +74,7 @@ void DepthObstacleDetector::FindMaxInRegions()
       float range[] = { 0, 256 };
       const float* ranges[] = { range };
       int channels[] = { 0 };
-      calcHist(&_depthImage(_regions[i * COL_REGIONS + j]), 1, channels, _maskImage(_regions[i * COL_REGIONS + j]), hist, 1, size, ranges, true, false);
+      calcHist(&_grayImage(_regions[i * COL_REGIONS + j]), 1, channels, _maskImage(_regions[i * COL_REGIONS + j]), hist, 1, size, ranges, true, false);
       normalize(hist, hist, 0, hist.rows, NORM_MINMAX, -1, Mat());
 
       Mat histDisplay = Mat::zeros(257, 256, CV_8UC1);
@@ -84,17 +86,17 @@ void DepthObstacleDetector::FindMaxInRegions()
 
 void DepthObstacleDetector::FindRowMax()
 {
-  _rowMax = Mat::zeros(1, _depthImage.rows, CV_8UC1);
+  _rowMax = Mat::zeros(1, _grayImage.rows, CV_8UC1);
   int pixel = 0;
   int rowMax = 0;
 
-  for (int i = 0; i < _depthImage.rows; ++i)
+  for (int i = 0; i < _grayImage.rows; ++i)
   {
     rowMax = 255;
 
-    for (int j = 0; j < _depthImage.cols; ++j)
+    for (int j = 0; j < _grayImage.cols; ++j)
     {
-      pixel = _depthImage.at<char>(i, j);
+      pixel = _grayImage.at<char>(i, j);
 
       if (pixel > 0 && pixel < rowMax)
         rowMax = pixel;
@@ -106,17 +108,17 @@ void DepthObstacleDetector::FindRowMax()
 
 void DepthObstacleDetector::FindColMax()
 {
-  _colMax = Mat::zeros(1, _depthImage.cols, CV_8UC1);
+  _colMax = Mat::zeros(1, _grayImage.cols, CV_8UC1);
   int pixel = 0;
   int columnMax = 0;
 
-  for (int j = 0; j < _depthImage.cols; ++j)
+  for (int j = 0; j < _grayImage.cols; ++j)
   {
     columnMax = 255;
 
-    for (int i = 0; i < _depthImage.rows; ++i)
+    for (int i = 0; i < _grayImage.rows; ++i)
     {
-      pixel = _depthImage.at<char>(i, j);
+      pixel = _grayImage.at<char>(i, j);
 
       if (pixel > 0 && pixel < columnMax)
         columnMax = pixel;
@@ -170,6 +172,18 @@ void DepthObstacleDetector::SplitColRegions()
 
     _colRegion.at<char>(0, i) = regionMax;
   }
+}
+
+void DepthObstacleDetector::Draw()
+{
+}
+
+void DepthObstacleDetector::Display()
+{
+}
+
+void DepthObstacleDetector::Clear()
+{
 }
 
 // TODO: implement function to break region into 3x5, iterate over them, and send (x, y, width, height) to...

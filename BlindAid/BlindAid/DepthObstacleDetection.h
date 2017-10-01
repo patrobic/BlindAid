@@ -1,15 +1,6 @@
 #pragma once
 
-#include<iostream>
-#include<string>
-
-#include "Parameters.h"
-#include "opencv2\core.hpp"
-#include "opencv2\imgproc.hpp"
-#include "opencv2\imgcodecs.hpp"
-#include "opencv2\highgui.hpp"
-
-using namespace std;
+#include "IDetector.h"
 
 #define COL_REGIONS 5
 #define ROW_REGIONS 3
@@ -39,9 +30,10 @@ struct NearestDistance
   int _regions[COL_REGIONS][ROW_REGIONS]; // each inner vector represents a column
 };
 
-struct NearestDistanceMat
+class DepthObstacleResults : public IDetectorResults
 {
-  NearestDistanceMat()
+public:
+  DepthObstacleResults()
   {
     _regionsMat = cv::Mat::zeros(3, 5, CV_8UC1);
   }
@@ -56,15 +48,22 @@ struct NearestDistanceMat
     return _regionsMat(cv::Rect(col, 0, 1, ROW_REGIONS));
   }
 
+  void SetRegion(int row, int col, int value)
+  {
+    _regionsMat.at<char>(row, col) = value;
+  }
+
+private:
   cv::Mat _regionsMat;
 };
 
-class DepthObstacleDetector {
+class DepthObstacleDetector : public IDetector {
 public:
-  DepthObstacleDetector(DepthObstacleParams params);
-  void CalculateRegionDepth(cv::Mat image);
-
+  void Init(const IDetectorParams *params, const cv::Mat *image, IDetectorResults *results);
+  void Start();
   void Process();
+  void PreProcess();
+
   void SeparateRegions();
   void FindMaxInRegions();
   void FindRowMax();
@@ -72,14 +71,18 @@ public:
   void SplitRowRegions();
   void SplitColRegions();
 
-private:
-  DepthObstacleParams _params;
+  void Draw();
+  void Display();
+  void Clear();
 
-  cv::Mat _depthImage;
+private:
+  const DepthObstacleParams *_params;
+  DepthObstacleResults *_results;
+
+  cv::Mat _grayImage;
   cv::Mat _maskImage;
   cv::Rect _regions[COL_REGIONS*ROW_REGIONS];
   NearestDistance _nearestDistance;
-  NearestDistanceMat _nearestDistanceMat;
 
   cv::Mat _rowMax;
   cv::Mat _colMax;

@@ -1,15 +1,24 @@
 #include "Main.h"
-#include <iostream>
 #include <conio.h>
-
-using namespace std;
+#include "opencv2\videoio.hpp"
 
 #define PATH "C:\\Projects\\BlindAid\\TestImages\\"
 
 void main()
 {
   Main main;
+  main.Init();
   main.Start();
+}
+
+void Main::Init()
+{
+  _dod.Init(&_params._depthObstacleParams, &_image, &_dodResults);
+ 
+  _params._streetLightParams.SetMode(TrafficLightParams::BlobDetectorMode);
+  _tld.Init(&_params._streetLightParams, &_image, &_tldResults);
+
+  _ssd.Init(&_params._stopSignParams, &_image, &_ssdResults);
 }
 
 void Main::Start()
@@ -33,6 +42,9 @@ void Main::Start()
     case 's':
       TestSsd();
       break;
+    case 'v':
+      TestVideo();
+      break;
     }
   } while (in != 'q' || in != 'Q');
 
@@ -49,37 +61,65 @@ void Main::LoadImage(string path)
 
 void Main::TestDod()
 {
-  DepthObstacleDetector dod(_params._depthObstacleParams);
-  
   string names[] = { "DepthMap.png" };
  
   for (int i = 0; i < 1; ++i)
   {
     LoadImage(PATH + names[i]);
-    dod.CalculateRegionDepth(_image);
+    _dod.Start();
+
+    cv::imshow("DepthObstacleDetector Results", _image);
+    cv::waitKey();
   }
+  cvDestroyWindow("DepthObstacleDetector Results");
 }
 
 void Main::TestTld()
 {
   string names[] = { "tlight2.jpg", "tlight3.jpg", "tlight4.jpg", "tlight5.jpg" };
 
-  _params._streetLightParams._mode = StreetLightParams::BlobDetectorMode;
-
-  TrafficLightDetector tld(_params._streetLightParams);
-
   for (int i = 0; i < 4; ++i)
   {
     LoadImage(PATH + names[i]);
-    tld.DetectTrafficLight(_image);
+    _tld.Start();
+
+    cv::imshow("TrafficLightDetector Results", _image);
+    cv::waitKey();
   }
+  cvDestroyWindow("TrafficLightDetector Results");
 }
 
 void Main::TestSsd()
 {
-  StopSignDetector ssd();
+  for (int i = 1; i < 8; ++i)
+  {
+    LoadImage(PATH + string("stop") + std::to_string(i) + string(".jpg"));
+    _ssd.Start();
 
-
+    cv::imshow("StopSignDetector Results", _image);
+    cv::waitKey();
+  }
+  cvDestroyWindow("StopSignDetector Results");
 }
 
+void Main::TestVideo()
+{
+  string sample = "TrafficLight.mp4";
 
+  cv::VideoCapture cap;
+
+  for (int i = 0; i < 4; ++i)
+  {
+    cap.open(PATH + string("tlight") + std::to_string(i) + string(".avi"));
+
+    while (cap.read(_image))
+    {
+      _ssd.Start();
+      _tld.Start();
+      _dod.Start();
+
+      cv::imshow("Video Results", _image);
+      cv::waitKey(1);
+    }
+  }
+}

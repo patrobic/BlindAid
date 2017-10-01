@@ -1,6 +1,15 @@
 #pragma once
 
-class DepthObstacleParams
+// Interface for detection module parameters.
+class IDetectorParams
+{
+public:
+  
+private:
+
+};
+
+class DepthObstacleParams : public IDetectorParams
 {
 public:
   DepthObstacleParams()
@@ -12,14 +21,9 @@ private:
 
 };
 
-class StreetLightParams
+class TrafficLightParams : public IDetectorParams
 {
 public:
-  StreetLightParams()
-  {
-    _mode = BlobDetectorMode;
-  }
-
   enum Mode
   {
     HoughCirclesMode,
@@ -27,13 +31,21 @@ public:
     BlobDetectorMode
   };
 
-  Mode _mode;
+  TrafficLightParams()
+  {
+    _mode = BlobDetectorMode;
+  }
+
+  const Mode &GetMode() const { return _mode; }
+
+  void SetMode(Mode mode) { _mode = mode; }
 
 private:
+  Mode _mode;
 
 };
 
-class StopSignParams
+class StopSignParams : public IDetectorParams
 {
 public:
   StopSignParams()
@@ -49,7 +61,7 @@ class Parameters
 {
 public:
   DepthObstacleParams _depthObstacleParams;
-  StreetLightParams _streetLightParams;
+  TrafficLightParams _streetLightParams;
   StopSignParams _stopSignParams;
 
 private:

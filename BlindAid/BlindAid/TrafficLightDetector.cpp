@@ -2,47 +2,51 @@
 
 using namespace cv;
 
-TrafficLightDetector::TrafficLightDetector(StreetLightParams params): _h(_hsvChannels[0]), _s(_hsvChannels[1]), _v(_hsvChannels[2]), _b(_bgrChannels[0]), _g(_bgrChannels[1]), _r(_bgrChannels[2])
+TrafficLightDetector::TrafficLightDetector() : _h(_hsvChannels[0]), _s(_hsvChannels[1]), _v(_hsvChannels[2]), _b(_bgrChannels[0]), _g(_bgrChannels[1]), _r(_bgrChannels[2])
 {
-  _params = params;
+
 }
 
-void TrafficLightDetector::DetectTrafficLight(cv::Mat image)
+void TrafficLightDetector::Init(const IDetectorParams *params, const cv::Mat *image, IDetectorResults *results)
 {
-  _bgrImage = image;
+  _params = static_cast<const TrafficLightParams*>(params);
+  _image = image;
+  _results = static_cast<TrafficLightResults*>(results);
+}
 
+void TrafficLightDetector::Start()
+{
   Clear();
+  Process();
+}
+
+void TrafficLightDetector::Process()
+{
   PreProcess();
 
-  switch (_params._mode)
+  switch (_params->GetMode())
   {
-  case StreetLightParams::BlobDetectorMode:
+  case TrafficLightParams::BlobDetectorMode:
     BlobDetectorApproach();
     break;
-  case StreetLightParams::HoughCirclesMode:
+  case TrafficLightParams::HoughCirclesMode:
     HoughCirclesApproach();
     break;
-  case StreetLightParams::FindContoursMode:
+  case TrafficLightParams::FindContoursMode:
     FindCountoursApproach();
     break;
   }
 
   DetectRectangle();
-  DrawLights();
+  Draw();
   Display();
 }
 
-void TrafficLightDetector::Clear()
-{
-  _streetLights.clear();
-}
-
-
 void TrafficLightDetector::PreProcess()
 {
-  cvtColor(_bgrImage, _hsvImage, CV_BGR2HSV);
+  cvtColor(*_image, _hsvImage, CV_BGR2HSV);
 
-  split(_bgrImage, _bgrChannels);
+  split(*_image, _bgrChannels);
   split(_hsvImage, _hsvChannels);
  
   Mat redRegionUpper;
@@ -72,7 +76,7 @@ void TrafficLightDetector::FindCountoursApproach()
 
   for (int i = 0; i < contours.size(); i++)
   {
-    drawContours(_bgrImage, contours, i, 255, 1, 8, vector<Vec4i>(), 0, Point());
+    drawContours(*_image, contours, i, 255, 1, 8, vector<Vec4i>(), 0, Point());
 
     circleArea = contourArea(contours[i]);
     Rect rect = boundingRect(Mat(contours[i]));
@@ -83,9 +87,9 @@ void TrafficLightDetector::FindCountoursApproach()
     if (score.at(i) > circularityThreshold)
     {
       minEnclosingCircle((Mat)contours[i], center[i], radius[i]);
-      drawContours(_bgrImage, contours, i, 255, 1, 8, vector<Vec4i>(), 0, Point());
+      drawContours(*_image, contours, i, 255, 1, 8, vector<Vec4i>(), 0, Point());
      
-      _streetLights.push_back(StreetLight(center[i], radius[i]));
+      _results->PushBack(Result(center[i], radius[i]));
     }
   }
 }
@@ -111,7 +115,7 @@ void TrafficLightDetector::HoughCirclesApproach()
   HoughCircles(_rMask, circles, HOUGH_GRADIENT, 1, _rMask.cols / 20, 100, 12, 1, 50);
 
   for (size_t i = 0; i < circles.size(); i++)
-    _streetLights.push_back(StreetLight(Point(cvRound(circles[i][0]), cvRound(circles[i][1])), (int)cvRound(circles[i][2])));
+    _results->PushBack(Result(Point(cvRound(circles[i][0]), cvRound(circles[i][1])), (int)cvRound(circles[i][2])));
 }
 
 void TrafficLightDetector::BlobDetectorApproach()
@@ -136,7 +140,7 @@ void TrafficLightDetector::BlobDetectorApproach()
   sbd->detect(_rMask, keypoints);
   
   for (int i = 0; i < keypoints.size(); i++)
-    _streetLights.push_back(StreetLight(keypoints[i].pt, (int)keypoints[i].size));
+    _results->PushBack(Result(keypoints[i].pt, (int)keypoints[i].size));
 }
 
 void TrafficLightDetector::DetectRectangle()
@@ -144,12 +148,12 @@ void TrafficLightDetector::DetectRectangle()
   int sizeFactor = 12;
   Mat box;
   Rect rect;
-  for (int i = 0; i < _streetLights.size(); ++i)
+  for (int i = 0; i < _results->Size(); ++i)
   {
-    rect.x = std::max(0, _streetLights[i]._point.x - _streetLights[i]._radius * sizeFactor);
-    rect.y = std::max(0, _streetLights[i]._point.y - _streetLights[i]._radius * sizeFactor);
-    rect.width = std::min(_bgrImage.cols - rect.x - 1, _streetLights[i]._radius * 2 * sizeFactor);
-    rect.height= std::min(_bgrImage.rows - rect.y - 1, _streetLights[i]._radius * 2 * sizeFactor);
+    rect.x = std::max(0, _results->At(i)._center.x - _results->Size() * sizeFactor);
+    rect.y = std::max(0, _results->At(i)._center.y - _results->Size() * sizeFactor);
+    rect.width = std::min(_image->cols - rect.x - 1, _results->Size() * 2 * sizeFactor);
+    rect.height= std::min(_image->rows - rect.y - 1, _results->Size() * 2 * sizeFactor);
 
     box = _v(rect);
 
@@ -177,26 +181,31 @@ void TrafficLightDetector::DetectRectangle()
   }
 }
 
-void TrafficLightDetector::DrawLights()
+void TrafficLightDetector::Draw()
 {
-  for(int i = 0; i<_streetLights.size(); ++i)
-    circle(_bgrImage, _streetLights[i]._point, (int)_streetLights[i]._radius + 2, Scalar(0, 255, 255), 2, 8, 0);
+  for(int i = 0; i<_results->Size(); ++i)
+    circle(*_image, _results->At(i)._center, (int)_results->At(i)._radius + 2, Scalar(0, 255, 255), 2, 8, 0);
 }
 
 void TrafficLightDetector::Display()
 {
-  namedWindow("Color");
-  moveWindow("Color", 20, 20);
-  imshow("Color", _bgrImage);
-  namedWindow("Hue");
-  moveWindow("Hue", 1000, 20);
-  imshow("Hue", _h);
-  namedWindow("Saturation");
-  moveWindow("Saturation", 20, 600);
-  imshow("Saturation", _s);
-  namedWindow("Value");
-  moveWindow("Value", 1000, 600);
-  imshow("Value", _v);
+  //namedWindow("Color");
+  //moveWindow("Color", 20, 20);
+  //imshow("Color", *_image);
+  //namedWindow("Hue");
+  //moveWindow("Hue", 1000, 20);
+  //imshow("Hue", _h);
+  //namedWindow("Saturation");
+  //moveWindow("Saturation", 20, 600);
+  //imshow("Saturation", _s);
+  //namedWindow("Value");
+  //moveWindow("Value", 1000, 600);
+  //imshow("Value", _v);
 
   //waitKey();
+}
+
+void TrafficLightDetector::Clear()
+{
+  _results->Clear();
 }
