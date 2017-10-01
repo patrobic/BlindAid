@@ -1,6 +1,5 @@
 #include "Main.h"
 #include <conio.h>
-#include "opencv2\videoio.hpp"
 
 #define PATH "C:\\Projects\\BlindAid\\TestImages\\"
 
@@ -106,20 +105,64 @@ void Main::TestVideo()
 {
   string sample = "TrafficLight.mp4";
 
-  cv::VideoCapture cap;
-
   for (int i = 0; i < 4; ++i)
   {
-    cap.open(PATH + string("tlight") + std::to_string(i) + string(".avi"));
+    //_cap.open(PATH + string("tlight") + std::to_string(i) + string(".avi"));
+    _cap.open(PATH + sample);
 
-    while (cap.read(_image))
+    _processingActive = true;
+    thread loadVideo(&Main::TLoadVideo, this);
+    thread processFrames(&Main::TProcessFrames, this);
+
+    loadVideo.join();
+    processFrames.join();
+  }
+}
+
+void Main::TLoadVideo()
+{
+  int frame = 0;
+  while (_processingActive)
+  {
+    frame++;
+    _bufferMutex.lock();
+    chrono::time_point<chrono::steady_clock> start = chrono::steady_clock::now();
+    _processingActive = _cap.read(_image);
+    chrono::time_point<chrono::steady_clock> end = chrono::steady_clock::now();
+    chrono::duration<double> time_span = chrono::duration_cast<chrono::duration<double>>(end - start);
+
+    cout << "Frame " << to_string(frame) << " load time : " << time_span.count()*1000 << "ms.\n";
+
+    _bufferMutex.unlock();
+    this_thread::sleep_for(std::chrono::milliseconds(33));
+  }
+
+  _processingActive = false;
+}
+
+void Main::TProcessFrames()
+{
+  int frame = 0;
+  while (_processingActive)
+  {
+    if (_bufferMutex.try_lock())
     {
+      frame++;
+      _currentImage = _image.clone();
+      _bufferMutex.unlock();
+
+      chrono::time_point<chrono::steady_clock> start = chrono::steady_clock::now();
       _ssd.Start();
       _tld.Start();
       _dod.Start();
+      chrono::time_point<chrono::steady_clock> end = chrono::steady_clock::now();
+      chrono::duration<double> time_span = chrono::duration_cast<chrono::duration<double>>(end - start);
+
+      cout << "Frame " << to_string(frame) << " process time : " << time_span.count() * 1000 << "ms.\n";
 
       cv::imshow("Video Results", _image);
       cv::waitKey(1);
+      this_thread::sleep_for(std::chrono::milliseconds(33));
     }
   }
 }
