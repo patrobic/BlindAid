@@ -1,7 +1,10 @@
 #pragma once
 
-#include<iostream>
-#include<string>
+#include <iostream>
+#include <thread>
+#include <chrono>
+#include <mutex>
+#include <atomic>
 
 #include "IParameters.h"
 #include "IResults.h"
@@ -15,6 +18,7 @@
 
 using namespace std;
 using namespace cv;
+
 
 class IDetector
 {

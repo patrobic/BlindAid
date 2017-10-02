@@ -101,7 +101,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Projects\BlindAid\BlindAid\StopSignDetection;C:\Projects\BlindAid\BlindAid\TrafficLightDetection;$(IncludePath);$(ProjectDir)..\..\opencv\include</IncludePath>
+    <IncludePath>$(IncludePath);$(ProjectDir)..\..\opencv\include</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(ProjectDir)..\..\opencv\x64\vc14\lib</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -116,7 +116,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Projects\BlindAid\BlindAid\StopSignDetection;C:\Projects\BlindAid\BlindAid\TrafficLightDetection;%(AdditionalIncludeDirectories);$(ProjectDir)..\..\opencv\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(ProjectDir)..\..\opencv\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\opencv\x64\vc14\lib;</AdditionalLibraryDirectories>

@@ -2,6 +2,7 @@
 #include <conio.h>
 
 #define PATH "C:\\Projects\\BlindAid\\TestImages\\"
+#define DEPTH PATH + string("DepthMap.png")
 
 void main()
 {
@@ -24,6 +25,7 @@ void Main::Start()
 {
   cout << "Welcome to BlindAid!\n\n\
 +========= Main Menu =========+\n\
+| 0: Load File                |\n\
 | 1: Settings                 |\n\
 | 2: Calibrate                |\n\
 | 3: Start Detection          |\n\
@@ -41,6 +43,8 @@ void Main::Start()
 
     switch (in)
     {
+    case '0':
+      LoadFile();
     case 'd':
       TestDod();
       break;
@@ -63,11 +67,14 @@ void Main::Start()
   return;
 }
 
-void Main::LoadImage(string path)
+void Main::LoadFile()
 {
-    _image = cv::imread(path);
+  string name;
+  cout << "Enter file name (default directory): ";
+  cin >> name;
 
-    if (_image.cols == 0 || _image.rows == 0) throw("could not open image.");
+  _core.Simulate(false, PATH + name, DEPTH);
+  cv::waitKey();
 }
 
 void Main::TestDod()
@@ -76,57 +83,47 @@ void Main::TestDod()
  
   for (int i = 0; i < 1; ++i)
   {
-    LoadImage(PATH + names[i]);
-    _dod.Start();
-
-    cv::imshow("DepthObstacleDetector Results", _image);
+    _core.Simulate(false, PATH + names[i], DEPTH);
     cv::waitKey();
   }
-  cvDestroyWindow("DepthObstacleDetector Results");
 }
 
 void Main::TestTld()
 {
-  string names[] = { "tlight2.jpg", "tlight3.jpg", "tlight4.jpg", "tlight5.jpg" };
-
-  for (int i = 0; i < 4; ++i)
+  for (int i = 2; i <= 5; ++i)
   {
-    LoadImage(PATH + names[i]);
-    _tld.Start();
+    string name = string("tlight") + std::to_string(i) + string(".jpg");
 
-    cv::imshow("TrafficLightDetector Results", _image);
-    cv::waitKey();
+    _core.Simulate(false, PATH + name, DEPTH);
+    waitKey();
   }
-  cvDestroyWindow("TrafficLightDetector Results");
 }
 
 void Main::TestSsd()
 {
   for (int i = 1; i < 8; ++i)
   {
-    LoadImage(PATH + string("stop") + std::to_string(i) + string(".jpg"));
-    _ssd.Start();
+    string name = string("stop") + std::to_string(i) + string(".jpg");
 
-    cv::imshow("StopSignDetector Results", _image);
+    _core.Simulate(false, PATH + name, DEPTH);
     cv::waitKey();
   }
-  cvDestroyWindow("StopSignDetector Results");
 }
 
 void Main::TestVideo()
 {
-  string sample = "TrafficLight.mp4";
+  string name = "TrafficLight.mp4";
 
   for (int i = 0; i < 4; ++i)
   {
-    _core.Simulate(true, PATH + sample);
+    _core.Simulate(true, PATH + name, DEPTH);
     //_core.Simulate(PATH + string("tlight") + std::to_string(i) + string(".avi"));
   }
 }
 
 void Main::TestPhoto()
 {
-  string sample = "DepthMap.png";
+  string sample = "tlight2.jpg";
 
-  _core.Simulate(false, PATH + sample);
+  _core.Simulate(false, PATH + sample, DEPTH);
 }

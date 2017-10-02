@@ -13,17 +13,19 @@ void Core::Start()
 }
 
 // Initialize and start capture & control simulation (does not use any extra memory unless called).
-void Core::Simulate(bool isVideo, std::string path)
+void Core::Simulate(bool isVideo, std::string colorPath, std::string depthPath)
 {
   CaptureSim captureSim;
   ControlSim controlSim;
 
-  _captureDone = false;
-  _visionDone = false;
+  _data._captureDone = false;
+  _data._visionDone = false;
 
-  captureSim.Init(isVideo, path, &_captureThread, &_bufferMutex, &_captureDone, &_newCapturedFrame, &_image);
-  _vision.Init(&_visionThread, &_bufferMutex, &_resultMutex, &_captureDone, &_visionDone, &_newCapturedFrame, &_newProcessedFrame, &_image, &_params, &_results);
-  controlSim.Init(&_controlThread, &_resultMutex, &_visionDone, &_newProcessedFrame, &_results);
+  captureSim.Init(&_data, &_captureThread);
+  captureSim.SetPath(isVideo, colorPath, depthPath);
+  _vision.Init(&_data, &_visionThread);
+  controlSim.Init(&_data, &_controlThread);
+  _display.Init(&_data, &_displayThread);
 
   captureSim.Start();
   _vision.Start();
@@ -33,4 +35,7 @@ void Core::Simulate(bool isVideo, std::string path)
 
   _visionThread.join();
   _controlThread.join();
+
+  // TODO: display thread not yet in pipeline.
+  _display.Start();
 }

@@ -15,7 +15,7 @@ public:
   void Start();
  
 private:
-  void LoadImage(string path);
+  void LoadFile();
   void TestDod();
   void TestTld();
   void TestSsd();

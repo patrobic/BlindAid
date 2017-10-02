@@ -1,23 +1,25 @@
 #include "SimulateCapture.h"
 
-void CaptureSim::Init(bool isVideo, std::string path, std::thread *thread, std::mutex *bufferMutex, atomic_bool *captureDone, atomic_bool *newCapturedFrame, cv::Mat *image)
+void CaptureSim::Init(Data *data, std::thread *thread)
 {
-  _isVideo = isVideo;
-  _path = path;
+  _data = data;
   _thread = thread;
-  _captureDone = captureDone;
-  _newCapturedFrame = newCapturedFrame;
-  _bufferMutex = bufferMutex;
-  _image = image;
+}
+
+void CaptureSim::SetPath(bool isVideo, string colorPath, string depthPath)
+{
+  _colorPath = colorPath;
+  _depthPath = depthPath;
+  _isVideo = isVideo;
 }
 
 void CaptureSim::Start()
 {
-  *_captureDone = false;
+  _data->_captureDone = false;
 
   if (_isVideo)
   {
-    _cap.open(_path);
+    _cap.open(_colorPath);
     *_thread = thread(&CaptureSim::TCaptureVideo, this);
   }
   else
@@ -29,38 +31,40 @@ void CaptureSim::Start()
 void CaptureSim::TCaptureVideo()
 {
   int frame = 0;
+  _data->_depthImage = imread(_depthPath);
 
   do 
   {
     frame++;
 
     time_point<steady_clock> start = steady_clock::now();
-    _bufferMutex->lock();
-    *_captureDone = !_cap.read(*_image);
-    _bufferMutex->unlock();
+    _data->_bufferMutex.lock();
+    _data->_captureDone = !_cap.read(_data->_colorImage);
+    _data->_bufferMutex.unlock();
     time_point<steady_clock> end = steady_clock::now();
     duration<double> time_span = duration_cast<duration<double>>(end - start);
 
-    *_newCapturedFrame = true;
+    _data->_newCapturedFrame = true;
 
     cout << "[CAPTURE] Frame " << to_string(frame) << " load time : " << time_span.count() * 1000 << "ms.\n";
     this_thread::sleep_for(milliseconds(33));
   }
-  while (!*_captureDone);
+  while (!_data->_captureDone);
 
-  *_captureDone = true;
+  _data->_captureDone = true;
 }
 
 void CaptureSim::TCapturePhoto()
 {
-  _bufferMutex->lock();
+  _data->_bufferMutex.lock();
 
-  *_image = cv::imread(_path);
-  if (_image->cols == 0 || _image->rows == 0) throw("could not open image.");
+  _data->_colorImage = imread(_colorPath);
+  _data->_depthImage = imread(_depthPath);
+  if (_data->_colorImage.cols == 0 || _data->_colorImage.rows == 0) throw("could not open image.");
 
-  _bufferMutex->unlock();
-  *_newCapturedFrame = true;
+  _data->_bufferMutex.unlock();
+  _data->_newCapturedFrame = true;
 
   cout << "[CAPTURE] Photo loaded.\n";
-  *_captureDone = true;
+  _data->_captureDone = true;
 }
