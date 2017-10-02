@@ -1,8 +1,6 @@
 #pragma once
 
-#include "IDetector.h"
 #include "IParameters.h"
-#include "IResults.h"
 #include "Settings.h"
 
 #include "opencv2\core.hpp"
@@ -73,6 +71,11 @@ public:
   DepthObstacleResults()
   {
     Clear();
+  }
+
+  cv::Mat GetMat()
+  {
+    return _regionsMat;
   }
 
   cv::Mat GetRowMat(int row)

@@ -22,8 +22,17 @@ void Main::Init()
 
 void Main::Start()
 {
-  cout << "=== Main Menu ===\n1: Settings\n2: Calibrate\n3: Start Detection\n";
-  cout << "d: Depth Obstacle Detector\nt: Traffic Light Detector\ns: Stop Sign Detector\n";
+  cout << "Welcome to BlindAid!\n\n\
++========= Main Menu =========+\n\
+| 1: Settings                 |\n\
+| 2: Calibrate                |\n\
+| 3: Start Detection          |\n\
+| d: Depth Obstacle Detector  |\n\
+| t: Traffic Light Detector   |\n\
+| s: Stop Sign Detector       |\n\
+| v: Video Simulation         |\n\
+| p: Photo Simulation         |\n\
++=============================+\n";
 
   char in;
 
@@ -43,6 +52,9 @@ void Main::Start()
       break;
     case 'v':
       TestVideo();
+      break;
+    case 'p':
+      TestPhoto();
       break;
     }
   } while (in != 'q' || in != 'Q');
@@ -107,8 +119,14 @@ void Main::TestVideo()
 
   for (int i = 0; i < 4; ++i)
   {
-    _core.InitSimulation(PATH + sample);
-    //_core.Init(PATH + string("tlight") + std::to_string(i) + string(".avi"));
-    _core.StartSimulation();
+    _core.Simulate(true, PATH + sample);
+    //_core.Simulate(PATH + string("tlight") + std::to_string(i) + string(".avi"));
   }
+}
+
+void Main::TestPhoto()
+{
+  string sample = "DepthMap.png";
+
+  _core.Simulate(false, PATH + sample);
 }

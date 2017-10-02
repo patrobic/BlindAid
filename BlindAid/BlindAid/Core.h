@@ -1,5 +1,7 @@
 #pragma once
 
+#include <atomic>
+
 #include "ModuleCapture.h"
 #include "ModuleVision.h"
 #include "ModuleControl.h"
@@ -10,15 +12,18 @@
 class Core
 {
 public:
-  void InitSimulation(std::string path);
-  void Init();
-  void StartSimulation();
+  bool Init();
+  void Start();
+  void Simulate(bool isVideo, std::string path);
 
 private:
-  std::string _path;
   cv::Mat _image;
-  bool _processingActive;
+  atomic_bool _captureDone;
+  atomic_bool _visionDone;
+  atomic_bool _newCapturedFrame;
+  atomic_bool _newProcessedFrame;
   std::mutex _bufferMutex;
+  std::mutex _resultMutex;
 
   VisionParams _params;
   VisionResults _results;
@@ -26,9 +31,6 @@ private:
   Capture _capture;
   Vision _vision;
   Control _control;
-
-  CaptureSim _captureSim;
-  ControlSim _controlSim;
 
   std::thread _captureThread;
   std::thread _visionThread;

@@ -19,18 +19,17 @@ private:
   void TestDod();
   void TestTld();
   void TestSsd();
+  
+  // Simulation (Video Load, Display Control)
   void TestVideo();
-
-  VisionParams _params;
-  VisionResults _results;
-
+  void TestPhoto();
   cv::Mat _image;
-  bool _processingActive;
-  mutex _bufferMutex;
-
   Core _core;
 
   // OLD: for individual modules.
+  VisionParams _params;
+  VisionResults _results;
+
   DetectStopSign _ssd;
   DetectTrafficLight _tld;
   DetectDepthObstacle _dod;
