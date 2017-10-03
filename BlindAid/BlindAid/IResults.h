@@ -1,28 +1,9 @@
 #pragma once
 
-#include "IParameters.h"
-#include "Settings.h"
+#include <array>
 
 #include "opencv2\core.hpp"
-#include "opencv2\imgcodecs.hpp"
-#include "opencv2\highgui.hpp"
-#include "opencv2\imgproc.hpp"
-#include "opencv2\features2d.hpp"
-
-using namespace std;
-using namespace cv;
-
-struct Result
-{
-  Result(cv::Point center, int radius)
-  {
-    _center = center;
-    _radius = radius;
-  }
-
-  cv::Point _center;
-  int _radius;
-};
+#include "IParameters.h"
 
 class IDetectorResults
 {
@@ -33,75 +14,72 @@ protected:
 
 };
 
+struct Circle
+{
+  Circle() {}
+  Circle(cv::Point center, int radius) { _center = center; _radius = radius; }
+  void Clear() { _center = cv::Point(0, 0); _radius = 0; }
+
+  cv::Point _center;
+  int _radius;
+};
+
+struct Region
+{
+  Region() {}
+  Region(cv::Rect rect, int intensity) { _rect = rect; _intensity = intensity; }
+
+  cv::Rect _rect;
+  int _intensity;
+};
+
 class TrafficLightResults : public IDetectorResults
 {
 public:
-  vector<Result>* GetResults() { return &_results; }
-
-  void PushBack(Result &result) { _results.push_back(result); }
-  int Size() { return _results.size(); }
-  Result& At(int i) { return _results.at(i); }
   void Clear() { _results.clear(); }
+
+  std::vector<Circle>* GetRegions() { return &_results; }
+  void PushBack(Circle &result) { _results.push_back(result); }
+  int Size() { return (int)_results.size(); }
+  Circle& At(int i) { return _results.at(i); }
+
 private:
-  vector<Result> _results;
+  std::vector<Circle> _results;
 };
 
 class StopSignResults : public IDetectorResults
 {
 public:
-  cv::Point GetPoint() { return _center; }
-  int GetSize() { return _size; }
+  void Clear() { _circle.Clear(); }
 
-  void SetPoint(cv::Point point) { _center = point; }
-  void SetSize(int size) { _size = size; }
-  void Clear()
-  {
-    _center = cv::Point(0, 0);
-    int _size = 0;
-  }
+  Circle GetRegion() { return _circle; }
+  void SetRegion(Circle circle) { _circle = circle; }
 
 private:
-  cv::Point _center;
-  int _size;
+  Circle _circle;
 };
 
 class DepthObstacleResults : public IDetectorResults
 {
 public:
-  DepthObstacleResults()
-  {
-    Clear();
-  }
+  DepthObstacleResults() { Clear(); }
 
-  cv::Mat GetMat()
-  {
-    return _regionsMat;
-  }
+  cv::Mat GetMat() { return _regionsMat; }
+  cv::Mat GetRowMat(int row) { return _regionsMat.row(row); }
+  cv::Mat GetColMat(int col) { return _regionsMat.col(col); }
 
-  cv::Mat GetRowMat(int row)
-  {
-    return _regionsMat(cv::Rect(0, row, COL_REGIONS, 1));
-  }
-
-  cv::Mat GetColMat(int col)
-  {
-    return _regionsMat(cv::Rect(col, 0, 1, ROW_REGIONS));
-  }
-
-  void SetRegion(int row, int col, int value)
-  {
-    _regionsMat.at<char>(row, col) = value;
-  }
-  void Clear()
-  {
-    _regionsMat = cv::Mat::zeros(ROW_REGIONS, COL_REGIONS, CV_8UC1);
-  }
-
+  void SetRegion(int row, int col, int value) { _regionsMat.at<char>(row, col) = value; }
+  void Clear() { _regionsMat = cv::Mat::zeros(HORZ_REGIONS, VERT_REGIONS, CV_8UC1); }
+  
 private:
   cv::Mat _regionsMat;
+  cv::Point _handPosition;
+
+  // TODO: switch from MAT to 2D array, also storing Rect in depthImage.
+  std::array<std::array<int, 3>, 5> _regions;
 };
 
-class VisionResults
+class Results
 {
 public:
   TrafficLightResults &GetTrafficLightResults() { return _tldResults; }
@@ -112,5 +90,4 @@ private:
   TrafficLightResults _tldResults;
   StopSignResults _ssdResults;
   DepthObstacleResults _dodResults;
-
 };

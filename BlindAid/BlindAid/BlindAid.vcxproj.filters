@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Main.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="IDetector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -34,9 +31,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IResults.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Settings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IModule.h">
@@ -60,7 +54,10 @@
     <ClInclude Include="SimulateControl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Core.h">
+    <ClInclude Include="ModuleCore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -75,9 +72,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DetectDepthObstacle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Settings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ModuleCapture.cpp">
@@ -98,7 +92,10 @@
     <ClCompile Include="SimulateControl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Core.cpp">
+    <ClCompile Include="ModuleCore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

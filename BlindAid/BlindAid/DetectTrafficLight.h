@@ -7,8 +7,8 @@ class DetectTrafficLight : public IDetector
 public:
   DetectTrafficLight();
 
-  void Init(VisionParams *params, const cv::Mat *image, VisionResults *results);
-  void Start();
+  void Init(Parameters *params, const cv::Mat *image, Results *results);
+  void operator()();
   void PreProcess();
   void Process();
 

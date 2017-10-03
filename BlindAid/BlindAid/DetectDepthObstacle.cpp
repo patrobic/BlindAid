@@ -1,22 +1,23 @@
 #include "DetectDepthObstacle.h"
 
+using namespace std;
 using namespace cv;
 
-void DetectDepthObstacle::Init(VisionParams *params, const cv::Mat *image, VisionResults *results)
+void DetectDepthObstacle::Init(Parameters *params, const cv::Mat *image, Results *results)
 {
   _params = &params->GetDepthObstacleParams();
-  _image = image;
+  _colorImage = image;
   _results = &results->GetDepthObstacleResults();
 }
 
-void DetectDepthObstacle::Start()
+void DetectDepthObstacle::operator()()
 {
   Process();
 }
 
 void DetectDepthObstacle::Process()
 {
-  cvtColor(*_image, _grayImage, CV_BGR2GRAY);
+  cvtColor(*_colorImage, _grayImage, CV_BGR2GRAY);
 
   threshold(_grayImage, _maskImage, 0, 255, THRESH_BINARY);
 
@@ -31,7 +32,7 @@ void DetectDepthObstacle::Process()
   SplitRowRegions();
   SplitColRegions();
 
-  _rowRegion = Mat::zeros(ROW_REGIONS, COL_REGIONS, CV_8UC1);
+  _rowRegion = Mat::zeros(HORZ_REGIONS, VERT_REGIONS, CV_8UC1);
 }
 
 void DetectDepthObstacle::PreProcess()
@@ -40,17 +41,17 @@ void DetectDepthObstacle::PreProcess()
 
 void DetectDepthObstacle::SeparateRegions()
 {
-  int width = _grayImage.cols / COL_REGIONS;
-  int height = _grayImage.rows / ROW_REGIONS;
+  int width = _grayImage.cols / VERT_REGIONS;
+  int height = _grayImage.rows / HORZ_REGIONS;
 
-  for (int i = 0; i < ROW_REGIONS; ++i)
+  for (int i = 0; i < HORZ_REGIONS; ++i)
   {
-    for (int j = 0; j < COL_REGIONS; ++j)
+    for (int j = 0; j < VERT_REGIONS; ++j)
     {
-      _regions[i * COL_REGIONS + j].x = j * width;
-      _regions[i * COL_REGIONS + j].y = i * height;
-      _regions[i * COL_REGIONS + j].width = width;
-      _regions[i * COL_REGIONS + j].height = height;
+      _regions[i * VERT_REGIONS + j].x = j * width;
+      _regions[i * VERT_REGIONS + j].y = i * height;
+      _regions[i * VERT_REGIONS + j].width = width;
+      _regions[i * VERT_REGIONS + j].height = height;
     }
   }
 }
@@ -59,13 +60,12 @@ void DetectDepthObstacle::FindMaxInRegions()
 {
   double minVal = 0;
   double maxVal = 0;
-  for (int i = 0; i < ROW_REGIONS; ++i)
+  for (int i = 0; i < HORZ_REGIONS; ++i)
   {
-    for (int j = 0; j < COL_REGIONS; ++j)
+    for (int j = 0; j < VERT_REGIONS; ++j)
     {
-      minMaxLoc(_grayImage(_regions[i * COL_REGIONS + j]), &minVal, &maxVal);
+      minMaxLoc(_grayImage(_regions[i * VERT_REGIONS + j]), &minVal, &maxVal);
      
-      _nearestDistance._regions[j][i] = minVal;
       _results->SetRegion(i, j, minVal);
 
       // Histogram Calculation
@@ -74,7 +74,7 @@ void DetectDepthObstacle::FindMaxInRegions()
       float range[] = { 0, 256 };
       const float* ranges[] = { range };
       int channels[] = { 0 };
-      calcHist(&_grayImage(_regions[i * COL_REGIONS + j]), 1, channels, _maskImage(_regions[i * COL_REGIONS + j]), hist, 1, size, ranges, true, false);
+      calcHist(&_grayImage(_regions[i * VERT_REGIONS + j]), 1, channels, _maskImage(_regions[i * VERT_REGIONS + j]), hist, 1, size, ranges, true, false);
       normalize(hist, hist, 0, hist.rows, NORM_MINMAX, -1, Mat());
 
       Mat histDisplay = Mat::zeros(257, 256, CV_8UC1);
@@ -130,12 +130,12 @@ void DetectDepthObstacle::FindColMax()
 
 void DetectDepthObstacle::SplitRowRegions()
 {
-  _rowRegion = Mat::zeros(1, ROW_REGIONS, CV_8UC1);
-  int numPixels = _rowMax.cols / ROW_REGIONS;
+  _rowRegion = Mat::zeros(1, HORZ_REGIONS, CV_8UC1);
+  int numPixels = _rowMax.cols / HORZ_REGIONS;
   int pixel = 0;
   int regionMax = 0;
 
-  for (int i = 0; i < ROW_REGIONS; ++i)
+  for (int i = 0; i < HORZ_REGIONS; ++i)
   {
     regionMax = 255;
     
@@ -153,12 +153,12 @@ void DetectDepthObstacle::SplitRowRegions()
 
 void DetectDepthObstacle::SplitColRegions()
 {
-  _colRegion = Mat::zeros(1, COL_REGIONS, CV_8UC1);
-  int numPixels = _colMax.cols / COL_REGIONS;
+  _colRegion = Mat::zeros(1, VERT_REGIONS, CV_8UC1);
+  int numPixels = _colMax.cols / VERT_REGIONS;
   int pixel = 0;
   int regionMax = 0;
 
-  for (int i = 0; i < COL_REGIONS; ++i)
+  for (int i = 0; i < VERT_REGIONS; ++i)
   {
     regionMax = 255;
 

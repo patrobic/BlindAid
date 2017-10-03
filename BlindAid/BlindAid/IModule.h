@@ -15,34 +15,38 @@
 #include "IParameters.h"
 #include "IResults.h"
 
-using namespace std;
-using namespace std::chrono;
-
 struct Data
 {
+  std::thread _captureThread;
+  std::thread _visionThread;
+  std::thread _controlThread;
+  std::thread _displayThread;
+
   std::mutex _bufferMutex;
+  std::mutex _currentBufferMutex;
   std::mutex _resultMutex;
 
-  atomic_bool _captureDone;
-  atomic_bool _visionDone;
-  atomic_bool _newCapturedFrame;
-  atomic_bool _newProcessedFrame;
+  std::atomic_bool _captureDone;
+  std::atomic_bool _visionDone;
+  std::atomic_bool _newFrameForVision;
+  std::atomic_bool _newFrameForControl;
+  std::atomic_bool _newFrameForDisplay;
 
   cv::Mat _colorImage;
   cv::Mat _depthImage;
   cv::Mat _currentColorImage;
   cv::Mat _currentDepthImage;
 
-  VisionParams _params;
-  VisionResults _results;
+  Parameters _params;
+  Results _results;
 };
 
 class IModule
 {
 public:
-  //virtual void Init() = 0;
-  virtual void Start() = 0;
+  virtual void Init(Data *data) = 0;
+  virtual void operator()() = 0;
 
-private:
-
+protected:
+  Data *_data;
 };

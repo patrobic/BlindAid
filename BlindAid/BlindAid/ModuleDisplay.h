@@ -1,21 +1,19 @@
 #pragma once
 
 #include "IModule.h"
-#include "IResults.h"
 
-class Display
+class Display : public IModule
 {
 public:
-  void Init(Data *data, std::thread *thread);
-  void Start();
+  void Init(Data *data);
+  void operator()();
 
 private:
-  void DisplayT();
+  void DisplayThread();
 
   void ShowDepthObstacles();
   void ShowTrafficLights();
   void ShowStopSign();
 
-  Data *_data;
-  std::thread *_thread;
+  void DisplayImage();
 };

@@ -1,15 +1,16 @@
 #include "DetectStopSign.h"
 
+using namespace std;
 using namespace cv;
 
-void DetectStopSign::Init(VisionParams *params, const cv::Mat *image, VisionResults *results)
+void DetectStopSign::Init(Parameters *params, const cv::Mat *image, Results *results)
 {
   _params = &params->GetStopSignParams();
-  _image = image;
+  _colorImage = image;
   _results = &results->GetStopSignResults();
 }
 
-void DetectStopSign::Start()
+void DetectStopSign::operator()()
 {
 
 

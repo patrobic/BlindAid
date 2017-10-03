@@ -1,50 +1,46 @@
 #include "SimulateCapture.h"
 
-void CaptureSim::Init(Data *data, std::thread *thread)
+using namespace std;
+using namespace std::chrono;
+using namespace cv;
+
+void CaptureSim::Init(Data *data)
 {
   _data = data;
-  _thread = thread;
 }
 
-void CaptureSim::SetPath(bool isVideo, string colorPath, string depthPath)
-{
-  _colorPath = colorPath;
-  _depthPath = depthPath;
-  _isVideo = isVideo;
-}
-
-void CaptureSim::Start()
+void CaptureSim::operator()()
 {
   _data->_captureDone = false;
 
-  if (_isVideo)
+  if (_data->_params.GetMediaType())
   {
-    _cap.open(_colorPath);
-    *_thread = thread(&CaptureSim::TCaptureVideo, this);
+    _cap.open(_data->_params.GetColorSimDataPath());
+    _data->_captureThread = thread(&CaptureSim::VideoCaptureThread, this);
   }
   else
   {
-    *_thread = thread(&CaptureSim::TCapturePhoto, this);
+    _data->_captureThread = thread(&CaptureSim::PhotoCaptureThread, this);
   }
 }
 
-void CaptureSim::TCaptureVideo()
+void CaptureSim::VideoCaptureThread()
 {
   int frame = 0;
-  _data->_depthImage = imread(_depthPath);
+  _data->_depthImage = imread(_data->_params.GetDepthSimDataPath());
 
   do 
   {
     frame++;
 
-    time_point<steady_clock> start = steady_clock::now();
+    steady_clock::time_point start = steady_clock::now();
     _data->_bufferMutex.lock();
     _data->_captureDone = !_cap.read(_data->_colorImage);
     _data->_bufferMutex.unlock();
-    time_point<steady_clock> end = steady_clock::now();
+    steady_clock::time_point end = steady_clock::now();
     duration<double> time_span = duration_cast<duration<double>>(end - start);
 
-    _data->_newCapturedFrame = true;
+    _data->_newFrameForVision = true;
 
     cout << "[CAPTURE] Frame " << to_string(frame) << " load time : " << time_span.count() * 1000 << "ms.\n";
     this_thread::sleep_for(milliseconds(33));
@@ -54,16 +50,16 @@ void CaptureSim::TCaptureVideo()
   _data->_captureDone = true;
 }
 
-void CaptureSim::TCapturePhoto()
+void CaptureSim::PhotoCaptureThread()
 {
   _data->_bufferMutex.lock();
 
-  _data->_colorImage = imread(_colorPath);
-  _data->_depthImage = imread(_depthPath);
+  _data->_colorImage = imread(_data->_params.GetColorSimDataPath());
+  _data->_depthImage = imread(_data->_params.GetDepthSimDataPath());
   if (_data->_colorImage.cols == 0 || _data->_colorImage.rows == 0) throw("could not open image.");
 
   _data->_bufferMutex.unlock();
-  _data->_newCapturedFrame = true;
+  _data->_newFrameForVision = true;
 
   cout << "[CAPTURE] Photo loaded.\n";
   _data->_captureDone = true;

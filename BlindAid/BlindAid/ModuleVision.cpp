@@ -1,36 +1,31 @@
 #include "ModuleVision.h"
 
-void Vision::Init(Data *data, std::thread *thread)
+using namespace std;
+using namespace std::chrono;
+using namespace cv;
+
+void Vision::Init(Data *data)
 {
   _data = data;
-  _thread = thread;
 
   _dod.Init(&_data->_params, &_data->_currentDepthImage, &_data->_results);
   _tld.Init(&_data->_params, &_data->_currentColorImage, &_data->_results);
   _ssd.Init(&_data->_params, &_data->_currentColorImage, &_data->_results);
 }
 
-void Vision::Start()
+void Vision::operator()()
 {
-  *_thread = thread(&Vision::TVision, this);
+  // TODO: move thread creation to init, simply set _run bool flag to true in here.
+  _data->_visionThread = thread(&Vision::VisionThread, this);
 }
 
-void Vision::DisplayImage(int frame, double time)
-{
-  cout << "[VISION] Frame " << to_string(frame) << " process time : " << time * 1000 << "ms.\n";
-
-  namedWindow("Video Results");
-  imshow("Video Results", _data->_colorImage);
-  waitKey(1);
-}
-
-void Vision::TVision()
+void Vision::VisionThread()
 {
   int frame = 0;
 
   do
   {
-    if (_data->_newCapturedFrame)
+    if (_data->_newFrameForVision)
     {
       if (_data->_bufferMutex.try_lock())
       {
@@ -39,24 +34,25 @@ void Vision::TVision()
         _data->_currentColorImage = _data->_colorImage.clone();
         _data->_currentDepthImage = _data->_depthImage.clone();
         _data->_bufferMutex.unlock();
-        _data->_newCapturedFrame = false;
+        _data->_newFrameForVision = false;
 
-        chrono::time_point<chrono::steady_clock> start = chrono::steady_clock::now();
+        steady_clock::time_point start = steady_clock::now();
         _data->_resultMutex.lock();
-        _ssd.Start();
-        _tld.Start();
-        _dod.Start();
+        _ssd();
+        _tld();
+        _dod();
         _data->_resultMutex.unlock();
-        chrono::time_point<chrono::steady_clock> end = chrono::steady_clock::now();
-        chrono::duration<double> time_span = chrono::duration_cast<chrono::duration<double>>(end - start);
-        _data->_newProcessedFrame = true;
+        steady_clock::time_point end = steady_clock::now();
+        duration<double> time_span = duration_cast<duration<double>>(end - start);
+        _data->_newFrameForControl = true;
+        _data->_newFrameForDisplay = true;
 
-        DisplayImage(frame, time_span.count());
+        cout << "[VISION] Frame " << to_string(frame) << " process time : " << time_span.count() * 1000 << "ms.\n";
       }
     }
-    this_thread::sleep_for(std::chrono::milliseconds(33));
+    this_thread::sleep_for(milliseconds(33));
   } 
-  while (!_data->_captureDone || _data->_newCapturedFrame);
+  while (!_data->_captureDone || _data->_newFrameForVision);
 
   _data->_visionDone = true;
 }

@@ -1,14 +1,16 @@
 #include "SimulateControl.h"
 
-void ControlSim::Init(Data *data, std::thread *thread)
+using namespace std;
+using namespace cv;
+
+void ControlSim::Init(Data *data)
 {
   _data = data;
-  _thread = thread;
 }
 
-void ControlSim::Start()
+void ControlSim::operator()()
 {
-  *_thread = thread(&ControlSim::TControl, this);
+  _data->_controlThread = thread(&ControlSim::ControlThread, this);
 }
 
 void ControlSim::SimulateOutput(int frame)
@@ -22,13 +24,13 @@ void ControlSim::SimulateOutput(int frame)
   waitKey(1);
 }
 
-void ControlSim::TControl()
+void ControlSim::ControlThread()
 {
   int frame = 0;
 
   do
   {
-    if (_data->_newProcessedFrame)
+    if (_data->_newFrameForControl)
     {
       if (_data->_resultMutex.try_lock())
       {
@@ -37,12 +39,12 @@ void ControlSim::TControl()
         // TODO: implement VisionResults deep copy instead.
         _data->_results.GetDepthObstacleResults().GetMat().copyTo(_depthMat);
         _data->_resultMutex.unlock();
-        _data->_newProcessedFrame = false;
+        _data->_newFrameForControl = false;
 
         SimulateOutput(frame);
       }
     }
-    this_thread::sleep_for(std::chrono::milliseconds(33));
+    this_thread::sleep_for(chrono::milliseconds(33));
   }
-  while (!_data->_visionDone || _data->_newProcessedFrame);
+  while (!_data->_visionDone || _data->_newFrameForControl);
 }
