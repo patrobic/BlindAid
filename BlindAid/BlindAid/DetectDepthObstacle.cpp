@@ -30,7 +30,10 @@ void DetectDepthObstacle::Process()
     SeparateRegions();
   }
   else
+  {
+    _results->SetHandPosition(Point(_grayImage.cols / 2, _grayImage.rows / 2));
     SeparateRegionsEqually();
+  }
 
   FindMaxInRegions();
 
@@ -51,60 +54,50 @@ void DetectDepthObstacle::DetectHand()
 {
   // TODO: detect position of hand
 
-  // cv::Point handPosition(_grayImage.cols / 2, _grayImage.rows / 2);
-  cv::Point handPosition(10, _grayImage.rows / 2);
-
-  if (_params->GetMode() == DepthObstacleParams::Mode::HandHunting)
-    _results->SetHandPosition(handPosition);
-  else
-    _results->SetHandPosition(Point(_grayImage.cols / 2, _grayImage.rows / 2));
+  _results->SetHandPosition(Point(_grayImage.cols / 2, _grayImage.rows / 2));
 }
 
 void DetectDepthObstacle::SeparateRegions()
 {
-  int handOffsetX = 0;
-  int handOffsetY = 0;
-  if (_params->GetMode() == DepthObstacleParams::Mode::HandHunting)
-  {
-    handOffsetX = _grayImage.cols / 2 - _results->GetHandPosition().x;
-    handOffsetY = _grayImage.rows / 2 - _results->GetHandPosition().y;
-  }
-
   Point tl;
   Point br;
 
-  int width = 0;
-  int height = 0;
-  int currentCol = 0;
-  int currentRow = 0;
-
   for (int i = 0; i < VERT_REGIONS; ++i)
   {
-    currentRow = 0;
     for (int j = 0; j < HORZ_REGIONS; ++j)
     {
+      tl.x = _results->GetHandPosition().x + (int)((i - 2.5) * _grayImage.cols * _params->GetCenterRegionsWidth());
+      br.x = _results->GetHandPosition().x + (int)((i - 1.5) * _grayImage.cols * _params->GetCenterRegionsWidth());
+      tl.y = _results->GetHandPosition().y + (int)((j - 1.5) * _grayImage.rows * _params->GetCenterRegionHeight());
+      br.y = _results->GetHandPosition().y + (int)((j - 0.5) * _grayImage.rows * _params->GetCenterRegionHeight());
+
       if (i == 0) tl.x = 0;
       if (i == VERT_REGIONS - 1) br.x = _grayImage.cols;
       if (j == 0) tl.y = 0;
       if (j == HORZ_REGIONS - 1) br.y = _grayImage.rows;
 
-      tl.x = _results->GetHandPosition().x/_grayImage.cols + (i/(float)VERT_REGIONS - _params->GetCenterRegionsWidth()/2) * _grayImage.cols;
-
-      width = ((i > 0 && i < VERT_REGIONS - 1) ? _grayImage.cols * _params->GetCenterRegionsWidth() : _grayImage.cols * (1 - 3 * _params->GetCenterRegionsWidth()) / 2.f);
-      height = ((j > 0 && j < HORZ_REGIONS - 1) ? _grayImage.rows * _params->GetCenterRegionHeight() : _grayImage.rows * (1 - _params->GetCenterRegionHeight()) / 2.f);
-
-      
-
-      _results->SetRegionBounds(i, j, Rect(currentCol + handOffsetX, currentRow + handOffsetY, width, height) & Rect(0, 0, _grayImage.cols, _grayImage.rows));
-      currentRow += height;
+      _results->SetRegionBounds(i, j, Rect(tl, br) & Rect(0, 0, _grayImage.cols, _grayImage.rows));
     }
-    currentCol += width;
   }
 }
 
 void DetectDepthObstacle::SeparateRegionsEqually()
 {
+  int width = _grayImage.cols / VERT_REGIONS;
+  int height = _grayImage.rows / HORZ_REGIONS;
 
+  for (int i = 0; i < HORZ_REGIONS; ++i)
+  {
+    for (int j = 0; j < VERT_REGIONS; ++j)
+    {
+      _regions[i * VERT_REGIONS + j].x = j * width;
+      _regions[i * VERT_REGIONS + j].y = i * height;
+      _regions[i * VERT_REGIONS + j].width = width;
+      _regions[i * VERT_REGIONS + j].height = height;
+
+      _results->SetRegionBounds(j, i, _regions[i * VERT_REGIONS + j] & Rect(0, 0, _grayImage.cols, _grayImage.rows));
+    }
+  }
 }
 
 void DetectDepthObstacle::FindMaxInRegions()
