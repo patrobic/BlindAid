@@ -55,6 +55,8 @@ void MainMenu::Simulate()
   system("cls");
 
   do {
+    system("cls");
+    
     cout << "\
 +========= Simulation ========+\n\
 | 1: Load Photo               |\n\
@@ -87,7 +89,6 @@ void MainMenu::Simulate()
     case 'v':
       TestVideo("tlight", "depthMap.png", 4);
       break;
-      system("cls");
     }
   } while (in != 'q' && in != 'Q');
 }
@@ -142,6 +143,6 @@ void MainMenu::TestPhoto(string colorPath, string depthPath, int count)
   {
     _data._params.SetColorSimDataPath(PATH + colorPath + (count != 0 ? std::to_string(i) : "") + string(".jpg"));
     _core();
-    waitKey();
+    _getch();
   }
 }

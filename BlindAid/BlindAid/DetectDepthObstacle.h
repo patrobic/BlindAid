@@ -9,7 +9,9 @@ public:
   void Process();
   void PreProcess();
 
+  void DetectHand();
   void SeparateRegions();
+  void SeparateRegionsEqually();
   void FindMaxInRegions();
   void FindRowMax();
   void FindColMax();

@@ -29,11 +29,19 @@ public:
   int GetVertRegions() { return _vertRegions; }
   void SetVertRegions(int vertRegions) { _vertRegions = vertRegions; }
 
+  float GetCenterRegionHeight() { return _centerRegionHeight; }
+  void SetCenterRegionHeight(float centerRegionHeight) { _centerRegionHeight = centerRegionHeight; }
+
+  float GetCenterRegionsWidth() { return _centerRegionsWidth; }
+  void SetCenterRegionsWidth(float centerRegionsWidth) { _centerRegionsWidth = centerRegionsWidth; }
+
 private:
-  Mode _regionMode;
+  Mode _regionMode = Mode::HandHunting;
 
   int _horzRegions = HORZ_REGIONS;
   int _vertRegions = VERT_REGIONS;
+  float _centerRegionHeight = 0.4f;
+  float _centerRegionsWidth = 0.1f;
 };
 
 class TrafficLightParams : public IDetectorParams

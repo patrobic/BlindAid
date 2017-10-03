@@ -12,6 +12,7 @@ void DetectDepthObstacle::Init(Parameters *params, const cv::Mat *image, Results
 
 void DetectDepthObstacle::operator()()
 {
+  DetectHand();
   Process();
 }
 
@@ -23,7 +24,14 @@ void DetectDepthObstacle::Process()
 
   GaussianBlur(_grayImage, _grayImage, Size(-1, -1), 3);
 
-  SeparateRegions();
+  if (_params->GetMode() == DepthObstacleParams::Mode::HandHunting)
+  {
+    DetectHand();
+    SeparateRegions();
+  }
+  else
+    SeparateRegionsEqually();
+
   FindMaxInRegions();
 
   FindRowMax();
@@ -39,34 +47,77 @@ void DetectDepthObstacle::PreProcess()
 {
 }
 
+void DetectDepthObstacle::DetectHand()
+{
+  // TODO: detect position of hand
+
+  // cv::Point handPosition(_grayImage.cols / 2, _grayImage.rows / 2);
+  cv::Point handPosition(10, _grayImage.rows / 2);
+
+  if (_params->GetMode() == DepthObstacleParams::Mode::HandHunting)
+    _results->SetHandPosition(handPosition);
+  else
+    _results->SetHandPosition(Point(_grayImage.cols / 2, _grayImage.rows / 2));
+}
+
 void DetectDepthObstacle::SeparateRegions()
 {
-  int width = _grayImage.cols / VERT_REGIONS;
-  int height = _grayImage.rows / HORZ_REGIONS;
-
-  for (int i = 0; i < HORZ_REGIONS; ++i)
+  int handOffsetX = 0;
+  int handOffsetY = 0;
+  if (_params->GetMode() == DepthObstacleParams::Mode::HandHunting)
   {
-    for (int j = 0; j < VERT_REGIONS; ++j)
-    {
-      _regions[i * VERT_REGIONS + j].x = j * width;
-      _regions[i * VERT_REGIONS + j].y = i * height;
-      _regions[i * VERT_REGIONS + j].width = width;
-      _regions[i * VERT_REGIONS + j].height = height;
-    }
+    handOffsetX = _grayImage.cols / 2 - _results->GetHandPosition().x;
+    handOffsetY = _grayImage.rows / 2 - _results->GetHandPosition().y;
   }
+
+  Point tl;
+  Point br;
+
+  int width = 0;
+  int height = 0;
+  int currentCol = 0;
+  int currentRow = 0;
+
+  for (int i = 0; i < VERT_REGIONS; ++i)
+  {
+    currentRow = 0;
+    for (int j = 0; j < HORZ_REGIONS; ++j)
+    {
+      if (i == 0) tl.x = 0;
+      if (i == VERT_REGIONS - 1) br.x = _grayImage.cols;
+      if (j == 0) tl.y = 0;
+      if (j == HORZ_REGIONS - 1) br.y = _grayImage.rows;
+
+      tl.x = _results->GetHandPosition().x/_grayImage.cols + (i/(float)VERT_REGIONS - _params->GetCenterRegionsWidth()/2) * _grayImage.cols;
+
+      width = ((i > 0 && i < VERT_REGIONS - 1) ? _grayImage.cols * _params->GetCenterRegionsWidth() : _grayImage.cols * (1 - 3 * _params->GetCenterRegionsWidth()) / 2.f);
+      height = ((j > 0 && j < HORZ_REGIONS - 1) ? _grayImage.rows * _params->GetCenterRegionHeight() : _grayImage.rows * (1 - _params->GetCenterRegionHeight()) / 2.f);
+
+      
+
+      _results->SetRegionBounds(i, j, Rect(currentCol + handOffsetX, currentRow + handOffsetY, width, height) & Rect(0, 0, _grayImage.cols, _grayImage.rows));
+      currentRow += height;
+    }
+    currentCol += width;
+  }
+}
+
+void DetectDepthObstacle::SeparateRegionsEqually()
+{
+
 }
 
 void DetectDepthObstacle::FindMaxInRegions()
 {
   double minVal = 0;
   double maxVal = 0;
+
   for (int i = 0; i < HORZ_REGIONS; ++i)
   {
     for (int j = 0; j < VERT_REGIONS; ++j)
     {
-      minMaxLoc(_grayImage(_regions[i * VERT_REGIONS + j]), &minVal, &maxVal);
-     
-      _results->SetRegion(i, j, minVal);
+      minMaxLoc(_grayImage(_results->GetRegionBounds(j, i)), &minVal, &maxVal);
+      _results->SetRegionIntensity(j, i, minVal);
 
       // Histogram Calculation
       Mat hist;

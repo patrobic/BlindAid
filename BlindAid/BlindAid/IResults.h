@@ -27,9 +27,10 @@ struct Circle
 struct Region
 {
   Region() {}
-  Region(cv::Rect rect, int intensity) { _rect = rect; _intensity = intensity; }
+  Region(cv::Rect rect, int intensity) { _region = rect; _intensity = intensity; }
+  void Clear() { _region = cv::Rect(cv::Point(0,0), cv::Point(0, 0)); _intensity = 0; }
 
-  cv::Rect _rect;
+  cv::Rect _region;
   int _intensity;
 };
 
@@ -63,20 +64,34 @@ class DepthObstacleResults : public IDetectorResults
 {
 public:
   DepthObstacleResults() { Clear(); }
+  void Clear() { for (int i = 0; i < VERT_REGIONS; ++i) for (int j = 0; j < HORZ_REGIONS; ++j) _regions[i][j].Clear(); _handPosition = cv::Point(0, 0); }
 
-  cv::Mat GetMat() { return _regionsMat; }
-  cv::Mat GetRowMat(int row) { return _regionsMat.row(row); }
-  cv::Mat GetColMat(int col) { return _regionsMat.col(col); }
+  cv::Rect GetRegionBounds(int col, int row) { return _regions[col][row]._region; }
+  void SetRegionBounds(int col, int row, cv::Rect region) { _regions[col][row]._region = region; }
 
-  void SetRegion(int row, int col, int value) { _regionsMat.at<char>(row, col) = value; }
-  void Clear() { _regionsMat = cv::Mat::zeros(HORZ_REGIONS, VERT_REGIONS, CV_8UC1); }
+  int GetRegionIntensity(int col, int row) { return _regions[col][row]._intensity; }
+  void SetRegionIntensity(int col, int row, int intensity) { _regions[col][row]._intensity = intensity; }
   
-private:
-  cv::Mat _regionsMat;
-  cv::Point _handPosition;
+  cv::Point GetHandPosition() { return _handPosition; }
+  void SetHandPosition(cv::Point handPosition) { _handPosition = handPosition; }
 
-  // TODO: switch from MAT to 2D array, also storing Rect in depthImage.
-  std::array<std::array<int, 3>, 5> _regions;
+  int GetMinColIntensity(int col) {
+    int min = 255;
+    for (int i = 0; i < HORZ_REGIONS; ++i)
+      min = std::min(min, _regions[col][i]._intensity);
+    return min;
+  }
+
+  int GetMinRowIntensity(int row) {
+    int min = 255;
+    for (int i = 0; i < HORZ_REGIONS; ++i)
+      min = std::min(min, _regions[i][row]._intensity);
+    return min;
+  }
+
+private:
+  cv::Point _handPosition;
+  std::array<std::array<Region, HORZ_REGIONS>, VERT_REGIONS> _regions;
 };
 
 class Results

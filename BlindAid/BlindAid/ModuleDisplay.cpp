@@ -15,15 +15,14 @@ void Display::operator()()
 
 void Display::ShowDepthObstacles()
 {
-  int width = _data->_currentDepthImage.cols / VERT_REGIONS;
-  int height = _data->_currentDepthImage.rows / HORZ_REGIONS;
-
+  Rect rect;
   for (int i = 0; i < HORZ_REGIONS; ++i)
   {
     for (int j = 0; j < VERT_REGIONS; ++j)
     {
-      rectangle(_data->_currentDepthImage, Point(j * width, i * height), Point((j + 1) * width, (i + 1) * height), Scalar(0, 0, 255), 2);
-      putText(_data->_currentDepthImage, to_string(_data->_results.GetDepthObstacleResults().GetMat().at<char>(i, j)), Point((j + 0.5) * width, (i + 0.5) * height), FONT_HERSHEY_PLAIN, 1, Scalar(0, 0, 255));
+      rect = _data->_results.GetDepthObstacleResults().GetRegionBounds(j, i);
+      rectangle(_data->_currentDepthImage, rect, Scalar(0, 0, 255), 2);
+      putText(_data->_currentDepthImage, to_string(_data->_results.GetDepthObstacleResults().GetRegionIntensity(j, i)), Point(rect.x + 0.5 * rect.width, rect.y + 0.5 * rect.height), FONT_HERSHEY_PLAIN, 1, Scalar(0, 0, 255));
     }
   }
 }
@@ -83,5 +82,6 @@ void Display::DisplayThread()
       }
     }
     this_thread::sleep_for(chrono::milliseconds(33));
-  } while (!_data->_visionDone || _data->_newFrameForDisplay);
+  }
+  while (!_data->_visionDone || _data->_newFrameForDisplay);
 }
