@@ -36,9 +36,28 @@ struct Data
 class IModule
 {
 public:
+  class Parameters : public IParameters
+  {
+  public:
+
+  private:
+
+  };
+
+  class Results: public IResults
+  {
+  public:
+
+  private:
+
+  };
+
   virtual void Init(Data *data, IParameters *params, IResults *input, IResults *output) = 0;
   virtual void operator()() = 0;
 
 protected:
   Data *_data;
+  Parameters *_params;
+  IResults *_input;
+  Results *_output;
 };

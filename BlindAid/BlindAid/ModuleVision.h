@@ -55,7 +55,7 @@ private:
   CaptureSim::Results *_input;
   Results *_output;
 
-  DetectStopSign _ssd;
-  DetectTrafficLight _tld;
-  DetectDepthObstacle _dod;
+  DetectStopSign _stopSign;
+  DetectTrafficLight _trafficLight;
+  DetectDepthObstacle _depthObstacle;
 };

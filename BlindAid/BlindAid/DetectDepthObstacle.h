@@ -91,7 +91,6 @@ public:
   void Clear();
 
 private:
-  Data *_data;
   Parameters *_params;
   Capture::Results *_input;
   Results *_output;

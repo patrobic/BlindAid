@@ -11,9 +11,9 @@ void Vision::Init(Data *data, IParameters *params, IResults *input, IResults *ou
   _input = static_cast<CaptureSim::Results*>(input);
   _output = static_cast<Results*>(output);
 
-  _dod.Init(_data, _params->GetDepthObstacleParams(), _input, _output->GetDepthObstacleResults());
-  _tld.Init(_data, _params->GetTrafficLightParams(), _input, _output->GetTrafficLightResults());
-  _ssd.Init(_data, _params->GetStopSignParams(), _input, _output->GetStopSignResults());
+  _depthObstacle.Init(_data, _params->GetDepthObstacleParams(), _input, _output->GetDepthObstacleResults());
+  _trafficLight.Init(_data, _params->GetTrafficLightParams(), _input, _output->GetTrafficLightResults());
+  _stopSign.Init(_data, _params->GetStopSignParams(), _input, _output->GetStopSignResults());
 }
 
 void Vision::operator()()
@@ -41,9 +41,9 @@ void Vision::VisionThread()
 
         steady_clock::time_point start = steady_clock::now();
         _data->_resultMutex.lock();
-        _ssd();
-        _tld();
-        _dod();
+        if(_params->GetStopSignParams()->GetToggle() == Parameters::Toggle::Enabled) _stopSign();
+        if (_params->GetTrafficLightParams()->GetToggle() == Parameters::Toggle::Enabled) _trafficLight();
+        if (_params->GetDepthObstacleParams()->GetToggle() == Parameters::Toggle::Enabled) _depthObstacle();
         _data->_resultMutex.unlock();
         steady_clock::time_point end = steady_clock::now();
         duration<double> time_span = duration_cast<duration<double>>(end - start);

@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DetectFace.cpp" />
+    <ClCompile Include="DetectVehicle.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="ModuleCapture.cpp" />
     <ClCompile Include="SimulateCapture.cpp" />
@@ -33,8 +35,11 @@
     <ClCompile Include="ModuleVision.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DetectFace.h" />
+    <ClInclude Include="DetectVehicle.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="ModuleCapture.h" />
+    <ClInclude Include="ConfigParser.h" />
     <ClInclude Include="SimulateCapture.h" />
     <ClInclude Include="ModuleControl.h" />
     <ClInclude Include="SimulateControl.h" />

@@ -7,6 +7,15 @@
 class IParameters
 {
 public:
-  
+  enum Toggle
+  {
+    Disabled,
+    Enabled
+  };
+
+  Toggle GetToggle() { return _toggle; }
+
 private:
+  Toggle _toggle = Toggle::Enabled;
+
 };
