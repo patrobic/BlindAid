@@ -8,11 +8,12 @@ DetectTrafficLight::DetectTrafficLight() : _h(_hsvChannels[0]), _s(_hsvChannels[
 
 }
 
-void DetectTrafficLight::Init(Parameters *params, const cv::Mat *image, Results *results)
+void DetectTrafficLight::Init(Data *data, IParameters *params, IResults *input, IResults *output)
 {
-  _params = &params->GetTrafficLightParams();
-  _colorImage = image;
-  _results = &results->GetTrafficLightResults();
+  _data = data;
+  _params = static_cast<Parameters*>(params);
+  _input = static_cast<Capture::Results*>(input);
+  _output = static_cast<Results*>(output);
 }
 
 void DetectTrafficLight::operator()()
@@ -27,27 +28,25 @@ void DetectTrafficLight::Process()
 
   switch (_params->GetMode())
   {
-  case TrafficLightParams::BlobDetectorMode:
+  case Parameters::BlobDetectorMode:
     BlobDetectorApproach();
     break;
-  case TrafficLightParams::HoughCirclesMode:
+  case Parameters::HoughCirclesMode:
     HoughCirclesApproach();
     break;
-  case TrafficLightParams::FindContoursMode:
+  case Parameters::FindContoursMode:
     FindCountoursApproach();
     break;
   }
 
   DetectRectangle();
-  Draw();
-  Display();
 }
 
 void DetectTrafficLight::PreProcess()
 {
-  cvtColor(*_colorImage, _hsvImage, CV_BGR2HSV);
+  cvtColor(*_input->GetColorImage(), _hsvImage, CV_BGR2HSV);
 
-  split(*_colorImage, _bgrChannels);
+  split(*_input->GetColorImage(), _bgrChannels);
   split(_hsvImage, _hsvChannels);
  
   Mat redRegionUpper;
@@ -77,7 +76,7 @@ void DetectTrafficLight::FindCountoursApproach()
 
   for (int i = 0; i < contours.size(); i++)
   {
-    drawContours(*_colorImage, contours, i, 255, 1, 8, vector<Vec4i>(), 0, Point());
+    drawContours(*_input->GetColorImage(), contours, i, 255, 1, 8, vector<Vec4i>(), 0, Point());
 
     circleArea = contourArea(contours[i]);
     Rect rect = boundingRect(Mat(contours[i]));
@@ -88,9 +87,9 @@ void DetectTrafficLight::FindCountoursApproach()
     if (score.at(i) > circularityThreshold)
     {
       minEnclosingCircle((Mat)contours[i], center[i], radius[i]);
-      drawContours(*_colorImage, contours, i, 255, 1, 8, vector<Vec4i>(), 0, Point());
+      drawContours(*_input->GetColorImage(), contours, i, 255, 1, 8, vector<Vec4i>(), 0, Point());
      
-      _results->PushBack(Circle(center[i], (int)radius[i]));
+      _output->PushBack(Circle(center[i], (int)radius[i]));
     }
   }
 }
@@ -116,7 +115,7 @@ void DetectTrafficLight::HoughCirclesApproach()
   HoughCircles(_rMask, circles, HOUGH_GRADIENT, 1, _rMask.cols / 20, 100, 12, 1, 50);
 
   for (size_t i = 0; i < circles.size(); i++)
-    _results->PushBack(Circle(Point(cvRound(circles[i][0]), cvRound(circles[i][1])), (int)cvRound(circles[i][2])));
+    _output->PushBack(Circle(Point(cvRound(circles[i][0]), cvRound(circles[i][1])), (int)cvRound(circles[i][2])));
 }
 
 void DetectTrafficLight::BlobDetectorApproach()
@@ -141,7 +140,7 @@ void DetectTrafficLight::BlobDetectorApproach()
   sbd->detect(_rMask, keypoints);
   
   for (int i = 0; i < keypoints.size(); i++)
-    _results->PushBack(Circle(keypoints[i].pt, (int)keypoints[i].size));
+    _output->PushBack(Circle(keypoints[i].pt, (int)keypoints[i].size));
 }
 
 void DetectTrafficLight::DetectRectangle()
@@ -149,12 +148,12 @@ void DetectTrafficLight::DetectRectangle()
   int sizeFactor = 12;
   Mat box;
   Rect rect;
-  for (int i = 0; i < _results->Size(); ++i)
+  for (int i = 0; i < _output->Size(); ++i)
   {
-    rect.x = std::max(0, _results->At(i)._center.x - _results->Size() * sizeFactor);
-    rect.y = std::max(0, _results->At(i)._center.y - _results->Size() * sizeFactor);
-    rect.width = std::min(_colorImage->cols - rect.x - 1, _results->Size() * 2 * sizeFactor);
-    rect.height= std::min(_colorImage->rows - rect.y - 1, _results->Size() * 2 * sizeFactor);
+    rect.x = std::max(0, _output->At(i)._center.x - _output->Size() * sizeFactor);
+    rect.y = std::max(0, _output->At(i)._center.y - _output->Size() * sizeFactor);
+    rect.width = std::min(_input->GetColorImage()->cols - rect.x - 1, _output->Size() * 2 * sizeFactor);
+    rect.height= std::min(_input->GetColorImage()->rows - rect.y - 1, _output->Size() * 2 * sizeFactor);
 
     box = _v(rect);
 
@@ -182,31 +181,7 @@ void DetectTrafficLight::DetectRectangle()
   }
 }
 
-void DetectTrafficLight::Draw()
-{
-  for(int i = 0; i<_results->Size(); ++i)
-    circle(*_colorImage, _results->At(i)._center, (int)_results->At(i)._radius + 2, Scalar(0, 255, 255), 2, 8, 0);
-}
-
-void DetectTrafficLight::Display()
-{
-  //namedWindow("Color");
-  //moveWindow("Color", 20, 20);
-  //imshow("Color", *_image);
-  //namedWindow("Hue");
-  //moveWindow("Hue", 1000, 20);
-  //imshow("Hue", _h);
-  //namedWindow("Saturation");
-  //moveWindow("Saturation", 20, 600);
-  //imshow("Saturation", _s);
-  //namedWindow("Value");
-  //moveWindow("Value", 1000, 600);
-  //imshow("Value", _v);
-
-  //waitKey();
-}
-
 void DetectTrafficLight::Clear()
 {
-  _results->Clear();
+  _output->Clear();
 }

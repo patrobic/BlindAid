@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IDetector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DetectTrafficLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>

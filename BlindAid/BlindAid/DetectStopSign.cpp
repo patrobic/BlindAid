@@ -3,11 +3,12 @@
 using namespace std;
 using namespace cv;
 
-void DetectStopSign::Init(Parameters *params, const cv::Mat *image, Results *results)
+void DetectStopSign::Init(Data *data, IParameters *params, IResults *input, IResults *output)
 {
-  _params = &params->GetStopSignParams();
-  _colorImage = image;
-  _results = &results->GetStopSignResults();
+  _data = data;
+  _params = static_cast<Parameters*>(params);
+  _input = static_cast<Capture::Results*>(input);
+  _output = static_cast<Results*>(output);
 }
 
 void DetectStopSign::operator()()

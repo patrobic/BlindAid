@@ -3,9 +3,12 @@
 using namespace std;
 using namespace cv;
 
-void ControlSim::Init(Data *data)
+void ControlSim::Init(Data *data, IParameters *params, IResults *input, IResults *output)
 {
   _data = data;
+  _params = static_cast<Parameters*>(params);
+  _input = static_cast<Vision::Results*>(input);
+  _output = static_cast<Results*>(output);
 }
 
 void ControlSim::operator()()
@@ -16,19 +19,19 @@ void ControlSim::operator()()
 void ControlSim::SimulateOutput(int frame)
 {
   cout << "[CONTROL] Frame " << to_string(frame) << " received.\n";
-  cout << "[GLOVE] \
-Thumb(" << _data->_results.GetDepthObstacleResults().GetMinColIntensity(0) << "), \
-Index(" << _data->_results.GetDepthObstacleResults().GetMinColIntensity(1) << "), \
-Middle(" << _data->_results.GetDepthObstacleResults().GetMinColIntensity(2) << "), \
-Ring(" << _data->_results.GetDepthObstacleResults().GetMinColIntensity(3) << "), \
-Pinky(" << _data->_results.GetDepthObstacleResults().GetMinColIntensity(4) << "), \
-Upper(" << _data->_results.GetDepthObstacleResults().GetMinColIntensity(0) << "), \
-Lower(" << _data->_results.GetDepthObstacleResults().GetMinRowIntensity(2) << ").\n";
+  cout << "\t[GLOVE] \
+Thumb(" << _input->GetDepthObstacleResults()->GetMinColIntensity(0) << "), \
+Index(" << _input->GetDepthObstacleResults()->GetMinColIntensity(1) << "), \
+Middle(" << _input->GetDepthObstacleResults()->GetMinColIntensity(2) << "), \
+Ring(" << _input->GetDepthObstacleResults()->GetMinColIntensity(3) << "), \
+Pinky(" << _input->GetDepthObstacleResults()->GetMinColIntensity(4) << "), \
+Upper(" << _input->GetDepthObstacleResults()->GetMinColIntensity(0) << "), \
+Lower(" << _input->GetDepthObstacleResults()->GetMinRowIntensity(2) << ").\n";
 
-  int trafficLightCount = _data->_results.GetTrafficLightResults().Size();
-  int stopSignCount = _data->_results.GetStopSignResults().GetRegion()._radius > 0 ? 1 : 0;
+  int trafficLightCount = _input->GetTrafficLightResults()->Size();
+  int stopSignCount = _input->GetStopSignResults()->GetRegion()._radius > 0 ? 1 : 0;
   
-  cout << "[AUDIO]";
+  cout << "\t[AUDIO]";
   if (trafficLightCount > 0) cout << " TrafficLights(" << trafficLightCount << ")";
   if (stopSignCount > 0) cout << " StopSign(" << trafficLightCount << ")"; cout << ".\n";
 }

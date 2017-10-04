@@ -4,13 +4,16 @@ using namespace std;
 using namespace std::chrono;
 using namespace cv;
 
-void Vision::Init(Data *data)
+void Vision::Init(Data *data, IParameters *params, IResults *input, IResults *output)
 {
   _data = data;
+  _params = static_cast<Parameters*>(params);
+  _input = static_cast<CaptureSim::Results*>(input);
+  _output = static_cast<Results*>(output);
 
-  _dod.Init(&_data->_params, &_data->_currentDepthImage, &_data->_results);
-  _tld.Init(&_data->_params, &_data->_currentColorImage, &_data->_results);
-  _ssd.Init(&_data->_params, &_data->_currentColorImage, &_data->_results);
+  _dod.Init(_data, _params->GetDepthObstacleParams(), _input, _output->GetDepthObstacleResults());
+  _tld.Init(_data, _params->GetTrafficLightParams(), _input, _output->GetTrafficLightResults());
+  _ssd.Init(_data, _params->GetStopSignParams(), _input, _output->GetStopSignResults());
 }
 
 void Vision::operator()()
@@ -31,8 +34,8 @@ void Vision::VisionThread()
       {
         frame++;
 
-        _data->_currentColorImage = _data->_colorImage.clone();
-        _data->_currentDepthImage = _data->_depthImage.clone();
+        *_output->GetCurrentColorImage() = _input->GetColorImage()->clone();
+        *_output->GetCurrentDepthImage() = _input->GetDepthImage()->clone();
         _data->_bufferMutex.unlock();
         _data->_newFrameForVision = false;
 

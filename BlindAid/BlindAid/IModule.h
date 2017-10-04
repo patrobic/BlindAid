@@ -31,20 +31,12 @@ struct Data
   std::atomic_bool _newFrameForVision;
   std::atomic_bool _newFrameForControl;
   std::atomic_bool _newFrameForDisplay;
-
-  cv::Mat _colorImage;
-  cv::Mat _depthImage;
-  cv::Mat _currentColorImage;
-  cv::Mat _currentDepthImage;
-
-  Parameters _params;
-  Results _results;
 };
 
 class IModule
 {
 public:
-  virtual void Init(Data *data) = 0;
+  virtual void Init(Data *data, IParameters *params, IResults *input, IResults *output) = 0;
   virtual void operator()() = 0;
 
 protected:

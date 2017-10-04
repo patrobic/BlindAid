@@ -1,11 +1,13 @@
 #pragma once
 
 #include "IModule.h"
+#include "ModuleControl.h"
+#include "ModuleVision.h"
 
-class ControlSim : public IModule
+class ControlSim : public ControlBase
 {
 public:
-  void Init(Data *data);
+  void Init(Data *data, IParameters *params, IResults *input, IResults *output);
   void operator()();
 
 private:

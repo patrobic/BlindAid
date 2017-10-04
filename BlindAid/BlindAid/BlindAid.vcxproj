@@ -41,7 +41,6 @@
     <ClInclude Include="ModuleCore.h" />
     <ClInclude Include="DetectDepthObstacle.h" />
     <ClInclude Include="ModuleDisplay.h" />
-    <ClInclude Include="IDetector.h" />
     <ClInclude Include="IModule.h" />
     <ClInclude Include="IParameters.h" />
     <ClInclude Include="DetectStopSign.h" />
