@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DetectFace">
+    <Position X="2.75" Y="5.5" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="DetectFace::Parameters" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DetectFace.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Class Name="DetectFace::Results" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DetectFace.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAEAAAAAAAABAAAAAAAAACAAIAAAA=</HashCode>
+      <FileName>DetectFace.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DetectVehicle">
+    <Position X="5" Y="5.5" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="DetectVehicle::Parameters" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DetectVehicle.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Class Name="DetectVehicle::Results" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DetectVehicle.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAEAAAAAAAABAAAAAAAAACAAIAAAA=</HashCode>
+      <FileName>DetectVehicle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MainMenu" Collapsed="true">
+    <Position X="29.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAEAABAAEAIAAEAAQAgACCAAIABAA=</HashCode>
+      <FileName>Menu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CaptureBase">
+    <Position X="24" Y="3.75" Width="1.5" />
+    <NestedTypes>
+      <Class Name="CaptureBase::Parameters" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ModuleCapture.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="CaptureBase::Results" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ModuleCapture.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAIAAAAAEAAAAAAAABAAAAAAAAACAAIAAAA=</HashCode>
+      <FileName>ModuleCapture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Capture">
+    <Position X="25.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>ModuleCapture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConfigParser" Collapsed="true">
+    <Position X="27.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAgABgACAACAAAAWAAAAAAgABAAAAAAAAACAAIAABA=</HashCode>
+      <FileName>ConfigParser.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CaptureSim">
+    <Position X="23" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAACAAAAEAAAAAAAACAAAAAgA=</HashCode>
+      <FileName>SimulateCapture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ControlBase">
+    <Position X="15" Y="3.75" Width="1.5" />
+    <NestedTypes>
+      <Class Name="ControlBase::Parameters" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ModuleControl.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="ControlBase::Results" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ModuleControl.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAIAAAAAAAAAAAAAABAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>ModuleControl.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Control">
+    <Position X="14" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>ModuleControl.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ControlSim">
+    <Position X="16.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAggAAAAAAAAAAAAEAAAAAAAAAAAAAEAAAACAAAAAAA=</HashCode>
+      <FileName>SimulateControl.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Core">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Core::Parameters" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ModuleCore.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Core::Results" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ModuleCore.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAABAACABAIACAAAEAAAAAACABAAAAAAAAACAAIAAAA=</HashCode>
+      <FileName>ModuleCore.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DetectDepthObstacle">
+    <Position X="7.25" Y="5.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="DetectDepthObstacle::Parameters" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DetectDepthObstacle.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="DetectDepthObstacle::Results" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DetectDepthObstacle.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>gEAEAAgIgAIACiAAEgAACQAIADAAAAAAAwACAAJQAQA=</HashCode>
+      <FileName>DetectDepthObstacle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Display">
+    <Position X="18.5" Y="3.75" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Display::Parameters" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ModuleDisplay.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Display::Results" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ModuleDisplay.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAADAIQABAAEIAAAAAAABAAAAAAAAACAAIACAA=</HashCode>
+      <FileName>ModuleDisplay.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IModule">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="IModule::Parameters" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>IModule.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="IModule::Results" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>IModule.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAIAAAAAEAAAAAAAABAAAAAAAAACAAIAAAA=</HashCode>
+      <FileName>IModule.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DetectBase">
+    <Position X="7.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IModule.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IParameters" Collapsed="true">
+    <Position X="29.5" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="IParameters::Toggle" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>IParameters.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IParameters.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DetectStopSign">
+    <Position X="9.5" Y="5.5" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="DetectStopSign::Parameters" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DetectStopSign.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Class Name="DetectStopSign::Results" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DetectStopSign.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIACgAAEgAAAQAAABAAAAAAAAACAAJAAAA=</HashCode>
+      <FileName>DetectStopSign.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DetectTrafficLight">
+    <Position X="11.75" Y="5.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="DetectTrafficLight::Parameters" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DetectTrafficLight.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="DetectTrafficLight::Results" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DetectTrafficLight.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIQCAIAEgDIIBAAABEAAAAYgKBCCAJAAgA=</HashCode>
+      <FileName>DetectTrafficLight.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IResults" Collapsed="true">
+    <Position X="27.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>IResults.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vision">
+    <Position X="20.75" Y="3.75" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Vision::Parameters" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ModuleVision.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Vision::Results" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ModuleVision.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAIQAAAAEAAEAAAAABAAAAAAAgACAAoAAAA=</HashCode>
+      <FileName>ModuleVision.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Data" Collapsed="true">
+    <Position X="29.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAACgAAAAAAEAAEAAABAAAAAECAAgAAAAhAAAAAAAE=</HashCode>
+      <FileName>IModule.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Circle" Collapsed="true">
+    <Position X="27.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAFAAAA=</HashCode>
+      <FileName>IResults.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Region" Collapsed="true">
+    <Position X="27.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>IResults.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -53,6 +53,9 @@
     <ClInclude Include="IResults.h" />
     <ClInclude Include="ModuleVision.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DD1BF88B-B634-46C9-A80F-FFA17C02A6F0}</ProjectGuid>
     <RootNamespace>BlindAid</RootNamespace>
@@ -120,6 +123,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(ProjectDir)..\..\Dependencies\opencv\include</AdditionalIncludeDirectories>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\Dependencies\opencv\x64\vc14\lib;</AdditionalLibraryDirectories>
@@ -128,6 +132,9 @@
     <PostBuildEvent>
       <Command>xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\opencv\x64\vc14\bin\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
