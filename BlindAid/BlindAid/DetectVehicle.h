@@ -3,7 +3,7 @@
 #include "IModule.h"
 #include "ModuleVision.h"
 
-class DetectVehicle : public IModule
+class DetectVehicle : public DetectBase
 {
 public:
   struct Parameters : public IParameters

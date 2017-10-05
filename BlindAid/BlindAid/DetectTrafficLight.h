@@ -3,7 +3,7 @@
 #include "IModule.h"
 #include "ModuleCapture.h"
 
-class DetectTrafficLight : public IModule
+class DetectTrafficLight : public DetectBase
 {
 public:
   class Parameters : public IParameters

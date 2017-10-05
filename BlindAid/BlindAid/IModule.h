@@ -15,7 +15,7 @@
 #include "IParameters.h"
 #include "IResults.h"
 
-struct Data
+struct Data // DEPRECATED! will be removed in the near future!
 {
   std::thread _captureThread;
   std::thread _visionThread;
@@ -31,6 +31,9 @@ struct Data
   std::atomic_bool _newFrameForVision;
   std::atomic_bool _newFrameForControl;
   std::atomic_bool _newFrameForDisplay;
+
+  // DO NOT add anything new to this class. a global Data class is bad practice and breaks many programming rules/conventions.
+  // If you need to add new data, it will be in either PARAMETERS or RESULTS (input is included in results).
 };
 
 class IModule
@@ -60,4 +63,12 @@ protected:
   Parameters *_params;
   IResults *_input;
   Results *_output;
+};
+
+class DetectBase : public IModule
+{
+public:
+
+private:
+
 };

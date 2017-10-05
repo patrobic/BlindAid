@@ -3,7 +3,7 @@
 #include "IModule.h"
 #include "ModuleVision.h"
 
-class DetectFace : public IModule
+class DetectFace : public DetectBase
 {
 public:
   struct Parameters : public IParameters

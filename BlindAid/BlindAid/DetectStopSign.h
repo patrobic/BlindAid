@@ -3,7 +3,7 @@
 #include "IModule.h"
 #include "ModuleCapture.h"
 
-class DetectStopSign : public IModule
+class DetectStopSign : public DetectBase
 {
 public:
   struct Parameters : public IParameters

@@ -1,6 +1,6 @@
 #include "Menu.h"
 
-#define PATH "C:\\Projects\\BlindAid\\TestImages\\"
+#define PATH "C:\\Projects\\BlindAid\\TestData\\"
 
 using namespace std;
 using namespace cv;
@@ -78,16 +78,16 @@ void MainMenu::Simulate()
       LoadFile(Capture::Parameters::MediaType::Video, "depthMap.png");
       break;
     case 'd':
-      TestPhoto("tlight", "depthMap.png", 1);
+      TestPhoto("TrafficLight\\tlight", "depthMap.png", 1);
       break;
     case 't':
-      TestPhoto("tlight", "depthMap.png", 4);
+      TestPhoto("TrafficLight\\tlight", "depthMap.png", 4);
       break;
     case 's':
-      TestPhoto("stop", "depthMap.png", 8);
+      TestPhoto("StopSign\\stop", "depthMap.png", 8);
       break;
     case 'v':
-      TestVideo("tlight", "depthMap.png", 4);
+      TestVideo("TrafficLight\\tlight", "depthMap.png", 4);
       break;
     }
   } while (in != 'q' && in != 'Q');

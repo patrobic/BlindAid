@@ -3,7 +3,8 @@
 #include "IModule.h"
 #include "ModuleCapture.h"
 
-class DetectDepthObstacle : public IModule {
+class DetectDepthObstacle : public DetectBase 
+{
 public:
   class Parameters : public IParameters
   {
