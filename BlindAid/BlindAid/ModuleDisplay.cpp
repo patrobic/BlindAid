@@ -1,9 +1,10 @@
 #include "ModuleDisplay.h"
 
 using namespace std;
+using namespace std::chrono;
 using namespace cv;
 
-void Display::Init(Data *data, IParameters *params, IResults *input, IResults *output)
+Display::Display(Data *data, IParameters *params, IResults *input, IResults *output)
 {
   _data = data;
   _params = static_cast<Parameters*>(params);
@@ -13,10 +14,20 @@ void Display::Init(Data *data, IParameters *params, IResults *input, IResults *o
 
 void Display::operator()()
 {
-  _data->_displayThread = thread(&Display::DisplayThread, this);
+  steady_clock::time_point start = steady_clock::now();
+
+  DrawDepthObstacles();
+  DrawTrafficLights();
+  DrawStopSign();
+  DisplayImage();
+
+  steady_clock::time_point end = steady_clock::now();
+  duration<double> time_span = duration_cast<duration<double>>(end - start);
+
+  cout << "[DISPLAY] Frame displayed (" << time_span.count() * 1000 << "ms).\n";
 }
 
-void Display::ShowDepthObstacles()
+void Display::DrawDepthObstacles()
 {
   Rect rect;
   for (int i = 0; i < HORZ_REGIONS; ++i)
@@ -30,7 +41,7 @@ void Display::ShowDepthObstacles()
   }
 }
 
-void Display::ShowTrafficLights()
+void Display::DrawTrafficLights()
 {
   DetectTrafficLight::Results result = *_input->GetTrafficLightResults();
 
@@ -41,7 +52,7 @@ void Display::ShowTrafficLights()
   }
 }
 
-void Display::ShowStopSign()
+void Display::DrawStopSign()
 {
   DetectStopSign::Results result = *_input->GetStopSignResults();
   circle(*_input->GetCurrentColorImage(), result.GetRegion()._center, result.GetRegion()._radius + 2, Scalar(0, 255, 255));
@@ -59,32 +70,4 @@ void Display::DisplayImage()
   moveWindow("Depth Image", 800, 20);
   imshow("Depth Image", *_input->GetCurrentDepthImage());
   waitKey(1);
-}
-
-void Display::DisplayThread()
-{
-  int frame = 0;
-
-  do
-  {
-    if (_data->_newFrameForDisplay)
-    {
-      if (_data->_resultMutex.try_lock())
-      {
-        frame++;
-
-        ShowDepthObstacles();
-        ShowTrafficLights();
-        ShowStopSign();
-        DisplayImage();
-
-        _data->_resultMutex.unlock();
-        _data->_newFrameForDisplay = false;
-
-        cout << "[DISPLAY] Frame " << to_string(frame) << " displayed.\n";
-      }
-    }
-    this_thread::sleep_for(chrono::milliseconds(33));
-  }
-  while (!_data->_visionDone || _data->_newFrameForDisplay);
 }

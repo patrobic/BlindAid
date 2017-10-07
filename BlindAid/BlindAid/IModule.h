@@ -15,8 +15,11 @@
 #include "IParameters.h"
 #include "IResults.h"
 
+
 struct Data // DEPRECATED! will be removed in the near future!
 {
+  bool _run;
+
   std::thread _captureThread;
   std::thread _visionThread;
   std::thread _controlThread;
@@ -55,20 +58,16 @@ public:
 
   };
 
-  virtual void Init(Data *data, IParameters *params, IResults *input, IResults *output) = 0;
+  //IModule(Data *data, IParameters *params, IResults *input, IResults *output) {};
   virtual void operator()() = 0;
 
 protected:
   Data *_data;
-  Parameters *_params;
-  IResults *_input;
-  Results *_output;
 };
 
 class DetectBase : public IModule
 {
 public:
 
-private:
-
+protected:
 };

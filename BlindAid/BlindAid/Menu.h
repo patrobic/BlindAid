@@ -9,7 +9,8 @@
 class MainMenu
 {
 public:
-  void Init();
+
+  MainMenu();
   void operator()();
 
 private:

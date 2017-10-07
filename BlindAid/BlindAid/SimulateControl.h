@@ -7,12 +7,9 @@
 class ControlSim : public ControlBase
 {
 public:
-  void Init(Data *data, IParameters *params, IResults *input, IResults *output);
+  ControlSim(Data *data, IParameters *params, IResults *input, IResults *output) : ControlBase(data, params, input, output) {}
   void operator()();
 
 private:
-  void ControlThread();
-  void SimulateOutput(int frame);
-
   cv::Mat _depthMat;
 };

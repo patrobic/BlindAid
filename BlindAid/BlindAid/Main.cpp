@@ -3,6 +3,5 @@
 void main()
 {
   MainMenu mainMenu;
-  mainMenu.Init();
   mainMenu();
 }

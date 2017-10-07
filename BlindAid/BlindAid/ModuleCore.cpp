@@ -1,6 +1,10 @@
 #include "ModuleCore.h"
 
-void Core::Init(Data *data, IParameters *params, IResults *input, IResults *output)
+using namespace std;
+using namespace std::chrono;
+using namespace cv;
+
+Core::Core(Data *data, IParameters *params, IResults *input, IResults *output)
 {
   _data = data;
   _params = static_cast<Parameters*>(params);
@@ -12,27 +16,43 @@ void Core::Init(Data *data, IParameters *params, IResults *input, IResults *outp
 
 void Core::operator()()
 {
-  _vision = new Vision();
-  if (_params->GetCaptureMode() == Parameters::Mode::Realtime) _capture = new Capture();
-  else _capture = new CaptureSim();
-  _display = new Display();
-  if (_params->GetControlMode() == Parameters::Mode::Realtime) _control = new Control();
-  else _control = new ControlSim();
+  int frame = 0;
 
-  _capture->Init(_data, _params->GetCaptureParams(), NULL, _output->GetCaptureResults());
-  _vision->Init(_data, _params->GetVisionParams(), _output->GetCaptureResults(), _output->GetVisionResults());
-  _control->Init(_data, _params->GetCaptureParams(), _output->GetVisionResults(), NULL);
-  _display->Init(_data, _params->GetDisplayParams(), _output->GetVisionResults(), _output->GetCaptureResults()); // note: uses CaptureResults as "output" even though it is technically an input.
+  _vision = new Vision(_data, _params->GetVisionParams(), _output->GetCaptureResults(), _output->GetVisionResults());
+  
+  if (_params->GetCaptureMode() == Parameters::Mode::Realtime)
+    _capture = new Capture(_data, _params->GetCaptureParams(), NULL, _output->GetCaptureResults());
+  else
+    _capture = new CaptureSim(_data, _params->GetCaptureParams(), NULL, _output->GetCaptureResults());
 
-  (*_capture)();
-  (*_vision)();
-  (*_control)();
-  (*_display)();
+  _display = new Display(_data, _params->GetDisplayParams(), _output->GetVisionResults(), _output->GetCaptureResults());
+  
+  if (_params->GetControlMode() == Parameters::Mode::Realtime)
+    _control = new Control(_data, _params->GetDisplayParams(), _output->GetVisionResults(), _output->GetCaptureResults());
+  else
+    _control = new ControlSim(_data, _params->GetDisplayParams(), _output->GetVisionResults(), _output->GetCaptureResults());
 
-  _data->_captureThread.join();
-  _data->_visionThread.join();
-  _data->_controlThread.join();
-  _data->_displayThread.join();
+  do
+  {
+    steady_clock::time_point start = steady_clock::now();
+
+    (*_capture)();
+
+    if (_data->_run == false)
+      break;
+
+    (*_vision)();
+    (*_control)();
+
+    if(_params->GetDisplayParams()->GetToggle() == IParameters::Toggle::Enabled)
+      (*_display)();
+
+    steady_clock::time_point end = steady_clock::now();
+    duration<double> time_span = duration_cast<duration<double>>(end - start);
+
+    cout << "[CORE] Frame #" << to_string(frame++) << " processed (" << time_span.count() * 1000 << "ms).\n";
+  }
+  while (_params->GetCaptureParams()->GetMediaType() == Capture::Parameters::MediaType::Video);
 
   delete _capture;
   delete _vision;

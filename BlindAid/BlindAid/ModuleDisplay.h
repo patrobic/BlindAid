@@ -23,19 +23,16 @@ public:
 
   };
 
-  void Init(Data *data, IParameters *params, IResults *input, IResults *output);
+  Display(Data *data, IParameters *params, IResults *input, IResults *output);
   void operator()();
 
 private:
-  void DisplayThread();
-
-  void ShowDepthObstacles();
-  void ShowTrafficLights();
-  void ShowStopSign();
+  void DrawDepthObstacles();
+  void DrawTrafficLights();
+  void DrawStopSign();
 
   void DisplayImage();
 
-  Data *_data;
   Parameters *_params;
   Vision::Results *_input;
   Results *_output;

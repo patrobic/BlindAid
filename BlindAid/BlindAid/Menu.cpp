@@ -5,9 +5,9 @@
 using namespace std;
 using namespace cv;
 
-void MainMenu::Init()
+MainMenu::MainMenu() : _core(&_data, &_params, NULL, &_results)
 {
-  _core.Init(&_data, &_params, NULL, &_results);
+  
 }
 
 void MainMenu::operator()()
@@ -143,6 +143,8 @@ void MainMenu::TestPhoto(string colorPath, string depthPath, int count)
   {
     _params.GetCaptureParams()->SetColorSimDataPath(PATH + colorPath + (count != 0 ? std::to_string(i) : "") + string(".jpg"));
     _core();
-    _getch();
+    waitKey(0);
   }
+
+  destroyAllWindows();
 }

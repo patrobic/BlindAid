@@ -73,7 +73,13 @@ public:
     std::array<std::array<Region, HORZ_REGIONS>, VERT_REGIONS> _regions;
   };
 
-  void Init(Data *data, IParameters *params, IResults *input, IResults *output);
+  DetectDepthObstacle(Data *data, IParameters *params, IResults *input, IResults *output)
+  {
+    _data = data;
+    _params = static_cast<Parameters*>(params);
+    _input = static_cast<Capture::Results*>(input);
+    _output = static_cast<Results*>(output);
+  }
   void operator()();
   void Process();
   void PreProcess();

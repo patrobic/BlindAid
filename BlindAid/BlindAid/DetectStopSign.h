@@ -25,7 +25,14 @@ public:
     Circle _circle;
   };
 
-  void Init(Data *data, IParameters *params, IResults *input, IResults *output);
+  DetectStopSign(Data *data, IParameters *params, IResults *input, IResults *output)
+  {
+    _data = data;
+    _params = static_cast<Parameters*>(params);
+    _input = static_cast<Capture::Results*>(input);
+    _output = static_cast<Results*>(output);
+  }
+
   void operator()();
   void PreProcess();
   void Process();

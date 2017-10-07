@@ -14,6 +14,7 @@ public:
   };
 
   Toggle GetToggle() { return _toggle; }
+  void SetToggle(Toggle toggle) { _toggle = toggle; }
 
 private:
   Toggle _toggle = Toggle::Enabled;

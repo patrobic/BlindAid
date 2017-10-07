@@ -6,12 +6,14 @@
 class CaptureSim : public CaptureBase
 {
 public:
-  void Init(Data *data, IParameters *params, IResults *input, IResults *output);
+  CaptureSim(Data *data, IParameters *params, IResults *input, IResults *output) : CaptureBase(data, params, input, output) {};
   void operator()();
 
 private:
-  void VideoCaptureThread();
-  void PhotoCaptureThread();
+  void LoadVideo();
+  void LoadPhoto();
 
   cv::VideoCapture _cap;
+  
+  int _frame = 0;
 };

@@ -63,11 +63,10 @@ public:
 
   };
 
-  void Init(Data *data, IParameters *params, IResults *input, IResults *output);
+  Core(Data *data, IParameters *params, IResults *input, IResults *output);
   void operator()();
 
 private:
-  Data *_data;
   Parameters *_params;
   Results *_input;
   Results *_output;

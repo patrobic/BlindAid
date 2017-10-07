@@ -3,19 +3,6 @@
 using namespace std;
 using namespace cv;
 
-DetectTrafficLight::DetectTrafficLight() : _h(_hsvChannels[0]), _s(_hsvChannels[1]), _v(_hsvChannels[2]), _b(_bgrChannels[0]), _g(_bgrChannels[1]), _r(_bgrChannels[2])
-{
-
-}
-
-void DetectTrafficLight::Init(Data *data, IParameters *params, IResults *input, IResults *output)
-{
-  _data = data;
-  _params = static_cast<Parameters*>(params);
-  _input = static_cast<Capture::Results*>(input);
-  _output = static_cast<Results*>(output);
-}
-
 void DetectTrafficLight::operator()()
 {
   Clear();

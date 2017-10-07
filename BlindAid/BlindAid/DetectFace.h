@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IModule.h"
-#include "ModuleVision.h"
+#include "ModuleCapture.h"
 
 class DetectFace : public DetectBase
 {
@@ -21,11 +21,17 @@ public:
 
   };
 
-  void Init(Data *data, IParameters *params, IResults *input, IResults *output);
+  DetectFace(Data *data, IParameters *params, IResults *input, IResults *output)
+  {
+    _data = data;
+    _params = static_cast<Parameters*>(params);
+    _input = static_cast<Capture::Results*>(input);
+    _output = static_cast<Results*>(output);
+  }
   void operator()();
 
 private:
   Parameters *_params;
-  Vision::Results *_input;
+  Capture::Results *_input;
   Results *_output;
 };

@@ -42,7 +42,13 @@ public:
 
   };
 
-  virtual void Init(Data *data, IParameters *params, IResults *input, IResults *output) = 0;
+  CaptureBase(Data *data, IParameters *params, IResults *input, IResults *output)
+  {
+    _data = data;
+    _params = static_cast<Parameters*>(params);
+    _input = input;
+    _output = static_cast<Results*>(output);
+  }
   virtual void operator()() = 0;
 
 protected:
@@ -55,7 +61,7 @@ protected:
 class Capture : public CaptureBase
 {
 public:
-  void Init(Data *data, IParameters *params, IResults *input, IResults *output);
+  Capture(Data *data, IParameters *params, IResults *input, IResults *output) : CaptureBase(data, params, input, output) {}
   void operator()();
 
   // TODO: Implement class to communicate with camera capture SDK and store both color images in cv::Mat as they come in.
