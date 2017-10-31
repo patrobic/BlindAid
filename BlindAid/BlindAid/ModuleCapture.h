@@ -33,11 +33,13 @@ public:
   public:
     void Clear() {}
 
-    cv::Mat *GetColorImage() { return &_colorImage; }
+    cv::Mat *GetRgbImage() { return &_rgbImage; }
+    cv::Mat *GetHsvImage() { return &_hsvImage; }
     cv::Mat *GetDepthImage() { return &_depthImage; }
 
   private:
-    cv::Mat _colorImage;
+    cv::Mat _rgbImage;
+    cv::Mat _hsvImage;
     cv::Mat _depthImage;
 
   };
@@ -49,7 +51,13 @@ public:
     _input = input;
     _output = static_cast<Results*>(output);
   }
+
   virtual void operator()() = 0;
+  
+  void CreateHsvImage()
+  {
+    cvtColor(*_output->GetRgbImage(), *_output->GetHsvImage(), CV_BGR2HSV);
+  }
 
 protected:
   Data *_data;

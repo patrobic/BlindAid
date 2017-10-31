@@ -31,15 +31,13 @@ void DetectTrafficLight::Process()
 
 void DetectTrafficLight::PreProcess()
 {
-  cvtColor(*_input->GetColorImage(), _hsvImage, CV_BGR2HSV);
-
-  split(*_input->GetColorImage(), _bgrChannels);
-  split(_hsvImage, _hsvChannels);
+  split(*_input->GetRgbImage(), _bgrChannels);
+  split(*_input->GetHsvImage(), _hsvChannels);
  
   Mat redRegionUpper;
   Mat redRegionLower;
-  inRange(_hsvImage, cv::Scalar(150, 150, 180), cv::Scalar(180, 255, 255), redRegionUpper);
-  inRange(_hsvImage, cv::Scalar(0, 150, 180), cv::Scalar(10, 255, 255), redRegionLower);
+  inRange(*_input->GetHsvImage(), cv::Scalar(150, 150, 180), cv::Scalar(180, 255, 255), redRegionUpper);
+  inRange(*_input->GetHsvImage(), cv::Scalar(0, 150, 180), cv::Scalar(10, 255, 255), redRegionLower);
   _rMask = redRegionUpper + redRegionLower;
 
   //threshold(_h, _hMask, 170, 255, THRESH_TOZERO);
@@ -63,7 +61,7 @@ void DetectTrafficLight::FindCountoursApproach()
 
   for (int i = 0; i < contours.size(); i++)
   {
-    drawContours(*_input->GetColorImage(), contours, i, 255, 1, 8, vector<Vec4i>(), 0, Point());
+    drawContours(*_input->GetRgbImage(), contours, i, 255, 1, 8, vector<Vec4i>(), 0, Point());
 
     circleArea = contourArea(contours[i]);
     Rect rect = boundingRect(Mat(contours[i]));
@@ -74,7 +72,7 @@ void DetectTrafficLight::FindCountoursApproach()
     if (score.at(i) > circularityThreshold)
     {
       minEnclosingCircle((Mat)contours[i], center[i], radius[i]);
-      drawContours(*_input->GetColorImage(), contours, i, 255, 1, 8, vector<Vec4i>(), 0, Point());
+      drawContours(*_input->GetRgbImage(), contours, i, 255, 1, 8, vector<Vec4i>(), 0, Point());
      
       _output->PushBack(Circle(center[i], (int)radius[i]));
     }
@@ -139,8 +137,8 @@ void DetectTrafficLight::DetectRectangle()
   {
     rect.x = std::max(0, _output->At(i)._center.x - _output->Size() * sizeFactor);
     rect.y = std::max(0, _output->At(i)._center.y - _output->Size() * sizeFactor);
-    rect.width = std::min(_input->GetColorImage()->cols - rect.x - 1, _output->Size() * 2 * sizeFactor);
-    rect.height= std::min(_input->GetColorImage()->rows - rect.y - 1, _output->Size() * 2 * sizeFactor);
+    rect.width = std::min(_input->GetRgbImage()->cols - rect.x - 1, _output->Size() * 2 * sizeFactor);
+    rect.height= std::min(_input->GetRgbImage()->rows - rect.y - 1, _output->Size() * 2 * sizeFactor);
 
     box = _v(rect);
 

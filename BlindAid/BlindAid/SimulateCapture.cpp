@@ -15,13 +15,15 @@ void CaptureSim::operator()()
   }
   else
     LoadPhoto();
+
+  CreateHsvImage();
 }
 
 void CaptureSim::LoadVideo()
 {
   steady_clock::time_point start = steady_clock::now();
 
-  _data->_run = _cap.read(*_output->GetColorImage());
+  _data->_run = _cap.read(*_output->GetRgbImage());
   *_output->GetDepthImage() = imread(_params->GetDepthSimDataPath());
 
   steady_clock::time_point end = steady_clock::now();
@@ -38,9 +40,9 @@ void CaptureSim::LoadPhoto()
   
   steady_clock::time_point start = steady_clock::now();
 
-  *_output->GetColorImage() = imread(_params->GetColorSimDataPath());
+  *_output->GetRgbImage() = imread(_params->GetColorSimDataPath());
   *_output->GetDepthImage() = imread(_params->GetDepthSimDataPath());
-  if (_output->GetColorImage()->cols == 0 || _output->GetColorImage()->rows == 0) throw("could not open image.");
+  if (_output->GetRgbImage()->cols == 0 || _output->GetRgbImage()->rows == 0) throw("could not open image.");
 
   steady_clock::time_point end = steady_clock::now();
   duration<double> time_span = duration_cast<duration<double>>(end - start);

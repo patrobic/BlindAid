@@ -61,7 +61,6 @@ private:
   Capture::Results *_input;
   Results *_output;
 
-  cv::Mat _hsvImage;
   cv::Mat _hsvChannels[3];
   cv::Mat _bgrChannels[3];
   cv::Mat &_h;

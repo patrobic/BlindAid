@@ -19,7 +19,7 @@ void Vision::operator()()
 {
   steady_clock::time_point start = steady_clock::now();
  
-  _output->SetCurrentColorImage(_input->GetColorImage());
+  _output->SetCurrentColorImage(_input->GetRgbImage());
   _output->SetCurrentDepthImage(_input->GetDepthImage());
   
   if (_params->GetStopSignParams()->GetToggle() == Parameters::Toggle::Enabled) _stopSign();
