@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
-#include "..\..\BlindAid\BlindAid\ModuleCore.h"
+#include "..\Modules\ModuleCore.h"
 
 #include <vector>
 #include <string>

@@ -15,84 +15,87 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\BlindAid\DetectFace.h">
+    <ClInclude Include="ModuleVision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\BlindAid\DetectStopSign.h">
+    <ClInclude Include="SimulateCapture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\BlindAid\DetectTrafficLight.h">
+    <ClInclude Include="SimulateControl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\BlindAid\DetectVehicle.h">
+    <ClInclude Include="DetectDepthObstacle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\BlindAid\IModule.h">
+    <ClInclude Include="DetectFace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\BlindAid\IParameters.h">
+    <ClInclude Include="DetectStopSign.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\BlindAid\IResults.h">
+    <ClInclude Include="DetectTrafficLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\BlindAid\ModuleCapture.h">
+    <ClInclude Include="DetectVehicle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\BlindAid\ModuleControl.h">
+    <ClInclude Include="IModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\BlindAid\ModuleCore.h">
+    <ClInclude Include="IParameters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\BlindAid\ModuleDisplay.h">
+    <ClInclude Include="IResults.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\BlindAid\ModuleVision.h">
+    <ClInclude Include="ModuleCapture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\BlindAid\SimulateCapture.h">
+    <ClInclude Include="ModuleControl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\BlindAid\SimulateControl.h">
+    <ClInclude Include="ModuleCore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleDisplay.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\BlindAid\DetectDepthObstacle.cpp">
+    <ClCompile Include="ModuleControl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\BlindAid\DetectFace.cpp">
+    <ClCompile Include="ModuleCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\BlindAid\DetectStopSign.cpp">
+    <ClCompile Include="ModuleDisplay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\BlindAid\DetectTrafficLight.cpp">
+    <ClCompile Include="ModuleVision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\BlindAid\DetectVehicle.cpp">
+    <ClCompile Include="SimulateCapture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\BlindAid\ModuleCapture.cpp">
+    <ClCompile Include="SimulateControl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\BlindAid\ModuleControl.cpp">
+    <ClCompile Include="DetectDepthObstacle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\BlindAid\ModuleCore.cpp">
+    <ClCompile Include="DetectFace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\BlindAid\ModuleDisplay.cpp">
+    <ClCompile Include="DetectStopSign.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\BlindAid\ModuleVision.cpp">
+    <ClCompile Include="DetectTrafficLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\BlindAid\SimulateCapture.cpp">
+    <ClCompile Include="DetectVehicle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\BlindAid\SimulateControl.cpp">
+    <ClCompile Include="ModuleCapture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

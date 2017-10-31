@@ -4,7 +4,7 @@
 
 #include "opencv2\videoio.hpp"
 
-#include "ModuleCore.h"
+#include "..\Modules\ModuleCore.h"
 
 class MainMenu
 {

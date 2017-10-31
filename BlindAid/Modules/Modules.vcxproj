@@ -18,6 +18,37 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DetectDepthObstacle.h" />
+    <ClInclude Include="DetectFace.h" />
+    <ClInclude Include="DetectStopSign.h" />
+    <ClInclude Include="DetectTrafficLight.h" />
+    <ClInclude Include="DetectVehicle.h" />
+    <ClInclude Include="IModule.h" />
+    <ClInclude Include="IParameters.h" />
+    <ClInclude Include="IResults.h" />
+    <ClInclude Include="ModuleCapture.h" />
+    <ClInclude Include="ModuleControl.h" />
+    <ClInclude Include="ModuleCore.h" />
+    <ClInclude Include="ModuleDisplay.h" />
+    <ClInclude Include="ModuleVision.h" />
+    <ClInclude Include="SimulateCapture.h" />
+    <ClInclude Include="SimulateControl.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DetectDepthObstacle.cpp" />
+    <ClCompile Include="DetectFace.cpp" />
+    <ClCompile Include="DetectStopSign.cpp" />
+    <ClCompile Include="DetectTrafficLight.cpp" />
+    <ClCompile Include="DetectVehicle.cpp" />
+    <ClCompile Include="ModuleCapture.cpp" />
+    <ClCompile Include="ModuleControl.cpp" />
+    <ClCompile Include="ModuleCore.cpp" />
+    <ClCompile Include="ModuleDisplay.cpp" />
+    <ClCompile Include="ModuleVision.cpp" />
+    <ClCompile Include="SimulateCapture.cpp" />
+    <ClCompile Include="SimulateControl.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4E97E47C-8B4A-4528-A98A-0FE82A8B1675}</ProjectGuid>
     <RootNamespace>Modules</RootNamespace>
@@ -117,36 +148,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="..\BlindAid\DetectFace.h" />
-    <ClInclude Include="..\BlindAid\DetectStopSign.h" />
-    <ClInclude Include="..\BlindAid\DetectTrafficLight.h" />
-    <ClInclude Include="..\BlindAid\DetectVehicle.h" />
-    <ClInclude Include="..\BlindAid\IModule.h" />
-    <ClInclude Include="..\BlindAid\IParameters.h" />
-    <ClInclude Include="..\BlindAid\IResults.h" />
-    <ClInclude Include="..\BlindAid\ModuleCapture.h" />
-    <ClInclude Include="..\BlindAid\ModuleControl.h" />
-    <ClInclude Include="..\BlindAid\ModuleCore.h" />
-    <ClInclude Include="..\BlindAid\ModuleDisplay.h" />
-    <ClInclude Include="..\BlindAid\ModuleVision.h" />
-    <ClInclude Include="..\BlindAid\SimulateCapture.h" />
-    <ClInclude Include="..\BlindAid\SimulateControl.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\BlindAid\DetectDepthObstacle.cpp" />
-    <ClCompile Include="..\BlindAid\DetectFace.cpp" />
-    <ClCompile Include="..\BlindAid\DetectStopSign.cpp" />
-    <ClCompile Include="..\BlindAid\DetectTrafficLight.cpp" />
-    <ClCompile Include="..\BlindAid\DetectVehicle.cpp" />
-    <ClCompile Include="..\BlindAid\ModuleCapture.cpp" />
-    <ClCompile Include="..\BlindAid\ModuleControl.cpp" />
-    <ClCompile Include="..\BlindAid\ModuleCore.cpp" />
-    <ClCompile Include="..\BlindAid\ModuleDisplay.cpp" />
-    <ClCompile Include="..\BlindAid\ModuleVision.cpp" />
-    <ClCompile Include="..\BlindAid\SimulateCapture.cpp" />
-    <ClCompile Include="..\BlindAid\SimulateControl.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
