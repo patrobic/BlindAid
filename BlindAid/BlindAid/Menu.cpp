@@ -81,7 +81,7 @@ void MainMenu::Simulate()
       TestPhoto("TrafficLight\\tlight", "depthMap.png", 1);
       break;
     case 't':
-      TestPhoto("TrafficLight\\tlight", "depthMap.png", 4);
+      TestPhoto("TrafficLight\\tlight", "depthMap.png", 15);
       break;
     case 's':
       TestPhoto("StopSign\\stop", "depthMap.png", 8);

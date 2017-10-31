@@ -16,7 +16,7 @@ protected:
 
 struct Circle
 {
-  Circle() {}
+  Circle() { _radius = 0; }
   Circle(cv::Point center, int radius) { _center = center; _radius = radius; }
   void Clear() { _center = cv::Point(0, 0); _radius = 0; }
 

@@ -66,7 +66,7 @@ void DetectDepthObstacle::SeparateRegions()
   for (int i = 0; i < VERT_REGIONS; ++i)
     for (int j = 0; j < HORZ_REGIONS; ++j)
     {
-      if (_params->GetMode() == Parameters::Mode::HeadProtection || i != 2)
+      if (_params->GetMode() == Parameters::Mode::HeadProtection && i != 2)
         continue;
 
       tl.x = _output->GetHandPosition().x + (int)((i - 2.5) * _grayImage.cols * _params->GetCenterRegionsWidth());
