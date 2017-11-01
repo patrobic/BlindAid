@@ -5,6 +5,8 @@
 
 #include <vector>
 #include <string>
+#include <iomanip>
+#include <sstream>
 
 using namespace std;
 using namespace cv;
@@ -68,6 +70,8 @@ namespace UnitTest
 
       for (int i = 0; i < testData.size(); ++i)
       {
+		float score = 0;
+
         params.GetCaptureParams()->SetColorSimDataPath(PATH + testData.at(i)._colorPath);
         params.GetCaptureParams()->SetDepthSimDataPath(PATH + testData.at(i)._depthPath);
         core();
@@ -83,15 +87,22 @@ namespace UnitTest
             distances.push_back(norm(testData.at(i)._points.at(k) - tlResults->At(j)._center));
 
         std::sort(distances.begin(), distances.end());
-
-        string pointResults;
+		
+		stringstream ss;
+		ss << fixed << setprecision(2) << "Test" << i << "(" << testData.at(i)._colorPath << "), ";
         for (int k = 0; k < std::min(tlResults->Size(), (int)testData.at(i)._points.size()); ++k)
         {
-          pointResults += "P" + to_string(k+1) + "(" + to_string(distances.at(k)) + "), ";
+		  score += (1 - 0.01 * distances.at(k)) / std::max(tlResults->Size(), (int)testData.at(i)._points.size());
+		  //ss << "P" << k+1 << "(" << distances.at(k) << "), ";
           Assert::IsTrue(distances.at(k) < maxDeviation);
         }
 
-        Logger::WriteMessage(("Test" + to_string(i) + "(" + testData.at(i)._colorPath + "), " + pointResults + "Count(" + to_string(testData.at(i)._points.size()) + "," + to_string(tlResults->Size()) + ").").c_str());
+		if (testData.at(i)._points.size() == 0 && tlResults->Size() == 0)
+			score = 1.0f;
+
+		Assert::IsTrue(score >= 0.6f);
+		ss << "Score(" << score << "), Count(" << testData.at(i)._points.size() << "," << tlResults->Size() << ").";
+        Logger::WriteMessage(ss.str().c_str());
       }
     }
   };
