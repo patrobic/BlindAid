@@ -15,18 +15,13 @@ void DetectTrafficLight::Process()
 
   switch (_params->GetMode())
   {
-  case Parameters::BlobDetectorMode:
-    BlobDetectorApproach();
+  case Parameters::Mode::BlobDetector:
+    BlobDetectorMode();
     break;
-  case Parameters::HoughCirclesMode:
-    HoughCirclesApproach();
-    break;
-  case Parameters::FindContoursMode:
-    FindCountoursApproach();
+  case Parameters::Mode::DeepLearning:
+    DeepLearningMode();
     break;
   }
-
-  DetectRectangle();
 }
 
 void DetectTrafficLight::PreProcess()
@@ -38,72 +33,14 @@ void DetectTrafficLight::PreProcess()
   Mat redRegionLower;
   inRange(*_input->GetHsvImage(), cv::Scalar(150, 150, 180), cv::Scalar(180, 255, 255), redRegionUpper);
   inRange(*_input->GetHsvImage(), cv::Scalar(0, 150, 180), cv::Scalar(10, 255, 255), redRegionLower);
-  _rMask = redRegionUpper + redRegionLower;
+  _rMask = (redRegionUpper + redRegionLower)(Rect(0, 0, redRegionUpper.cols, redRegionUpper.rows*_params->GetUpperRegionToAnalyze()));
 
   //threshold(_h, _hMask, 170, 255, THRESH_TOZERO);
   //threshold(_hMask, _hMask, 190, 255, THRESH_TOZERO_INV);
   //dilate(_rMask, _rMask, Mat(), Point(-1, -1), 1);
 }
 
-void DetectTrafficLight::FindCountoursApproach()
-{
-  vector<vector<cv::Point>> contours;
-  vector<Vec4i> hierarchy;
-  double circleArea;
-  double rectArea;
-  vector<double> score;
-  float circularityThreshold = 0.5;
-
-  findContours(_rMask, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point(0, 0));
-  
-  vector<Point2f>center(contours.size());
-  vector<float>radius(contours.size());
-
-  for (int i = 0; i < contours.size(); i++)
-  {
-    drawContours(*_input->GetRgbImage(), contours, i, 255, 1, 8, vector<Vec4i>(), 0, Point());
-
-    circleArea = contourArea(contours[i]);
-    Rect rect = boundingRect(Mat(contours[i]));
-    rectArea = CV_PI * ((rect.width + rect.height) ^ 2 / 4);
-
-    score.push_back(1 - abs(circleArea - rectArea) / rectArea);
-
-    if (score.at(i) > circularityThreshold)
-    {
-      minEnclosingCircle((Mat)contours[i], center[i], radius[i]);
-      drawContours(*_input->GetRgbImage(), contours, i, 255, 1, 8, vector<Vec4i>(), 0, Point());
-     
-      _output->PushBack(Circle(center[i], (int)radius[i]));
-    }
-  }
-}
-
-void DetectTrafficLight::HoughCirclesApproach()
-{
-  vector<vector<cv::Point>> contours;
-  vector<Vec4i> hierarchy;
-  vector<cv::Vec3f> circles;
-
-  // Option 1: Trace circle outline on mask using FindContours
-  //findContours(_rMask, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point(0, 0));
-
-  //_rMask = Scalar::all(0);
-
-  //for(int i = 0; i<contours.size(); ++i)
-  //  drawContours(_rMask, contours, i, 255, 1, 8, vector<Vec4i>(), 0, Point());
-
-  // Option 2: Get circle outlines by using edge detector
-  int th = 100;
-  Canny(_rMask, _rMask, th, th * 3);
-
-  HoughCircles(_rMask, circles, HOUGH_GRADIENT, 1, _rMask.cols / 20, 100, 12, 1, 50);
-
-  for (size_t i = 0; i < circles.size(); i++)
-    _output->PushBack(Circle(Point(cvRound(circles[i][0]), cvRound(circles[i][1])), (int)cvRound(circles[i][2])));
-}
-
-void DetectTrafficLight::BlobDetectorApproach()
+void DetectTrafficLight::BlobDetectorMode()
 {
   SimpleBlobDetector::Params params;
 
@@ -126,9 +63,11 @@ void DetectTrafficLight::BlobDetectorApproach()
   
   for (int i = 0; i < keypoints.size(); i++)
     _output->PushBack(Circle(keypoints[i].pt, (int)keypoints[i].size));
+
+  ConfirmWithBox();
 }
 
-void DetectTrafficLight::DetectRectangle()
+void DetectTrafficLight::ConfirmWithBox()
 {
   int sizeFactor = 12;
   Mat box;
@@ -164,6 +103,12 @@ void DetectTrafficLight::DetectRectangle()
     // detect if shape is near rectangular.
     // shape contains original light region.
   }
+}
+
+void DetectTrafficLight::DeepLearningMode()
+{
+  // TODO
+  // integrate with deep learning API of choice.
 }
 
 void DetectTrafficLight::Clear()

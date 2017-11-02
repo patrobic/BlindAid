@@ -4,6 +4,9 @@
 
 #include "opencv2\videoio.hpp"
 
+#include "LoadConfig.h"
+#include "SaveConfig.h"
+
 #include "..\Modules\ModuleCore.h"
 
 class MainMenu

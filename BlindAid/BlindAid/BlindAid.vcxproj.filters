@@ -18,7 +18,10 @@
     <ClInclude Include="Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConfigParser.h">
+    <ClInclude Include="LoadConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -14,12 +14,17 @@ public:
   {
   public:
     DetectDepthObstacle::Parameters *GetDepthObstacleParams() { return &_dodParams; }
-    DetectTrafficLight::Parameters *GetTrafficLightParams() { return &_sldParams; }
+    DetectTrafficLight::Parameters *GetTrafficLightParams() { return &_tldParams; }
     DetectStopSign::Parameters *GetStopSignParams() { return &_ssdParams; }
 
   private:
+    // parameters class for depth obstacle detector.
     DetectDepthObstacle::Parameters _dodParams;
-    DetectTrafficLight::Parameters _sldParams;
+
+    // parameters class for traffic light detector.
+    DetectTrafficLight::Parameters _tldParams;
+
+    // parameters class for stop sign detector.
     DetectStopSign::Parameters _ssdParams;
   };
 

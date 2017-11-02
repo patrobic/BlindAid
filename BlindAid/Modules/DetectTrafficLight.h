@@ -11,16 +11,22 @@ public:
   public:
     enum Mode
     {
-      HoughCirclesMode,
-      FindContoursMode,
-      BlobDetectorMode
+      BlobDetector,
+      DeepLearning
     };
 
     const Mode &GetMode() const { return _mode; }
     void SetMode(Mode mode) { _mode = mode; }
+    
+    float GetUpperRegionToAnalyze() { return _topRegionToAnalyze; }
+    void SetLowerRegionToAnalyzer(float topRegionToAnalyzeR) { _topRegionToAnalyze = topRegionToAnalyzeR; }
 
   private:
-    Mode _mode = BlobDetectorMode;
+    // detection mode to use (CV or AI).
+    Mode _mode = BlobDetector;
+
+    // upper region to inspect for traffic lights.
+    float _topRegionToAnalyze = 0.5f;
   };
 
   class Results : public IResults
@@ -49,10 +55,9 @@ public:
   void PreProcess();
   void Process();
 
-  void FindCountoursApproach();
-  void HoughCirclesApproach();
-  void BlobDetectorApproach();
-  void DetectRectangle();
+  void BlobDetectorMode();
+  void DeepLearningMode();
+  void ConfirmWithBox();
 
   void Clear();
 

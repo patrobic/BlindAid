@@ -7,7 +7,16 @@ using namespace cv;
 
 MainMenu::MainMenu() : _core(&_data, &_params, NULL, &_results)
 {
-  
+  // TODO: if(file exists)
+  // LoadConfiguration()
+  // else
+  // SaveConfiguration() ... to save the default configuration specified in each class's Parameters class.
+
+  SaveConfiguration saveConfig(&_params, "BlindAid.cfg");
+  saveConfig();
+
+  LoadConfiguration loadConfig(&_params, "BlindAid.cfg");
+  loadConfig();
 }
 
 void MainMenu::operator()()
