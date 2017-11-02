@@ -8,7 +8,7 @@
           <NewMemberFileName>DetectFace.h</NewMemberFileName>
         </TypeIdentifier>
       </Struct>
-      <Class Name="DetectFace::Results" Collapsed="true">
+      <Class Name="DetectFace::Data" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>DetectFace.h</NewMemberFileName>
         </TypeIdentifier>
@@ -27,7 +27,7 @@
           <NewMemberFileName>DetectVehicle.h</NewMemberFileName>
         </TypeIdentifier>
       </Struct>
-      <Class Name="DetectVehicle::Results" Collapsed="true">
+      <Class Name="DetectVehicle::Data" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>DetectVehicle.h</NewMemberFileName>
         </TypeIdentifier>
@@ -53,7 +53,7 @@
           <NewMemberFileName>ModuleCapture.h</NewMemberFileName>
         </TypeIdentifier>
       </Class>
-      <Class Name="CaptureBase::Results" Collapsed="true">
+      <Class Name="CaptureBase::Data" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>ModuleCapture.h</NewMemberFileName>
         </TypeIdentifier>
@@ -93,7 +93,7 @@
           <NewMemberFileName>ModuleControl.h</NewMemberFileName>
         </TypeIdentifier>
       </Class>
-      <Class Name="ControlBase::Results" Collapsed="true">
+      <Class Name="ControlBase::Data" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>ModuleControl.h</NewMemberFileName>
         </TypeIdentifier>
@@ -126,7 +126,7 @@
           <NewMemberFileName>ModuleCore.h</NewMemberFileName>
         </TypeIdentifier>
       </Class>
-      <Class Name="Core::Results" Collapsed="true">
+      <Class Name="Core::Data" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>ModuleCore.h</NewMemberFileName>
         </TypeIdentifier>
@@ -145,7 +145,7 @@
           <NewMemberFileName>DetectDepthObstacle.h</NewMemberFileName>
         </TypeIdentifier>
       </Class>
-      <Class Name="DetectDepthObstacle::Results" Collapsed="true">
+      <Class Name="DetectDepthObstacle::Data" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>DetectDepthObstacle.h</NewMemberFileName>
         </TypeIdentifier>
@@ -164,7 +164,7 @@
           <NewMemberFileName>ModuleDisplay.h</NewMemberFileName>
         </TypeIdentifier>
       </Class>
-      <Class Name="Display::Results" Collapsed="true">
+      <Class Name="Display::Data" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>ModuleDisplay.h</NewMemberFileName>
         </TypeIdentifier>
@@ -183,7 +183,7 @@
           <NewMemberFileName>IModule.h</NewMemberFileName>
         </TypeIdentifier>
       </Class>
-      <Class Name="IModule::Results" Collapsed="true">
+      <Class Name="IModule::Data" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>IModule.h</NewMemberFileName>
         </TypeIdentifier>
@@ -223,7 +223,7 @@
           <NewMemberFileName>DetectStopSign.h</NewMemberFileName>
         </TypeIdentifier>
       </Struct>
-      <Class Name="DetectStopSign::Results" Collapsed="true">
+      <Class Name="DetectStopSign::Data" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>DetectStopSign.h</NewMemberFileName>
         </TypeIdentifier>
@@ -242,7 +242,7 @@
           <NewMemberFileName>DetectTrafficLight.h</NewMemberFileName>
         </TypeIdentifier>
       </Class>
-      <Class Name="DetectTrafficLight::Results" Collapsed="true">
+      <Class Name="DetectTrafficLight::Data" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>DetectTrafficLight.h</NewMemberFileName>
         </TypeIdentifier>
@@ -253,11 +253,11 @@
       <FileName>DetectTrafficLight.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IResults" Collapsed="true">
+  <Class Name="IData" Collapsed="true">
     <Position X="27.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
-      <FileName>IResults.h</FileName>
+      <FileName>IData.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Vision">
@@ -268,7 +268,7 @@
           <NewMemberFileName>ModuleVision.h</NewMemberFileName>
         </TypeIdentifier>
       </Class>
-      <Class Name="Vision::Results" Collapsed="true">
+      <Class Name="Vision::Data" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>ModuleVision.h</NewMemberFileName>
         </TypeIdentifier>
@@ -290,14 +290,14 @@
     <Position X="27.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAFAAAA=</HashCode>
-      <FileName>IResults.h</FileName>
+      <FileName>IData.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="Region" Collapsed="true">
     <Position X="27.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
-      <FileName>IResults.h</FileName>
+      <FileName>IData.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Font Name="Segoe UI" Size="9" />

@@ -14,7 +14,7 @@ public:
 
   };
 
-  class Results : public IResults
+  class Data : public IData
   {
   public:
     void Clear() {}
@@ -23,7 +23,7 @@ public:
 
   };
 
-  Display(Data *data, IParameters *params, IResults *input, IResults *output);
+  Display(IParameters *params, IData *input, IData *output);
   void operator()();
 
 private:
@@ -34,6 +34,6 @@ private:
   void DisplayImage();
 
   Parameters *_params;
-  Vision::Results *_input;
-  Results *_output;
+  Vision::Data *_input;
+  Data *_output;
 };

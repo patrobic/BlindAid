@@ -7,7 +7,7 @@
 class ControlSim : public ControlBase
 {
 public:
-  ControlSim(Data *data, IParameters *params, IResults *input, IResults *output) : ControlBase(data, params, input, output) {}
+  ControlSim(IParameters *params, IData *input, IData *output) : ControlBase(params, input, output) {}
   void operator()();
 
 private:

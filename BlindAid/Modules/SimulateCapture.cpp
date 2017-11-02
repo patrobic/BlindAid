@@ -23,7 +23,7 @@ void CaptureSim::LoadVideo()
 {
   steady_clock::time_point start = steady_clock::now();
 
-  _data->_run = _cap.read(*_output->GetRgbImage());
+  _cap.read(*_output->GetRgbImage());
   *_output->GetDepthImage() = imread(_params->GetDepthSimDataPath());
 
   steady_clock::time_point end = steady_clock::now();
@@ -35,9 +35,7 @@ void CaptureSim::LoadVideo()
 }
 
 void CaptureSim::LoadPhoto()
-{
-  _data->_run = true;
-  
+{  
   steady_clock::time_point start = steady_clock::now();
 
   *_output->GetRgbImage() = imread(_params->GetColorSimDataPath());

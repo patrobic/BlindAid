@@ -5,7 +5,7 @@
 #include "opencv2\core.hpp"
 #include "IParameters.h"
 
-class IResults
+class IData
 {
 public:
   virtual void Clear() = 0;

@@ -29,7 +29,7 @@ public:
     float _topRegionToAnalyze = 0.5f;
   };
 
-  class Results : public IResults
+  class Data : public IData
   {
   public:
     void Clear() { _results.clear(); }
@@ -43,12 +43,11 @@ public:
     std::vector<Circle> _results;
   };
 
-  DetectTrafficLight(Data *data, IParameters *params, IResults *input, IResults *output) : _h(_hsvChannels[0]), _s(_hsvChannels[1]), _v(_hsvChannels[2]), _b(_bgrChannels[0]), _g(_bgrChannels[1]), _r(_bgrChannels[2])
+  DetectTrafficLight(IParameters *params, IData *input, IData *output) : _h(_hsvChannels[0]), _s(_hsvChannels[1]), _v(_hsvChannels[2]), _b(_bgrChannels[0]), _g(_bgrChannels[1]), _r(_bgrChannels[2])
   {
-    _data = data;
     _params = static_cast<Parameters*>(params);
-    _input = static_cast<Capture::Results*>(input);
-    _output = static_cast<Results*>(output);
+    _input = static_cast<Capture::Data*>(input);
+    _output = static_cast<Data*>(output);
   }
 
   void operator()();
@@ -63,8 +62,8 @@ public:
 
 private:
   Parameters *_params;
-  Capture::Results *_input;
-  Results *_output;
+  Capture::Data *_input;
+  Data *_output;
 
   cv::Mat _hsvChannels[3];
   cv::Mat _bgrChannels[3];

@@ -4,12 +4,11 @@ using namespace std;
 using namespace std::chrono;
 using namespace cv;
 
-Display::Display(Data *data, IParameters *params, IResults *input, IResults *output)
+Display::Display(IParameters *params, IData *input, IData *output)
 {
-  _data = data;
   _params = static_cast<Parameters*>(params);
-  _input = static_cast<Vision::Results*>(input);
-  _output = static_cast<Results*>(output);
+  _input = static_cast<Vision::Data*>(input);
+  _output = static_cast<Data*>(output);
 }
 
 void Display::operator()()
@@ -43,7 +42,7 @@ void Display::DrawDepthObstacles()
 
 void Display::DrawTrafficLights()
 {
-  DetectTrafficLight::Results result = *_input->GetTrafficLightResults();
+  DetectTrafficLight::Data result = *_input->GetTrafficLightResults();
 
   for (int i = 0; i < _input->GetTrafficLightResults()->Size(); ++i)
   {
@@ -54,7 +53,7 @@ void Display::DrawTrafficLights()
 
 void Display::DrawStopSign()
 {
-  DetectStopSign::Results result = *_input->GetStopSignResults();
+  DetectStopSign::Data result = *_input->GetStopSignResults();
   circle(*_input->GetCurrentColorImage(), result.GetRegion()._center, result.GetRegion()._radius + 2, Scalar(0, 255, 255));
   putText(*_input->GetCurrentColorImage(), "StopSign", Point(result.GetRegion()._center.x - result.GetRegion()._radius, result.GetRegion()._center.y - result.GetRegion()._radius), FONT_HERSHEY_PLAIN, 1, Scalar(0, 255, 255));
 }

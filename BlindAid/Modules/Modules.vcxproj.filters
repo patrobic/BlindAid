@@ -45,9 +45,6 @@
     <ClInclude Include="IParameters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IResults.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleCapture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -58,6 +55,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ModuleDisplay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

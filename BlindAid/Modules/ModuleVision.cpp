@@ -4,15 +4,14 @@ using namespace std;
 using namespace std::chrono;
 using namespace cv;
 
-Vision::Vision(Data *data, IParameters *params, IResults *input, IResults *output) :
-  _depthObstacle(data, static_cast<Parameters*>(params)->GetDepthObstacleParams(), input, static_cast<Results*>(output)->GetDepthObstacleResults()),
-  _trafficLight(data, static_cast<Parameters*>(params)->GetTrafficLightParams(), input, static_cast<Results*>(output)->GetTrafficLightResults()),
-  _stopSign(data, static_cast<Parameters*>(params)->GetStopSignParams(), input, static_cast<Results*>(output)->GetStopSignResults())
+Vision::Vision(IParameters *params, IData *input, IData *output) :
+  _depthObstacle(static_cast<Parameters*>(params)->GetDepthObstacleParams(), input, static_cast<Data*>(output)->GetDepthObstacleResults()),
+  _trafficLight(static_cast<Parameters*>(params)->GetTrafficLightParams(), input, static_cast<Data*>(output)->GetTrafficLightResults()),
+  _stopSign(static_cast<Parameters*>(params)->GetStopSignParams(), input, static_cast<Data*>(output)->GetStopSignResults())
 {
-  _data = data;
   _params = static_cast<Parameters*>(params);
-  _input = static_cast<CaptureSim::Results*>(input);
-  _output = static_cast<Results*>(output);
+  _input = static_cast<CaptureSim::Data*>(input);
+  _output = static_cast<Data*>(output);
 }
 
 void Vision::operator()()

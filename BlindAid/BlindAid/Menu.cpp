@@ -5,7 +5,7 @@
 using namespace std;
 using namespace cv;
 
-MainMenu::MainMenu() : _core(&_data, &_params, NULL, &_results)
+MainMenu::MainMenu() : _core(&_params, NULL, &_results)
 {
   // TODO: if(file exists)
   // LoadConfiguration()
@@ -52,8 +52,8 @@ void MainMenu::operator()()
 
 void MainMenu::Realtime()
 {
-  _params.SetCaptureMode(Core::Parameters::Mode::Realtime);
-  _params.SetControlMode(Core::Parameters::Mode::Realtime);
+  _params.GetCaptureParams()->SetMode(IParameters::Mode::Realtime);
+  _params.GetControlParams()->SetMode(IParameters::Mode::Realtime);
 
   _core();
 }
@@ -113,10 +113,10 @@ void MainMenu::LoadFile(Capture::Parameters::MediaType mode, string depthPath)
   cout << "Enter file name (default directory): ";
   cin >> name;
 
-  _params.SetCaptureMode(Core::Parameters::Mode::Simulate);
-  _params.SetControlMode(Core::Parameters::Mode::Simulate);
+  _params.GetCaptureParams()->SetMode(IParameters::Mode::Simulate);
+  _params.GetControlParams()->SetMode(IParameters::Mode::Simulate);
+  _params.GetDisplayParams()->SetToggle(IParameters::Toggle::Enabled);
   _params.GetCaptureParams()->SetMediaType(mode);
-  _params.SetEnableDisplay(true);
   _params.GetCaptureParams()->SetDepthSimDataPath(PATH + depthPath);
   _params.GetCaptureParams()->SetColorSimDataPath(PATH + name);
 
@@ -126,10 +126,10 @@ void MainMenu::LoadFile(Capture::Parameters::MediaType mode, string depthPath)
 
 void MainMenu::TestVideo(string colorVideoPath, string depthPath, int count)
 {
-  _params.SetCaptureMode(Core::Parameters::Mode::Simulate);
-  _params.SetControlMode(Core::Parameters::Mode::Simulate);
+  _params.GetCaptureParams()->SetMode(IParameters::Mode::Simulate);
+  _params.GetControlParams()->SetMode(IParameters::Mode::Simulate);
+  _params.GetDisplayParams()->SetToggle(IParameters::Toggle::Enabled);
   _params.GetCaptureParams()->SetMediaType(Capture::Parameters::MediaType::Video);
-  _params.SetEnableDisplay(true);
   _params.GetCaptureParams()->SetDepthSimDataPath(PATH + depthPath);
 
   for (int i = 1; i <= count; ++i)
@@ -142,10 +142,10 @@ void MainMenu::TestVideo(string colorVideoPath, string depthPath, int count)
 
 void MainMenu::TestPhoto(string colorPath, string depthPath, int count)
 {
-  _params.SetCaptureMode(Core::Parameters::Mode::Simulate);
-  _params.SetControlMode(Core::Parameters::Mode::Simulate);
+  _params.GetCaptureParams()->SetMode(IParameters::Mode::Simulate);
+  _params.GetControlParams()->SetMode(IParameters::Mode::Simulate);
+  _params.GetDisplayParams()->SetToggle(IParameters::Toggle::Enabled);
   _params.GetCaptureParams()->SetMediaType(Capture::Parameters::MediaType::Photo);
-  _params.SetEnableDisplay(true);
   _params.GetCaptureParams()->SetDepthSimDataPath(PATH + depthPath);
 
   for (int i = 1; i <= count; ++i)

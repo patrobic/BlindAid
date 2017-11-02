@@ -13,7 +13,7 @@ public:
   private:
   };
 
-  class Results : public IResults
+  class Data : public IData
   {
   public:
 
@@ -21,17 +21,16 @@ public:
 
   };
 
-  DetectVehicle(Data *data, IParameters *params, IResults *input, IResults *output)
+  DetectVehicle(IParameters *params, IData *input, IData *output)
   {
-    _data = data;
     _params = static_cast<Parameters*>(params);
-    _input = static_cast<Capture::Results*>(input);
-    _output = static_cast<Results*>(output);
+    _input = static_cast<Capture::Data*>(input);
+    _output = static_cast<Data*>(output);
   }
   void operator()();
 
 private:
   Parameters *_params;
-  Capture::Results *_input;
-  Results *_output;
+  Capture::Data *_input;
+  Data *_output;
 };

@@ -98,10 +98,10 @@ public:
     cv::SimpleBlobDetector::Params _sbdParams;
   };
 
-  class Results : public IResults
+  class Data : public IData
   {
   public:
-    Results() { Clear(); }
+    Data() { Clear(); }
     void Clear() { for (int i = 0; i < VERT_REGIONS; ++i) for (int j = 0; j < HORZ_REGIONS; ++j) _regions[i][j].Clear(); _handPosition = cv::Point(0, 0); }
 
     cv::Rect GetRegionBounds(int col, int row) { return _regions[col][row]._region; }
@@ -132,12 +132,11 @@ public:
     std::array<std::array<Region, HORZ_REGIONS>, VERT_REGIONS> _regions;
   };
 
-  DetectDepthObstacle(Data *data, IParameters *params, IResults *input, IResults *output)
+  DetectDepthObstacle(IParameters *params, IData *input, IData *output)
   {
-    _data = data;
     _params = static_cast<Parameters*>(params);
-    _input = static_cast<Capture::Results*>(input);
-    _output = static_cast<Results*>(output);
+    _input = static_cast<Capture::Data*>(input);
+    _output = static_cast<Data*>(output);
   }
 
   void operator()();
@@ -151,8 +150,8 @@ public:
 
 private:
   Parameters *_params;
-  Capture::Results *_input;
-  Results *_output;
+  Capture::Data *_input;
+  Data *_output;
 
   cv::Mat _grayImage;
   cv::Mat _maskImage;

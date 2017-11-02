@@ -28,7 +28,7 @@ public:
     std::string _depthSimDataPath;
   };
 
-  class Results : public IResults
+  class Data : public IData
   {
   public:
     void Clear() {}
@@ -44,12 +44,11 @@ public:
 
   };
 
-  CaptureBase(Data *data, IParameters *params, IResults *input, IResults *output)
+  CaptureBase(IParameters *params, IData *input, IData *output)
   {
-    _data = data;
     _params = static_cast<Parameters*>(params);
     _input = input;
-    _output = static_cast<Results*>(output);
+    _output = static_cast<Data*>(output);
   }
 
   virtual void operator()() = 0;
@@ -60,16 +59,15 @@ public:
   }
 
 protected:
-  Data *_data;
   Parameters *_params;
-  IResults *_input;
-  Results *_output;
+  IData *_input;
+  Data *_output;
 };
 
 class Capture : public CaptureBase
 {
 public:
-  Capture(Data *data, IParameters *params, IResults *input, IResults *output) : CaptureBase(data, params, input, output) {}
+  Capture(IParameters *params, IData *input, IData *output) : CaptureBase(params, input, output) {}
   void operator()();
 
   // TODO: Implement class to communicate with camera capture SDK and store both color images in cv::Mat as they come in.

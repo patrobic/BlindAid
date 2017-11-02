@@ -58,15 +58,14 @@ namespace UnitTest
         TestData("TrafficLight\\tlight15.jpg", "depthMap.png", vector<Point>{ Point(202, 76), Point(362, 61) }),
       };
 
-      Data data;
       Core::Parameters params;
-      Core::Results results;
-      Core core(&data, &params, NULL, &results);
+      Core::Data results;
+      Core core(&params, NULL, &results);
 
-      params.SetCaptureMode(Core::Parameters::Mode::Simulate);
-      params.SetControlMode(Core::Parameters::Mode::Simulate);
+      params.GetCaptureParams()->SetMode(IParameters::Mode::Simulate);
+      params.GetControlParams()->SetMode(IParameters::Mode::Simulate);
+      params.GetCaptureParams()->SetToggle(IParameters::Toggle::Disabled);
       params.GetCaptureParams()->SetMediaType(Capture::Parameters::MediaType::Photo);
-      params.SetEnableDisplay(false);
 
       for (int i = 0; i < testData.size(); ++i)
       {
@@ -76,7 +75,7 @@ namespace UnitTest
         params.GetCaptureParams()->SetDepthSimDataPath(PATH + testData.at(i)._depthPath);
         core();
         
-        DetectTrafficLight::Results *tlResults = results.GetVisionResults()->GetTrafficLightResults();
+        DetectTrafficLight::Data *tlResults = results.GetVisionResults()->GetTrafficLightResults();
 
         int countDiff = testData.at(i)._points.size() - tlResults->Size();
         Assert::IsTrue(abs(countDiff) <= 2); // ensure that detected number of lights is NOT more than expected (i.e. allow missing detections but not false detections).

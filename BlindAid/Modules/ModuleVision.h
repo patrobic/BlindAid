@@ -28,14 +28,14 @@ public:
     DetectStopSign::Parameters _ssdParams;
   };
 
-  class Results : public IResults
+  class Data : public IData
   {
   public:
     void Clear() {}
 
-    DetectTrafficLight::Results *GetTrafficLightResults() { return &_tldResults; }
-    DetectStopSign::Results *GetStopSignResults() { return &_ssdResults; }
-    DetectDepthObstacle::Results *GetDepthObstacleResults() { return &_dodResults; }
+    DetectTrafficLight::Data *GetTrafficLightResults() { return &_tldResults; }
+    DetectStopSign::Data *GetStopSignResults() { return &_ssdResults; }
+    DetectDepthObstacle::Data *GetDepthObstacleResults() { return &_dodResults; }
 
     cv::Mat *GetCurrentColorImage() { return _currentColorImage; }
     cv::Mat *GetCurrentDepthImage() { return _currentDepthImage; }
@@ -44,21 +44,21 @@ public:
     void SetCurrentDepthImage(cv::Mat *mat) { _currentDepthImage = mat; }
 
   private:
-    DetectTrafficLight::Results _tldResults;
-    DetectStopSign::Results _ssdResults;
-    DetectDepthObstacle::Results _dodResults;
+    DetectTrafficLight::Data _tldResults;
+    DetectStopSign::Data _ssdResults;
+    DetectDepthObstacle::Data _dodResults;
 
     cv::Mat *_currentColorImage;
     cv::Mat *_currentDepthImage;
   };
 
-  Vision(Data *data, IParameters *params, IResults *input, IResults *output);
+  Vision(IParameters *params, IData *input, IData *output);
   void operator()();
 
 private:
   Parameters *_params;
-  CaptureSim::Results *_input;
-  Results *_output;
+  CaptureSim::Data *_input;
+  Data *_output;
 
   DetectStopSign _stopSign;
   DetectTrafficLight _trafficLight;

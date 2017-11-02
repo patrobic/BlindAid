@@ -14,7 +14,7 @@ public:
 
   };
 
-  class Results : public IResults
+  class Data : public IData
   {
   public:
     void Clear() {}
@@ -23,27 +23,24 @@ public:
 
   };
 
-  ControlBase(Data *data, IParameters *params, IResults *input, IResults *output)
+  ControlBase(IParameters *params, IData *input, IData *output)
   {
-    _data = data;
     _params = static_cast<Parameters*>(params);
-    _input = static_cast<Vision::Results*>(input);
-    _output = static_cast<Results*>(output);
+    _input = static_cast<Vision::Data*>(input);
+    _output = static_cast<Data*>(output);
   }
   virtual void operator()() = 0;
 
-
 protected:
-  Data *_data;
   Parameters *_params;
-  Vision::Results *_input;
-  Results *_output;
+  Vision::Data *_input;
+  Data *_output;
 };
 
 class Control : public ControlBase
 {
 public:
-  Control(Data *data, IParameters *params, IResults *input, IResults *output) : ControlBase(data, params, input, output) {}
+  Control(IParameters *params, IData *input, IData *output) : ControlBase(params, input, output) {}
   void operator()();
 
   // TODO: Implement class to control the Glove's Arduino(?) hardware once we have a working prototype.

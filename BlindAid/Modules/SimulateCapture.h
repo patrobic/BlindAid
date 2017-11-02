@@ -6,7 +6,7 @@
 class CaptureSim : public CaptureBase
 {
 public:
-  CaptureSim(Data *data, IParameters *params, IResults *input, IResults *output) : CaptureBase(data, params, input, output) {};
+  CaptureSim(IParameters *params, IData *input, IData *output) : CaptureBase(params, input, output) {};
   void operator()();
 
 private:
