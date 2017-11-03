@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ModuleCapture.h"
+#include "ModuleRecord.h"
 #include "ModuleVision.h"
 #include "ModuleControl.h"
 #include "ModuleDisplay.h"
@@ -15,12 +16,14 @@ public:
   {
   public:
     Capture::Parameters *GetCaptureParams() { return &_captureParams; }
+    Record::Parameters *GetRecordParams() { return &_recordParams; }
     Vision::Parameters *GetVisionParams() { return &_visionParams; }
     Control::Parameters *GetControlParams() { return &_controlParams; }
     Display::Parameters *GetDisplayParams() { return &_displayParams; }
 
   private:
     Capture::Parameters _captureParams;
+    Record::Parameters _recordParams;
     Vision::Parameters _visionParams;
     Control::Parameters _controlParams;
     Display::Parameters _displayParams;
@@ -32,12 +35,14 @@ public:
     void Clear() {}
 
     Capture::Data *GetCaptureResults() { return &_captureResults; }
+    Record::Data *GetRecordResults() { return &_recordResults; }
     Vision::Data *GetVisionResults() { return &_visionResults; }
     Control::Data *GetControlResults() { return &_controlResults; }
     Display::Data *GetDisplayResults() { return &_displayResults; }
 
   private:
     Capture::Data _captureResults;
+    Record::Data _recordResults;
     Vision::Data _visionResults;
     Control::Data _controlResults;
     Display::Data _displayResults;
@@ -53,6 +58,7 @@ private:
 
   // capture and control declared as base class pointer so that it can be declared based on parameter as either simulate or realtime class.
   IModule *_capture;
+  Record *_record;
   Vision *_vision;
   IModule *_control;
   Display *_display;

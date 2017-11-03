@@ -39,12 +39,20 @@ private:
   void Core(Setting &setting, Core::Parameters *parameters)
   {
     Capture(setting.lookup("capture"), _params->GetCaptureParams());
+    Record(setting.lookup("record"), _params->GetRecordParams());
     Vision(setting.lookup("vision"), _params->GetVisionParams());
     Control(setting.lookup("control"), _params->GetControlParams());
     Display(setting.lookup("display"), _params->GetDisplayParams());
   }
 
   void Capture(Setting &setting, Capture::Parameters *parameters)
+  {
+    BaseParams(setting, parameters);
+
+
+  }
+
+  void Record(Setting &setting, Record::Parameters *parameters)
   {
     BaseParams(setting, parameters);
 

@@ -29,9 +29,29 @@ public:
     _input = static_cast<Vision::Data*>(input);
     _output = static_cast<Data*>(output);
   }
+
   virtual void operator()() = 0;
 
 protected:
+  float CalculateVibrationValue(int pixel)
+  {
+    float control = 0.f;
+
+    // TODO: design algorithm that calculates vibrator control value (voltage/factor/whatever is required by the API controlling the Arduino/glove).
+    // Should implement a function that maps the nearest pixel intensity value to control value in some non-linear way,
+    // giving higher weight to near objects (possibly negative exponential function?).
+    // [intensity]
+    // |.......
+    // |       .....
+    // |            ...
+    // |               ..
+    // |                 .
+    // |__________________._____________ [distance]
+    // 0             128             255
+
+    return control;
+  }
+
   Parameters *_params;
   Vision::Data *_input;
   Data *_output;

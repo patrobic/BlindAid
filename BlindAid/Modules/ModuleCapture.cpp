@@ -21,23 +21,16 @@ Capture::Capture(IParameters *params, IData *input, IData *output) : CaptureBase
 
 void Capture::operator()()
 {
-  _frames = _pipe.wait_for_frames();
+  GetFrame();
+}
 
+void Capture::GetFrame()
+{
+  _frames = _pipe.wait_for_frames();
   _colorFrame = _frames.get_color_frame();
 
   _output->GetRgbImage()->data = (uchar*)_colorFrame.get_data();
-
-  // TODO: change this success flag to operator()'s return value, for all derived classes!
-  if (_output->GetRgbImage()->rows == 0 || _output->GetRgbImage()->cols == 0)
-  {
-    _output->SetSuccess(false);
-    return;
-  }
-
   CreateHsvImage();
-
-  //namedWindow("Color Image", WINDOW_AUTOSIZE);
-  //imshow("Color Image", color);
 
   if (_params->GetEnableDepth())
   {
@@ -49,9 +42,6 @@ void Capture::operator()()
     applyColorMap(ir, ir, COLORMAP_JET);
 
     *_output->GetDepthImage() = ir;
-
-    //namedWindow("Depth Image", WINDOW_AUTOSIZE);
-    //imshow("Depth Image", ir);
   }
 
   waitKey(1);

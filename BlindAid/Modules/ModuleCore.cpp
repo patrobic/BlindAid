@@ -20,6 +20,8 @@ void Core::operator()()
   else
     _capture = new CaptureSim(_params->GetCaptureParams(), NULL, _output->GetCaptureResults());
   
+  _record = new Record(_params->GetRecordParams(), _output->GetCaptureResults(), NULL);
+
   _vision = new Vision(_params->GetVisionParams(), _output->GetCaptureResults(), _output->GetVisionResults());
   
   if (_params->GetControlParams()->GetMode() == Parameters::Mode::Realtime)
@@ -33,19 +35,19 @@ void Core::operator()()
   {
     steady_clock::time_point start = steady_clock::now();
 
-    if (_params->GetCaptureParams()->GetToggle() == IParameters::Toggle::Enabled)
+    if (_params->GetCaptureParams()->GetToggle())
       (*_capture)();
     
-    if (!_output->GetCaptureResults()->GetSuccess())
-      break;
+    if (_params->GetRecordParams()->GetToggle())
+      (*_record)();
 
-    if (_params->GetVisionParams()->GetToggle() == IParameters::Toggle::Enabled)
+    if (_params->GetVisionParams()->GetToggle())
       (*_vision)();
  
-    if (_params->GetControlParams()->GetToggle() == IParameters::Toggle::Enabled)
+    if (_params->GetControlParams()->GetToggle())
       (*_control)();
 
-    if(_params->GetDisplayParams()->GetToggle() == IParameters::Toggle::Enabled)
+    if(_params->GetDisplayParams()->GetToggle())
       (*_display)();
 
     steady_clock::time_point end = steady_clock::now();

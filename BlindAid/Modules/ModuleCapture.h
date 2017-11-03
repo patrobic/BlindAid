@@ -50,15 +50,10 @@ public:
     cv::Mat *GetHsvImage() { return &_hsvImage; }
     cv::Mat *GetDepthImage() { return &_depthImage; }
 
-    bool GetSuccess() { return _success; }
-    void SetSuccess(bool success) { _success = success; }
-
   private:
     cv::Mat _rgbImage;
     cv::Mat _hsvImage;
     cv::Mat _depthImage;
-
-    bool _success = true;
   };
 
   CaptureBase(IParameters *params, IData *input, IData *output)
@@ -70,12 +65,12 @@ public:
 
   virtual void operator()() = 0;
   
+protected:
   void CreateHsvImage()
   {
     cvtColor(*_output->GetRgbImage(), *_output->GetHsvImage(), CV_BGR2HSV);
   }
 
-protected:
   Parameters *_params;
   IData *_input;
   Data *_output;
@@ -87,8 +82,9 @@ public:
   Capture(IParameters *params, IData *input, IData *output);
   void operator()();
 
-  // TODO: Implement class to communicate with camera capture SDK and store both color images in cv::Mat as they come in.
 private:
+  void GetFrame();
+
   rs2::pipeline _pipe;
   rs2::config _cfg;
   rs2::frameset _frames;

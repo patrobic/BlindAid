@@ -31,12 +31,19 @@ public:
   void Core(Setting &setting, Core::Parameters *parameters)
   {
     Capture(setting.add("capture", Setting::Type::TypeGroup), _params->GetCaptureParams());
+    Record(setting.add("record", Setting::Type::TypeGroup), _params->GetRecordParams());
     Vision(setting.add("vision", Setting::Type::TypeGroup), _params->GetVisionParams());
     Control(setting.add("control", Setting::Type::TypeGroup), _params->GetControlParams());
     Display(setting.add("display", Setting::Type::TypeGroup), _params->GetDisplayParams());
   }
 
   void Capture(Setting &setting, Capture::Parameters *parameters)
+  {
+    BaseParams(setting, parameters);
+
+  }
+
+  void Record(Setting &setting, Record::Parameters *parameters)
   {
     BaseParams(setting, parameters);
 

@@ -7,16 +7,24 @@ using namespace cv;
 
 MainMenu::MainMenu() : _core(&_params, NULL, &_results)
 {
-  // TODO: if(file exists)
-  // LoadConfiguration()
-  // else
-  // SaveConfiguration() ... to save the default configuration specified in each class's Parameters class.
+  // TODO: implement proper file loading/validating mechanics that creates new file if nonexistant or invalid.
+  // if(file exists)
+  //    try(LoadConfiguration());
+  //    if(!file.valid) .. LoadConfig should return if the file is valid (contains all values, and sensical)
+  //      if(PromptOverwrite()) ... prompt user to overwrite existing corrupt file?
+  //        Saveconfiguration();
+  //      else
+  //        throw exception(); ... terminate application!
+  // else ... no configuration exists at all (new installation).
+  //    SaveConfiguration(); ... create a file by saving the default configuration specified in each class's Parameters class.
 
   SaveConfiguration saveConfig(&_params, "BlindAid.cfg");
   saveConfig();
 
   LoadConfiguration loadConfig(&_params, "BlindAid.cfg");
   loadConfig();
+
+  _params.GetRecordParams()->SetToggle(IParameters::Toggle::Disabled);
 }
 
 void MainMenu::operator()()
@@ -55,7 +63,30 @@ void MainMenu::Realtime()
   _params.GetCaptureParams()->SetMode(IParameters::Mode::Realtime);
   _params.GetControlParams()->SetMode(IParameters::Mode::Realtime);
 
-  _core();
+  char in;
+  system("cls");
+
+  do {
+    system("cls");
+
+    cout << "\
++========== Realtime =========+\n\
+| c: Realtime Capture         |\n\
+| t: Realtime Control         |\n\
++=============================+\n";
+
+    in = _getch();
+
+    switch (in)
+    {
+    case 'c':
+      TestRealtimeCapture();
+      break;
+    case 't':
+      TestRealtimeControl();
+      break;
+    }
+  } while (in != 'q' && in != 'Q');
 }
 
 void MainMenu::Simulate()
@@ -74,7 +105,6 @@ void MainMenu::Simulate()
 | t: Traffic Light Detector   |\n\
 | s: Stop Sign Detector       |\n\
 | v: Video Simulation         |\n\
-| c: Realtime Capture         |\n\
 +=============================+\n";
 
     in = _getch();
@@ -99,16 +129,14 @@ void MainMenu::Simulate()
     case 'v':
       TestVideo("TrafficLight\\tlight", "depthMap.png", 4);
       break;
-    case 'c':
-      TestRealtimeCapture();
-      break;
     }
   } while (in != 'q' && in != 'Q');
 }
 
 void MainMenu::Settings()
 {
-
+  // TODO: user can manually specify (select and change) parameters, either via command line, or more sophisticated UI?
+  // Not necessarily needed since editing the text file is just as easy...
 }
 
 void MainMenu::LoadFile(Capture::Parameters::MediaType mode, string depthPath)
@@ -174,4 +202,10 @@ void MainMenu::TestRealtimeCapture()
   
   waitKey(0);
   destroyAllWindows();
+}
+
+void MainMenu::TestRealtimeControl()
+{
+  // TODO: maybe run through test sequence of vibrations, audible messages, etc...?
+  // Assuming 
 }
