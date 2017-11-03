@@ -74,6 +74,7 @@ void MainMenu::Simulate()
 | t: Traffic Light Detector   |\n\
 | s: Stop Sign Detector       |\n\
 | v: Video Simulation         |\n\
+| c: Realtime Capture         |\n\
 +=============================+\n";
 
     in = _getch();
@@ -97,6 +98,9 @@ void MainMenu::Simulate()
       break;
     case 'v':
       TestVideo("TrafficLight\\tlight", "depthMap.png", 4);
+      break;
+    case 'c':
+      TestRealtimeCapture();
       break;
     }
   } while (in != 'q' && in != 'Q');
@@ -155,5 +159,19 @@ void MainMenu::TestPhoto(string colorPath, string depthPath, int count)
     waitKey(0);
   }
 
+  destroyAllWindows();
+}
+
+void MainMenu::TestRealtimeCapture()
+{
+  _params.GetCaptureParams()->SetMode(IParameters::Mode::Realtime);
+  _params.GetControlParams()->SetMode(IParameters::Mode::Simulate);
+  _params.GetVisionParams()->GetDepthObstacleParams()->SetToggle(IParameters::Toggle::Disabled);
+  _params.GetVisionParams()->GetStopSignParams()->SetToggle(IParameters::Toggle::Disabled);
+  _params.GetCaptureParams()->SetMediaType(Capture::Parameters::MediaType::Video);
+
+  _core();
+  
+  waitKey(0);
   destroyAllWindows();
 }

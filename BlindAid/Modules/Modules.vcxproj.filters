@@ -60,6 +60,9 @@
     <ClInclude Include="IData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Users\patri\Downloads\librealsense-master\librealsense-master\examples\example.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleControl.cpp">

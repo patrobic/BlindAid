@@ -65,8 +65,11 @@ void Display::DisplayImage()
   imshow("Color Image", *_input->GetCurrentColorImage());
   waitKey(1);
 
-  namedWindow("Depth Image");
-  moveWindow("Depth Image", 800, 20);
-  imshow("Depth Image", *_input->GetCurrentDepthImage());
-  waitKey(1);
+  if (_input->GetCurrentDepthImage()->rows > 0 && _input->GetCurrentDepthImage()->cols > 0)
+  {
+    namedWindow("Depth Image");
+    moveWindow("Depth Image", 800, 20);
+    imshow("Depth Image", *_input->GetCurrentDepthImage());
+    waitKey(1);
+  }
 }

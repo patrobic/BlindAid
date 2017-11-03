@@ -86,8 +86,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(IncludePath);$(ProjectDir)..\..\Dependencies\opencv\include'$(ProjectDir)..\..\Dependencies\libconfig\include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(ProjectDir)..\..\Dependencies\opencv\x64\vc14\lib;$(ProjectDir)..\..\Dependencies\libconfig\x64\lib</LibraryPath>
+    <IncludePath>$(IncludePath);$(ProjectDir)..\..\Dependencies\opencv\include'$(ProjectDir)..\..\Dependencies\libconfig\include;$(ProjectDir)..\..\Dependencies\realsense\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(ProjectDir)..\..\Dependencies\opencv\x64\vc14\lib;$(ProjectDir)..\..\Dependencies\libconfig\x64\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\lib</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -101,16 +101,17 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(ProjectDir)..\..\Dependencies\opencv\include;$(ProjectDir)..\..\Dependencies\libconfig\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(ProjectDir)..\..\Dependencies\opencv\include;$(ProjectDir)..\..\Dependencies\libconfig\include;$(ProjectDir)..\..\Dependencies\realsense\include</AdditionalIncludeDirectories>
       <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Dependencies\opencv\x64\vc14\lib;$(ProjectDir)..\..\Dependencies\libconfig\x64\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);opencv_core330d.lib;opencv_highgui330d.lib;opencv_imgcodecs330d.lib;opencv_imgproc330d.lib;opencv_objdetect330d.lib;opencv_features2d330d.lib;opencv_videoio330d.lib;libconfig.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Dependencies\opencv\x64\vc14\lib;$(ProjectDir)..\..\Dependencies\libconfig\x64\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);opencv_core330d.lib;opencv_highgui330d.lib;opencv_imgcodecs330d.lib;opencv_imgproc330d.lib;opencv_objdetect330d.lib;opencv_features2d330d.lib;opencv_videoio330d.lib;libconfig.lib;realsense2.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\opencv\x64\vc14\bin\*.dll" "$(OutDir)"
-xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\libconfig\x64\bin\*.dll" "$(OutDir)"</Command>
+xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\libconfig\x64\bin\*.dll" "$(OutDir)"
+xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\realsense\x64\bin\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>

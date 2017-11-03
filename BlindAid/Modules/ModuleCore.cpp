@@ -2,17 +2,19 @@
 
 using namespace std;
 using namespace std::chrono;
-using namespace cv;
 
 Core::Core(IParameters *params, IData *input, IData *output)
 {
   _params = static_cast<Parameters*>(params);
   _input = static_cast<Data*>(output);
   _output = static_cast<Data*>(output);
+
 }
 
 void Core::operator()()
 {  
+  static int frame = 0;
+
   if (_params->GetCaptureParams()->GetMode() == Parameters::Mode::Realtime)
     _capture = new Capture(_params->GetCaptureParams(), NULL, _output->GetCaptureResults());
   else
@@ -24,19 +26,24 @@ void Core::operator()()
     _control = new Control(_params->GetDisplayParams(), _output->GetVisionResults(), _output->GetCaptureResults());
   else
     _control = new ControlSim(_params->GetDisplayParams(), _output->GetVisionResults(), _output->GetCaptureResults());
-  
-  if (_params->GetDisplayParams()->GetToggle() == Parameters::Toggle::Enabled)
-    _display = new Display(_params->GetDisplayParams(), _output->GetVisionResults(), _output->GetCaptureResults());
 
-  int frame = 0;
+  _display = new Display(_params->GetDisplayParams(), _output->GetVisionResults(), _output->GetCaptureResults());
 
   do
   {
     steady_clock::time_point start = steady_clock::now();
 
-    (*_capture)();
-    (*_vision)();
-    (*_control)();
+    if (_params->GetCaptureParams()->GetToggle() == IParameters::Toggle::Enabled)
+      (*_capture)();
+    
+    if (!_output->GetCaptureResults()->GetSuccess())
+      break;
+
+    if (_params->GetVisionParams()->GetToggle() == IParameters::Toggle::Enabled)
+      (*_vision)();
+ 
+    if (_params->GetControlParams()->GetToggle() == IParameters::Toggle::Enabled)
+      (*_control)();
 
     if(_params->GetDisplayParams()->GetToggle() == IParameters::Toggle::Enabled)
       (*_display)();

@@ -2,6 +2,8 @@
 
 #include "IModule.h"
 
+#include "librealsense2\rs.hpp"
+
 class CaptureBase : public IModule
 {
 public:
@@ -22,10 +24,21 @@ public:
     std::string GetDepthSimDataPath() { return _depthSimDataPath; }
     void SetDepthSimDataPath(std::string depthSimDataPath) { _depthSimDataPath = depthSimDataPath; }
 
+    bool GetEnableDepth() { return _enableDepth; }
+    void SetEnableDepth(bool enableDepth) { _enableDepth = enableDepth; }
+
   private:
+    // indicate whether simulation media is photo or video.
     MediaType _mediaType = Photo;
+    
+    // path to color image for simulation.
     std::string _colorSimDataPath;
+    
+    // path to depth image for simulation.
     std::string _depthSimDataPath;
+
+    // enable or disable depth camera acquisition.
+    bool _enableDepth = false;
   };
 
   class Data : public IData
@@ -37,11 +50,15 @@ public:
     cv::Mat *GetHsvImage() { return &_hsvImage; }
     cv::Mat *GetDepthImage() { return &_depthImage; }
 
+    bool GetSuccess() { return _success; }
+    void SetSuccess(bool success) { _success = success; }
+
   private:
     cv::Mat _rgbImage;
     cv::Mat _hsvImage;
     cv::Mat _depthImage;
 
+    bool _success = true;
   };
 
   CaptureBase(IParameters *params, IData *input, IData *output)
@@ -67,9 +84,13 @@ protected:
 class Capture : public CaptureBase
 {
 public:
-  Capture(IParameters *params, IData *input, IData *output) : CaptureBase(params, input, output) {}
+  Capture(IParameters *params, IData *input, IData *output);
   void operator()();
 
   // TODO: Implement class to communicate with camera capture SDK and store both color images in cv::Mat as they come in.
 private:
+  rs2::pipeline _pipe;
+  rs2::config _cfg;
+  rs2::frameset _frames;
+  rs2::frame _colorFrame;
 };

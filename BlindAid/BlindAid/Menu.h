@@ -2,8 +2,6 @@
 
 #include <conio.h>
 
-#include "opencv2\videoio.hpp"
-
 #include "LoadConfig.h"
 #include "SaveConfig.h"
 
@@ -25,6 +23,8 @@ private:
 
   void TestVideo(std::string colorVideoPath, std::string depthPath, int count);
   void TestPhoto(std::string colorPath, std::string depthPath, int count);
+
+  void TestRealtimeCapture();
 
   Core _core;
   Core::Parameters _params;
