@@ -31,40 +31,35 @@ void DetectTrafficLight::PreProcess()
  
   Mat redRegionUpper;
   Mat redRegionLower;
-  inRange(*_input->GetHsvImage(), cv::Scalar(150, 150, 180), cv::Scalar(180, 255, 255), redRegionUpper);
-  inRange(*_input->GetHsvImage(), cv::Scalar(0, 150, 180), cv::Scalar(10, 255, 255), redRegionLower);
-  _rMask = (redRegionUpper + redRegionLower)(Rect(0, 0, redRegionUpper.cols, redRegionUpper.rows*_params->GetUpperRegionToAnalyze()));
+  inRange(*_input->GetHsvImage(), _params->GetColorRange(0, 0), cv::Scalar(180, 255, 255), redRegionUpper);
+  inRange(*_input->GetHsvImage(), cv::Scalar(0, 150, 180), _params->GetColorRange(0, 1), redRegionLower);
+  _blobMask[0] = (redRegionUpper + redRegionLower)(Rect(0, 0, redRegionUpper.cols, redRegionUpper.rows*_params->GetUpperRegionToAnalyze()));
+
+  for(int i = 1; i < 3; ++i)
+    inRange((*_input->GetHsvImage())(Rect(0, 0, redRegionUpper.cols, redRegionUpper.rows*_params->GetUpperRegionToAnalyze())), _params->GetColorRange(i, 0), _params->GetColorRange(i, 1), _blobMask[i]);
 
   //threshold(_h, _hMask, 170, 255, THRESH_TOZERO);
   //threshold(_hMask, _hMask, 190, 255, THRESH_TOZERO_INV);
-  //dilate(_rMask, _rMask, Mat(), Point(-1, -1), 1);
+  //dilate(_redMask, _redMask, Mat(), Point(-1, -1), 1);
 }
 
 void DetectTrafficLight::BlobDetectorMode()
 {
-  SimpleBlobDetector::Params params;
-
-  params.filterByArea = true;
-  params.minArea = 4 * 4;
-  params.maxArea = 60 * 60;
-  params.filterByCircularity = true;
-  params.minCircularity = 0.1f;
-  params.filterByConvexity = true;
-  params.minConvexity = 0.8f;
-  params.filterByInertia = true;
-  params.minInertiaRatio = 0.5f;
-  params.filterByColor = true;
-  params.blobColor = 255;
-
-  Ptr<SimpleBlobDetector> sbd = SimpleBlobDetector::create(params);
+  Ptr<SimpleBlobDetector> sbd = SimpleBlobDetector::create(*_params->GetBlobParams());
 
   vector<KeyPoint> keypoints;
-  sbd->detect(_rMask, keypoints);
-  
-  for (int i = 0; i < keypoints.size(); i++)
-    _output->PushBack(Circle(keypoints[i].pt, (int)keypoints[i].size));
 
-  ConfirmWithBox();
+  for (int i = 0; i < 3; ++i)
+  {
+    vector<KeyPoint> keypoints;
+
+    sbd->detect(_blobMask[i], keypoints);
+
+    for (int j = 0; j < keypoints.size(); j++)
+      _output->PushBack(Circle(keypoints[j].pt, (int)keypoints[j].size, (Circle::Color)i));
+  }
+
+  //ConfirmWithBox();
 }
 
 void DetectTrafficLight::ConfirmWithBox()

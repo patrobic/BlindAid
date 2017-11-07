@@ -46,8 +46,11 @@ void Display::DrawTrafficLights()
 
   for (int i = 0; i < _input->GetTrafficLightResults()->Size(); ++i)
   {
-    circle(*_input->GetCurrentColorImage(), result.At(i)._center, (int)result.At(i)._radius + 2, Scalar(0, 255, 255), 2);
-    putText(*_input->GetCurrentColorImage(), "TrafficLight" + to_string(i), Point(result.At(i)._center.x - result.At(i)._radius, result.At(i)._center.y - result.At(i)._radius), FONT_HERSHEY_PLAIN, 1, Scalar(0, 255, 255));
+    Scalar color[3] = { Scalar(0, 0, 255), Scalar(0, 255, 0), Scalar(0, 255, 255) };
+    string name[3] = { "Red", "Green", "Yellow" };
+
+    circle(*_input->GetCurrentColorImage(), result.At(i)._center, (int)result.At(i)._radius + 2, color[result.At(i)._color], 2);
+    putText(*_input->GetCurrentColorImage(), name[result.At(i)._color] + "TrafficLight" + to_string(i), Point(result.At(i)._center.x - result.At(i)._radius, result.At(i)._center.y - result.At(i)._radius), FONT_HERSHEY_PLAIN, 1, color[result.At(i)._color]);
   }
 }
 
