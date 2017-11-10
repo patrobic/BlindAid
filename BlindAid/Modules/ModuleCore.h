@@ -21,12 +21,17 @@ public:
     Control::Parameters *GetControlParams() { return &_controlParams; }
     Display::Parameters *GetDisplayParams() { return &_displayParams; }
 
+    int GetRepeat() { return _repeat; }
+    void SetRepeat(int repeat) { _repeat = repeat; }
+
   private:
     Capture::Parameters _captureParams;
     Record::Parameters _recordParams;
     Vision::Parameters _visionParams;
     Control::Parameters _controlParams;
     Display::Parameters _displayParams;
+
+    int _repeat = 0;
   };
 
   class Data : public IData

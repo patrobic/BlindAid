@@ -66,6 +66,9 @@
     <ClInclude Include="ModuleCapture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Serial.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleControl.cpp">
@@ -106,6 +109,9 @@
     </ClCompile>
     <ClCompile Include="ModuleRecord.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Serial.cpp">
+      <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

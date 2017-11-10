@@ -34,6 +34,7 @@
     <ClInclude Include="ModuleDisplay.h" />
     <ClInclude Include="ModuleVision.h" />
     <ClInclude Include="ModuleRecord.h" />
+    <ClInclude Include="Serial.h" />
     <ClInclude Include="SimulateCapture.h" />
     <ClInclude Include="SimulateControl.h" />
   </ItemGroup>
@@ -49,6 +50,7 @@
     <ClCompile Include="ModuleDisplay.cpp" />
     <ClCompile Include="ModuleVision.cpp" />
     <ClCompile Include="ModuleRecord.cpp" />
+    <ClCompile Include="Serial.cpp" />
     <ClCompile Include="SimulateCapture.cpp" />
     <ClCompile Include="SimulateControl.cpp" />
   </ItemGroup>

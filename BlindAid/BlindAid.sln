@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlindAid", "BlindAid\BlindAid.vcxproj", "{DD1BF88B-B634-46C9-A80F-FFA17C02A6F0}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -14,6 +14,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest", "UnitTest\UnitTe
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Modules", "Modules\Modules.vcxproj", "{4E97E47C-8B4A-4528-A98A-0FE82A8B1675}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BluetoothComm", "BluetoothComm\BluetoothComm.vcxproj", "{903128DD-67EC-467F-8104-2B3614C62A75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,8 +49,19 @@ Global
 		{4E97E47C-8B4A-4528-A98A-0FE82A8B1675}.Release|x64.Build.0 = Release|x64
 		{4E97E47C-8B4A-4528-A98A-0FE82A8B1675}.Release|x86.ActiveCfg = Release|Win32
 		{4E97E47C-8B4A-4528-A98A-0FE82A8B1675}.Release|x86.Build.0 = Release|Win32
+		{903128DD-67EC-467F-8104-2B3614C62A75}.Debug|x64.ActiveCfg = Debug|x64
+		{903128DD-67EC-467F-8104-2B3614C62A75}.Debug|x64.Build.0 = Debug|x64
+		{903128DD-67EC-467F-8104-2B3614C62A75}.Debug|x86.ActiveCfg = Debug|Win32
+		{903128DD-67EC-467F-8104-2B3614C62A75}.Debug|x86.Build.0 = Debug|Win32
+		{903128DD-67EC-467F-8104-2B3614C62A75}.Release|x64.ActiveCfg = Release|x64
+		{903128DD-67EC-467F-8104-2B3614C62A75}.Release|x64.Build.0 = Release|x64
+		{903128DD-67EC-467F-8104-2B3614C62A75}.Release|x86.ActiveCfg = Release|Win32
+		{903128DD-67EC-467F-8104-2B3614C62A75}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {82A9D97B-0AAA-4EA7-8094-A2C4B281A474}
 	EndGlobalSection
 EndGlobal

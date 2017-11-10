@@ -83,7 +83,7 @@ void MainMenu::Realtime()
       TestRealtimeCapture();
       break;
     case 't':
-      TestRealtimeControl();
+      TestRealtimeControl("TrafficLight\\tlight1.jpg", "depthMap.png", 1);
       break;
     }
   } while (in != 'q' && in != 'Q');
@@ -204,8 +204,19 @@ void MainMenu::TestRealtimeCapture()
   destroyAllWindows();
 }
 
-void MainMenu::TestRealtimeControl()
+void MainMenu::TestRealtimeControl(string colorPath, string depthPath, int count)
 {
-  // TODO: maybe run through test sequence of vibrations, audible messages, etc...?
-  // Assuming 
+  _params.GetCaptureParams()->SetMode(IParameters::Mode::Simulate);
+  _params.GetControlParams()->SetMode(IParameters::Mode::Realtime);
+  _params.GetVisionParams()->GetDepthObstacleParams()->SetToggle(IParameters::Toggle::Enabled);
+  _params.GetVisionParams()->GetStopSignParams()->SetToggle(IParameters::Toggle::Disabled);
+  _params.GetCaptureParams()->SetMediaType(Capture::Parameters::MediaType::Photo);
+  _params.GetCaptureParams()->SetDepthSimDataPath(PATH + depthPath);
+  _params.GetCaptureParams()->SetColorSimDataPath(PATH + colorPath);
+  _params.SetRepeat(10000);
+
+  _core();
+
+  waitKey(0);
+  destroyAllWindows();
 }

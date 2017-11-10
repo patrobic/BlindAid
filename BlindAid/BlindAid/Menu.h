@@ -25,7 +25,7 @@ private:
   void TestPhoto(std::string colorPath, std::string depthPath, int count);
 
   void TestRealtimeCapture();
-  void TestRealtimeControl();
+  void TestRealtimeControl(std::string colorPath, std::string depthPath, int count);
 
   Core _core;
   Core::Parameters _params;

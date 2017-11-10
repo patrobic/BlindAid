@@ -55,7 +55,7 @@ void Core::operator()()
 
     cout << "[CORE] Frame #" << to_string(frame++) << " processed (" << time_span.count() * 1000 << "ms).\n";
   }
-  while (_params->GetCaptureParams()->GetMediaType() == Capture::Parameters::MediaType::Video);
+  while (_params->GetCaptureParams()->GetMediaType() == Capture::Parameters::MediaType::Video || frame < _params->GetRepeat());
 
   delete _capture;
   delete _vision;

@@ -13,13 +13,13 @@ void ControlSim::operator()()
 
   cout << "[CONTROL] Frame received (" << time_span.count() * 1000 << "ms).\n";
   cout << "\t[GLOVE] \
-Thumb(" << _input->GetDepthObstacleResults()->GetMinColIntensity(0) << "), \
-Index(" << _input->GetDepthObstacleResults()->GetMinColIntensity(1) << "), \
-Middle(" << _input->GetDepthObstacleResults()->GetMinColIntensity(2) << "), \
-Ring(" << _input->GetDepthObstacleResults()->GetMinColIntensity(3) << "), \
-Pinky(" << _input->GetDepthObstacleResults()->GetMinColIntensity(4) << "), \
-Upper(" << _input->GetDepthObstacleResults()->GetMinRowIntensity(0) << "), \
-Lower(" << _input->GetDepthObstacleResults()->GetMinRowIntensity(2) << ").\n";
+Thumb(" << CalculateVibrationValue(_input->GetDepthObstacleResults()->GetMinColIntensity(0)) << "), \
+Index(" << CalculateVibrationValue(_input->GetDepthObstacleResults()->GetMinColIntensity(1)) << "), \
+Middle(" << CalculateVibrationValue(_input->GetDepthObstacleResults()->GetMinColIntensity(2)) << "), \
+Ring(" << CalculateVibrationValue(_input->GetDepthObstacleResults()->GetMinColIntensity(3)) << "), \
+Pinky(" << CalculateVibrationValue(_input->GetDepthObstacleResults()->GetMinColIntensity(4)) << "), \
+Upper(" << CalculateVibrationValue(_input->GetDepthObstacleResults()->GetMinRowIntensity(0)) << "), \
+Lower(" << CalculateVibrationValue(_input->GetDepthObstacleResults()->GetMinRowIntensity(2)) << ").\n";
 
   cout << "\t[AUDIO]";
 
