@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IModule.h"
-#include "ModuleControl.h"
+#include "BaseControl.h"
 #include "ModuleVision.h"
 
 class ControlSim : public ControlBase

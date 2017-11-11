@@ -9,6 +9,8 @@ class IData
 {
 public:
   virtual void Clear() = 0;
+  // TODO: check that parameters are valid in all Modules.
+  // virtual bool Valid() = 0;
 
 protected:
 

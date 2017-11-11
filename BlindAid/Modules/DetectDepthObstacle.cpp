@@ -5,7 +5,9 @@ using namespace cv;
 
 void DetectDepthObstacle::operator()()
 {
-  Process();
+
+  if (_params->GetToggle())
+    Process();
 }
 
 void DetectDepthObstacle::Process()

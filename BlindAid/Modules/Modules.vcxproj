@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Users\patri\Downloads\librealsense-master\librealsense-master\examples\example.hpp" />
+    <ClInclude Include="BaseCapture.h" />
+    <ClInclude Include="BaseControl.h" />
     <ClInclude Include="DetectDepthObstacle.h" />
     <ClInclude Include="DetectFace.h" />
     <ClInclude Include="DetectStopSign.h" />
@@ -39,6 +41,8 @@
     <ClInclude Include="SimulateControl.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BaseCapture.cpp" />
+    <ClCompile Include="BaseControl.cpp" />
     <ClCompile Include="DetectDepthObstacle.cpp" />
     <ClCompile Include="DetectFace.cpp" />
     <ClCompile Include="DetectStopSign.cpp" />

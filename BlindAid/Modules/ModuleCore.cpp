@@ -15,20 +15,10 @@ void Core::operator()()
 {  
   static int frame = 0;
 
-  if (_params->GetCaptureParams()->GetMode() == Parameters::Mode::Realtime)
-    _capture = new Capture(_params->GetCaptureParams(), NULL, _output->GetCaptureResults());
-  else
-    _capture = new CaptureSim(_params->GetCaptureParams(), NULL, _output->GetCaptureResults());
-  
+  _capture = Capture::MakeCapture(_params->GetCaptureParams(), NULL, _output->GetCaptureResults());
   _record = new Record(_params->GetRecordParams(), _output->GetCaptureResults(), NULL);
-
   _vision = new Vision(_params->GetVisionParams(), _output->GetCaptureResults(), _output->GetVisionResults());
-  
-  if (_params->GetControlParams()->GetMode() == Parameters::Mode::Realtime)
-    _control = new Control(_params->GetDisplayParams(), _output->GetVisionResults(), _output->GetCaptureResults());
-  else
-    _control = new ControlSim(_params->GetDisplayParams(), _output->GetVisionResults(), _output->GetCaptureResults());
-
+  _control = Control::MakeControl(_params->GetDisplayParams(), _output->GetVisionResults(), _output->GetCaptureResults());
   _display = new Display(_params->GetDisplayParams(), _output->GetVisionResults(), _output->GetCaptureResults());
 
   do
