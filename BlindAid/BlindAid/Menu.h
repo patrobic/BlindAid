@@ -5,7 +5,7 @@
 #include "LoadConfig.h"
 #include "SaveConfig.h"
 
-#include "..\Modules\ModuleCore.h"
+#include "..\Modules\Core.h"
 
 class MainMenu
 {
@@ -27,7 +27,7 @@ private:
   void TestRealtimeCapture();
   void TestRealtimeControl(std::string colorPath, std::string depthPath, int count);
 
-  Core _core;
+  Core::Core _core;
   Core::Parameters _params;
   Core::Data _results;
 };

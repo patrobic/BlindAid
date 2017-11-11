@@ -6,7 +6,7 @@
 #include "libconfig.h"
 
 #include "..\Modules\IParameters.h"
-#include "..\Modules\ModuleCore.h"
+#include "..\Modules\Core.h"
 
 using namespace libconfig;
 
@@ -63,9 +63,9 @@ private:
   {
     BaseParams(setting, parameters);
 
-    DepthObstacle(setting.lookup("depthobstacle"), parameters->GetDepthObstacleParams());
-    TrafficLight(setting.lookup("trafficlight"), parameters->GetTrafficLightParams());
-    StopSign(setting.lookup("stopsign"), parameters->GetStopSignParams());
+    LoadDepthObstacle(setting.lookup("depthobstacle"), parameters->GetDepthObstacleParams());
+    LoadTrafficLight(setting.lookup("trafficlight"), parameters->GetTrafficLightParams());
+    LoadStopSign(setting.lookup("stopsign"), parameters->GetStopSignParams());
   }
 
   void Control(Setting &setting, Control::Parameters *parameters)
@@ -81,19 +81,19 @@ private:
 
   }
 
-  void DepthObstacle(Setting &setting, DetectDepthObstacle::Parameters *parameters)
+  void LoadDepthObstacle(Setting &setting, Vision::DepthObstacle::Parameters *parameters)
   {
     BaseParams(setting, parameters);
 
   }
 
-  void TrafficLight(Setting &setting, DetectTrafficLight::Parameters *parameters)
+  void LoadTrafficLight(Setting &setting, Vision::TrafficLight::Parameters *parameters)
   {
     BaseParams(setting, parameters);
 
   }
 
-  void StopSign(Setting &setting, DetectStopSign::Parameters *parameters)
+  void LoadStopSign(Setting &setting, Vision::StopSign::Parameters *parameters)
   {
     BaseParams(setting, parameters);
 

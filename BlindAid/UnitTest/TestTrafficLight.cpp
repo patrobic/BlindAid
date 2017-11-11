@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
-#include "..\Modules\ModuleCore.h"
+#include "..\Modules\Core.h"
 
 #include <vector>
 #include <string>
@@ -60,7 +60,7 @@ namespace UnitTest
 
       Core::Parameters params;
       Core::Data results;
-      Core core(&params, NULL, &results);
+      Core::Core core(&params, NULL, &results);
 
       params.GetCaptureParams()->SetMode(IParameters::Mode::Simulate);
       params.GetControlParams()->SetMode(IParameters::Mode::Simulate);
@@ -75,7 +75,7 @@ namespace UnitTest
         params.GetCaptureParams()->SetDepthSimDataPath(PATH + testData.at(i)._depthPath);
         core();
         
-        DetectTrafficLight::Data *tlResults = results.GetVisionResults()->GetTrafficLightResults();
+        Vision::TrafficLight::Data *tlResults = results.GetVisionResults()->GetTrafficLightResults();
 
         int countDiff = testData.at(i)._points.size() - tlResults->Size();
         Assert::IsTrue(abs(countDiff) <= 2); // ensure that detected number of lights is NOT more than expected (i.e. allow missing detections but not false detections).

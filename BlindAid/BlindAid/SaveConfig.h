@@ -6,7 +6,7 @@
 #include "libconfig.h"
 
 #include "..\Modules\IParameters.h"
-#include "..\Modules\ModuleCore.h"
+#include "..\Modules\Core.h"
 
 using namespace libconfig;
 
@@ -53,9 +53,9 @@ public:
   {
     BaseParams(setting, parameters);
 
-    DepthObstacle(setting.add("depthobstacle", Setting::Type::TypeGroup), parameters->GetDepthObstacleParams());
-    TrafficLight(setting.add("trafficlight", Setting::Type::TypeGroup), parameters->GetTrafficLightParams());
-    StopSign(setting.add("stopsign", Setting::Type::TypeGroup), parameters->GetStopSignParams());
+    SaveDepthObstacle(setting.add("depthobstacle", Setting::Type::TypeGroup), parameters->GetDepthObstacleParams());
+    SaveTrafficLight(setting.add("trafficlight", Setting::Type::TypeGroup), parameters->GetTrafficLightParams());
+    SaveStopSign(setting.add("stopsign", Setting::Type::TypeGroup), parameters->GetStopSignParams());
   }
 
   void Control(Setting &setting, Control::Parameters *parameters)
@@ -70,19 +70,19 @@ public:
 
   }
 
-  void DepthObstacle(Setting &setting, DetectDepthObstacle::Parameters *parameters)
+  void SaveDepthObstacle(Setting &setting, Vision::DepthObstacle::Parameters *parameters)
   {
     BaseParams(setting, parameters);
 
   }
 
-  void TrafficLight(Setting &setting, DetectTrafficLight::Parameters *parameters)
+  void SaveTrafficLight(Setting &setting, Vision::TrafficLight::Parameters *parameters)
   {
     BaseParams(setting, parameters);
 
   }
 
-  void StopSign(Setting &setting, DetectStopSign::Parameters *parameters)
+  void SaveStopSign(Setting &setting, Vision::StopSign::Parameters *parameters)
   {
     BaseParams(setting, parameters);
 

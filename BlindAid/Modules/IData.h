@@ -8,6 +8,7 @@
 class IData
 {
 public:
+  virtual bool Valid() = 0;
   virtual void Clear() = 0;
 
 protected:

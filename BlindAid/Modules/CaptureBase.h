@@ -2,11 +2,8 @@
 
 #include "IModule.h"
 
-#include "librealsense2\rs.hpp"
-
-class CaptureBase : public IModule
+namespace Capture
 {
-public:
   class Parameters : public IParameters
   {
   public:
@@ -15,6 +12,11 @@ public:
       Photo,
       Video
     };
+
+    bool Valid()
+    {
+      return true;
+    }
 
     MediaType GetMediaType() { return _mediaType; }
     void SetMediaType(MediaType mediaType) { _mediaType = mediaType; }
@@ -30,10 +32,10 @@ public:
   private:
     // indicate whether simulation media is photo or video.
     MediaType _mediaType = Photo;
-    
+
     // path to color image for simulation.
     std::string _colorSimDataPath;
-    
+
     // path to depth image for simulation.
     std::string _depthSimDataPath;
 
@@ -45,6 +47,10 @@ public:
   {
   public:
     void Clear() {}
+    bool Valid()
+    {
+      return true;
+    }
 
     cv::Mat *GetRgbImage() { return &_rgbImage; }
     cv::Mat *GetHsvImage() { return &_hsvImage; }
@@ -56,37 +62,14 @@ public:
     cv::Mat _depthImage;
   };
 
-  CaptureBase(IParameters *params, IData *input, IData *output)
+  class Base : public IModule<Parameters, IData, Data>
   {
-    _params = static_cast<Parameters*>(params);
-    _input = input;
-    _output = static_cast<Data*>(output);
-  }
+  public:
+    Base(IParameters *params, IData *input, IData *output);
+    static Base *MakeCapture(IParameters *params, IData *input, IData *output);
 
-  virtual void operator()() = 0;
-  
-protected:
-  void CreateHsvImage()
-  {
-    cvtColor(*_output->GetRgbImage(), *_output->GetHsvImage(), CV_BGR2HSV);
-  }
+  protected:
+    void CreateHsvImage();
 
-  Parameters *_params;
-  IData *_input;
-  Data *_output;
-};
-
-class Capture : public CaptureBase
-{
-public:
-  Capture(IParameters *params, IData *input, IData *output);
-  void operator()();
-
-private:
-  void GetFrame();
-
-  rs2::pipeline _pipe;
-  rs2::config _cfg;
-  rs2::frameset _frames;
-  rs2::frame _colorFrame;
-};
+  };
+}

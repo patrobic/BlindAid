@@ -7,6 +7,9 @@
 class IParameters
 {
 public:
+  // TODO: check that data is valid when received by a module.
+  virtual bool Valid() = 0;
+
   enum Toggle
   {
     Disabled,

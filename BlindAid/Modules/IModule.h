@@ -15,33 +15,47 @@
 #include "IParameters.h"
 #include "IData.h"
 
+template<class Params, class Input, class Output>
 class IModule
 {
 public:
-  class Parameters : public IParameters
+  IModule(IParameters *params, IData *input, IData *output)
   {
-  public:
+    _params = static_cast<Params*>(params);
+    _input = static_cast<Input*>(input);
+    _output = static_cast<Output*>(output);
+  }
 
-  private:
-
-  };
-
-  class Data: public IData
+  void operator()()
   {
-  public:
+    if (!_params->GetToggle())
+      return;
 
-  private:
-
-  };
-
-  virtual void operator()() = 0;
+    Valid();
+    Clear();
+    Process();
+  }
 
 protected:
-};
+  virtual void Valid()
+  {
+    if (!_params->Valid())
+      throw std::exception("Parameters not valid.");
 
-class DetectBase : public IModule
-{
-public:
+    if(_input != NULL)
+      if (!_input->Valid())
+        throw std::exception("Input not valid.");
+  }
 
-protected:
+  virtual void Clear()
+  {
+    if(_output != NULL)
+      _output->Clear();
+  }
+
+  virtual void Process() = 0;
+
+  Params *_params;
+  Input *_input;
+  Output *_output;
 };

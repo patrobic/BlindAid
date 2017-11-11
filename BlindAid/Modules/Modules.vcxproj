@@ -19,40 +19,45 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Users\patri\Downloads\librealsense-master\librealsense-master\examples\example.hpp" />
-    <ClInclude Include="DetectDepthObstacle.h" />
-    <ClInclude Include="DetectFace.h" />
-    <ClInclude Include="DetectStopSign.h" />
-    <ClInclude Include="DetectTrafficLight.h" />
-    <ClInclude Include="DetectVehicle.h" />
+    <ClInclude Include="CaptureBase.h" />
+    <ClInclude Include="ControlBase.h" />
+    <ClInclude Include="DetectBase.h" />
+    <ClInclude Include="TrafficLightBase.h" />
+    <ClInclude Include="DepthObstacle.h" />
+    <ClInclude Include="StopSign.h" />
+    <ClInclude Include="TrafficLightBlobDetector.h" />
+    <ClInclude Include="TrafficLightDeepLearning.h" />
     <ClInclude Include="IModule.h" />
     <ClInclude Include="IParameters.h" />
     <ClInclude Include="IData.h" />
-    <ClInclude Include="ModuleCapture.h" />
-    <ClInclude Include="ModuleControl.h" />
-    <ClInclude Include="ModuleCore.h" />
-    <ClInclude Include="ModuleDisplay.h" />
-    <ClInclude Include="ModuleVision.h" />
-    <ClInclude Include="ModuleRecord.h" />
+    <ClInclude Include="CaptureRealtime.h" />
+    <ClInclude Include="ControlRealtime.h" />
+    <ClInclude Include="Core.h" />
+    <ClInclude Include="Display.h" />
+    <ClInclude Include="Vision.h" />
+    <ClInclude Include="Record.h" />
     <ClInclude Include="Serial.h" />
-    <ClInclude Include="SimulateCapture.h" />
-    <ClInclude Include="SimulateControl.h" />
+    <ClInclude Include="CaptureSimulate.h" />
+    <ClInclude Include="ControlSimulate.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DetectDepthObstacle.cpp" />
-    <ClCompile Include="DetectFace.cpp" />
-    <ClCompile Include="DetectStopSign.cpp" />
-    <ClCompile Include="DetectTrafficLight.cpp" />
-    <ClCompile Include="DetectVehicle.cpp" />
-    <ClCompile Include="ModuleCapture.cpp" />
-    <ClCompile Include="ModuleControl.cpp" />
-    <ClCompile Include="ModuleCore.cpp" />
-    <ClCompile Include="ModuleDisplay.cpp" />
-    <ClCompile Include="ModuleVision.cpp" />
-    <ClCompile Include="ModuleRecord.cpp" />
+    <ClCompile Include="CaptureBase.cpp" />
+    <ClCompile Include="ControlBase.cpp" />
+    <ClCompile Include="DetectBase.cpp" />
+    <ClCompile Include="TrafficLightBase.cpp" />
+    <ClCompile Include="DepthObstacle.cpp" />
+    <ClCompile Include="StopSign.cpp" />
+    <ClCompile Include="TrafficLightBlobDetector.cpp" />
+    <ClCompile Include="TrafficLightDeepLearning.cpp" />
+    <ClCompile Include="CaptureRealtime.cpp" />
+    <ClCompile Include="ControlRealtime.cpp" />
+    <ClCompile Include="Core.cpp" />
+    <ClCompile Include="Display.cpp" />
+    <ClCompile Include="Vision.cpp" />
+    <ClCompile Include="Record.cpp" />
     <ClCompile Include="Serial.cpp" />
-    <ClCompile Include="SimulateCapture.cpp" />
-    <ClCompile Include="SimulateControl.cpp" />
+    <ClCompile Include="CaptureSimulate.cpp" />
+    <ClCompile Include="ControlSimulate.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4E97E47C-8B4A-4528-A98A-0FE82A8B1675}</ProjectGuid>

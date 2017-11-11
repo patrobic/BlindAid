@@ -1,20 +1,24 @@
 #pragma once
 
-#include "ModuleCapture.h"
-#include "ModuleRecord.h"
-#include "ModuleVision.h"
-#include "ModuleControl.h"
-#include "ModuleDisplay.h"
+#include "CaptureBase.h"
+#include "Record.h"
+#include "Vision.h"
+#include "ControlBase.h"
+#include "Display.h"
 
-#include "SimulateCapture.h"
-#include "SimulateControl.h"
+#include "CaptureSimulate.h"
+#include "ControlSimulate.h"
 
-class Core : public IModule
+namespace Core
 {
-public:
   class Parameters : public IParameters
   {
   public:
+    bool Valid()
+    {
+      return true;
+    }
+
     Capture::Parameters *GetCaptureParams() { return &_captureParams; }
     Record::Parameters *GetRecordParams() { return &_recordParams; }
     Vision::Parameters *GetVisionParams() { return &_visionParams; }
@@ -38,6 +42,10 @@ public:
   {
   public:
     void Clear() {}
+    bool Valid()
+    {
+      return true;
+    }
 
     Capture::Data *GetCaptureResults() { return &_captureResults; }
     Record::Data *GetRecordResults() { return &_recordResults; }
@@ -53,18 +61,18 @@ public:
     Display::Data _displayResults;
   };
 
-  Core(IParameters *params, IData *input, IData *output);
-  void operator()();
+  class Core : public IModule<Parameters, Data, Data>
+  {
+  public:
+    Core(IParameters *params, IData *input, IData *output);
+    void Process();
 
-private:
-  Parameters *_params;
-  Data *_input;
-  Data *_output;
-
-  // capture and control declared as base class pointer so that it can be declared based on parameter as either simulate or realtime class.
-  IModule *_capture;
-  Record *_record;
-  Vision *_vision;
-  IModule *_control;
-  Display *_display;
-};
+  private:
+    // capture and control declared as base class pointer so that it can be declared based on parameter as either simulate or realtime class.
+    Capture::Base *_capture;
+    Record::Record *_record;
+    Vision::Vision *_vision;
+    Control::Base *_control;
+    Display::Display *_display;
+  };
+}
