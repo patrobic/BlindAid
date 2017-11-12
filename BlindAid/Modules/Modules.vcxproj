@@ -22,6 +22,7 @@
     <ClInclude Include="CaptureBase.h" />
     <ClInclude Include="ControlBase.h" />
     <ClInclude Include="DetectBase.h" />
+    <ClInclude Include="IResult.h" />
     <ClInclude Include="TrafficLightBase.h" />
     <ClInclude Include="DepthObstacle.h" />
     <ClInclude Include="StopSign.h" />

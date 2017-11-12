@@ -15,6 +15,7 @@ namespace Vision
 
     void BlobDetector::Process()
     {
+      _output->SetParams(_params->GetConsecutiveCount(), _params->GetMaximumDistance(), _params->GetMaximumRadiusDiff());
       MaskColors();
       DetectBlobs();
       //ConfirmWithBox();
@@ -24,7 +25,7 @@ namespace Vision
     {
       Ptr<SimpleBlobDetector> sbd = SimpleBlobDetector::create(*_params->GetBlobParams());
 
-      vector<KeyPoint> keypoints;
+      vector<Result> points;
 
       for (int i = 0; i < 3; ++i)
       {
@@ -33,8 +34,10 @@ namespace Vision
         sbd->detect(_blobMask[i], keypoints);
 
         for (int j = 0; j < keypoints.size(); j++)
-          _output->PushBack(Circle(keypoints[j].pt, (int)keypoints[j].size, (Circle::Color)i));
+          points.push_back(Result(keypoints[j].pt, (int)keypoints[j].size, (Result::Color)i));
       }
+
+      _output->Set(points);
     }
 
     void BlobDetector::MaskColors()
@@ -61,37 +64,38 @@ namespace Vision
       int sizeFactor = 12;
       Mat box;
       Rect rect;
-      for (int i = 0; i < _output->Size(); ++i)
-      {
-        rect.x = std::max(0, _output->At(i)._center.x - _output->Size() * sizeFactor);
-        rect.y = std::max(0, _output->At(i)._center.y - _output->Size() * sizeFactor);
-        rect.width = std::min(_input->GetRgbImage()->cols - rect.x - 1, _output->Size() * 2 * sizeFactor);
-        rect.height = std::min(_input->GetRgbImage()->rows - rect.y - 1, _output->Size() * 2 * sizeFactor);
-
-        box = _v(rect);
-
-        threshold(box, box, 70, 255, THRESH_BINARY_INV);
-        dilate(box, box, Mat(), Point(-1, -1), 1);
-        erode(box, box, Mat(), Point(-1, -1), 2);
-
-        vector<vector<cv::Point>> contours;
-        vector<Vec4i> hierarchy;
-
-        findContours(box, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point(0, 0));
-
-        vector<vector<Point> > contours_poly;
-        contours_poly.resize(contours.size());
-
-
-        for (int j = 0; j < contours_poly.size(); ++j)
+      for(int color = 0; color < 3; ++color)
+        for (int i = 0; i < _output->Size(); ++i)
         {
-          approxPolyDP(Mat(contours[j]), contours_poly[j], 10, true);
-          drawContours(box, contours_poly, j, 128, 1, 8, vector<Vec4i>(), 0, Point());
+          rect.x = std::max(0, _output->At(i)._center.x - _output->Size() * sizeFactor);
+          rect.y = std::max(0, _output->At(i)._center.y - _output->Size() * sizeFactor);
+          rect.width = std::min(_input->GetRgbImage()->cols - rect.x - 1, _output->Size() * 2 * sizeFactor);
+          rect.height = std::min(_input->GetRgbImage()->rows - rect.y - 1, _output->Size() * 2 * sizeFactor);
+
+          box = _v(rect);
+
+          threshold(box, box, 70, 255, THRESH_BINARY_INV);
+          dilate(box, box, Mat(), Point(-1, -1), 1);
+          erode(box, box, Mat(), Point(-1, -1), 2);
+
+          vector<vector<cv::Point>> contours;
+          vector<Vec4i> hierarchy;
+
+          findContours(box, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point(0, 0));
+
+          vector<vector<Point> > contours_poly;
+          contours_poly.resize(contours.size());
+
+
+          for (int j = 0; j < contours_poly.size(); ++j)
+          {
+            approxPolyDP(Mat(contours[j]), contours_poly[j], 10, true);
+            drawContours(box, contours_poly, j, 128, 1, 8, vector<Vec4i>(), 0, Point());
+          }
+          // TODO
+          // detect if shape is near rectangular.
+          // shape contains original light region.
         }
-        // TODO
-        // detect if shape is near rectangular.
-        // shape contains original light region.
-      }
     }
   }
 }

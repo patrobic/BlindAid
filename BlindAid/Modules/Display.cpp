@@ -42,15 +42,15 @@ namespace Display
 
   void Display::DrawTrafficLights()
   {
-    Vision::TrafficLight::Data result = *_input->GetTrafficLightResults();
+    vector<Vision::TrafficLight::Result> result = _input->GetTrafficLightResults()->Get();
 
-    for (int i = 0; i < _input->GetTrafficLightResults()->Size(); ++i)
+    for (int i = 0; i < result.size(); ++i)
     {
       Scalar color[3] = { Scalar(0, 0, 255), Scalar(0, 255, 0), Scalar(0, 255, 255) };
       string name[3] = { "Red", "Green", "Yellow" };
 
-      circle(*_input->GetCurrentColorImage(), result.At(i)._center, (int)result.At(i)._radius + 2, color[result.At(i)._color], 2);
-      putText(*_input->GetCurrentColorImage(), name[result.At(i)._color] + "TrafficLight" + to_string(i), Point(result.At(i)._center.x - result.At(i)._radius, result.At(i)._center.y - result.At(i)._radius), FONT_HERSHEY_PLAIN, 1, color[result.At(i)._color]);
+      circle(*_input->GetCurrentColorImage(), result.at(i)._center, (int)result.at(i)._radius + 2, color[result.at(i)._color], 2);
+      putText(*_input->GetCurrentColorImage(), name[result.at(i)._color] + "TrafficLight" + to_string(i), Point(result.at(i)._center.x - result.at(i)._radius, result.at(i)._center.y - result.at(i)._radius), FONT_HERSHEY_PLAIN, 1, color[result.at(i)._color]);
     }
   }
 

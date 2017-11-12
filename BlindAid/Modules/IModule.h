@@ -32,7 +32,7 @@ public:
       return;
 
     Valid();
-    Clear();
+    //Clear();
     Process();
   }
 
