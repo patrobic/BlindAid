@@ -14,6 +14,7 @@
 
 #include "IParameters.h"
 #include "IData.h"
+#include "IResult.h"
 
 template<class Params, class Input, class Output>
 class IModule

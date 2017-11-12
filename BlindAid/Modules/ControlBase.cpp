@@ -17,9 +17,30 @@ namespace Control
 
   }
 
-  std::string Base::CalculateVibrationValue(int pixel) // TODO: May belong instead in Control... not ControlBase?
+  void Base::MapVibrationValues() // TODO: May belong instead in Control... not ControlBase?
   {
-    pixel = 255 - pixel; // TODO: implement function
+    _output->Clear();
+
+    for (int i = 0; i < VERT_REGIONS; ++i)
+      for (int j = 0; j < HORZ_REGIONS; ++j)
+      {
+        float distanceMeters = PixelToMeters(_input->GetDepthObstacleResults()->GetRegionIntensity(i, j)); // convert given region pixel distance to meters.
+
+        _vibrationIntensity[i] = max(_vibrationIntensity[i], MappingFunction(distanceMeters, i, j)); // map the value to a vibration intensity ratio, and the maximum for that finger.
+      }
+  }
+
+  float Base::MappingFunction(float distance, int col, int row)
+  {
+    if (distance < _params->GetNearestBound() || distance > _params->GetFarthestBound(col, row))
+      return 0.f;
+
+    else
+    {
+      float slope = (_params->GetMaximumVibration() - _params->GetMinimumVibration()) / (_params->GetFarthestBound(col, row) - _params->GetNearestBound());
+
+      return (distance - _params->GetNearestBound()) * slope + _params->GetMinimumVibration();
+    }
 
     // TODO: design algorithm that calculates vibrator control value (voltage/factor/whatever is required by the API controlling the Arduino/glove).
     // Should implement a function that maps the nearest pixel intensity value to control value in some non-linear way,
@@ -32,26 +53,16 @@ namespace Control
     // |                 .
     // |__________________._____________ [distance]
     // 0             128             255
-
-    return std::string(3 - std::to_string(pixel).length(), '0') + std::to_string(pixel);
   }
 
-  void Base::CheckConsecutiveDetections() // TODO: probably does NOT belong here.
+  float Base::PixelToMeters(int pixel)
   {
-    // TODO: function that counts the number of consecutive detections of a given type (point & radius), and only accepts it once the count reaches a certain threshold.
-    // Always store the detections of the previous image, along with an associated counter for each (starting at 1).
-    // For each frame
-    //    identify which current detections correspond to any last detections (threshold of distance and size scaling)
-    //    if any do correspond
-    //      overwrite previous detection with latest
-    //      increment corresponding counter
-    //    else
-    //      delete the detection and counter
-    //    for each counter-detection pair
-    //       if the counter >= threshold
-    //          act upon the detection (draw + feedback)
+    // TODO: more complex mapping once we test camera, if conversion is non-linear.
+    return pixel / 255.f * _params->GetMaximumDepthSpec();;
+  }
 
-    // To do this, beef up the Results class of TrafficLight, so that each detection also includes a counter. (or should the results class be STUPID, and Control hold a copy of previous results and counter?)
-    //    Where should the threshold checking be done? (TrafficLight, TrafficLight::Results, Control)???
+  int Base::MetersToPixel(float meters)
+  {
+    return meters / _params->GetMaximumDepthSpec() * 255;
   }
 }

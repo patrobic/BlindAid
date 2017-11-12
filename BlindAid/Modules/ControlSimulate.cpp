@@ -13,6 +13,12 @@ namespace Control
 
   void Simulate::Process()
   {
+    MapVibrationValues();
+    Print();
+  }
+
+  void Simulate::Print()
+  {
     steady_clock::time_point start = steady_clock::now();
 
     steady_clock::time_point end = steady_clock::now();
@@ -20,13 +26,13 @@ namespace Control
 
     cout << "[CONTROL] Frame received (" << time_span.count() * 1000 << "ms).\n";
     cout << "\t[GLOVE] \
-Thumb(" << CalculateVibrationValue(_input->GetDepthObstacleResults()->GetMinColIntensity(0)) << "), \
-Index(" << CalculateVibrationValue(_input->GetDepthObstacleResults()->GetMinColIntensity(1)) << "), \
-Middle(" << CalculateVibrationValue(_input->GetDepthObstacleResults()->GetMinColIntensity(2)) << "), \
-Ring(" << CalculateVibrationValue(_input->GetDepthObstacleResults()->GetMinColIntensity(3)) << "), \
-Pinky(" << CalculateVibrationValue(_input->GetDepthObstacleResults()->GetMinColIntensity(4)) << "), \
-Upper(" << CalculateVibrationValue(_input->GetDepthObstacleResults()->GetMinRowIntensity(0)) << "), \
-Lower(" << CalculateVibrationValue(_input->GetDepthObstacleResults()->GetMinRowIntensity(2)) << ").\n";
+Thumb(" << _vibrationIntensity[0] << "), \
+Index(" << _vibrationIntensity[1] << "), \
+Middle(" << _vibrationIntensity[2] << "), \
+Ring(" << _vibrationIntensity[3] << "), \
+Pinky(" << _vibrationIntensity[4] << "), \
+Upper(" << _vibrationIntensity[6] << "), \
+Lower(" << _vibrationIntensity[7] << ").\n";
 
     cout << "\t[AUDIO]";
 
@@ -39,5 +45,6 @@ Lower(" << CalculateVibrationValue(_input->GetDepthObstacleResults()->GetMinRowI
 
     int stopSignCount = _input->GetStopSignResults()->GetRegion()._radius > 0 ? 1 : 0;
     if (stopSignCount > 0) cout << " StopSign(" << trafficLightCount << ")"; cout << ".\n";
+
   }
 }

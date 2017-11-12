@@ -49,10 +49,10 @@ namespace Control
     _controlMessage = "<";
 
     for (int i = 0; i < 5; ++i)
-      _controlMessage += CalculateVibrationValue(_input->GetDepthObstacleResults()->GetMinColIntensity(i));
+      _controlMessage += _vibrationIntensity[i];
 
     for (int i = 0; i < 2; ++i)
-      _controlMessage += CalculateVibrationValue(0);
+      _controlMessage += _vibrationIntensity[VERT_REGIONS];
 
     _controlMessage += ">";
   }

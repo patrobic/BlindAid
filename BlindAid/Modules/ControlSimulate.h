@@ -13,6 +13,8 @@ namespace Control
     void Process();
 
   private:
+    void Print();
+
     cv::Mat _depthMat;
   };
 }

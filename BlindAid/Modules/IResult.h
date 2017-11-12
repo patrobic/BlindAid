@@ -1,9 +1,10 @@
 #pragma once
 
-template <class T>
 class IResult
 {
 public:
+  virtual void Clear() = 0;
 
-  std::vector<T> _result;
+protected:
+
 };
