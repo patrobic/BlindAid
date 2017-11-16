@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ControlBase.h"
+#include "Control.h"
 #include "Serial.h"
 
 namespace Control

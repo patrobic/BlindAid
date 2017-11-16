@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IModule.h"
-#include "ControlBase.h"
+#include "Control.h"
 #include "Vision.h"
 
 namespace Control

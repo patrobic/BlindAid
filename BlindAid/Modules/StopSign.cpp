@@ -7,7 +7,7 @@ namespace Vision
 {
   namespace StopSign
   {
-    Detect::Detect(IParameters *params, IData *input, IData *output) : DetectBase(params, input, output)
+    Detect::Detect(IParameters *params, IData *input, IData *output) : IDetect(params, input, output)
     {
 
     }

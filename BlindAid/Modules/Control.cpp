@@ -1,4 +1,4 @@
-#include "ControlBase.h"
+#include "Control.h"
 #include "ControlRealtime.h"
 #include "ControlSimulate.h"
 

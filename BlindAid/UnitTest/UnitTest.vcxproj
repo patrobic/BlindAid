@@ -172,6 +172,8 @@
     <ClCompile Include="TestCore.cpp" />
     <ClCompile Include="TestDepthObstacle.cpp" />
     <ClCompile Include="TestFace.cpp" />
+    <ClCompile Include="TestLoadConfig.cpp" />
+    <ClCompile Include="TestSaveConfig.cpp" />
     <ClCompile Include="TestStopSign.cpp" />
     <ClCompile Include="TestTrafficLight.cpp" />
     <ClCompile Include="TestVehicle.cpp" />

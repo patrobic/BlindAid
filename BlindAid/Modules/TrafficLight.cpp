@@ -1,4 +1,4 @@
-#include "TrafficLightBase.h"
+#include "TrafficLight.h"
 #include "TrafficLightBlobDetector.h"
 #include "TrafficLightDeepLearning.h"
 
@@ -14,7 +14,7 @@ namespace Vision
         return new DeepLearning::DeepLearning(params, input, output);
     }
 
-    Base::Base(IParameters *params, IData *input, IData *output) : DetectBase(params, input, output)
+    Base::Base(IParameters *params, IData *input, IData *output) : IDetect(params, input, output)
     {
 
     }

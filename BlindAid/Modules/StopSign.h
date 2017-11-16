@@ -1,7 +1,7 @@
 #pragma once
 
-#include "DetectBase.h"
-#include "CaptureBase.h"
+#include "IDetect.h"
+#include "Capture.h"
 
 namespace Vision
 {
@@ -23,7 +23,7 @@ namespace Vision
       Circle _circle;
     };
 
-    class Detect : public DetectBase<Parameters, Capture::Data, Data>
+    class Detect : public IDetect<Parameters, Capture::Data, Data>
     {
     public:
       Detect(IParameters *params, IData *input, IData *output);

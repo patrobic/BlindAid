@@ -4,7 +4,7 @@
 #include "CaptureSimulate.h"
 
 #include "DepthObstacle.h"
-#include "TrafficLightBase.h"
+#include "TrafficLight.h"
 #include "StopSign.h"
 
 namespace Vision

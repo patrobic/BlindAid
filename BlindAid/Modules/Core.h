@@ -1,9 +1,9 @@
 #pragma once
 
-#include "CaptureBase.h"
+#include "Capture.h"
 #include "Record.h"
 #include "Vision.h"
-#include "ControlBase.h"
+#include "Control.h"
 #include "Display.h"
 
 #include "CaptureSimulate.h"

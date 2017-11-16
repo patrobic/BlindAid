@@ -1,6 +1,6 @@
 #pragma once
 
-#include "TrafficLightBase.h"
+#include "TrafficLight.h"
 
 namespace Vision
 {

@@ -1,4 +1,4 @@
-#include "CaptureBase.h"
+#include "Capture.h"
 #include "CaptureRealtime.h"
 #include "CaptureSimulate.h"
 

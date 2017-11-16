@@ -19,13 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CaptureBase.h" />
-    <ClInclude Include="ControlBase.h" />
+    <ClInclude Include="Capture.h" />
+    <ClInclude Include="Control.h" />
     <ClInclude Include="ControlParameters.h" />
-    <ClInclude Include="DetectBase.h" />
+    <ClInclude Include="IDetect.h" />
     <ClInclude Include="IResult.h" />
     <ClInclude Include="CaptureParameters.h" />
-    <ClInclude Include="TrafficLightBase.h" />
+    <ClInclude Include="TrafficLight.h" />
     <ClInclude Include="DepthObstacle.h" />
     <ClInclude Include="StopSign.h" />
     <ClInclude Include="TrafficLightBlobDetector.h" />
@@ -45,9 +45,9 @@
     <ClInclude Include="VisionParameters.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CaptureBase.cpp" />
-    <ClCompile Include="ControlBase.cpp" />
-    <ClCompile Include="TrafficLightBase.cpp" />
+    <ClCompile Include="Capture.cpp" />
+    <ClCompile Include="Control.cpp" />
+    <ClCompile Include="TrafficLight.cpp" />
     <ClCompile Include="DepthObstacle.cpp" />
     <ClCompile Include="StopSign.cpp" />
     <ClCompile Include="TrafficLightBlobDetector.cpp" />

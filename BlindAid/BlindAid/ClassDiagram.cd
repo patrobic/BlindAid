@@ -194,7 +194,7 @@
       <FileName>IModule.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DetectBase">
+  <Class Name="IDetect">
     <Position X="7.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>

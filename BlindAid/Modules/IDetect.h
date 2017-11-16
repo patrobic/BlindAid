@@ -6,10 +6,10 @@
 namespace Vision
 {
   template<class Params, class Input, class Output>
-  class DetectBase : public IModule<Params, Input, Output>
+  class IDetect : public IModule<Params, Input, Output>
   {
   public:
-    DetectBase(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
+    IDetect(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
     {
 
     }

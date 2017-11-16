@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IModule.h"
-#include "CaptureBase.h"
+#include "Capture.h"
 
 namespace Capture
 {

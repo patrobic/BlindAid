@@ -1,7 +1,7 @@
 #pragma once
 
-#include "DetectBase.h"
-#include "CaptureBase.h"
+#include "IDetect.h"
+#include "Capture.h"
 
 namespace Vision
 {
@@ -54,7 +54,7 @@ namespace Vision
       int _maximumRadiusDiff;
     };
 
-    class Base : public DetectBase<Parameters, Capture::Data, Data>
+    class Base : public IDetect<Parameters, Capture::Data, Data>
     {
     public:
       Base(IParameters *params, IData *input, IData *output);

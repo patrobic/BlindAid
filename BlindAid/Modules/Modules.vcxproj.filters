@@ -13,31 +13,16 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{3d1eb98a-26df-4ffe-91d7-046ec1e72114}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parameters">
+      <UniqueIdentifier>{e9c2f4db-be08-4d0f-95af-778115441091}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IModule.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IParameters.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Serial.h">
       <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CaptureBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ControlBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DetectBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TrafficLightBase.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DepthObstacle.h">
       <Filter>Header Files</Filter>
@@ -75,31 +60,43 @@
     <ClInclude Include="ControlSimulate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IResult.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="IData.h">
+      <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="ControlParameters.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="IModule.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IParameters.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IResult.h">
+      <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="CaptureParameters.h">
-      <Filter>Header Files</Filter>
+      <Filter>Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlParameters.h">
+      <Filter>Parameters</Filter>
     </ClInclude>
     <ClInclude Include="VisionParameters.h">
+      <Filter>Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="IDetect.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="TrafficLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Capture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Control.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Serial.cpp">
       <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CaptureBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ControlBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TrafficLightBase.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DepthObstacle.cpp">
       <Filter>Source Files</Filter>
@@ -135,6 +132,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ControlSimulate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Capture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Control.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TrafficLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

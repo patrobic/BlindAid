@@ -1,7 +1,7 @@
 #pragma once
 
-#include "DetectBase.h"
-#include "CaptureBase.h"
+#include "IDetect.h"
+#include "Capture.h"
 
 #define DEPTH_RANGE 256
 
@@ -47,7 +47,7 @@ namespace Vision
       std::array<std::array<Region, HORZ_REGIONS>, VERT_REGIONS> _regions;
     };
 
-    class Detect : public DetectBase<Parameters, Capture::Data, Data>
+    class Detect : public IDetect<Parameters, Capture::Data, Data>
     {
     public:
       Detect(IParameters *params, IData *input, IData *output);
