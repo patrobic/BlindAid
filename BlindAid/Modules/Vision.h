@@ -9,29 +9,6 @@
 
 namespace Vision
 {
-  class Parameters : public SwitchableParameters
-  {
-  public:
-    DepthObstacle::Parameters *GetDepthObstacleParams() { return &_dodParams; }
-    TrafficLight::Parameters *GetTrafficLightParams() { return &_tldParams; }
-    StopSign::Parameters *GetStopSignParams() { return &_ssdParams; }
-
-    bool Valid()
-    {
-      return true;
-    }
-
-  private:
-    // parameters class for depth obstacle detector.
-    DepthObstacle::Parameters _dodParams;
-
-    // parameters class for traffic light detector.
-    TrafficLight::Parameters _tldParams;
-
-    // parameters class for stop sign detector.
-    StopSign::Parameters _ssdParams;
-  };
-
   class Data : public IData
   {
   public:
@@ -66,6 +43,7 @@ namespace Vision
     Vision(IParameters *params, IData *input, IData *output);
 
   private:
+    void CreateModules();
     void Process();
     
     DepthObstacle::Detect *_depthObstacle;

@@ -19,7 +19,7 @@ namespace Record
     steady_clock::time_point end = steady_clock::now();
     duration<double> time_span = duration_cast<duration<double>>(end - start);
 
-    cout << "[Record] Frame recorded (" << time_span.count() * 1000 << "ms).\n";
+    cout << "[Record ] Frame recorded (" << time_span.count() * 1000 << "ms).\n";
   }
 
   void Record::SaveToDisk()

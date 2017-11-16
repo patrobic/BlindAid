@@ -19,8 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LoadConfig.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="SaveConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Menu.h" />

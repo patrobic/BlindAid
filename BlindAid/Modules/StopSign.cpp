@@ -12,11 +12,6 @@ namespace Vision
 
     }
 
-    void Detect::PreProcess()
-    {
-
-    }
-
     void Detect::Process()
     {
 

@@ -6,15 +6,18 @@ namespace Vision
 {
   namespace TrafficLight
   {
-    class DeepLearning : public Base
+    namespace DeepLearning
     {
-    public:
-      DeepLearning(IParameters *params, IData *input, IData *output);
+      class DeepLearning : public Base
+      {
+      public:
+        DeepLearning(IParameters *params, IData *input, IData *output);
 
-    private:
-      void Process();
-      void RunDeepLearning();
+      private:
+        void Process();
+        void RunDeepLearning();
 
-    };
+      };
+    }
   }
 }

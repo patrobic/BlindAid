@@ -7,6 +7,8 @@
 class IParameters
 {
 public:
+  virtual bool Valid() = 0;
+
   bool GetToggle() { return true; }
 
 private:

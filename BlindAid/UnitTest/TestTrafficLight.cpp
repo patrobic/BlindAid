@@ -69,38 +69,38 @@ namespace UnitTest
 
       for (int i = 0; i < testData.size(); ++i)
       {
-		float score = 0;
+        float score = 0;
 
         params.GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + testData.at(i)._colorPath);
         params.GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + testData.at(i)._depthPath);
         core();
-        
+
         Vision::TrafficLight::Data *tlResults = results.GetVisionResults()->GetTrafficLightResults();
 
-        int countDiff = testData.at(i)._points.size() - tlResults->Size();
+        int countDiff = (int)testData.at(i)._points.size() - tlResults->Size();
         Assert::IsTrue(abs(countDiff) <= 2); // ensure that detected number of lights is NOT more than expected (i.e. allow missing detections but not false detections).
 
         vector<float> distances;
         for (int j = 0; j < tlResults->Size(); ++j)
           for (int k = 0; k < testData.at(i)._points.size(); ++k)
-            distances.push_back(norm(testData.at(i)._points.at(k) - tlResults->At(j)._center));
+            distances.push_back((float)norm(testData.at(i)._points.at(k) - tlResults->At(j)._center));
 
         std::sort(distances.begin(), distances.end());
-		
-		stringstream ss;
-		ss << fixed << setprecision(2) << "Test" << i << "(" << testData.at(i)._colorPath << "), ";
-       // for (int k = 0; k < std::min(tlResults->Size(), (int)testData.at(i)._points.size()); ++k)
-      //  {
-		 // score += (1 - 0.01 * distances.at(k)) / std::max(tlResults->Size(), (int)testData.at(i)._points.size());
-		  //ss << "P" << k+1 << "(" << distances.at(k) << "), ";
-     //     Assert::IsTrue(distances.at(k) < maxDeviation);
-     //   }
 
-		if (testData.at(i)._points.size() == 0 && tlResults->Size() == 0)
-			score = 1.0f;
+        stringstream ss;
+        ss << fixed << setprecision(2) << "Test" << i << "(" << testData.at(i)._colorPath << "), ";
+        for (int k = 0; k < std::min(tlResults->Size(), (int)testData.at(i)._points.size()); ++k)
+        {
+          score += (1 - 0.01f * distances.at(k)) / std::max(tlResults->Size(), (int)testData.at(i)._points.size());
+          ss << "P" << k + 1 << "(" << distances.at(k) << "), ";
+          Assert::IsTrue(distances.at(k) < maxDeviation);
+        }
 
-		Assert::IsTrue(score >= 0.6f);
-		ss << "Score(" << score << "), Count(" << testData.at(i)._points.size() << "," << tlResults->Size() << ").";
+        if (testData.at(i)._points.size() == 0 && tlResults->Size() == 0)
+          score = 1.0f;
+
+        Assert::IsTrue(score >= 0.6f);
+        ss << "Score(" << score << "), Count(" << testData.at(i)._points.size() << "," << tlResults->Size() << ").";
         Logger::WriteMessage(ss.str().c_str());
       }
     }

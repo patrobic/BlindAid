@@ -1,59 +1,76 @@
 #include "ControlRealtime.h"
 
 using namespace std;
+using namespace std::chrono;
 using namespace cv;
 
 namespace Control
 {
-  Realtime::Realtime(IParameters *params, IData *input, IData *output) : Base(params, input, output)
+  namespace Realtime
   {
-    static bool connected = _serial.Open(_params->GetSerialPort(), _params->GetBaudRate());
-
-    while (!connected)
+    Realtime::Realtime(IParameters *params, IData *input, IData *output) : Base(params, input, output)
     {
-      cout << "connection failed!\n";
-
-      Sleep(1000);
-      connected = _serial.Open(_params->GetSerialPort(), _params->GetBaudRate());
+      ConnectToArduino();
     }
 
-    cout << "connection success!\n";
-  }
+    void Realtime::ConnectToArduino()
+    {
+      static bool connected = _serial.Open(_params->GetRealtimeParams()->GetSerialPort(), _params->GetRealtimeParams()->GetBaudRate());
 
-  void Realtime::Process()
-  {
-    GenerateControlString();
-    CommandArduino();
-  }
+      while (!connected)
+      {
+        cout << "connection failed!\n";
 
-  void Realtime::CommandArduino()
-  {
-    int bytesToSend = 6;
-    int bytesSent = 0;
+        Sleep(1000);
+        connected = _serial.Open(_params->GetRealtimeParams()->GetSerialPort(), _params->GetRealtimeParams()->GetBaudRate());
+      }
 
-    _receivedLength = _serial.ReadData(_receivedMessage, 256);
+      cout << "connection success!\n";
+    }
 
-    if (_receivedLength > 0)
-      cout << "Received(" << _receivedLength << " bytes): " << _receivedMessage << endl;
-    else
-      cout << "Received nothing.\n";
+    void Realtime::Process()
+    {
+      steady_clock::time_point start = steady_clock::now();
 
-    bytesSent = _serial.SendData(_controlMessage.c_str(), (int)_controlMessage.length());
+      MapVibrationValues();
+      GenerateControlString();
+      CommandArduino();
 
-    if (bytesSent > 0)
-      cout << "Sent(" << bytesSent << " bytes): " << _controlMessage << endl;
-  }
+      steady_clock::time_point end = steady_clock::now();
+      duration<double> time_span = duration_cast<duration<double>>(end - start);
+      cout << "[CONTROL] Frame executed (" << time_span.count() * 1000 << "ms).\n";
+    }
 
-  void Realtime::GenerateControlString()
-  {
-    _controlMessage = "<";
+    void Realtime::CommandArduino()
+    {
+      // TODO: make sending of data more clear/robust, and remove cout messages and use exceptions instead.
+      int bytesSent = 0;
 
-    for (int i = 0; i < 5; ++i)
-      _controlMessage += _vibrationIntensity[i];
+      _receivedLength = _serial.ReadData(_receivedMessage, 256);
 
-    for (int i = 0; i < 2; ++i)
-      _controlMessage += _vibrationIntensity[VERT_REGIONS];
+      if (_receivedLength > 0)
+        cout << "Received(" << _receivedLength << " bytes): " << _receivedMessage << endl;
+      else
+        cout << "Received nothing.\n";
 
-    _controlMessage += ">";
+      bytesSent = _serial.SendData(_controlMessage.c_str(), (int)_controlMessage.length());
+
+      if (bytesSent > 0)
+        cout << "Sent(" << bytesSent << " bytes): " << _controlMessage << endl;
+    }
+
+    void Realtime::GenerateControlString()
+    {
+      _controlMessage = _params->GetRealtimeParams()->GetMessageStart();
+
+      for (int i = 0; i < 5; ++i)
+        _controlMessage += to_string(_vibrationIntensity[i]);
+
+      // TODO: acquire option messages from correct source, according to _optionSignals[].
+      for (int i = 0; i < _params->GetOptionSignalsCount(); ++i)
+        _controlMessage += to_string(_vibrationIntensity[VERT_REGIONS]);
+
+      _controlMessage += _params->GetRealtimeParams()->GetMessageEnd();
+    }
   }
 }

@@ -7,8 +7,7 @@ namespace Capture
 {
   namespace Simulate
   {
-
-    class Simulate : public Base<Parameters>
+    class Simulate : public Base
     {
     public:
       Simulate(IParameters *params, IData *input, IData *output);
@@ -19,8 +18,6 @@ namespace Capture
       void LoadPhoto();
 
       cv::VideoCapture _cap;
-
-      int _frame = 0;
     };
   }
 }

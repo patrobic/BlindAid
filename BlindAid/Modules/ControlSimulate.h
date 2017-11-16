@@ -6,15 +6,20 @@
 
 namespace Control
 {
-  class Simulate : public Base
+  namespace Simulate
   {
-  public:
-    Simulate(IParameters *params, IData *input, IData *output);
-    void Process();
+    class Simulate : public Base
+    {
+    public:
+      Simulate(IParameters *params, IData *input, IData *output);
 
-  private:
-    void Print();
+    private:
+      void Process();
+      void PrintDepthObstacle();
+      void PrintTrafficLights();
+      void PrintStopSign();
 
-    cv::Mat _depthMat;
-  };
+      cv::Mat _depthMat;
+    };
+  }
 }

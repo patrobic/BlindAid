@@ -78,10 +78,13 @@
     <ClInclude Include="IResult.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CaptureParams.h">
+    <ClInclude Include="ControlParameters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ControlParams.h">
+    <ClInclude Include="CaptureParameters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VisionParameters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -93,9 +96,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ControlBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DetectBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TrafficLightBase.cpp">

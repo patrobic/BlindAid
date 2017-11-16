@@ -5,7 +5,7 @@
 using namespace std;
 using namespace cv;
 
-MainMenu::MainMenu() : _core(&_params, NULL, &_results)
+MainMenu::MainMenu() //: _core(&_params, NULL, &_results)
 {
   // TODO: implement proper file loading/validating mechanics that creates new file if nonexistant or invalid.
   // if(file exists)
@@ -56,6 +56,15 @@ void MainMenu::operator()()
     }
     system("cls");
   } while (in != 'q' && in != 'Q');
+}
+
+void MainMenu::Process()
+{
+  if(_core == NULL)
+    _core = new Core::Core(&_params, NULL, &_results);
+
+  (*_core)();
+  waitKey();
 }
 
 void MainMenu::Realtime()
@@ -152,8 +161,7 @@ void MainMenu::LoadFile(Capture::Simulate::Parameters::MediaType mode, string de
   _params.GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + depthPath);
   _params.GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + name);
 
-  _core();
-  waitKey();
+  Process();
 }
 
 void MainMenu::TestVideo(string colorVideoPath, string depthPath, int count)
@@ -167,8 +175,7 @@ void MainMenu::TestVideo(string colorVideoPath, string depthPath, int count)
   for (int i = 1; i <= count; ++i)
   {
     _params.GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + colorVideoPath + std::to_string(i) + string(".avi"));
-    _core();
-    waitKey();
+    Process();
   }
 }
 
@@ -183,8 +190,7 @@ void MainMenu::TestPhoto(string colorPath, string depthPath, int count)
   for (int i = 1; i <= count; ++i)
   {
     _params.GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + colorPath + (count != 0 ? std::to_string(i) : "") + string(".jpg"));
-    _core();
-    waitKey(0);
+    Process();
   }
 
   destroyAllWindows();
@@ -198,9 +204,7 @@ void MainMenu::TestRealtimeCapture()
   _params.GetVisionParams()->GetStopSignParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
   _params.GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Video);
 
-  _core();
-  
-  waitKey(0);
+  Process();
   destroyAllWindows();
 }
 
@@ -215,8 +219,6 @@ void MainMenu::TestRealtimeControl(string colorPath, string depthPath, int count
   _params.GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + colorPath);
   _params.SetRepeat(10000);
 
-  _core();
-
-  waitKey(0);
+  Process();
   destroyAllWindows();
 }

@@ -7,17 +7,6 @@ namespace Vision
 {
   namespace StopSign
   {
-    struct Parameters : public SwitchableParameters
-    {
-    public:
-      bool Valid()
-      {
-        return true;
-      }
-
-    private:
-    };
-
     class Data : public IData
     {
     public:
@@ -41,7 +30,6 @@ namespace Vision
 
     private:
       void Process();
-      void PreProcess();
     };
   }
 }

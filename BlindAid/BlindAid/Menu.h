@@ -15,6 +15,7 @@ public:
   void operator()();
 
 private:
+  void Process();
   void Realtime();
   void Simulate();
   void Settings();
@@ -27,7 +28,7 @@ private:
   void TestRealtimeCapture();
   void TestRealtimeControl(std::string colorPath, std::string depthPath, int count);
 
-  Core::Core _core;
+  Core::Core *_core;
   Core::Parameters _params;
   Core::Data _results;
 };

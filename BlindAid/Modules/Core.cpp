@@ -7,18 +7,20 @@ namespace Core
 {
   Core::Core(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
   {
+    CreateModules();
   }
 
-  void Core::Process()
+  void Core::CreateModules()
   {
-    static int frame = 0;
-
-    _capture = Capture::MakeCapture(_params->GetCaptureParams(), NULL, _output->GetCaptureResults());
+    _capture = Capture::Base::MakeCapture(_params->GetCaptureParams(), NULL, _output->GetCaptureResults());
     _record = new Record::Record(_params->GetRecordParams(), _output->GetCaptureResults(), NULL);
     _vision = new Vision::Vision(_params->GetVisionParams(), _output->GetCaptureResults(), _output->GetVisionResults());
     _control = Control::Base::MakeControl(_params->GetControlParams(), _output->GetVisionResults(), _output->GetCaptureResults());
     _display = new Display::Display(_params->GetDisplayParams(), _output->GetVisionResults(), NULL);
+  }
 
+  void Core::Process()
+  {
     do
     {
       steady_clock::time_point start = steady_clock::now();
@@ -39,12 +41,7 @@ namespace Core
       steady_clock::time_point end = steady_clock::now();
       duration<double> time_span = duration_cast<duration<double>>(end - start);
 
-      cout << "[CORE] Frame #" << to_string(frame++) << " processed (" << time_span.count() * 1000 << "ms).\n";
-    } while (_params->GetCaptureParams()->GetSimulateParams()->GetMediaType() == Capture::Simulate::Parameters::MediaType::Video || frame < _params->GetRepeat());
-
-    delete _capture;
-    delete _vision;
-    delete _control;
-    delete _display;
+      cout << "[CORE   ] Frame #" << to_string(_frame++) << " processed (" << time_span.count() * 1000 << "ms).\n";
+    } while (_params->GetCaptureParams()->GetSimulateParams()->GetMediaType() == Capture::Simulate::Parameters::MediaType::Video || _frame < _params->GetRepeat());
   }
 }

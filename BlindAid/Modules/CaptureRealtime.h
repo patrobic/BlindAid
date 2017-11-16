@@ -9,21 +9,23 @@ namespace Capture
 {
   namespace Realtime
   {
-
-    class Realtime : public Base<Parameters>
+    class Realtime : public Base
     {
     public:
       Realtime(IParameters *params, IData *input, IData *output);
 
     private:
       void Process();
-      void GetFrame();
+      void ConnectToCamera();
+      void GetColorFrame();
+      void GetDepthFrame();
 
       rs2::pipeline _pipe;
       rs2::config _cfg;
       rs2::frameset _frames;
       rs2::frame _colorFrame;
-
+      rs2::frame ir_frame;
+      rs2::frame depth_frame;
     };
   }
 }

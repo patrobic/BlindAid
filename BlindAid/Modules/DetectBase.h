@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IModule.h"
+#include "VisionParameters.h"
 
 namespace Vision
 {

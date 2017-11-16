@@ -35,6 +35,7 @@ namespace Core
     Control::Parameters _controlParams;
     Display::Parameters _displayParams;
 
+    // max number of times to run the detection loop.
     int _repeat = 0;
   };
 
@@ -65,14 +66,18 @@ namespace Core
   {
   public:
     Core(IParameters *params, IData *input, IData *output);
-    void Process();
 
   private:
+    void Process();
+    void CreateModules();
+
     // capture and control declared as base class pointer so that it can be declared based on parameter as either simulate or realtime class.
-    IIModule *_capture;
+    Capture::Base *_capture;
     Record::Record *_record;
     Vision::Vision *_vision;
     Control::Base *_control;
     Display::Display *_display;
+
+    int _frame = 0;
   };
 }

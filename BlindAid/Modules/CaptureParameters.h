@@ -3,7 +3,8 @@
 #include "IParameters.h"
 #include "opencv2\core.hpp"
 
-namespace Capture {
+namespace Capture
+{
   namespace Realtime
   {
     class Parameters : public IParameters
@@ -53,7 +54,8 @@ namespace Capture {
     };
   }
 
-  namespace Simulate {
+  namespace Simulate
+  {
     class Parameters : public IParameters
     {
     public:

@@ -21,10 +21,10 @@
   <ItemGroup>
     <ClInclude Include="CaptureBase.h" />
     <ClInclude Include="ControlBase.h" />
-    <ClInclude Include="ControlParams.h" />
+    <ClInclude Include="ControlParameters.h" />
     <ClInclude Include="DetectBase.h" />
     <ClInclude Include="IResult.h" />
-    <ClInclude Include="CaptureParams.h" />
+    <ClInclude Include="CaptureParameters.h" />
     <ClInclude Include="TrafficLightBase.h" />
     <ClInclude Include="DepthObstacle.h" />
     <ClInclude Include="StopSign.h" />
@@ -42,11 +42,11 @@
     <ClInclude Include="Serial.h" />
     <ClInclude Include="CaptureSimulate.h" />
     <ClInclude Include="ControlSimulate.h" />
+    <ClInclude Include="VisionParameters.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CaptureBase.cpp" />
     <ClCompile Include="ControlBase.cpp" />
-    <ClCompile Include="DetectBase.cpp" />
     <ClCompile Include="TrafficLightBase.cpp" />
     <ClCompile Include="DepthObstacle.cpp" />
     <ClCompile Include="StopSign.cpp" />

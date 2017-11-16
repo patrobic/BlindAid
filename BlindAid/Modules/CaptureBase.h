@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IModule.h"
-#include "CaptureParams.h"
+#include "CaptureParameters.h"
 
 namespace Capture
 {
@@ -24,21 +24,13 @@ namespace Capture
     cv::Mat _depthImage;
   };
 
-  template<class Params>
-  class Base : public IModule<Params, IData, Data>
+  class Base : public IModule<Parameters, IData, Data>
   {
   public:
-    Base(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
-    {
-
-    }
+    Base(IParameters *params, IData *input, IData *output);
+    static Base *MakeCapture(Capture::Parameters *params, IData *input, IData *output);
 
   protected:
-    void CreateHsvImage()
-    {
-      cvtColor(*_output->GetRgbImage(), *_output->GetHsvImage(), CV_BGR2HSV);
-    }
+    void CreateHsvImage();
   };
-
-  IIModule *MakeCapture(Capture::Parameters *params, IData *input, IData *output);
 }

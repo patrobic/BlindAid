@@ -50,15 +50,15 @@ namespace Display
       string name[3] = { "Red", "Green", "Yellow" };
 
       circle(*_input->GetCurrentColorImage(), result.at(i)._center, (int)result.at(i)._radius + 2, color[result.at(i)._color], 2);
-      putText(*_input->GetCurrentColorImage(), name[result.at(i)._color] + "TrafficLight" + to_string(i), Point(result.at(i)._center.x - result.at(i)._radius, result.at(i)._center.y - result.at(i)._radius), FONT_HERSHEY_PLAIN, 1, color[result.at(i)._color]);
+      putText(*_input->GetCurrentColorImage(), name[result.at(i)._color] + "TrafficLight" + to_string(i), Point(result.at(i)._center.x - (int)result.at(i)._radius, result.at(i)._center.y - (int)result.at(i)._radius), FONT_HERSHEY_PLAIN, 1, color[result.at(i)._color]);
     }
   }
 
   void Display::DrawStopSign()
   {
     Vision::StopSign::Data result = *_input->GetStopSignResults();
-    circle(*_input->GetCurrentColorImage(), result.GetRegion()._center, result.GetRegion()._radius + 2, Scalar(0, 255, 255));
-    putText(*_input->GetCurrentColorImage(), "StopSign", Point(result.GetRegion()._center.x - result.GetRegion()._radius, result.GetRegion()._center.y - result.GetRegion()._radius), FONT_HERSHEY_PLAIN, 1, Scalar(0, 255, 255));
+    circle(*_input->GetCurrentColorImage(), result.GetRegion()._center, (int)result.GetRegion()._radius + 2, Scalar(0, 255, 255));
+    putText(*_input->GetCurrentColorImage(), "StopSign", Point(result.GetRegion()._center.x - (int)result.GetRegion()._radius, result.GetRegion()._center.y - (int)result.GetRegion()._radius), FONT_HERSHEY_PLAIN, 1, Scalar(0, 255, 255));
   }
 
   void Display::DisplayImage()

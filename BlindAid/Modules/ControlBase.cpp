@@ -7,9 +7,9 @@ namespace Control
   Base *Base::MakeControl(IParameters *params, IData *input, IData *output)
   {
     if (((Control::Parameters*)params)->GetMode() == SwitchableParameters::Mode::Realtime)
-      return new Realtime(params, input, output);
+      return new Realtime::Realtime(params, input, output);
     else
-      return new Simulate(params, input, output);
+      return new Simulate::Simulate(params, input, output);
   }
 
   Base::Base(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
@@ -17,7 +17,7 @@ namespace Control
 
   }
 
-  void Base::MapVibrationValues() // TODO: May belong instead in Control... not ControlBase?
+  void Base::MapVibrationValues()
   {
     _output->Clear();
 
@@ -63,6 +63,6 @@ namespace Control
 
   int Base::MetersToPixel(float meters)
   {
-    return meters / _params->GetMaximumDepthSpec() * 255;
+    return (int)(meters / _params->GetMaximumDepthSpec() * 255);
   }
 }

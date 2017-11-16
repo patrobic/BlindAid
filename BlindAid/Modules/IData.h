@@ -25,12 +25,12 @@ struct Circle
   };
 
   Circle() { _radius = 0; }
-  Circle(cv::Point center, int radius, Color color) { _center = center; _radius = radius; _color = color; }
+  Circle(cv::Point center, float radius, Color color) { _center = center; _radius = radius; _color = color; }
   void Clear() { _center = cv::Point(0, 0); _radius = 0; _color = Red; }
 
   float CartesianDistance(Circle &c2)
   {
-    return cv::norm(_center - c2._center);
+    return (float)cv::norm(_center - c2._center);
   }
 
   float RadiusDifference(Circle &c2)
@@ -39,7 +39,7 @@ struct Circle
   }
 
   cv::Point _center;
-  int _radius;
+  float _radius;
   Color _color;
   int _count = 0;
 };
