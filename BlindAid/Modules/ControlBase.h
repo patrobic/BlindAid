@@ -5,7 +5,7 @@
 
 namespace Control
 {
-  class Parameters : public IParameters
+  class Parameters : public SwitchableParameters
   {
   public:
     enum OptionSignals
@@ -68,7 +68,7 @@ namespace Control
     float _nearestBound = 0.5f;
 
     // minimum and maximum vibration instensity ratios at farthest and nearest distances.
-    float _minimumVibration = 0.4f;
+    float _minimumVibration = 0.0f;
     float _maximumVibration = 1.f;
  
     // camera maximum depth distance (in meters), i.e. distance at pixel = 255.
@@ -86,13 +86,10 @@ namespace Control
       return true;
     }
 
-    void Clear() { } // for (int i = 0; i < VERT_REGIONS; ++i) _vibrationIntensity[i] = 0; }
-
-    //void SetVibrationIntensity(float intensity, int col) { _vibrationIntensity[col] = intensity; }
-    //float GetVibrationIntensity(int col) { return _vibrationIntensity[col]; }
+    void Clear() { }
 
   private:
-    //float _vibrationIntensity[VERT_REGIONS];
+
   };
 
   class Base : public IModule<Parameters, Vision::Data, Data>

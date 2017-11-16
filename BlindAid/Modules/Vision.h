@@ -9,7 +9,7 @@
 
 namespace Vision
 {
-  class Parameters : public IParameters
+  class Parameters : public SwitchableParameters
   {
   public:
     DepthObstacle::Parameters *GetDepthObstacleParams() { return &_dodParams; }

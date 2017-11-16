@@ -78,6 +78,12 @@
     <ClInclude Include="IResult.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CaptureParams.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlParams.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Serial.cpp">

@@ -21,8 +21,10 @@
   <ItemGroup>
     <ClInclude Include="CaptureBase.h" />
     <ClInclude Include="ControlBase.h" />
+    <ClInclude Include="ControlParams.h" />
     <ClInclude Include="DetectBase.h" />
     <ClInclude Include="IResult.h" />
+    <ClInclude Include="CaptureParams.h" />
     <ClInclude Include="TrafficLightBase.h" />
     <ClInclude Include="DepthObstacle.h" />
     <ClInclude Include="StopSign.h" />

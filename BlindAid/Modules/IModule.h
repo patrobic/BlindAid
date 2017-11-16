@@ -16,8 +16,17 @@
 #include "IData.h"
 #include "IResult.h"
 
+class IIModule
+{
+public:
+  virtual void operator()() = 0;
+  virtual void Valid() = 0;
+  virtual void Clear() = 0;
+  virtual void Process() = 0;
+};
+
 template<class Params, class Input, class Output>
-class IModule
+class IModule : public IIModule
 {
 public:
   IModule(IParameters *params, IData *input, IData *output)
@@ -40,8 +49,9 @@ public:
 protected:
   virtual void Valid()
   {
-    if (!_params->Valid())
-      throw std::exception("Parameters not valid.");
+    if (_params != NULL)
+      if(!_params->Valid())
+        throw std::exception("Parameters not valid.");
 
     if(_input != NULL)
       if (!_input->Valid())

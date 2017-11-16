@@ -6,7 +6,7 @@ namespace Control
 {
   Base *Base::MakeControl(IParameters *params, IData *input, IData *output)
   {
-    if (params->GetMode() == IParameters::Mode::Realtime)
+    if (((Control::Parameters*)params)->GetMode() == SwitchableParameters::Mode::Realtime)
       return new Realtime(params, input, output);
     else
       return new Simulate(params, input, output);

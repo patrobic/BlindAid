@@ -4,21 +4,24 @@
 
 namespace Capture
 {
-  Base::Base(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
-  {
+  //template<class Params>
+  //Base<Params>::Base(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
+  //{
 
-  }
+  //}
 
-  Base *Base::MakeCapture(IParameters *params, IData *input, IData *output)
+//  template<class Params>
+  IIModule *MakeCapture(Capture::Parameters *params, IData *input, IData *output)
   {
-    if (params->GetMode() == IParameters::Mode::Realtime)
-      return new Realtime(params, input, output);
+    if (((Capture::Parameters*)params)->GetMode() == SwitchableParameters::Mode::Realtime)
+      return new Realtime::Realtime(params->GetRealtimeParams(), input, output);
     else
-      return new Simulate(params, input, output);
+      return new Simulate::Simulate(params->GetSimulateParams(), input, output);
   }
 
-  void Base::CreateHsvImage()
-  {
-    cvtColor(*_output->GetRgbImage(), *_output->GetHsvImage(), CV_BGR2HSV);
-  }
+  //template<class Params>
+  //void Base<Params>::CreateHsvImage()
+  //{
+  //  cvtColor(*_output->GetRgbImage(), *_output->GetHsvImage(), CV_BGR2HSV);
+  //}
 }

@@ -1,48 +1,10 @@
 #pragma once
 
 #include "IModule.h"
+#include "CaptureParams.h"
 
 namespace Capture
 {
-  class Parameters : public IParameters
-  {
-  public:
-    enum MediaType
-    {
-      Photo,
-      Video
-    };
-
-    bool Valid()
-    {
-      return true;
-    }
-
-    MediaType GetMediaType() { return _mediaType; }
-    void SetMediaType(MediaType mediaType) { _mediaType = mediaType; }
-
-    std::string GetColorSimDataPath() { return _colorSimDataPath; }
-    void SetColorSimDataPath(std::string colorSimDataPath) { _colorSimDataPath = colorSimDataPath; }
-    std::string GetDepthSimDataPath() { return _depthSimDataPath; }
-    void SetDepthSimDataPath(std::string depthSimDataPath) { _depthSimDataPath = depthSimDataPath; }
-
-    bool GetEnableDepth() { return _enableDepth; }
-    void SetEnableDepth(bool enableDepth) { _enableDepth = enableDepth; }
-
-  private:
-    // indicate whether simulation media is photo or video.
-    MediaType _mediaType = Photo;
-
-    // path to color image for simulation.
-    std::string _colorSimDataPath;
-
-    // path to depth image for simulation.
-    std::string _depthSimDataPath;
-
-    // enable or disable depth camera acquisition.
-    bool _enableDepth = false;
-  };
-
   class Data : public IData
   {
   public:
@@ -62,14 +24,21 @@ namespace Capture
     cv::Mat _depthImage;
   };
 
-  class Base : public IModule<Parameters, IData, Data>
+  template<class Params>
+  class Base : public IModule<Params, IData, Data>
   {
   public:
-    Base(IParameters *params, IData *input, IData *output);
-    static Base *MakeCapture(IParameters *params, IData *input, IData *output);
+    Base(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
+    {
+
+    }
 
   protected:
-    void CreateHsvImage();
-
+    void CreateHsvImage()
+    {
+      cvtColor(*_output->GetRgbImage(), *_output->GetHsvImage(), CV_BGR2HSV);
+    }
   };
+
+  IIModule *MakeCapture(Capture::Parameters *params, IData *input, IData *output);
 }

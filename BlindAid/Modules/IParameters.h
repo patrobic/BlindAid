@@ -7,6 +7,14 @@
 class IParameters
 {
 public:
+  bool GetToggle() { return true; }
+
+private:
+};
+
+class SwitchableParameters : public IParameters
+{
+public:
   // TODO: check that data is valid when received by a module.
   virtual bool Valid() = 0;
 

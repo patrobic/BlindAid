@@ -5,7 +5,7 @@
 
 namespace Record
 {
-  class Parameters : public IParameters
+  class Parameters : public SwitchableParameters
   {
   public:
     enum Type

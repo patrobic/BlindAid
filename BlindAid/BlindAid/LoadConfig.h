@@ -107,8 +107,8 @@ private:
     int toggle;
     setting.lookupValue("toggle", toggle);
 
-    _params->SetMode((IParameters::Mode)mode);
-    _params->SetToggle((IParameters::Toggle)toggle);
+    _params->SetMode((SwitchableParameters::Mode)mode);
+    _params->SetToggle((SwitchableParameters::Toggle)toggle);
   }
 
 private:

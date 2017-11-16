@@ -7,7 +7,7 @@ namespace Vision
 {
   namespace TrafficLight
   {
-    class Parameters : public IParameters
+    class Parameters : public SwitchableParameters
     {
     public:
       enum Mode
@@ -68,15 +68,15 @@ namespace Vision
       // HSV color range for red/green/yellow masking.
       cv::Scalar _colorRanges[3][2] = {
         { cv::Scalar(150, 150, 180), cv::Scalar(10, 255, 255) },
-        { cv::Scalar(40, 150, 180), cv::Scalar(80, 255, 255) },
-        { cv::Scalar(10, 110, 160), cv::Scalar(40, 255, 255) } };
+        { cv::Scalar(40, 110, 150), cv::Scalar(80, 255, 255) },
+        { cv::Scalar(10, 110, 150), cv::Scalar(40, 255, 255) } };
 
       // consecutive detection
-      int _consecutiveCount = 3;
+      int _consecutiveCount = 4;
 
       //  maximum distance and radius difference thresholds.
       int _maximumDistance = 25;
-      int _maximumRadiusDiff = 7;
+      int _maximumRadiusDiff = 5;
       
       // parameters class for blobdetector.
       cv::SimpleBlobDetector::Params _blobParams;

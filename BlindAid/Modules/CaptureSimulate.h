@@ -5,18 +5,22 @@
 
 namespace Capture
 {
-  class Simulate : public Base
+  namespace Simulate
   {
-  public:
-    Simulate(IParameters *params, IData *input, IData *output);
 
-  private:
-    void Process();
-    void LoadVideo();
-    void LoadPhoto();
+    class Simulate : public Base<Parameters>
+    {
+    public:
+      Simulate(IParameters *params, IData *input, IData *output);
 
-    cv::VideoCapture _cap;
+    private:
+      void Process();
+      void LoadVideo();
+      void LoadPhoto();
 
-    int _frame = 0;
-  };
+      cv::VideoCapture _cap;
+
+      int _frame = 0;
+    };
+  }
 }

@@ -7,7 +7,7 @@ namespace Vision
 {
   namespace StopSign
   {
-    struct Parameters : public IParameters
+    struct Parameters : public SwitchableParameters
     {
     public:
       bool Valid()

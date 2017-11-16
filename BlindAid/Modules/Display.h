@@ -5,7 +5,7 @@
 
 namespace Display
 {
-  class Parameters : public IParameters
+  class Parameters : public SwitchableParameters
   {
   public:
     bool Valid()

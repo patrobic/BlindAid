@@ -24,7 +24,7 @@ MainMenu::MainMenu() : _core(&_params, NULL, &_results)
   LoadConfiguration loadConfig(&_params, "BlindAid.cfg");
   loadConfig();
 
-  _params.GetRecordParams()->SetToggle(IParameters::Toggle::Disabled);
+  _params.GetRecordParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
 }
 
 void MainMenu::operator()()
@@ -60,8 +60,8 @@ void MainMenu::operator()()
 
 void MainMenu::Realtime()
 {
-  _params.GetCaptureParams()->SetMode(IParameters::Mode::Realtime);
-  _params.GetControlParams()->SetMode(IParameters::Mode::Realtime);
+  _params.GetCaptureParams()->SetMode(SwitchableParameters::Mode::Realtime);
+  _params.GetControlParams()->SetMode(SwitchableParameters::Mode::Realtime);
 
   char in;
   system("cls");
@@ -112,10 +112,10 @@ void MainMenu::Simulate()
     switch (in)
     {
     case '1':
-      LoadFile(Capture::Parameters::MediaType::Photo, "depthMap.png");
+      LoadFile(Capture::Simulate::Parameters::MediaType::Photo, "depthMap.png");
       break;
     case '2':
-      LoadFile(Capture::Parameters::MediaType::Video, "depthMap.png");
+      LoadFile(Capture::Simulate::Parameters::MediaType::Video, "depthMap.png");
       break;
     case 'd':
       TestPhoto("TrafficLight\\tlight", "depthMap.png", 1);
@@ -139,18 +139,18 @@ void MainMenu::Settings()
   // Not necessarily needed since editing the text file is just as easy...
 }
 
-void MainMenu::LoadFile(Capture::Parameters::MediaType mode, string depthPath)
+void MainMenu::LoadFile(Capture::Simulate::Parameters::MediaType mode, string depthPath)
 {
   string name;
   cout << "Enter file name (default directory): ";
   cin >> name;
 
-  _params.GetCaptureParams()->SetMode(IParameters::Mode::Simulate);
-  _params.GetControlParams()->SetMode(IParameters::Mode::Simulate);
-  _params.GetDisplayParams()->SetToggle(IParameters::Toggle::Enabled);
-  _params.GetCaptureParams()->SetMediaType(mode);
-  _params.GetCaptureParams()->SetDepthSimDataPath(PATH + depthPath);
-  _params.GetCaptureParams()->SetColorSimDataPath(PATH + name);
+  _params.GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
+  _params.GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
+  _params.GetDisplayParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
+  _params.GetCaptureParams()->GetSimulateParams()->SetMediaType(mode);
+  _params.GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + depthPath);
+  _params.GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + name);
 
   _core();
   waitKey();
@@ -158,15 +158,15 @@ void MainMenu::LoadFile(Capture::Parameters::MediaType mode, string depthPath)
 
 void MainMenu::TestVideo(string colorVideoPath, string depthPath, int count)
 {
-  _params.GetCaptureParams()->SetMode(IParameters::Mode::Simulate);
-  _params.GetControlParams()->SetMode(IParameters::Mode::Simulate);
-  _params.GetDisplayParams()->SetToggle(IParameters::Toggle::Enabled);
-  _params.GetCaptureParams()->SetMediaType(Capture::Parameters::MediaType::Video);
-  _params.GetCaptureParams()->SetDepthSimDataPath(PATH + depthPath);
+  _params.GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
+  _params.GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
+  _params.GetDisplayParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
+  _params.GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Video);
+  _params.GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + depthPath);
 
   for (int i = 1; i <= count; ++i)
   {
-    _params.GetCaptureParams()->SetColorSimDataPath(PATH + colorVideoPath + std::to_string(i) + string(".avi"));
+    _params.GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + colorVideoPath + std::to_string(i) + string(".avi"));
     _core();
     waitKey();
   }
@@ -174,15 +174,15 @@ void MainMenu::TestVideo(string colorVideoPath, string depthPath, int count)
 
 void MainMenu::TestPhoto(string colorPath, string depthPath, int count)
 {
-  _params.GetCaptureParams()->SetMode(IParameters::Mode::Simulate);
-  _params.GetControlParams()->SetMode(IParameters::Mode::Simulate);
-  _params.GetDisplayParams()->SetToggle(IParameters::Toggle::Enabled);
-  _params.GetCaptureParams()->SetMediaType(Capture::Parameters::MediaType::Photo);
-  _params.GetCaptureParams()->SetDepthSimDataPath(PATH + depthPath);
+  _params.GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
+  _params.GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
+  _params.GetDisplayParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
+  _params.GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Photo);
+  _params.GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + depthPath);
 
   for (int i = 1; i <= count; ++i)
   {
-    _params.GetCaptureParams()->SetColorSimDataPath(PATH + colorPath + (count != 0 ? std::to_string(i) : "") + string(".jpg"));
+    _params.GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + colorPath + (count != 0 ? std::to_string(i) : "") + string(".jpg"));
     _core();
     waitKey(0);
   }
@@ -192,11 +192,11 @@ void MainMenu::TestPhoto(string colorPath, string depthPath, int count)
 
 void MainMenu::TestRealtimeCapture()
 {
-  _params.GetCaptureParams()->SetMode(IParameters::Mode::Realtime);
-  _params.GetControlParams()->SetMode(IParameters::Mode::Simulate);
-  _params.GetVisionParams()->GetDepthObstacleParams()->SetToggle(IParameters::Toggle::Disabled);
-  _params.GetVisionParams()->GetStopSignParams()->SetToggle(IParameters::Toggle::Disabled);
-  _params.GetCaptureParams()->SetMediaType(Capture::Parameters::MediaType::Video);
+  _params.GetCaptureParams()->SetMode(SwitchableParameters::Mode::Realtime);
+  _params.GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
+  _params.GetVisionParams()->GetDepthObstacleParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
+  _params.GetVisionParams()->GetStopSignParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
+  _params.GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Video);
 
   _core();
   
@@ -206,13 +206,13 @@ void MainMenu::TestRealtimeCapture()
 
 void MainMenu::TestRealtimeControl(string colorPath, string depthPath, int count)
 {
-  _params.GetCaptureParams()->SetMode(IParameters::Mode::Simulate);
-  _params.GetControlParams()->SetMode(IParameters::Mode::Realtime);
-  _params.GetVisionParams()->GetDepthObstacleParams()->SetToggle(IParameters::Toggle::Enabled);
-  _params.GetVisionParams()->GetStopSignParams()->SetToggle(IParameters::Toggle::Disabled);
-  _params.GetCaptureParams()->SetMediaType(Capture::Parameters::MediaType::Photo);
-  _params.GetCaptureParams()->SetDepthSimDataPath(PATH + depthPath);
-  _params.GetCaptureParams()->SetColorSimDataPath(PATH + colorPath);
+  _params.GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
+  _params.GetControlParams()->SetMode(SwitchableParameters::Mode::Realtime);
+  _params.GetVisionParams()->GetDepthObstacleParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
+  _params.GetVisionParams()->GetStopSignParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
+  _params.GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Photo);
+  _params.GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + depthPath);
+  _params.GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + colorPath);
   _params.SetRepeat(10000);
 
   _core();

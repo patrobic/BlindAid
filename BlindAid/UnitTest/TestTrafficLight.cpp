@@ -62,17 +62,17 @@ namespace UnitTest
       Core::Data results;
       Core::Core core(&params, NULL, &results);
 
-      params.GetCaptureParams()->SetMode(IParameters::Mode::Simulate);
-      params.GetControlParams()->SetMode(IParameters::Mode::Simulate);
-      params.GetCaptureParams()->SetToggle(IParameters::Toggle::Disabled);
-      params.GetCaptureParams()->SetMediaType(Capture::Parameters::MediaType::Photo);
+      params.GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
+      params.GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
+      params.GetCaptureParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
+      params.GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Photo);
 
       for (int i = 0; i < testData.size(); ++i)
       {
 		float score = 0;
 
-        params.GetCaptureParams()->SetColorSimDataPath(PATH + testData.at(i)._colorPath);
-        params.GetCaptureParams()->SetDepthSimDataPath(PATH + testData.at(i)._depthPath);
+        params.GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + testData.at(i)._colorPath);
+        params.GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + testData.at(i)._depthPath);
         core();
         
         Vision::TrafficLight::Data *tlResults = results.GetVisionResults()->GetTrafficLightResults();

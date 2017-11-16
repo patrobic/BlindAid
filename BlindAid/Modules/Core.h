@@ -11,7 +11,7 @@
 
 namespace Core
 {
-  class Parameters : public IParameters
+  class Parameters : public SwitchableParameters
   {
   public:
     bool Valid()
@@ -69,7 +69,7 @@ namespace Core
 
   private:
     // capture and control declared as base class pointer so that it can be declared based on parameter as either simulate or realtime class.
-    Capture::Base *_capture;
+    IIModule *_capture;
     Record::Record *_record;
     Vision::Vision *_vision;
     Control::Base *_control;

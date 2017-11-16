@@ -204,7 +204,7 @@
   <Class Name="IParameters" Collapsed="true">
     <Position X="29.5" Y="0.5" Width="1.5" />
     <NestedTypes>
-      <Enum Name="IParameters::Toggle" Collapsed="true">
+      <Enum Name="SwitchableParameters::Toggle" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>IParameters.h</NewMemberFileName>
         </TypeIdentifier>

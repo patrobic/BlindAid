@@ -9,7 +9,7 @@ namespace Vision
 {
   namespace DepthObstacle
   {
-    class Parameters : public IParameters
+    class Parameters : public SwitchableParameters
     {
     public:
       enum Mode
