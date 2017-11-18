@@ -24,6 +24,12 @@
     <ClInclude Include="SaveConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MenuSimulate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuRealtime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -36,6 +42,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SaveConfig.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuSimulate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuRealtime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

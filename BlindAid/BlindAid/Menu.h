@@ -5,28 +5,24 @@
 #include "LoadConfig.h"
 #include "SaveConfig.h"
 
+#include "MenuSimulate.h"
+#include "MenuRealtime.h"
+
 #include "..\Modules\Core.h"
 
 class MainMenu
 {
 public:
-
   MainMenu();
   void operator()();
 
 private:
-  void Process();
-  void Realtime();
-  void Simulate();
+  void Configure();
+  void ShowMenu();
   void Settings();
 
-  void LoadFile(Capture::Simulate::Parameters::MediaType mode, std::string depthPath);
-
-  void TestVideo(std::string colorVideoPath, std::string depthPath, int count);
-  void TestPhoto(std::string colorPath, std::string depthPath, int count);
-
-  void TestRealtimeCapture();
-  void TestRealtimeControl(std::string colorPath, std::string depthPath, int count);
+  RealtimeMenu _realtime;
+  SimulateMenu _simulate;
 
   Core::Core *_core;
   Core::Parameters _params;

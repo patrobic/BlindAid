@@ -1,11 +1,21 @@
 #include "Menu.h"
 
-#define PATH "C:\\Projects\\BlindAid\\TestData\\"
-
 using namespace std;
 using namespace cv;
 
-MainMenu::MainMenu() //: _core(&_params, NULL, &_results)
+MainMenu::MainMenu():
+  _realtime(_core, &_params, &_results),
+  _simulate(_core, &_params, &_results)
+{
+  Configure();
+}
+
+void MainMenu::operator()()
+{
+  ShowMenu();
+}
+
+void MainMenu::Configure()
 {
   // TODO: implement proper file loading/validating mechanics that creates new file if nonexistant or invalid.
   // if(file exists)
@@ -27,7 +37,7 @@ MainMenu::MainMenu() //: _core(&_params, NULL, &_results)
   _params.GetRecordParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
 }
 
-void MainMenu::operator()()
+void MainMenu::ShowMenu()
 {
   char in;
   cout << "Welcome to BlindAid!\n\n";
@@ -45,10 +55,10 @@ void MainMenu::operator()()
     switch (in)
     {
     case '1':
-      Realtime();
+      _realtime();
       break;
     case '2':
-      Simulate();
+      _simulate();
       break;
     case '3':
       Settings();
@@ -58,167 +68,8 @@ void MainMenu::operator()()
   } while (in != 'q' && in != 'Q');
 }
 
-void MainMenu::Process()
-{
-  if(_core == NULL)
-    _core = new Core::Core(&_params, NULL, &_results);
-
-  (*_core)();
-  waitKey();
-}
-
-void MainMenu::Realtime()
-{
-  _params.GetCaptureParams()->SetMode(SwitchableParameters::Mode::Realtime);
-  _params.GetControlParams()->SetMode(SwitchableParameters::Mode::Realtime);
-
-  char in;
-  system("cls");
-
-  do {
-    system("cls");
-
-    cout << "\
-+========== Realtime =========+\n\
-| c: Realtime Capture         |\n\
-| t: Realtime Control         |\n\
-+=============================+\n";
-
-    in = _getch();
-
-    switch (in)
-    {
-    case 'c':
-      TestRealtimeCapture();
-      break;
-    case 't':
-      TestRealtimeControl("TrafficLight\\tlight1.jpg", "depthMap.png", 1);
-      break;
-    }
-  } while (in != 'q' && in != 'Q');
-}
-
-void MainMenu::Simulate()
-{
-  char in;
-  system("cls");
-
-  do {
-    system("cls");
-    
-    cout << "\
-+========= Simulation ========+\n\
-| 1: Load Photo               |\n\
-| 2: Load Video               |\n\
-| d: Depth Obstacle Detector  |\n\
-| t: Traffic Light Detector   |\n\
-| s: Stop Sign Detector       |\n\
-| v: Video Simulation         |\n\
-+=============================+\n";
-
-    in = _getch();
-
-    switch (in)
-    {
-    case '1':
-      LoadFile(Capture::Simulate::Parameters::MediaType::Photo, "depthMap.png");
-      break;
-    case '2':
-      LoadFile(Capture::Simulate::Parameters::MediaType::Video, "depthMap.png");
-      break;
-    case 'd':
-      TestPhoto("TrafficLight\\tlight", "depthMap.png", 1);
-      break;
-    case 't':
-      TestPhoto("TrafficLight\\tlight", "depthMap.png", 15);
-      break;
-    case 's':
-      TestPhoto("StopSign\\stop", "depthMap.png", 8);
-      break;
-    case 'v':
-      TestVideo("TrafficLight\\tlight", "depthMap.png", 4);
-      break;
-    }
-  } while (in != 'q' && in != 'Q');
-}
-
 void MainMenu::Settings()
 {
   // TODO: user can manually specify (select and change) parameters, either via command line, or more sophisticated UI?
   // Not necessarily needed since editing the text file is just as easy...
-}
-
-void MainMenu::LoadFile(Capture::Simulate::Parameters::MediaType mode, string depthPath)
-{
-  string name;
-  cout << "Enter file name (default directory): ";
-  cin >> name;
-
-  _params.GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
-  _params.GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
-  _params.GetDisplayParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
-  _params.GetCaptureParams()->GetSimulateParams()->SetMediaType(mode);
-  _params.GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + depthPath);
-  _params.GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + name);
-
-  Process();
-}
-
-void MainMenu::TestVideo(string colorVideoPath, string depthPath, int count)
-{
-  _params.GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
-  _params.GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
-  _params.GetDisplayParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
-  _params.GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Video);
-  _params.GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + depthPath);
-
-  for (int i = 1; i <= count; ++i)
-  {
-    _params.GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + colorVideoPath + std::to_string(i) + string(".avi"));
-    Process();
-  }
-}
-
-void MainMenu::TestPhoto(string colorPath, string depthPath, int count)
-{
-  _params.GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
-  _params.GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
-  _params.GetDisplayParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
-  _params.GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Photo);
-  _params.GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + depthPath);
-
-  for (int i = 1; i <= count; ++i)
-  {
-    _params.GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + colorPath + (count != 0 ? std::to_string(i) : "") + string(".jpg"));
-    Process();
-  }
-
-  destroyAllWindows();
-}
-
-void MainMenu::TestRealtimeCapture()
-{
-  _params.GetCaptureParams()->SetMode(SwitchableParameters::Mode::Realtime);
-  _params.GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
-  _params.GetVisionParams()->GetDepthObstacleParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
-  _params.GetVisionParams()->GetStopSignParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
-  _params.GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Video);
-
-  Process();
-  destroyAllWindows();
-}
-
-void MainMenu::TestRealtimeControl(string colorPath, string depthPath, int count)
-{
-  _params.GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
-  _params.GetControlParams()->SetMode(SwitchableParameters::Mode::Realtime);
-  _params.GetVisionParams()->GetDepthObstacleParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
-  _params.GetVisionParams()->GetStopSignParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
-  _params.GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Photo);
-  _params.GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + depthPath);
-  _params.GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + colorPath);
-  _params.SetRepeat(10000);
-
-  Process();
-  destroyAllWindows();
 }

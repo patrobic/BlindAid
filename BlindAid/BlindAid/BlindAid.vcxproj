@@ -22,12 +22,16 @@
     <ClCompile Include="LoadConfig.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MenuRealtime.cpp" />
     <ClCompile Include="SaveConfig.cpp" />
+    <ClCompile Include="MenuSimulate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Menu.h" />
     <ClInclude Include="LoadConfig.h" />
+    <ClInclude Include="MenuRealtime.h" />
     <ClInclude Include="SaveConfig.h" />
+    <ClInclude Include="MenuSimulate.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
