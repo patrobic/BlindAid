@@ -1,5 +1,7 @@
 #include "Core.h"
 
+#include <Windows.h>
+
 using namespace std;
 using namespace std::chrono;
 
@@ -28,6 +30,9 @@ namespace Core
       try
       {
         (*_capture)();
+        if (!_output->GetCaptureResults()->GetStatus())
+          break;
+
         (*_record)();
         (*_vision)();
         (*_control)();
@@ -42,6 +47,9 @@ namespace Core
       duration<double> time_span = duration_cast<duration<double>>(end - start);
 
       cout << "[CORE   ] Frame #" << to_string(_frame++) << " processed (" << time_span.count() * 1000 << "ms).\n";
+
+      if (GetAsyncKeyState(VK_ESCAPE))
+        break;
     } while (_params->GetCaptureParams()->GetSimulateParams()->GetMediaType() == Capture::Simulate::Parameters::MediaType::Video || _frame < _params->GetRepeat());
   }
 }

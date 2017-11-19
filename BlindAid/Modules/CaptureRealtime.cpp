@@ -16,12 +16,12 @@ namespace Capture
 
     void Realtime::ConnectToCamera()
     {
-      if (_params->GetRealtimeParams()->GetEnableColor())
+      if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
       {
         _cfg.enable_stream(RS2_STREAM_COLOR, _params->GetRealtimeParams()->GetColorResolution().width, _params->GetRealtimeParams()->GetColorResolution().height, RS2_FORMAT_BGR8, _params->GetRealtimeParams()->GetDepthFrameRate());
       }
 
-      if (_params->GetRealtimeParams()->GetEnableDepth())
+      if (_params->GetType() == SwitchableParameters::Type::Depth || _params->GetType() == SwitchableParameters::Type::Both)
       {
         _cfg.enable_stream(RS2_STREAM_INFRARED, _params->GetRealtimeParams()->GetDepthResolution().width, _params->GetRealtimeParams()->GetDepthResolution().height, RS2_FORMAT_Y8, _params->GetRealtimeParams()->GetDepthFrameRate());
         _cfg.enable_stream(RS2_STREAM_DEPTH, _params->GetRealtimeParams()->GetDepthResolution().width, _params->GetRealtimeParams()->GetDepthResolution().height, RS2_FORMAT_Z16, _params->GetRealtimeParams()->GetDepthFrameRate());
@@ -37,9 +37,9 @@ namespace Capture
     {
       steady_clock::time_point start = steady_clock::now();
 
-      if (_params->GetRealtimeParams()->GetEnableColor())
+      if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
         GetColorFrame();
-      if (_params->GetRealtimeParams()->GetEnableDepth())
+      if (_params->GetType() == SwitchableParameters::Type::Depth || _params->GetType() == SwitchableParameters::Type::Both)
         GetDepthFrame();
 
       steady_clock::time_point end = steady_clock::now();

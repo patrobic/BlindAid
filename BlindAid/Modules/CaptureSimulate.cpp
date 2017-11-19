@@ -17,10 +17,12 @@ namespace Capture
     {
       steady_clock::time_point start = steady_clock::now();
 
-      if (_params->GetSimulateParams()->GetMediaType())
+      if (_params->GetSimulateParams()->GetMediaType() == Parameters::MediaType::Video)
         LoadVideo();
-      else
+      else if (_params->GetSimulateParams()->GetMediaType() == Parameters::MediaType::Photo)
         LoadPhoto();
+      else
+        LoadSequence();
 
       CreateHsvImage();
 
@@ -45,6 +47,26 @@ namespace Capture
       *_output->GetDepthImage() = imread(_params->GetSimulateParams()->GetDepthSimDataPath());
 
       if (_output->GetRgbImage()->cols == 0 || _output->GetRgbImage()->rows == 0) throw("could not open image.");
+    }
+
+    void Simulate::LoadSequence()
+    {
+      string path = _params->GetSimulateParams()->GetColorSimDataPath() + "\\color_" + to_string(_index) + ".jpg";
+      if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
+      {
+        *_output->GetRgbImage() = imread(_params->GetSimulateParams()->GetColorSimDataPath() + "\\color_" + to_string(_index) + ".jpg");
+        if (_output->GetRgbImage()->cols == 0 || _output->GetRgbImage()->rows == 0)
+          _output->SetStatus(false);
+      }
+
+      if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
+      {
+        *_output->GetDepthImage() = imread(_params->GetSimulateParams()->GetDepthSimDataPath() + "\\depth_" + to_string(_index) + ".jpg");
+        if (_output->GetDepthImage()->cols == 0 || _output->GetDepthImage()->rows == 0)
+          _output->SetStatus(false);
+      }
+
+      ++_index;
     }
   }
 }

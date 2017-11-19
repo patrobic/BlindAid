@@ -13,6 +13,7 @@ public:
 private:
   void TestRealtimeCapture();
   void TestRealtimeControl(std::string colorPath, std::string depthPath, int count);
+  void TestRecord(std::string path);
 
   Core::Core *_core;
   Core::Parameters *_params;

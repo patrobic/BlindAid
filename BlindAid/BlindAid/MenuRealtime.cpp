@@ -35,6 +35,7 @@ void RealtimeMenu::ShowMenu()
 +========== Realtime =========+\n\
 | c: Realtime Capture         |\n\
 | t: Realtime Control         |\n\
+| r: Realtime Capture+Record  |\n\
 +=============================+\n";
 
     in = _getch();
@@ -47,6 +48,8 @@ void RealtimeMenu::ShowMenu()
     case 't':
       TestRealtimeControl("TrafficLight\\tlight1.jpg", "depthMap.png", 1);
       break;
+    case 'r':
+      TestRecord("Record");
     }
   } while (in != 'q' && in != 'Q');
 }
@@ -57,7 +60,6 @@ void RealtimeMenu::Process()
     _core = new Core::Core(_params, NULL, _results);
 
   (*_core)();
-  waitKey();
 }
 
 void RealtimeMenu::TestRealtimeCapture()
@@ -85,4 +87,14 @@ void RealtimeMenu::TestRealtimeControl(string colorPath, string depthPath, int c
 
   Process();
   destroyAllWindows();
+}
+
+void RealtimeMenu::TestRecord(string path)
+{
+  _params->GetRecordParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
+  _params->GetRecordParams()->SetType(SwitchableParameters::Type::Color);
+  _params->GetCaptureParams()->SetType(SwitchableParameters::Type::Color);
+  _params->GetRecordParams()->SetPath(PATH);
+
+  TestRealtimeCapture();
 }

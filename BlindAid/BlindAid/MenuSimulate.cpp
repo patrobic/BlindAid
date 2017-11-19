@@ -32,6 +32,7 @@ void SimulateMenu::ShowMenu()
 +========= Simulation ========+\n\
 | 1: Load Photo               |\n\
 | 2: Load Video               |\n\
+| 3: Load Sequence            |\n\
 | d: Depth Obstacle Detector  |\n\
 | t: Traffic Light Detector   |\n\
 | s: Stop Sign Detector       |\n\
@@ -47,6 +48,9 @@ void SimulateMenu::ShowMenu()
       break;
     case '2':
       LoadFile(Capture::Simulate::Parameters::MediaType::Video, "depthMap.png");
+      break;
+    case '3':
+      TestSequence();
       break;
     case 'd':
       TestPhoto("TrafficLight\\tlight", "depthMap.png", 1);
@@ -71,7 +75,6 @@ void SimulateMenu::Process()
     _core = new Core::Core(_params, NULL, _results);
 
   (*_core)();
-  waitKey();
 }
 
 void SimulateMenu::LoadFile(Capture::Simulate::Parameters::MediaType mode, string depthPath)
@@ -89,6 +92,7 @@ void SimulateMenu::LoadFile(Capture::Simulate::Parameters::MediaType mode, strin
   _params->GetVisionParams()->GetTrafficLightParams()->SetConsecutiveCount(0);
 
   Process();
+  waitKey();
 }
 
 void SimulateMenu::TestVideo(string colorVideoPath, string depthPath, int count)
@@ -103,6 +107,7 @@ void SimulateMenu::TestVideo(string colorVideoPath, string depthPath, int count)
   {
     _params->GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + colorVideoPath + std::to_string(i) + string(".avi"));
     Process();
+    waitKey();
   }
 }
 
@@ -119,7 +124,30 @@ void SimulateMenu::TestPhoto(string colorPath, string depthPath, int count)
   {
     _params->GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + colorPath + (count != 0 ? std::to_string(i) : "") + string(".jpg"));
     Process();
+    waitKey();
   }
+
+  destroyAllWindows();
+}
+
+void SimulateMenu::TestSequence()
+{
+  _params->GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
+  _params->GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
+  _params->GetDisplayParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
+  _params->GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Sequence);
+  _params->GetVisionParams()->GetTrafficLightParams()->SetConsecutiveCount(0);
+
+  string path;
+  cout << "Enter folder name (date): ";
+  cin >> path;
+
+  _params->GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + path);
+  _params->GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + path);
+  _results->GetCaptureResults()->SetStatus(true);
+
+  while(_results->GetCaptureResults()->GetStatus())
+    Process();
 
   destroyAllWindows();
 }

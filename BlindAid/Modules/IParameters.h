@@ -32,11 +32,21 @@ public:
     Simulate
   };
 
+  enum Type
+  {
+    Color,
+    Depth,
+    Both
+  };
+
   Toggle GetToggle() { return _toggle; }
   void SetToggle(Toggle toggle) { _toggle = toggle; }
 
   Mode GetMode() { return _mode; }
   void SetMode(Mode mode) { _mode = mode; }
+
+  Type GetType() { return _type; }
+  void SetType(Type type) { _type = type; }
 
 private:
   // allows toggling a module between enabled and disabled.
@@ -44,4 +54,7 @@ private:
 
   // allows switching a module from realtime to simulation modes.
   Mode _mode = Mode::Realtime;
+
+  // save color, depth, or both
+  Type _type = Both;
 };

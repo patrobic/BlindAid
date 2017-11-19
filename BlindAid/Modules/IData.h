@@ -11,7 +11,11 @@ public:
   virtual bool Valid() = 0;
   virtual void Clear() = 0;
 
+  int GetStatus() { return _status; }
+  void SetStatus(bool status) { _status = status; }
+
 protected:
+  bool _status = true;
 
 };
 

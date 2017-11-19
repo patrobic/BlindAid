@@ -1,5 +1,12 @@
 #include "Record.h"
 
+#include <chrono>
+#include <ctime>
+#include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
+
 using namespace std;
 using namespace std::chrono;
 using namespace cv;
@@ -8,6 +15,23 @@ namespace Record
 {
   Record::Record(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
   {
+    CreateFolder();
+  }
+
+  void Record::CreateFolder()
+  {
+    time_t t = time(0);
+    struct tm now;
+    localtime_s(&now, &t);
+
+    _folderName = to_string(now.tm_year + 1900) + '-' + to_string(now.tm_mon + 1) + '-' + to_string(now.tm_mday)
+      + '_' + to_string(now.tm_hour) + '-' + to_string(now.tm_min) + '-' + to_string(now.tm_sec);
+
+    string path = _params->GetPath() + "\\" + _folderName;
+    system(("mkdir " + path).c_str());
+
+    if (!(GetFileAttributesA(path.c_str()) & FILE_ATTRIBUTE_DIRECTORY))
+      throw exception("failed to create Record directory.");
   }
 
   void Record::Process()
@@ -19,14 +43,17 @@ namespace Record
     steady_clock::time_point end = steady_clock::now();
     duration<double> time_span = duration_cast<duration<double>>(end - start);
 
-    cout << "[Record ] Frame recorded (" << time_span.count() * 1000 << "ms).\n";
+    cout << "[RECORD ] Frame recorded (" << time_span.count() * 1000 << "ms).\n";
   }
 
   void Record::SaveToDisk()
   {
-    // TODO: record color and depth image streams to disk
-    // (sequential jpegs with unique run and frame number, or possibly video file?) photo easier and gives us ability to select image subset for testing.
-    // Format: color/depth_run#_frame#.jpg, or even better create a new folder for each run.
-    // Recordings/Run#/Color_Frame#.jpg, Depth_Frame#.jpg
+    if(_params->GetType() == Parameters::Type::Color || _params->GetType() == Parameters::Type::Both)
+      imwrite(_params->GetPath() + "\\" + _folderName + "\\color_" + to_string(_index) + ".jpg", *_input->GetRgbImage());
+
+    if (_params->GetType() == Parameters::Type::Depth || _params->GetType() == Parameters::Type::Both)
+      imwrite(_params->GetPath() + "\\" + _folderName + "\\depth_" + to_string(_index) + ".jpg", *_input->GetDepthImage());
+
+    ++_index;
   }
 }

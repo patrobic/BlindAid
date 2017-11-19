@@ -15,12 +15,6 @@ namespace Capture
         return true;
       }
 
-      bool GetEnableDepth() { return _enableDepth; }
-      void SetEnableDepth(bool enableDepth) { _enableDepth = enableDepth; }
-
-      bool GetEnableColor() { return _enableColor; }
-      void SetEnableColor(bool enableColor) { _enableColor = enableColor; }
-
       cv::Size GetColorResolution() { return _colorResolution; }
       void SetColorResolution(cv::Size colorResolution) { _colorResolution = colorResolution; }
 
@@ -34,12 +28,6 @@ namespace Capture
       void SetDepthFrameRate(int depthFrameRate) { _depthFrameRate = depthFrameRate; }
 
     private:
-      // enable or disable depth camera acquisition.
-      bool _enableDepth = false;
-
-      // enable or disable color camera acquisition.
-      bool _enableColor = true;
-
       // color camera resolution.
       cv::Size _colorResolution = cv::Size(640, 480); //cv::Size(1920, 1080);
 
@@ -62,7 +50,8 @@ namespace Capture
       enum MediaType
       {
         Photo,
-        Video
+        Video,
+        Sequence
       };
 
       bool Valid()

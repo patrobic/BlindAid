@@ -16,8 +16,11 @@ namespace Capture
       void Process();
       void LoadVideo();
       void LoadPhoto();
+      void LoadSequence();
 
       cv::VideoCapture _cap;
+
+      int _index = 0;
     };
   }
 }

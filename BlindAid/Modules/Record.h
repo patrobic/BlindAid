@@ -8,24 +8,17 @@ namespace Record
   class Parameters : public SwitchableParameters
   {
   public:
-    enum Type
-    {
-      Color,
-      Depth,
-      Both
-    };
-
     bool Valid()
     {
       return true;
     }
 
+    std::string GetPath() { return _path; }
+    void SetPath(std::string path) { _path = path; }
+
   private:
     // path at which to save image stream.
     std::string _path;
-
-    // save color, depth, or both
-    Type _type;
   };
 
   class Data : public IData
@@ -47,12 +40,13 @@ namespace Record
 
     Record(IParameters *params, IData *input, IData *output);
 
+    void CreateFolder();
+
   private:
     void Process();
     void SaveToDisk();
 
-    Parameters *_params;
-    Capture::Data *_input;
-    Data *_output;
+    std::string _folderName;
+    int _index = 0;
   };
 }

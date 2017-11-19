@@ -14,6 +14,7 @@ private:
   void LoadFile(Capture::Simulate::Parameters::MediaType mode, std::string depthPath);
   void TestVideo(std::string colorVideoPath, std::string depthPath, int count);
   void TestPhoto(std::string colorPath, std::string depthPath, int count);
+  void TestSequence();
 
   Core::Core *_core;
   Core::Parameters *_params;
