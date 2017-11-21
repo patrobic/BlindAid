@@ -10,21 +10,24 @@ namespace Vision
     class Parameters : public SwitchableParameters
     {
     public:
-      enum Mode
-      {
-        FingerRegions,
-        HandHunting,
-        HeadProtection
-      };
+      enum Mode { FingerRegions, HandHunting, HeadProtection };
+      enum Polarity { CloseIsSmall, CloseIsLarge };
 
-      enum Polarity
-      {
-        CloseIsSmall,
-        CloseIsLarge
-      };
+      Parameters() { Defaults(); }
 
-      Parameters()
+      void Defaults()
       {
+        _regionMode = Mode::HandHunting;
+        _intensityPolarity = Polarity::CloseIsSmall;
+        _percentileToIgnore = 0.01f;
+        _horzRegions = HORZ_REGIONS;
+        _vertRegions = VERT_REGIONS;
+        _centerRegionHeight = 0.4f;
+        _centerRegionsWidth = 0.1f;
+        _defaultHandPosition = cv::Point(320, 240);
+        _handDotHsvRange[0] = cv::Scalar(100 / 2, 100, 100);
+        _handDotHsvRange[1] = cv::Scalar(140 / 2, 255, 255);
+
         _sbdParams.filterByArea = true;
         _sbdParams.minArea = 20 * 20;
         _sbdParams.maxArea = 120 * 120;
@@ -75,29 +78,29 @@ namespace Vision
 
     private:
       // mode used in defining region position and sizes.
-      Mode _regionMode = Mode::HandHunting;
+      Mode _regionMode;
 
       // significance of pixel values (i.e. is distance directly or inversely proportional to pixel value).
-      Polarity _intensityPolarity = Polarity::CloseIsSmall;
+      Polarity _intensityPolarity;
 
       // percentage of nearest pixels to ignore (to avoid false detections from noise etc.)
-      float _percentileToIgnore = 0.01f;
+      float _percentileToIgnore;
 
       // number of horizontal regions to split the frame in (default is 3: upper, middle and lower).
-      int _horzRegions = HORZ_REGIONS;
+      int _horzRegions;
 
       // number of vertical regions to split the frame in (default is 5: one for each finger).
-      int _vertRegions = VERT_REGIONS;
+      int _vertRegions;
 
       // height of the central region (for hand hunting mode), other regions evenly distributed in remaining height.
-      float _centerRegionHeight = 0.4f;
+      float _centerRegionHeight;
 
       // width of the central region (for hand hunting mode), other regions evenly distributed in remaining width.
-      float _centerRegionsWidth = 0.1f;
+      float _centerRegionsWidth;
 
-      cv::Point _defaultHandPosition = cv::Point(320, 240);
+      cv::Point _defaultHandPosition;
 
-      cv::Scalar _handDotHsvRange[2] = { cv::Scalar(100 / 2, 100, 100), cv::Scalar(140 / 2, 255, 255) };
+      cv::Scalar _handDotHsvRange[2];
 
       cv::SimpleBlobDetector::Params _sbdParams;
     };
@@ -110,21 +113,17 @@ namespace Vision
       class Parameters : public IParameters
       {
       public:
-        Parameters() { InitBlobParams(); }
+        Parameters() { Defaults(); }
 
-        bool Valid()
+        void Defaults()
         {
-          return true;
-        }
+          _colorRanges[0][0] = cv::Scalar(150, 150, 180);
+          _colorRanges[0][1] = cv::Scalar(10, 255, 255);
+          _colorRanges[1][0] = cv::Scalar(40, 110, 150);
+          _colorRanges[1][1] = cv::Scalar(80, 255, 255);
+          _colorRanges[2][0] = cv::Scalar(10, 110, 150);
+          _colorRanges[2][1] = cv::Scalar(40, 255, 255);
 
-        cv::Scalar GetColorRange(int color, int index) { return _colorRanges[color][index]; }
-        void SetColorRange(int color, int index, cv::Scalar scalar) { _colorRanges[color][index] = scalar; }
-
-        cv::SimpleBlobDetector::Params *GetBlobParams() { return &_blobParams; }
-
-      private:
-        void InitBlobParams()
-        {
           _blobParams.filterByArea = true;
           _blobParams.minArea = 4 * 4;
           _blobParams.maxArea = 60 * 60;
@@ -138,11 +137,19 @@ namespace Vision
           _blobParams.blobColor = 255;
         }
 
+        bool Valid()
+        {
+          return true;
+        }
+
+        cv::Scalar GetColorRange(int color, int index) { return _colorRanges[color][index]; }
+        void SetColorRange(int color, int index, cv::Scalar scalar) { _colorRanges[color][index] = scalar; }
+
+        cv::SimpleBlobDetector::Params *GetBlobParams() { return &_blobParams; }
+
+      private:
         // HSV color range for red/green/yellow masking.
-        cv::Scalar _colorRanges[3][2] = {
-          { cv::Scalar(150, 150, 180), cv::Scalar(10, 255, 255) },
-          { cv::Scalar(40, 110, 150), cv::Scalar(80, 255, 255) },
-          { cv::Scalar(10, 110, 150), cv::Scalar(40, 255, 255) } };
+        cv::Scalar _colorRanges[3][2];
 
         // parameters class for blobdetector.
         cv::SimpleBlobDetector::Params _blobParams;
@@ -154,6 +161,13 @@ namespace Vision
       class Parameters : public IParameters
       {
       public:
+        Parameters() { Defaults(); }
+
+        void Defaults()
+        {
+
+        }
+
         bool Valid()
         {
           return true;
@@ -168,11 +182,21 @@ namespace Vision
     class Parameters : public SwitchableParameters
     {
     public:
-      enum Mode
+      enum Mode { BlobDetector, DeepLearning };
+
+      Parameters() { Defaults(); }
+
+      void Defaults()
       {
-        BlobDetector,
-        DeepLearning
-      };
+        _blobDetectorParams.Defaults();
+        _deepLearningParams.Defaults();
+
+        _mode = BlobDetector;
+        _topRegionToAnalyze = 0.5f;
+        _consecutiveCount = 4;
+        _maximumDistance = 25;
+        _maximumRadiusDiff = 5;
+      }
 
       bool Valid()
       {
@@ -206,17 +230,17 @@ namespace Vision
       DeepLearning::Parameters _deepLearningParams;
 
       // detection mode to use (CV or AI).
-      Mode _mode = BlobDetector;
+      Mode _mode;
 
       // upper region to inspect for traffic lights.
-      float _topRegionToAnalyze = 0.5f;
+      float _topRegionToAnalyze;
 
       // consecutive detection
-      int _consecutiveCount = 4;
+      int _consecutiveCount;
 
       //  maximum distance and radius difference thresholds.
-      int _maximumDistance = 25;
-      int _maximumRadiusDiff = 5;
+      int _maximumDistance;
+      int _maximumRadiusDiff;
     };
   }
 
@@ -225,6 +249,13 @@ namespace Vision
     struct Parameters : public SwitchableParameters
     {
     public:
+      Parameters() { Defaults(); }
+
+      void Defaults()
+      {
+
+      }
+
       bool Valid()
       {
         return true;
@@ -238,14 +269,23 @@ namespace Vision
   class Parameters : public SwitchableParameters
   {
   public:
-    DepthObstacle::Parameters *GetDepthObstacleParams() { return &_dodParams; }
-    TrafficLight::Parameters *GetTrafficLightParams() { return &_tldParams; }
-    StopSign::Parameters *GetStopSignParams() { return &_ssdParams; }
+    Parameters() { Defaults(); }
+
+    void Defaults()
+    {
+      _dodParams.Defaults();
+      _tldParams.Defaults();
+      _ssdParams.Defaults();
+    }
 
     bool Valid()
     {
       return true;
     }
+
+    DepthObstacle::Parameters *GetDepthObstacleParams() { return &_dodParams; }
+    TrafficLight::Parameters *GetTrafficLightParams() { return &_tldParams; }
+    StopSign::Parameters *GetStopSignParams() { return &_ssdParams; }
 
   private:
     // parameters class for depth obstacle detector.

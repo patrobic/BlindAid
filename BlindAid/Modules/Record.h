@@ -8,6 +8,13 @@ namespace Record
   class Parameters : public SwitchableParameters
   {
   public:
+    Parameters() { Defaults(); }
+
+    void Defaults()
+    {
+      _path = "";
+    }
+
     bool Valid()
     {
       return true;

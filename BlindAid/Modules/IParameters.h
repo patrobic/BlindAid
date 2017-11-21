@@ -8,6 +8,7 @@ class IParameters
 {
 public:
   virtual bool Valid() = 0;
+  virtual void Defaults() = 0;
 
   bool GetToggle() { return true; }
 
@@ -20,24 +21,9 @@ public:
   // TODO: check that data is valid when received by a module.
   virtual bool Valid() = 0;
 
-  enum Toggle
-  {
-    Disabled,
-    Enabled
-  };
-
-  enum Mode
-  {
-    Realtime,
-    Simulate
-  };
-
-  enum Type
-  {
-    Color,
-    Depth,
-    Both
-  };
+  enum Toggle { Disabled, Enabled };
+  enum Mode { Realtime, Simulate };
+  enum Type { Color, Depth, Both };
 
   Toggle GetToggle() { return _toggle; }
   void SetToggle(Toggle toggle) { _toggle = toggle; }

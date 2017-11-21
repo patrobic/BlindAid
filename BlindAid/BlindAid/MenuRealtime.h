@@ -8,6 +8,7 @@ public:
   RealtimeMenu(Core::Core *core, Core::Parameters *params, Core::Data *data);
   void operator()();
   void ShowMenu();
+  void SetParameters();
   void Process();
 
 private:

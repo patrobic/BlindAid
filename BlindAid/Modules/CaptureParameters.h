@@ -10,6 +10,16 @@ namespace Capture
     class Parameters : public IParameters
     {
     public:
+      Parameters() { Defaults(); }
+
+      void Defaults()
+      {
+        _colorResolution = cv::Size(640, 480); //cv::Size(1920, 1080);
+        _colorFrameRate = 30;
+        _depthResolution = cv::Size(640, 480);
+        _depthFrameRate = 30;
+      }
+
       bool Valid()
       {
         return true;
@@ -29,16 +39,16 @@ namespace Capture
 
     private:
       // color camera resolution.
-      cv::Size _colorResolution = cv::Size(640, 480); //cv::Size(1920, 1080);
+      cv::Size _colorResolution;
 
-                                                      // color camera frame rate.
-      int _colorFrameRate = 30;
+      // color camera frame rate.
+      int _colorFrameRate;
 
       // depth camera resolution.
-      cv::Size _depthResolution = cv::Size(640, 480);
+      cv::Size _depthResolution;
 
       // depth camera frame rate.
-      int _depthFrameRate = 30;
+      int _depthFrameRate;
     };
   }
 
@@ -47,12 +57,16 @@ namespace Capture
     class Parameters : public IParameters
     {
     public:
-      enum MediaType
+      enum MediaType { Photo, Video, Sequence };
+
+      Parameters() { Defaults(); }
+
+      void Defaults()
       {
-        Photo,
-        Video,
-        Sequence
-      };
+        _mediaType = Photo;
+        _colorSimDataPath = "";
+        _depthSimDataPath = "";
+      }
 
       bool Valid()
       {
@@ -68,19 +82,7 @@ namespace Capture
       std::string GetDepthSimDataPath() { return _depthSimDataPath; }
       void SetDepthSimDataPath(std::string depthSimDataPath) { _depthSimDataPath = depthSimDataPath; }
 
-      bool GetEnableDepth() { return _enableDepth; }
-      void SetEnableDepth(bool enableDepth) { _enableDepth = enableDepth; }
-
-      bool GetEnableColor() { return _enableColor; }
-      void SetEnableColor(bool enableColor) { _enableColor = enableColor; }
-
     private:
-      // enable or disable depth camera acquisition.
-      bool _enableDepth = true;
-
-      // enable or disable color camera acquisition.
-      bool _enableColor = true;
-
       // indicate whether simulation media is photo or video.
       MediaType _mediaType = Photo;
 
@@ -95,6 +97,14 @@ namespace Capture
   class Parameters : public SwitchableParameters
   {
   public:
+    Parameters() { Defaults(); }
+
+    void Defaults()
+    {
+      _realtimeParams.Defaults();
+      _simulateParams.Defaults();
+    }
+
     bool Valid()
     {
       return true;

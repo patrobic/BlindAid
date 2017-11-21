@@ -1,4 +1,4 @@
-#include "SaveConfig.h"
+#include "ConfigSave.h"
 
 SaveConfiguration::SaveConfiguration(Core::Parameters *params, std::string path)
 {

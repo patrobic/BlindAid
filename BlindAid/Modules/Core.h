@@ -14,6 +14,17 @@ namespace Core
   class Parameters : public SwitchableParameters
   {
   public:
+    Parameters() { Defaults(); }
+
+    void Defaults()
+    {
+      _captureParams.Defaults();
+      _recordParams.Defaults();
+      _visionParams.Defaults();
+      _controlParams.Defaults();
+      _displayParams.Defaults();
+    }
+
     bool Valid()
     {
       return true;

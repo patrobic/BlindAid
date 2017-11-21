@@ -21,11 +21,13 @@ void SimulateMenu::operator()()
 }
 
 void SimulateMenu::ShowMenu()
-{
+{  
   char in;
   system("cls");
 
   do {
+    SetParameters();
+
     system("cls");
 
     cout << "\
@@ -66,7 +68,15 @@ void SimulateMenu::ShowMenu()
       break;
     }
   } while (in != 'q' && in != 'Q');
+}
 
+void SimulateMenu::SetParameters()
+{
+  _params->Defaults();
+  _params->GetRecordParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
+  _params->GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
+  _params->GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
+  _params->GetDisplayParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
 }
 
 void SimulateMenu::Process()
@@ -83,9 +93,6 @@ void SimulateMenu::LoadFile(Capture::Simulate::Parameters::MediaType mode, strin
   cout << "Enter file name (default directory): ";
   cin >> name;
 
-  _params->GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
-  _params->GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
-  _params->GetDisplayParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
   _params->GetCaptureParams()->GetSimulateParams()->SetMediaType(mode);
   _params->GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + depthPath);
   _params->GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + name);
@@ -97,9 +104,6 @@ void SimulateMenu::LoadFile(Capture::Simulate::Parameters::MediaType mode, strin
 
 void SimulateMenu::TestVideo(string colorVideoPath, string depthPath, int count)
 {
-  _params->GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
-  _params->GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
-  _params->GetDisplayParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
   _params->GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Video);
   _params->GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + depthPath);
 
@@ -113,9 +117,6 @@ void SimulateMenu::TestVideo(string colorVideoPath, string depthPath, int count)
 
 void SimulateMenu::TestPhoto(string colorPath, string depthPath, int count)
 {
-  _params->GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
-  _params->GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
-  _params->GetDisplayParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
   _params->GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Photo);
   _params->GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + depthPath);
   _params->GetVisionParams()->GetTrafficLightParams()->SetConsecutiveCount(0);
@@ -132,9 +133,6 @@ void SimulateMenu::TestPhoto(string colorPath, string depthPath, int count)
 
 void SimulateMenu::TestSequence()
 {
-  _params->GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
-  _params->GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
-  _params->GetDisplayParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
   _params->GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Sequence);
   _params->GetVisionParams()->GetTrafficLightParams()->SetConsecutiveCount(0);
 

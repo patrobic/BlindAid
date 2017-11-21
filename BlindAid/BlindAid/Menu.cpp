@@ -5,36 +5,14 @@ using namespace cv;
 
 MainMenu::MainMenu():
   _realtime(_core, &_params, &_results),
-  _simulate(_core, &_params, &_results)
+  _simulate(_core, &_params, &_results),
+  _configuration(&_params)
 {
-  Configure();
 }
 
 void MainMenu::operator()()
 {
   ShowMenu();
-}
-
-void MainMenu::Configure()
-{
-  // TODO: implement proper file loading/validating mechanics that creates new file if nonexistant or invalid.
-  // if(file exists)
-  //    try(LoadConfiguration());
-  //    if(!file.valid) .. LoadConfig should return if the file is valid (contains all values, and sensical)
-  //      if(PromptOverwrite()) ... prompt user to overwrite existing corrupt file?
-  //        Saveconfiguration();
-  //      else
-  //        throw exception(); ... terminate application!
-  // else ... no configuration exists at all (new installation).
-  //    SaveConfiguration(); ... create a file by saving the default configuration specified in each class's Parameters class.
-
-  SaveConfiguration saveConfig(&_params, "BlindAid.cfg");
-  saveConfig();
-
-  LoadConfiguration loadConfig(&_params, "BlindAid.cfg");
-  loadConfig();
-
-  _params.GetRecordParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
 }
 
 void MainMenu::ShowMenu()
@@ -44,11 +22,11 @@ void MainMenu::ShowMenu()
 
   do {
     cout << "\
-+== Main Menu ==+\n\
-| 1: Realtime   |\n\
-| 2: Simulate   |\n\
-| 3: Settings   |\n\
-+===============+\n";
++===== Main Menu =====+\n\
+| 1: Realtime         |\n\
+| 2: Simulate         |\n\
+| 3: Reload Settings  |\n\
++=====================+\n";
 
     in = _getch();
 
@@ -70,6 +48,8 @@ void MainMenu::ShowMenu()
 
 void MainMenu::Settings()
 {
+  _configuration.Configure();
+
   // TODO: user can manually specify (select and change) parameters, either via command line, or more sophisticated UI?
   // Not necessarily needed since editing the text file is just as easy...
 }

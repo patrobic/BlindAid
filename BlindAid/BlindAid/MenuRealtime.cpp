@@ -22,13 +22,12 @@ void RealtimeMenu::operator()()
 
 void RealtimeMenu::ShowMenu()
 {
-  _params->GetCaptureParams()->SetMode(SwitchableParameters::Mode::Realtime);
-  _params->GetControlParams()->SetMode(SwitchableParameters::Mode::Realtime);
-
   char in;
   system("cls");
 
   do {
+    SetParameters();
+
     system("cls");
 
     cout << "\
@@ -54,6 +53,14 @@ void RealtimeMenu::ShowMenu()
   } while (in != 'q' && in != 'Q');
 }
 
+void RealtimeMenu::SetParameters()
+{
+  _params->Defaults();
+  _params->GetRecordParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
+  _params->GetCaptureParams()->SetMode(SwitchableParameters::Mode::Realtime);
+  _params->GetControlParams()->SetMode(SwitchableParameters::Mode::Realtime);
+}
+
 void RealtimeMenu::Process()
 {
   if (_core == NULL)
@@ -69,6 +76,7 @@ void RealtimeMenu::TestRealtimeCapture()
   _params->GetVisionParams()->GetDepthObstacleParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
   _params->GetVisionParams()->GetStopSignParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
   _params->GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Video);
+  _params->GetCaptureParams()->SetType(SwitchableParameters::Type::Color);
 
   Process();
   destroyAllWindows();

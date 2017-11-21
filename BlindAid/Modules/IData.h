@@ -21,12 +21,7 @@ protected:
 
 struct Circle
 {
-  enum Color
-  {
-    Red,
-    Green,
-    Yellow
-  };
+  enum Color { Red, Green, Yellow };
 
   Circle() { _radius = 0; }
   Circle(cv::Point center, float radius, Color color) { _center = center; _radius = radius; _color = color; }

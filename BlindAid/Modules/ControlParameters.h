@@ -4,11 +4,21 @@
 
 namespace Control
 {
-  namespace Realtime 
+  namespace Realtime
   {
     class Parameters : public IParameters
     {
     public:
+      Parameters() { Defaults(); }
+
+      void Defaults()
+      {
+        _serialPort = 2;
+        _baudRate = 9600;
+        _messageStart = '<';
+        _messageEnd = '>';
+      }
+
       bool Valid()
       {
         return true;
@@ -28,17 +38,17 @@ namespace Control
 
     private:
       // COM port which bluetooth communicates.
-      int _serialPort = 2;
+      int _serialPort;
 
       // baud rate at which the COM port runs.
-      int _baudRate = 9600;
+      int _baudRate;
 
       // control message start and terminating characters.
-      char _messageStart = '<';
-      char _messageEnd = '>';
+      char _messageStart;
+      char _messageEnd;
 
       // TODO: any pairing options/memory once we configure BT.
-    
+
     };
   }
 
@@ -47,26 +57,52 @@ namespace Control
     class Parameters : public IParameters
     {
     public:
+      Parameters() { Defaults(); }
+
+      void Defaults()
+      {
+
+      }
+
       bool Valid()
       {
         return true;
       }
 
     private:
-    
+
     };
   }
 
   class Parameters : public SwitchableParameters
   {
   public:
-    enum OptionSignals
+    enum OptionSignals { None, LowerUpper, TrafficLight, NearObstacle };
+
+    Parameters() { Defaults(); }
+
+    void Defaults()
     {
-      None,
-      LowerUpper,
-      TrafficLight,
-      NearObstacle
-    };
+      _realtimeParams.Defaults();
+      _simulateParams.Defaults();
+
+      float bounds[HORZ_REGIONS][VERT_REGIONS] = {
+         { 1.5f, 2.f, 3.f, 2.f, 1.5f },
+         { 2.f, 2.5f, 3.f, 2.5f, 2.f },
+         { 1.5f, 2.f, 3.f, 2.f, 1.5f } };
+
+      for (int i = 0; i < HORZ_REGIONS; ++i)
+        for (int j = 0; j < VERT_REGIONS; ++j)
+          _farthestBound[i][j] = bounds[i][j];
+
+      _nearestBound = 0.5f;
+      _minimumVibration = 0.0f;
+      _maximumVibration = 1.f;
+      _maximumDepthSpec = 5.f;
+      _optionSignals[0] = TrafficLight;
+      _optionSignals[1] = NearObstacle;
+      _optionSignalsCount = 1;
+    }
 
     bool Valid()
     {
@@ -105,23 +141,20 @@ namespace Control
     Simulate::Parameters _simulateParams;
 
     // farthest and nearest distance range (in meters) to consider in depth detection (zero to disable region).
-    float _farthestBound[HORZ_REGIONS][VERT_REGIONS] = {
-      { 1.5f, 2.f, 3.f, 2.f, 1.5f },
-      { 2.f, 2.5f, 3.f, 2.5f, 2.f },
-      { 1.5f, 2.f, 3.f, 2.f, 1.5f } };
-    float _nearestBound = 0.5f;
+    float _farthestBound[HORZ_REGIONS][VERT_REGIONS];
+    float _nearestBound;
 
     // minimum and maximum vibration instensity ratios at farthest and nearest distances.
-    float _minimumVibration = 0.0f;
-    float _maximumVibration = 1.f;
+    float _minimumVibration;
+    float _maximumVibration;
 
     // camera maximum depth distance (in meters), i.e. distance at pixel = 255.
-    float _maximumDepthSpec = 5.f;
+    float _maximumDepthSpec;
 
     // what do the last two (6th & 7th) sent signals represent.
-    OptionSignals _optionSignals[2] = { TrafficLight, NearObstacle };
+    OptionSignals _optionSignals[2];
 
     // how many option signals are actually enabled.
-    int _optionSignalsCount = 1;
+    int _optionSignalsCount;
   };
 }

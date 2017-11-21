@@ -2,11 +2,9 @@
 
 #include <conio.h>
 
-#include "LoadConfig.h"
-#include "SaveConfig.h"
-
 #include "MenuSimulate.h"
 #include "MenuRealtime.h"
+#include "Config.h"
 
 #include "..\Modules\Core.h"
 
@@ -17,12 +15,13 @@ public:
   void operator()();
 
 private:
-  void Configure();
   void ShowMenu();
   void Settings();
 
   RealtimeMenu _realtime;
   SimulateMenu _simulate;
+
+  Configuration _configuration;
 
   Core::Core *_core;
   Core::Parameters _params;

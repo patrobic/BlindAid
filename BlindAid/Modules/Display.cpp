@@ -63,15 +63,20 @@ namespace Display
 
   void Display::DisplayImage()
   {
-    namedWindow("Color Image");
-    moveWindow("Color Image", 20, 20);
-    imshow("Color Image", *_input->GetCurrentColorImage());
-    waitKey(1);
+    if (_input->GetCurrentColorImage()->rows > 0 && _input->GetCurrentColorImage()->cols > 0)
+    {
+      namedWindow("Color Image");
+      moveWindow("Color Image", _params->GetColorWindowPosition().x, _params->GetColorWindowPosition().y);
+      resizeWindow("Color Image", (int)(_input->GetCurrentColorImage()->cols * _params->GetColorWindowScale()), (int)(_input->GetCurrentColorImage()->rows * _params->GetColorWindowScale()));
+      imshow("Color Image", *_input->GetCurrentColorImage());
+      waitKey(1);
+    }
 
     if (_input->GetCurrentDepthImage()->rows > 0 && _input->GetCurrentDepthImage()->cols > 0)
     {
       namedWindow("Depth Image");
-      moveWindow("Depth Image", 800, 20);
+      moveWindow("Depth Image", _params->GetDepthWindowPosition().x, _params->GetDepthWindowPosition().y);
+      resizeWindow("Depth Image", (int)(_input->GetCurrentDepthImage()->cols * _params->GetDepthWindowScale()), (int)(_input->GetCurrentDepthImage()->rows * _params->GetDepthWindowScale()));
       imshow("Depth Image", *_input->GetCurrentDepthImage());
       waitKey(1);
     }

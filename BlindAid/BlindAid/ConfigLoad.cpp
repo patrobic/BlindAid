@@ -1,4 +1,4 @@
-#include "LoadConfig.h"
+#include "ConfigLoad.h"
 
 LoadConfiguration::LoadConfiguration(Core::Parameters *params, std::string path)
 {
