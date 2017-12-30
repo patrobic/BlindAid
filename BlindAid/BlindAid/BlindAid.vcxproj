@@ -97,6 +97,10 @@
     <IncludePath>$(IncludePath);$(ProjectDir)..\..\Dependencies\opencv\include'$(ProjectDir)..\..\Dependencies\libconfig\include;$(ProjectDir)..\..\Dependencies\realsense\include</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(ProjectDir)..\..\Dependencies\opencv\x64\vc14\lib;$(ProjectDir)..\..\Dependencies\libconfig\x64\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\lib</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);;$(ProjectDir)..\..\Dependencies\opencv\include'$(ProjectDir)..\..\Dependencies\libconfig\include;$(ProjectDir)..\..\Dependencies\realsense\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(ProjectDir)..\..\Dependencies\opencv\x64\vc14\lib;$(ProjectDir)..\..\Dependencies\libconfig\x64\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\lib</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -145,11 +149,19 @@ xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\realsense\x64\bin\*.dll" "$(
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>;$(ProjectDir)..\..\Dependencies\opencv\include;$(ProjectDir)..\..\Dependencies\libconfig\include;$(ProjectDir)..\..\Dependencies\realsense\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Dependencies\opencv\x64\vc14\lib;$(ProjectDir)..\..\Dependencies\libconfig\x64\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);opencv_core330.lib;opencv_highgui330.lib;opencv_imgcodecs330.lib;opencv_imgproc330.lib;opencv_objdetect330.lib;opencv_features2d330.lib;opencv_videoio330.lib;libconfig.lib;realsense2.lib</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\opencv\x64\vc14\bin\*.dll" "$(OutDir)"
+xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\libconfig\x64\bin\*.dll" "$(OutDir)"
+xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\realsense\x64\bin\*.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
