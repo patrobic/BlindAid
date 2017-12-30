@@ -38,7 +38,7 @@ namespace Display
       {
         rect = _input->GetDepthObstacleResults()->GetRegionBounds(j, i);
         rectangle(_depthOverlay, rect, Scalar(0, 0, 255), 2);
-        putText(_depthOverlay, to_string(_input->GetDepthObstacleResults()->GetRegionIntensity(j, i)), Point(rect.x + (int)(0.5 * rect.width) - 20, rect.y + (int)(0.5 * rect.height)), FONT_HERSHEY_PLAIN, 1, Scalar(0, 0, 255));
+        putText(_depthOverlay, to_string(_input->GetDepthObstacleResults()->GetRegionIntensity(j, i)), Point(rect.x + (int)(0.5 * rect.width) - 25, rect.y + (int)(0.5 * rect.height)), FONT_HERSHEY_PLAIN, 1.25, Scalar(0, 0, 255), 2);
       }
     }
   }
@@ -68,7 +68,7 @@ namespace Display
   {
     if (_input->GetCurrentColorImage()->rows > 0 && _input->GetCurrentColorImage()->cols > 0)
     {
-      namedWindow("Color Image");
+      namedWindow("Color Image", WINDOW_NORMAL);
       moveWindow("Color Image", _params->GetColorWindowPosition().x, _params->GetColorWindowPosition().y);
       resizeWindow("Color Image", (int)(_input->GetCurrentColorImage()->cols * _params->GetColorWindowScale()), (int)(_input->GetCurrentColorImage()->rows * _params->GetColorWindowScale()));
       imshow("Color Image", *_input->GetCurrentColorImage());
@@ -77,7 +77,7 @@ namespace Display
 
     if (_input->GetCurrentDepthImage()->rows > 0 && _input->GetCurrentDepthImage()->cols > 0)
     {
-      namedWindow("Depth Image");
+      namedWindow("Depth Image", WINDOW_NORMAL);
       moveWindow("Depth Image", _params->GetDepthWindowPosition().x, _params->GetDepthWindowPosition().y);
       resizeWindow("Depth Image", (int)(_depthOverlay.cols * _params->GetDepthWindowScale()), (int)(_depthOverlay.rows * _params->GetDepthWindowScale()));
       imshow("Depth Image", _depthOverlay);

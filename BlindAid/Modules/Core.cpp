@@ -46,7 +46,7 @@ namespace Core
       steady_clock::time_point end = steady_clock::now();
       duration<double> time_span = duration_cast<duration<double>>(end - start);
 
-      cout << "[CORE   ] Frame #" << to_string(_frame++) << " processed (" << time_span.count() * 1000 << "ms).\n";
+      cout << "[   CORE] Frame #" << to_string(_frame++) << " processed (" << time_span.count() * 1000 << "ms).\n";
 
       if (GetAsyncKeyState(VK_ESCAPE))
         break;

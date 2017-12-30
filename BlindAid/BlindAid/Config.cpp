@@ -4,7 +4,8 @@ Configuration::Configuration(Core::Parameters *params) :
   _saveConfig(params, CONFIG_FILE),
   _loadConfig(params, CONFIG_FILE)
 {
-
+  // TODO: add this once the loading works correctly.
+  //Configure();
 }
 
 void Configuration::Configure()

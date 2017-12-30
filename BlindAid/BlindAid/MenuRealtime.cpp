@@ -73,11 +73,9 @@ void RealtimeMenu::TestRealtimeCapture()
 {
   _params->GetCaptureParams()->SetMode(SwitchableParameters::Mode::Realtime);
   _params->GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
- // _params->GetVisionParams()->GetDepthObstacleParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
   _params->GetVisionParams()->GetStopSignParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
   _params->GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Video);
   _params->GetCaptureParams()->SetType(SwitchableParameters::Type::Both);
-  _params->GetVisionParams()->GetTrafficLightParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
 
   Process();
   destroyAllWindows();

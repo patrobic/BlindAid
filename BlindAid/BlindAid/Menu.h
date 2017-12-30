@@ -15,8 +15,9 @@ public:
   void operator()();
 
 private:
+  void Run();
   void ShowMenu();
-  void Settings();
+  void LoadSettings();
 
   RealtimeMenu _realtime;
   SimulateMenu _simulate;

@@ -7,11 +7,12 @@ class RealtimeMenu
 public:
   RealtimeMenu(Core::Core *core, Core::Parameters *params, Core::Data *data);
   void operator()();
-  void ShowMenu();
-  void SetParameters();
   void Process();
 
 private:
+  void ShowMenu();
+  void SetParameters();
+
   void TestRealtimeCapture();
   void TestRealtimeControl(std::string colorPath, std::string depthPath, int count);
   void TestRecord(std::string path);

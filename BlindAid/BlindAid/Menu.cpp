@@ -1,5 +1,7 @@
 #include "Menu.h"
 
+#include <windows.h>
+
 using namespace std;
 using namespace cv;
 
@@ -8,11 +10,23 @@ MainMenu::MainMenu():
   _simulate(_core, &_params, &_results),
   _configuration(&_params)
 {
+  
 }
 
 void MainMenu::operator()()
 {
-  ShowMenu();
+  HWND consoleWindow = GetConsoleWindow();
+  SetWindowPos(consoleWindow, 0, _params.GetConsoleWindowPosition().x, _params.GetConsoleWindowPosition().y, _params.GetConsoleWindowScale(), _params.GetConsoleWindowScale(), TRUE);
+
+  if (_params.GetMode() == SwitchableParameters::Mode::Realtime)
+    Run();
+  else
+    ShowMenu();
+}
+
+void MainMenu::Run()
+{
+  _realtime.Process();
 }
 
 void MainMenu::ShowMenu()
@@ -39,14 +53,14 @@ void MainMenu::ShowMenu()
       _simulate();
       break;
     case '3':
-      Settings();
+      LoadSettings();
       break;
     }
     system("cls");
   } while (in != 'q' && in != 'Q');
 }
 
-void MainMenu::Settings()
+void MainMenu::LoadSettings()
 {
   _configuration.Configure();
 

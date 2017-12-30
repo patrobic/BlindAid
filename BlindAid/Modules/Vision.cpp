@@ -32,6 +32,6 @@ namespace Vision
     steady_clock::time_point end = steady_clock::now();
     duration<double> time_span = duration_cast<duration<double>>(end - start);
 
-    cout << "[VISION ] Frame detected (" << time_span.count() * 1000 << "ms).\n";
+    cout << "[ VISION] Frame detected (" << time_span.count() * 1000 << "ms).\n";
   }
 }

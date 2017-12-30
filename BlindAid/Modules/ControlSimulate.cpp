@@ -1,17 +1,18 @@
 #include "ControlSimulate.h"
 
+#include <iomanip>
+
 using namespace std;
 using namespace std::chrono;
 using namespace cv;
 
-#define STATUS_SIZE 50
 namespace Control
 {
   namespace Simulate
   {
     Simulate::Simulate(IParameters *params, IData *input, IData *output) : Base(params, input, output)
     {
-      _vibration = Mat(STATUS_SIZE, STATUS_SIZE * 5, CV_8UC1);
+      _vibration = Mat(1, 5, CV_8UC1);
     }
 
     void Simulate::Process()
@@ -32,21 +33,21 @@ namespace Control
     {
       string signals[7] = { "Thumb", "Index", "Middle", "Ring", "Pinky", "Option1", "Option2" };
 
-      cout << "  [GLOVE] ";
+      cout << "  [GLOVE] Thumb, Index, Middle, Ring, Pinky (";
       for (int i = 0; i < 5; ++i)
       {
-        cout << signals[i] << "(" << (int)_vibrationIntensity[i]->Get() << "), ";
-        _vibration(Rect(Point(i * STATUS_SIZE, 0), Point((i + 1) * STATUS_SIZE, STATUS_SIZE))).setTo((int)_vibrationIntensity[i]->Get());
+        cout << setw(4) << (int)_vibrationIntensity[i]->Get();
+        _vibration.at<uchar>(Point(i, 0)) = (int)_vibrationIntensity[i]->Get();
       }
-      cout << endl;
+      cout << ").\n";
 
-      namedWindow("Vibration Image");
-      //moveWindow("Vibration Image", , );
-      //resizeWindow("Vibration Image", , );
+      namedWindow("Vibration Image", WINDOW_NORMAL);
+      moveWindow("Vibration Image", _params->GetSimulateParams()->GetVibrationWindowPosition().x, _params->GetSimulateParams()->GetVibrationWindowPosition().y);
+      resizeWindow("Vibration Image", _params->GetSimulateParams()->GetVibrationWindowScale() * 5, _params->GetSimulateParams()->GetVibrationWindowScale());
       imshow("Vibration Image", _vibration);
       waitKey(1);
     }
-
+    
     void Simulate::PrintTrafficLights()
     {
       string name[3] = { "Red", "Green", "Yellow" };

@@ -61,6 +61,8 @@ namespace Control
 
       void Defaults()
       {
+        _vibrationWindowPosition = cv::Point(1000, 600);
+        _vibrationWindowScale = 50.f;
       }
 
       bool Valid()
@@ -68,7 +70,18 @@ namespace Control
         return true;
       }
 
+      cv::Point GetVibrationWindowPosition() { return _vibrationWindowPosition; }
+      void SetVibrationWindowPosition(cv::Point point) { _vibrationWindowPosition = point; }
+
+      float GetVibrationWindowScale() { return _vibrationWindowScale; }
+      void SetVibrationWindowScale(float scale) { _vibrationWindowScale = scale; }
+
     private:
+      // position of color image window.
+      cv::Point _vibrationWindowPosition;
+
+      // scale of color image window.
+      float _vibrationWindowScale;
 
     };
   }

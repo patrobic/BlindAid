@@ -12,9 +12,9 @@ namespace Display
 
     void Defaults()
     {
-      _colorWindowPosition = cv::Point(20, 20);
-      _depthWindowPosition = cv::Point(800, 20);
-      _colorWindowScale = 1.0f;
+      _colorWindowPosition = cv::Point(0, 0);
+      _depthWindowPosition = cv::Point(800, 0);
+      _colorWindowScale = 0.4f;
       _depthWindowScale = 1.0f;
     }
 
