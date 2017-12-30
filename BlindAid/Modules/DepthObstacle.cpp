@@ -22,8 +22,7 @@ namespace Vision
 
     void Detect::MaskShadows()
     {
-      cvtColor(*_input->GetDepthImage(), _grayImage, CV_BGR2GRAY);
-      threshold(_grayImage, _maskImage, 0, DEPTH_RANGE - 1, THRESH_BINARY);
+      inRange(*_input->GetDepthImage(), _params->GetMinDistance(), _params->GetMaxDistance(), _maskImage);
     }
 
     void Detect::SetCenterPoint()
@@ -37,7 +36,7 @@ namespace Vision
         _output->SetHandPosition(_params->GetDefaultHandPosition());
         break;
       case(Parameters::Mode::HeadProtection):
-        _output->SetHandPosition(Point(_grayImage.cols / 2, _grayImage.rows * 1 / 3));
+        _output->SetHandPosition(Point(_input->GetDepthImage()->cols / 2, _input->GetDepthImage()->rows * 1 / 3));
         break;
       }
     }
@@ -53,10 +52,10 @@ namespace Vision
       Ptr<SimpleBlobDetector> sbd = SimpleBlobDetector::create(_params->GetSbdParams());
 
       vector<KeyPoint> keyPoints;
-      sbd->detect(_grayImage, keyPoints);
+      sbd->detect(*_input->GetDepthImage(), keyPoints);
 
       if (keyPoints.size() == 0)
-        _output->SetHandPosition(Point(_grayImage.cols / 2, _grayImage.rows / 2));
+        _output->SetHandPosition(Point(_input->GetDepthImage()->cols / 2, _input->GetDepthImage()->rows / 2));
       else
         _output->SetHandPosition(keyPoints.at(0).pt);
     }
@@ -72,25 +71,25 @@ namespace Vision
           if (_params->GetMode() == Parameters::Mode::HeadProtection && i != 2)
             continue;
 
-          tl.x = _output->GetHandPosition().x + (int)((i - 2.5) * _grayImage.cols * _params->GetCenterRegionsWidth());
-          br.x = _output->GetHandPosition().x + (int)((i - 1.5) * _grayImage.cols * _params->GetCenterRegionsWidth());
-          tl.y = _output->GetHandPosition().y + (int)((j - 1.5) * _grayImage.rows * _params->GetCenterRegionHeight());
-          br.y = _output->GetHandPosition().y + (int)((j - 0.5) * _grayImage.rows * _params->GetCenterRegionHeight());
+          tl.x = _output->GetHandPosition().x + (int)((i - 2.5) * _input->GetDepthImage()->cols * _params->GetCenterRegionsWidth());
+          br.x = _output->GetHandPosition().x + (int)((i - 1.5) * _input->GetDepthImage()->cols * _params->GetCenterRegionsWidth());
+          tl.y = _output->GetHandPosition().y + (int)((j - 1.5) * _input->GetDepthImage()->rows * _params->GetCenterRegionHeight());
+          br.y = _output->GetHandPosition().y + (int)((j - 0.5) * _input->GetDepthImage()->rows * _params->GetCenterRegionHeight());
 
           if (i == 0) tl.x = 0;
-          if (i == VERT_REGIONS - 1) br.x = _grayImage.cols;
+          if (i == VERT_REGIONS - 1) br.x = _input->GetDepthImage()->cols;
           if (j == 0) tl.y = 0;
-          if (j == HORZ_REGIONS - 1) br.y = _grayImage.rows;
+          if (j == HORZ_REGIONS - 1) br.y = _input->GetDepthImage()->rows;
 
-          _output->SetRegionBounds(i, j, Rect(tl, br) & Rect(0, 0, _grayImage.cols, _grayImage.rows));
+          _output->SetRegionBounds(i, j, Rect(tl, br) & Rect(0, 0, _input->GetDepthImage()->cols, _input->GetDepthImage()->rows));
         }
     }
 
     void Detect::FindMaxInRegions()
     {
       Mat hist;
-      int size[] = { DEPTH_RANGE };
-      float range[] = { 0, DEPTH_RANGE };
+      int size[] = { _params->GetHistogramBins() };
+      float range[] = { _params->GetMinDistance(), _params->GetMaxDistance() };
       const float* ranges[] = { range };
       int channels[] = { 0 };
 
@@ -100,19 +99,19 @@ namespace Vision
       for (int i = 0; i < HORZ_REGIONS; ++i)
         for (int j = 0; j < VERT_REGIONS; ++j)
         {
-          calcHist(&_grayImage(_output->GetRegionBounds(j, i)), 1, channels, _maskImage(_output->GetRegionBounds(j, i)), hist, 1, size, ranges, true, false);
+          calcHist(&(*_input->GetDepthImage())(_output->GetRegionBounds(j, i)), 1, channels, _maskImage(_output->GetRegionBounds(j, i)), hist, 1, size, ranges, true, false);
           normalize(hist, hist, 0, hist.rows, NORM_MINMAX, -1, Mat());
 
           sum = (float)cv::sum(hist)[0];
           total = 0;
 
-          for (int k = 0; k < DEPTH_RANGE; ++k)
+          for (int k = 0; k < _params->GetHistogramBins(); ++k)
           {
             total += hist.at<float>(k);
 
             if (total > sum * _params->GetPercentileToIgnore())
             {
-              _output->SetRegionIntensity(j, i, k);
+              _output->SetRegionIntensity(j, i, _params->GetMinDistance() + k * (_params->GetMaxDistance() - _params->GetMinDistance()) / (float)_params->GetHistogramBins());
               break;
             }
           }

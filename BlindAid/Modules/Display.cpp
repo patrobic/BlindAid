@@ -8,7 +8,7 @@ namespace Display
 {
   Display::Display(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
   {
-
+    _depthOverlay = Mat(Size(628, 468), CV_8UC3);
   }
 
   void Display::Process()
@@ -28,14 +28,17 @@ namespace Display
 
   void Display::DrawDepthObstacles()
   {
+    _input->GetCurrentDepthImage()->convertTo(_depthOverlay, CV_8UC1, 1.f / 8.f, -0.5 / 8.f); // , 255.0 / (5 - 0.5));
+    cvtColor(_depthOverlay, _depthOverlay, CV_GRAY2BGR);
+
     Rect rect;
     for (int i = 0; i < HORZ_REGIONS; ++i)
     {
       for (int j = 0; j < VERT_REGIONS; ++j)
       {
         rect = _input->GetDepthObstacleResults()->GetRegionBounds(j, i);
-        rectangle(*_input->GetCurrentDepthImage(), rect, Scalar(0, 0, 255), 2);
-        putText(*_input->GetCurrentDepthImage(), to_string(_input->GetDepthObstacleResults()->GetRegionIntensity(j, i)), Point(rect.x + (int)0.5 * rect.width, rect.y + (int)0.5 * rect.height), FONT_HERSHEY_PLAIN, 1, Scalar(0, 0, 255));
+        rectangle(_depthOverlay, rect, Scalar(0, 0, 255), 2);
+        putText(_depthOverlay, to_string(_input->GetDepthObstacleResults()->GetRegionIntensity(j, i)), Point(rect.x + (int)(0.5 * rect.width) - 20, rect.y + (int)(0.5 * rect.height)), FONT_HERSHEY_PLAIN, 1, Scalar(0, 0, 255));
       }
     }
   }
@@ -74,10 +77,13 @@ namespace Display
 
     if (_input->GetCurrentDepthImage()->rows > 0 && _input->GetCurrentDepthImage()->cols > 0)
     {
+      //cv::Mat mat = cv::Mat(628, 468, CV_8UC1);
+      //(*_input->GetCurrentDepthImage())(Rect(0, 0, 628, 468)).convertTo(mat, CV_8UC1, 1.f / 8.f, -0.5/8.f); // , 255.0 / (5 - 0.5));
+
       namedWindow("Depth Image");
       moveWindow("Depth Image", _params->GetDepthWindowPosition().x, _params->GetDepthWindowPosition().y);
-      resizeWindow("Depth Image", (int)(_input->GetCurrentDepthImage()->cols * _params->GetDepthWindowScale()), (int)(_input->GetCurrentDepthImage()->rows * _params->GetDepthWindowScale()));
-      imshow("Depth Image", *_input->GetCurrentDepthImage());
+      resizeWindow("Depth Image", (int)(_depthOverlay.cols * _params->GetDepthWindowScale()), (int)(_depthOverlay.rows * _params->GetDepthWindowScale()));
+      imshow("Depth Image", _depthOverlay);
       waitKey(1);
     }
   }

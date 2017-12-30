@@ -17,11 +17,14 @@ namespace Vision
 
       void Defaults()
       {
-        _regionMode = Mode::HandHunting;
+        _regionMode = Mode::FingerRegions;
         _intensityPolarity = Polarity::CloseIsSmall;
         _percentileToIgnore = 0.01f;
         _horzRegions = HORZ_REGIONS;
         _vertRegions = VERT_REGIONS;
+        _minDistance = 500;
+        _maxDistance = 5000;
+        _histogramBins = 256;
         _centerRegionHeight = 0.4f;
         _centerRegionsWidth = 0.1f;
         _defaultHandPosition = cv::Point(320, 240);
@@ -61,6 +64,15 @@ namespace Vision
       int GetVertRegions() { return _vertRegions; }
       void SetVertRegions(int vertRegions) { _vertRegions = vertRegions; }
 
+      float GetMinDistance() { return _minDistance; }
+      void SetMinDistance(float minDistance) { _minDistance = minDistance; }
+
+      float GetMaxDistance() { return _maxDistance; }
+      void SetMaxDistance(float maxDistance) { _maxDistance = maxDistance; }
+
+      int GetHistogramBins() { return _histogramBins; }
+      void SetHistogramBins(int histogramBins) { _histogramBins = histogramBins; }
+
       float GetCenterRegionHeight() { return _centerRegionHeight; }
       void SetCenterRegionHeight(float centerRegionHeight) { _centerRegionHeight = centerRegionHeight; }
 
@@ -91,6 +103,15 @@ namespace Vision
 
       // number of vertical regions to split the frame in (default is 5: one for each finger).
       int _vertRegions;
+
+      // minimum object distance supported by camera.
+      float _minDistance;
+      
+      // maximum object distance supported by camera.
+      float _maxDistance;
+
+      // number of bins used in histogram calculation.
+      int _histogramBins;
 
       // height of the central region (for hand hunting mode), other regions evenly distributed in remaining height.
       float _centerRegionHeight;

@@ -14,7 +14,7 @@ namespace Capture
 
       void Defaults()
       {
-        _colorResolution = cv::Size(640, 480); //cv::Size(1920, 1080);
+        _colorResolution = cv::Size(1920, 1080);
         _colorFrameRate = 30;
         _depthResolution = cv::Size(640, 480);
         _depthFrameRate = 30;

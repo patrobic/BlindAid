@@ -4,6 +4,7 @@
 #include "Capture.h"
 
 #include "librealsense2\rs.hpp"
+#include "RealSense/SenseManager.h"
 
 namespace Capture
 {
@@ -19,6 +20,11 @@ namespace Capture
       void ConnectToCamera();
       void GetColorFrame();
       void GetDepthFrame();
+
+      Intel::RealSense::SenseManager *_pp;
+      const Intel::RealSense::Capture::Sample *_sample;
+      Intel::RealSense::ImageData _color;
+      Intel::RealSense::ImageData _depth;
 
       rs2::pipeline _pipe;
       rs2::config _cfg;

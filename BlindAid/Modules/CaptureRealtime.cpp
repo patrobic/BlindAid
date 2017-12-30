@@ -4,6 +4,7 @@ using namespace std;
 using namespace cv;
 using namespace std::chrono;
 using namespace rs2;
+//using namespace Intel::RealSense;
 
 namespace Capture
 {
@@ -16,31 +17,37 @@ namespace Capture
 
     void Realtime::ConnectToCamera()
     {
-      if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
-      {
-        _cfg.enable_stream(RS2_STREAM_COLOR, _params->GetRealtimeParams()->GetColorResolution().width, _params->GetRealtimeParams()->GetColorResolution().height, RS2_FORMAT_BGR8, _params->GetRealtimeParams()->GetDepthFrameRate());
-      }
+      _pp = Intel::RealSense::SenseManager::CreateInstance();
+   
+      Intel::RealSense::DataDesc desc = {};
+      desc.deviceInfo.streams = Intel::RealSense::Capture::STREAM_TYPE_COLOR | Intel::RealSense::Capture::STREAM_TYPE_DEPTH;
+      _pp->EnableStreams(&desc);
 
-      if (_params->GetType() == SwitchableParameters::Type::Depth || _params->GetType() == SwitchableParameters::Type::Both)
-      {
-        _cfg.enable_stream(RS2_STREAM_INFRARED, _params->GetRealtimeParams()->GetDepthResolution().width, _params->GetRealtimeParams()->GetDepthResolution().height, RS2_FORMAT_Y8, _params->GetRealtimeParams()->GetDepthFrameRate());
-        _cfg.enable_stream(RS2_STREAM_DEPTH, _params->GetRealtimeParams()->GetDepthResolution().width, _params->GetRealtimeParams()->GetDepthResolution().height, RS2_FORMAT_Z16, _params->GetRealtimeParams()->GetDepthFrameRate());
-      }
+      //_pp->EnableStream(Intel::RealSense::Capture::STREAM_TYPE_COLOR, _params->GetRealtimeParams()->GetColorResolution().width, _params->GetRealtimeParams()->GetColorResolution().height, _params->GetRealtimeParams()->GetColorFrameRate());
+      //_pp->EnableStream(Intel::RealSense::Capture::STREAM_TYPE_DEPTH, _params->GetRealtimeParams()->GetDepthResolution().width, _params->GetRealtimeParams()->GetDepthResolution().height, _params->GetRealtimeParams()->GetDepthFrameRate());
 
-      _pipe.start(_cfg);
+      _pp->Init();
+      Intel::RealSense::Capture::Device *device = _pp->QueryCaptureManager()->QueryDevice();
+      //device->ResetProperties(Intel::RealSense::Capture::STREAM_TYPE_ANY);
+      //device->SetMirrorMode(Intel::RealSense::Capture::Device::MirrorMode::MIRROR_MODE_DISABLED);
 
       *_output->GetRgbImage() = Mat(_params->GetRealtimeParams()->GetColorResolution(), CV_8UC3, Mat::AUTO_STEP);
-      *_output->GetDepthImage() = Mat(_params->GetRealtimeParams()->GetDepthResolution(), CV_8UC1, Mat::AUTO_STEP);
+      *_output->GetDepthImage() = Mat(_params->GetRealtimeParams()->GetDepthResolution(), CV_16U, Mat::AUTO_STEP);
     }
 
     void Realtime::Process()
     {
       steady_clock::time_point start = steady_clock::now();
 
+      _pp->AcquireFrame(false);
+      _sample = _pp->QuerySample();
+
       if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
         GetColorFrame();
       if (_params->GetType() == SwitchableParameters::Type::Depth || _params->GetType() == SwitchableParameters::Type::Both)
         GetDepthFrame();
+
+      _pp->ReleaseFrame();
 
       steady_clock::time_point end = steady_clock::now();
       duration<double> time_span = duration_cast<duration<double>>(end - start);
@@ -49,22 +56,20 @@ namespace Capture
 
     void Realtime::GetColorFrame()
     {
-      _frames = _pipe.wait_for_frames();
-      _colorFrame = _frames.get_color_frame();
-
-      _output->GetRgbImage()->data = (uchar*)_colorFrame.get_data();
+      _sample->color->AcquireAccess(Intel::RealSense::ImageAccess::ACCESS_READ, Intel::RealSense::PixelFormat::PIXEL_FORMAT_BGR, &_color);
+      _output->GetRgbImage()->data = _color.planes[0];
 
       CreateHsvImage();
+      _sample->color->ReleaseAccess(&_color);
     }
 
     void Realtime::GetDepthFrame()
     {
-      ir_frame = _frames.first(RS2_STREAM_INFRARED);
-      depth_frame = _frames.get_depth_frame();
-      _output->GetDepthImage()->data = (uchar*)ir_frame.get_data();
+      _sample->depth->AcquireAccess(Intel::RealSense::ImageAccess::ACCESS_READ, Intel::RealSense::PixelFormat::PIXEL_FORMAT_DEPTH, &_depth);
+      Mat temp = Mat(_params->GetRealtimeParams()->GetDepthResolution(), CV_16U, _depth.planes[0]);
 
-      equalizeHist(*_output->GetDepthImage(), *_output->GetDepthImage());
-      applyColorMap(*_output->GetDepthImage(), *_output->GetDepthImage(), COLORMAP_JET);
+      temp(Rect(0, 0, 628, 468)).copyTo(*_output->GetDepthImage());
+      _sample->color->ReleaseAccess(&_depth);
     }
   }
 }
