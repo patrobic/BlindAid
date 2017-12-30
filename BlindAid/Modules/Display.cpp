@@ -77,9 +77,6 @@ namespace Display
 
     if (_input->GetCurrentDepthImage()->rows > 0 && _input->GetCurrentDepthImage()->cols > 0)
     {
-      //cv::Mat mat = cv::Mat(628, 468, CV_8UC1);
-      //(*_input->GetCurrentDepthImage())(Rect(0, 0, 628, 468)).convertTo(mat, CV_8UC1, 1.f / 8.f, -0.5/8.f); // , 255.0 / (5 - 0.5));
-
       namedWindow("Depth Image");
       moveWindow("Depth Image", _params->GetDepthWindowPosition().x, _params->GetDepthWindowPosition().y);
       resizeWindow("Depth Image", (int)(_depthOverlay.cols * _params->GetDepthWindowScale()), (int)(_depthOverlay.rows * _params->GetDepthWindowScale()));

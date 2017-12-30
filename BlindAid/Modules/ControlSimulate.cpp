@@ -26,7 +26,7 @@ namespace Control
       steady_clock::time_point end = steady_clock::now();
       duration<double> time_span = duration_cast<duration<double>>(end - start);
       cout << "[CONTROL] Frame executed (" << time_span.count() * 1000 << "ms).\n";
-   }
+    }
 
     void Simulate::PrintDepthObstacle()
     {
@@ -35,8 +35,8 @@ namespace Control
       cout << "  [GLOVE] ";
       for (int i = 0; i < 5; ++i)
       {
-        cout << signals[i] << "(" << (int)_vibrationIntensity[i] << "), ";
-        _vibration(Rect(Point(i * STATUS_SIZE, 0), Point((i + 1) * STATUS_SIZE, STATUS_SIZE))).setTo((int)_vibrationIntensity[i]);
+        cout << signals[i] << "(" << (int)_vibrationIntensity[i]->Get() << "), ";
+        _vibration(Rect(Point(i * STATUS_SIZE, 0), Point((i + 1) * STATUS_SIZE, STATUS_SIZE))).setTo((int)_vibrationIntensity[i]->Get());
       }
       cout << endl;
 
@@ -45,7 +45,6 @@ namespace Control
       //resizeWindow("Vibration Image", , );
       imshow("Vibration Image", _vibration);
       waitKey(1);
-
     }
 
     void Simulate::PrintTrafficLights()

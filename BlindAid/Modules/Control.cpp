@@ -14,19 +14,18 @@ namespace Control
 
   Base::Base(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
   {
-
+    for(int i = 0; i < VERT_REGIONS + 2; ++i) _vibrationIntensity[i] = new Result(_params->GetConsecutiveCount());
   }
 
-  // TODO: avoid false positives with the following criteria.
-  // - large change in distance
-  // - over a short duration (1-3 frames)
   void Base::MapVibrationValues()
   {
     for (int i = 0; i < VERT_REGIONS; ++i)
     {
-      _vibrationIntensity[i] = 0.f;
+      int intensity = 0;
       for (int j = 0; j < HORZ_REGIONS; ++j)
-        _vibrationIntensity[i] = max(_vibrationIntensity[i], MappingFunction(_input->GetDepthObstacleResults()->GetRegionIntensity(_params->GetHandPolarity() ? i : VERT_REGIONS - i - 1, j), i, j)); // map the value to a vibration intensity ratio, and the maximum for that finger.
+        intensity = max(0, MappingFunction(_input->GetDepthObstacleResults()->GetRegionIntensity(_params->GetHandPolarity() ? i : VERT_REGIONS - i - 1, j), i, j)); // map the value to a vibration intensity ratio, and the maximum for that finger.
+
+      _vibrationIntensity[i]->Update(intensity);
     }
   }
 

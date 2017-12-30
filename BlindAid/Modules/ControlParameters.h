@@ -61,7 +61,6 @@ namespace Control
 
       void Defaults()
       {
-
       }
 
       bool Valid()
@@ -105,6 +104,8 @@ namespace Control
       _optionSignals[0] = TrafficLight;
       _optionSignals[1] = NearObstacle;
       _optionSignalsCount = 1;
+
+      _consecutiveCount = 3;
     }
 
     bool Valid()
@@ -139,6 +140,9 @@ namespace Control
     int GetOptionSignalsCount() { return _optionSignalsCount; }
     void SetOptionSignalsCount(int optionSignalsCount) { _optionSignalsCount = optionSignalsCount; }
 
+    int GetConsecutiveCount() { return _consecutiveCount; }
+    void SetConsecutiveCount(int consecutiveCount) { _consecutiveCount = consecutiveCount; }
+
   private:
     // realtime control parameters.
     Realtime::Parameters _realtimeParams;
@@ -165,5 +169,8 @@ namespace Control
 
     // how many option signals are actually enabled.
     int _optionSignalsCount;
+
+    // number of frames for which the farthest object will be chosen.
+    int _consecutiveCount;
   };
 }

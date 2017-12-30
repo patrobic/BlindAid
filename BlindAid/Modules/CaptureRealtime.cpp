@@ -3,8 +3,6 @@
 using namespace std;
 using namespace cv;
 using namespace std::chrono;
-using namespace rs2;
-//using namespace Intel::RealSense;
 
 namespace Capture
 {
@@ -23,13 +21,8 @@ namespace Capture
       desc.deviceInfo.streams = Intel::RealSense::Capture::STREAM_TYPE_COLOR | Intel::RealSense::Capture::STREAM_TYPE_DEPTH;
       _pp->EnableStreams(&desc);
 
-      //_pp->EnableStream(Intel::RealSense::Capture::STREAM_TYPE_COLOR, _params->GetRealtimeParams()->GetColorResolution().width, _params->GetRealtimeParams()->GetColorResolution().height, _params->GetRealtimeParams()->GetColorFrameRate());
-      //_pp->EnableStream(Intel::RealSense::Capture::STREAM_TYPE_DEPTH, _params->GetRealtimeParams()->GetDepthResolution().width, _params->GetRealtimeParams()->GetDepthResolution().height, _params->GetRealtimeParams()->GetDepthFrameRate());
-
       _pp->Init();
       Intel::RealSense::Capture::Device *device = _pp->QueryCaptureManager()->QueryDevice();
-      //device->ResetProperties(Intel::RealSense::Capture::STREAM_TYPE_ANY);
-      //device->SetMirrorMode(Intel::RealSense::Capture::Device::MirrorMode::MIRROR_MODE_DISABLED);
 
       *_output->GetRgbImage() = Mat(_params->GetRealtimeParams()->GetColorResolution(), CV_8UC3, Mat::AUTO_STEP);
       *_output->GetDepthImage() = Mat(_params->GetRealtimeParams()->GetDepthResolution(), CV_16U, Mat::AUTO_STEP);

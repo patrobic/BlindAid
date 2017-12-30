@@ -64,11 +64,11 @@ namespace Control
       _controlMessage = _params->GetRealtimeParams()->GetMessageStart();
 
       for (int i = 0; i < 5; ++i)
-        _controlMessage += to_string(_vibrationIntensity[i]);
+        _controlMessage += to_string(_vibrationIntensity[i]->Get());
 
       // TODO: acquire option messages from correct source, according to _optionSignals[].
       for (int i = 0; i < _params->GetOptionSignalsCount(); ++i)
-        _controlMessage += to_string(_vibrationIntensity[VERT_REGIONS]);
+        _controlMessage += to_string(_vibrationIntensity[VERT_REGIONS]->Get());
 
       _controlMessage += _params->GetRealtimeParams()->GetMessageEnd();
     }
