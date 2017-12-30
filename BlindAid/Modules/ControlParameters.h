@@ -78,6 +78,7 @@ namespace Control
   {
   public:
     enum OptionSignals { None, LowerUpper, TrafficLight, NearObstacle };
+    enum HandPolarity { Left, Right };
 
     Parameters() { Defaults(); }
 
@@ -86,18 +87,20 @@ namespace Control
       _realtimeParams.Defaults();
       _simulateParams.Defaults();
 
+      _handPolarity = Left;
+
       float bounds[HORZ_REGIONS][VERT_REGIONS] = {
-         { 1.5f, 2.f, 3.f, 2.f, 1.5f },
-         { 2.f, 2.5f, 3.f, 2.5f, 2.f },
-         { 1.5f, 2.f, 3.f, 2.f, 1.5f } };
+         { 700, 800, 900, 800, 700 },
+         { 800, 900, 1000, 900, 800 },
+         { 700, 800, 900, 800, 700 } };
 
       for (int i = 0; i < HORZ_REGIONS; ++i)
         for (int j = 0; j < VERT_REGIONS; ++j)
           _farthestBound[i][j] = bounds[i][j];
 
-      _nearestBound = 0.5f;
-      _minimumVibration = 0.0f;
-      _maximumVibration = 1.f;
+      _nearestBound = 650;
+      _minimumVibration = 0.25f;
+      _maximumVibration = 255.f;
       _maximumDepthSpec = 5.f;
       _optionSignals[0] = TrafficLight;
       _optionSignals[1] = NearObstacle;
@@ -111,6 +114,9 @@ namespace Control
 
     Realtime::Parameters *GetRealtimeParams() { return &_realtimeParams; }
     Simulate::Parameters *GetSimulateParams() { return &_simulateParams; }
+
+    HandPolarity GetHandPolarity() { return _handPolarity; }
+    void SetHandPolarity(HandPolarity handPolarity) { _handPolarity = handPolarity; }
 
     float GetFarthestBound(int finger, int level) { return _farthestBound[level][finger]; }
     void SetFarthestBound(int finger, int level, float farthestBound) { _farthestBound[level][finger] = farthestBound; }
@@ -139,6 +145,9 @@ namespace Control
 
     // simulate control parametes.
     Simulate::Parameters _simulateParams;
+
+    // order of the fingers.
+    HandPolarity _handPolarity;
 
     // farthest and nearest distance range (in meters) to consider in depth detection (zero to disable region).
     float _farthestBound[HORZ_REGIONS][VERT_REGIONS];

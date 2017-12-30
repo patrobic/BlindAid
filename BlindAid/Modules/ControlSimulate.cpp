@@ -4,13 +4,14 @@ using namespace std;
 using namespace std::chrono;
 using namespace cv;
 
+#define STATUS_SIZE 50
 namespace Control
 {
   namespace Simulate
   {
     Simulate::Simulate(IParameters *params, IData *input, IData *output) : Base(params, input, output)
     {
-
+      _vibration = Mat(STATUS_SIZE, STATUS_SIZE * 5, CV_8UC1);
     }
 
     void Simulate::Process()
@@ -33,8 +34,18 @@ namespace Control
 
       cout << "  [GLOVE] ";
       for (int i = 0; i < 5; ++i)
-        cout << signals[i] << "(" << _vibrationIntensity[0] << "), ";
+      {
+        cout << signals[i] << "(" << (int)_vibrationIntensity[i] << "), ";
+        _vibration(Rect(Point(i * STATUS_SIZE, 0), Point((i + 1) * STATUS_SIZE, STATUS_SIZE))).setTo((int)_vibrationIntensity[i]);
+      }
       cout << endl;
+
+      namedWindow("Vibration Image");
+      //moveWindow("Vibration Image", , );
+      //resizeWindow("Vibration Image", , );
+      imshow("Vibration Image", _vibration);
+      waitKey(1);
+
     }
 
     void Simulate::PrintTrafficLights()

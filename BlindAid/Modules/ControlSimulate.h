@@ -20,6 +20,7 @@ namespace Control
       void PrintStopSign();
 
       cv::Mat _depthMat;
+      cv::Mat _vibration;
     };
   }
 }

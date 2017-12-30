@@ -29,9 +29,7 @@ namespace Control
   protected:
     void MapVibrationValues();
     float MappingFunction(float distance, int col, int row);
-    float PixelToMeters(int pixel);
-    int MetersToPixel(float meters);
-  
+
     float _vibrationIntensity[VERT_REGIONS + 2];
   };
 }
