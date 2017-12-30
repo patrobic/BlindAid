@@ -10,14 +10,19 @@ namespace Vision
     class Parameters : public SwitchableParameters
     {
     public:
-      enum Mode { FingerRegions, HandHunting, HeadProtection };
+      enum Mode { Static, Dynamic, Reduced };
       enum Polarity { CloseIsSmall, CloseIsLarge };
 
       Parameters() { Defaults(); }
 
       void Defaults()
       {
-        _regionMode = Mode::FingerRegions;
+        // MODES: Configuration
+        // FingerRegions: regionMode = Static, center = (320, 240), horizontalCoverage = 0.9, verticalCoverage = 0.9, snapToEdges = true
+        // HandHunting: regionMode = Dynamic, center = (DYNAMIC), horizontalCoverage = 0.5, verticalCoverage = 0.5, snapToEdges = true
+        // HeadProtection: regionMode = Static, center = (320, 120), horizontalCoverage = 0.3, verticalCoverage = 0.7, snapToEdges = false
+
+        _regionMode = Mode::Static;
         _intensityPolarity = Polarity::CloseIsSmall;
         _percentileToIgnore = 0.01f;
         _horzRegions = HORZ_REGIONS;
@@ -27,7 +32,10 @@ namespace Vision
         _histogramBins = 256;
         _centerRegionHeight = 0.4f;
         _centerRegionsWidth = 0.1f;
-        _defaultHandPosition = cv::Point(320, 240);
+        _horizontalCoverage = 0.9f;
+        _verticalCoverage = 0.9f;
+        _snapToEdges = true;
+        _center = cv::Point(320, 240);
         _handDotHsvRange[0] = cv::Scalar(100 / 2, 100, 100);
         _handDotHsvRange[1] = cv::Scalar(140 / 2, 255, 255);
 
@@ -79,8 +87,17 @@ namespace Vision
       float GetCenterRegionsWidth() { return _centerRegionsWidth; }
       void SetCenterRegionsWidth(float centerRegionsWidth) { _centerRegionsWidth = centerRegionsWidth; }
 
-      cv::Point GetDefaultHandPosition() { return _defaultHandPosition; }
-      void SetDefaultHandPosition(cv::Point defaultHandPosition) { _defaultHandPosition = defaultHandPosition; }
+      float GetHorizontalCoverage() { return _horizontalCoverage; }
+      void SetHorizontalCoverage(float horizontalCoverage) { _horizontalCoverage = horizontalCoverage; }
+
+      float GetVerticalCoverage() { return _verticalCoverage; }
+      void SetVerticalCoverage(float verticalCoverage) { _verticalCoverage = verticalCoverage; }
+
+      bool GetSnapToEdges() { return _snapToEdges; }
+      void SetSnapToEdges(bool snapToEdges) { _snapToEdges = snapToEdges; }
+
+      cv::Point GetDefaultHandPosition() { return _center; }
+      void SetDefaultHandPosition(cv::Point defaultHandPosition) { _center = defaultHandPosition; }
 
       cv::Scalar GetHandDotHsvRange(int n) { return _handDotHsvRange[n]; }
       void SetHandDotHsvRange(int n, cv::Scalar handDotHsvRange) { _handDotHsvRange[n] = handDotHsvRange; }
@@ -119,7 +136,17 @@ namespace Vision
       // width of the central region (for hand hunting mode), other regions evenly distributed in remaining width.
       float _centerRegionsWidth;
 
-      cv::Point _defaultHandPosition;
+      // percentage of frame to analyze horizontally (reduce for head protection mode).
+      float _horizontalCoverage;
+
+      // percentage of frame to analyze vertically (reduce for head protection mode).
+      float _verticalCoverage;
+
+      // choose whether outer regions will expand to stick to edges.
+      bool _snapToEdges;
+
+      // point at which the search regions are centered.
+      cv::Point _center;
 
       cv::Scalar _handDotHsvRange[2];
 

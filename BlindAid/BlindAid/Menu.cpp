@@ -16,7 +16,7 @@ MainMenu::MainMenu():
 void MainMenu::operator()()
 {
   HWND consoleWindow = GetConsoleWindow();
-  SetWindowPos(consoleWindow, 0, _params.GetConsoleWindowPosition().x, _params.GetConsoleWindowPosition().y, _params.GetConsoleWindowScale(), _params.GetConsoleWindowScale(), TRUE);
+  SetWindowPos(consoleWindow, 0, _params.GetConsoleWindowPosition().x, _params.GetConsoleWindowPosition().y, (int)_params.GetConsoleWindowScale(), (int)_params.GetConsoleWindowScale(), TRUE);
 
   if (_params.GetMode() == SwitchableParameters::Mode::Realtime)
     Run();

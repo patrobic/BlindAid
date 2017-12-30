@@ -43,7 +43,7 @@ namespace Control
 
       namedWindow("Vibration Image", WINDOW_NORMAL);
       moveWindow("Vibration Image", _params->GetSimulateParams()->GetVibrationWindowPosition().x, _params->GetSimulateParams()->GetVibrationWindowPosition().y);
-      resizeWindow("Vibration Image", _params->GetSimulateParams()->GetVibrationWindowScale() * 5, _params->GetSimulateParams()->GetVibrationWindowScale());
+      resizeWindow("Vibration Image", (int)_params->GetSimulateParams()->GetVibrationWindowScale() * 5, (int)_params->GetSimulateParams()->GetVibrationWindowScale());
       imshow("Vibration Image", _vibration);
       waitKey(1);
     }

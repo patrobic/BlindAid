@@ -29,13 +29,13 @@ namespace Vision
     {
       switch (_params->GetMode())
       {
-      case(Parameters::Mode::HandHunting):
+      case(Parameters::Mode::Dynamic):
         DetectHand();
         break;
-      case(Parameters::Mode::FingerRegions):
+      case(Parameters::Mode::Static):
         _output->SetHandPosition(_params->GetDefaultHandPosition());
         break;
-      case(Parameters::Mode::HeadProtection):
+      case(Parameters::Mode::Reduced):
         _output->SetHandPosition(Point(_input->GetDepthImage()->cols / 2, _input->GetDepthImage()->rows * 1 / 3));
         break;
       }
@@ -68,18 +68,18 @@ namespace Vision
       for (int i = 0; i < VERT_REGIONS; ++i)
         for (int j = 0; j < HORZ_REGIONS; ++j)
         {
-          if (_params->GetMode() == Parameters::Mode::HeadProtection && i != 2)
-            continue;
+          tl.x = _output->GetHandPosition().x + (int)((i - 2.5) * _input->GetDepthImage()->cols * _params->GetCenterRegionsWidth() * _params->GetHorizontalCoverage());
+          br.x = _output->GetHandPosition().x + (int)((i - 1.5) * _input->GetDepthImage()->cols * _params->GetCenterRegionsWidth() * _params->GetHorizontalCoverage());
+          tl.y = _output->GetHandPosition().y + (int)((j - 1.5) * _input->GetDepthImage()->rows * _params->GetCenterRegionHeight() * _params->GetVerticalCoverage());
+          br.y = _output->GetHandPosition().y + (int)((j - 0.5) * _input->GetDepthImage()->rows * _params->GetCenterRegionHeight() * _params->GetVerticalCoverage());
 
-          tl.x = _output->GetHandPosition().x + (int)((i - 2.5) * _input->GetDepthImage()->cols * _params->GetCenterRegionsWidth());
-          br.x = _output->GetHandPosition().x + (int)((i - 1.5) * _input->GetDepthImage()->cols * _params->GetCenterRegionsWidth());
-          tl.y = _output->GetHandPosition().y + (int)((j - 1.5) * _input->GetDepthImage()->rows * _params->GetCenterRegionHeight());
-          br.y = _output->GetHandPosition().y + (int)((j - 0.5) * _input->GetDepthImage()->rows * _params->GetCenterRegionHeight());
-
-          if (i == 0) tl.x = 0;
-          if (i == VERT_REGIONS - 1) br.x = _input->GetDepthImage()->cols;
-          if (j == 0) tl.y = 0;
-          if (j == HORZ_REGIONS - 1) br.y = _input->GetDepthImage()->rows;
+          if (_params->GetSnapToEdges())
+          {
+            if (i == 0) tl.x = (int)(_input->GetDepthImage()->cols * (1 - _params->GetHorizontalCoverage()) / 2);
+            if (i == VERT_REGIONS - 1) br.x = (int)(_input->GetDepthImage()->cols * (1 + _params->GetHorizontalCoverage()) / 2);
+            if (j == 0) tl.y = (int)(_input->GetDepthImage()->rows * (1 - _params->GetVerticalCoverage()) / 2);
+            if (j == HORZ_REGIONS - 1) br.y = (int)(_input->GetDepthImage()->rows * (1 + _params->GetVerticalCoverage()) / 2);
+          }
 
           _output->SetRegionBounds(i, j, Rect(tl, br) & Rect(0, 0, _input->GetDepthImage()->cols, _input->GetDepthImage()->rows));
         }
@@ -111,7 +111,7 @@ namespace Vision
 
             if (total > sum * _params->GetPercentileToIgnore())
             {
-              _output->SetRegionIntensity(j, i, _params->GetMinDistance() + k * (_params->GetMaxDistance() - _params->GetMinDistance()) / (float)_params->GetHistogramBins());
+              _output->SetRegionIntensity(j, i, (int)(_params->GetMinDistance() + k * (_params->GetMaxDistance() - _params->GetMinDistance()) / (float)_params->GetHistogramBins()));
               break;
             }
           }

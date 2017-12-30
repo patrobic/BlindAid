@@ -21,9 +21,9 @@ namespace Control
   {
     for (int i = 0; i < VERT_REGIONS; ++i)
     {
-      int intensity = 0;
+      float intensity = 0;
       for (int j = 0; j < HORZ_REGIONS; ++j)
-        intensity = max(0, MappingFunction(_input->GetDepthObstacleResults()->GetRegionIntensity(_params->GetHandPolarity() ? i : VERT_REGIONS - i - 1, j), i, j)); // map the value to a vibration intensity ratio, and the maximum for that finger.
+        intensity = max(0.f, MappingFunction((float)(_input->GetDepthObstacleResults()->GetRegionIntensity(_params->GetHandPolarity() ? i : VERT_REGIONS - i - 1, j)), i, j)); // map the value to a vibration intensity ratio, and the maximum for that finger.
 
       _vibrationIntensity[i]->Update(intensity);
     }
@@ -32,6 +32,6 @@ namespace Control
   float Base::MappingFunction(float distance, int col, int row)
   {
     float slope = (_params->GetMaximumVibration() - _params->GetMinimumVibration()) / (_params->GetFarthestBound(col, row) - _params->GetNearestBound()); // calculate the slope between nearest and farthest points.
-    return min(255, _params->GetMaximumVibration() - max(0, distance - _params->GetNearestBound()) * slope);
+    return min(255.f, _params->GetMaximumVibration() - max(0.f, distance - _params->GetNearestBound()) * slope);
   }
 }
