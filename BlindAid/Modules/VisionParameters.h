@@ -23,33 +23,39 @@ namespace Vision
         // HeadProtection: regionMode = Static, center = (320, 120), horizontalCoverage = 0.3, verticalCoverage = 0.7, snapToEdges = false
 
         _regionMode = Mode::Static;
-        _intensityPolarity = Polarity::CloseIsSmall;
-        _percentileToIgnore = 0.01f;
-        _horzRegions = HORZ_REGIONS;
-        _vertRegions = VERT_REGIONS;
-        _minDistance = 500;
-        _maxDistance = 5000;
-        _histogramBins = 256;
-        _centerRegionHeight = 0.4f;
-        _centerRegionsWidth = 0.1f;
+
+        _horizontalRegions = HORZ_REGIONS;
+        _verticalRegions = VERT_REGIONS;
+
+        _regionHeight = 0.4f;
+        _regionWidth = 0.1f;
+        
         _horizontalCoverage = 0.9f;
         _verticalCoverage = 0.9f;
+        
         _snapToEdges = true;
-        _center = cv::Point(320, 240);
+        _defaultCenter = cv::Point(320, 240);
+        
+        _minimumDistance = 500;
+        _maximumDistance = 5000;
+        _percentileToIgnore = 0.01f;
+        _intensityPolarity = Polarity::CloseIsSmall;
+        _histogramBins = 256;
+
         _handDotHsvRange[0] = cv::Scalar(100 / 2, 100, 100);
         _handDotHsvRange[1] = cv::Scalar(140 / 2, 255, 255);
 
-        _sbdParams.filterByArea = true;
-        _sbdParams.minArea = 20 * 20;
-        _sbdParams.maxArea = 120 * 120;
-        _sbdParams.filterByCircularity = true;
-        _sbdParams.minCircularity = 0.1f;
-        _sbdParams.filterByConvexity = true;
-        _sbdParams.minConvexity = 0.8f;
-        _sbdParams.filterByInertia = true;
-        _sbdParams.minInertiaRatio = 0.5f;
-        _sbdParams.filterByColor = true;
-        _sbdParams.blobColor = 255;
+        _handDetectorParams.filterByArea = true;
+        _handDetectorParams.minArea = 20 * 20;
+        _handDetectorParams.maxArea = 120 * 120;
+        _handDetectorParams.filterByCircularity = true;
+        _handDetectorParams.minCircularity = 0.1f;
+        _handDetectorParams.filterByConvexity = true;
+        _handDetectorParams.minConvexity = 0.8f;
+        _handDetectorParams.filterByInertia = true;
+        _handDetectorParams.minInertiaRatio = 0.5f;
+        _handDetectorParams.filterByColor = true;
+        _handDetectorParams.blobColor = 255;
       }
 
       bool Valid()
@@ -57,35 +63,20 @@ namespace Vision
         return true;
       }
 
-      Mode GetMode() { return _regionMode; }
-      void SetMode(Mode regionMode) { _regionMode = regionMode; }
+      int GetHorizontalRegions() { return _horizontalRegions; }
+      void SetHorizontalRegions(int horzRegions) { _horizontalRegions = horzRegions; }
 
-      Polarity GetIntensityPolarity() { return _intensityPolarity; }
-      void SetIntensityPolarity(Polarity intensityPolarity) { _intensityPolarity = intensityPolarity; }
+      int GetVerticalRegions() { return _verticalRegions; }
+      void SetVerticalRegions(int vertRegions) { _verticalRegions = vertRegions; }
 
-      float GetPercentileToIgnore() { return _percentileToIgnore; }
-      void SetPercentileToIgnor(float percentileToIgnore) { _percentileToIgnore = percentileToIgnore; }
+      Mode GetRegionMode() { return _regionMode; }
+      void SetRegionMode(Mode regionMode) { _regionMode = regionMode; }
 
-      int GetHorzRegions() { return _horzRegions; }
-      void SetHorzRegions(int horzRegions) { _horzRegions = horzRegions; }
+      float GetRegionHeight() { return _regionHeight; }
+      void SetRegionHeight(float centerRegionHeight) { _regionHeight = centerRegionHeight; }
 
-      int GetVertRegions() { return _vertRegions; }
-      void SetVertRegions(int vertRegions) { _vertRegions = vertRegions; }
-
-      float GetMinDistance() { return _minDistance; }
-      void SetMinDistance(float minDistance) { _minDistance = minDistance; }
-
-      float GetMaxDistance() { return _maxDistance; }
-      void SetMaxDistance(float maxDistance) { _maxDistance = maxDistance; }
-
-      int GetHistogramBins() { return _histogramBins; }
-      void SetHistogramBins(int histogramBins) { _histogramBins = histogramBins; }
-
-      float GetCenterRegionHeight() { return _centerRegionHeight; }
-      void SetCenterRegionHeight(float centerRegionHeight) { _centerRegionHeight = centerRegionHeight; }
-
-      float GetCenterRegionsWidth() { return _centerRegionsWidth; }
-      void SetCenterRegionsWidth(float centerRegionsWidth) { _centerRegionsWidth = centerRegionsWidth; }
+      float GetRegionWidth() { return _regionWidth; }
+      void SetRegionWidth(float centerRegionsWidth) { _regionWidth = centerRegionsWidth; }
 
       float GetHorizontalCoverage() { return _horizontalCoverage; }
       void SetHorizontalCoverage(float horizontalCoverage) { _horizontalCoverage = horizontalCoverage; }
@@ -96,45 +87,45 @@ namespace Vision
       bool GetSnapToEdges() { return _snapToEdges; }
       void SetSnapToEdges(bool snapToEdges) { _snapToEdges = snapToEdges; }
 
-      cv::Point GetDefaultHandPosition() { return _center; }
-      void SetDefaultHandPosition(cv::Point defaultHandPosition) { _center = defaultHandPosition; }
+      cv::Point GetDefaultCenter() { return _defaultCenter; }
+      void SetDefaultCenter(cv::Point defaultCenter) { _defaultCenter = defaultCenter; }
+
+      float GetMinimumDistance() { return _minimumDistance; }
+      void SetMinimumDistance(float minDistance) { _minimumDistance = minDistance; }
+
+      float GetMaximumDistance() { return _maximumDistance; }
+      void SetMaximumDistance(float maxDistance) { _maximumDistance = maxDistance; }
+
+      float GetPercentileToIgnore() { return _percentileToIgnore; }
+      void SetPercentileToIgnor(float percentileToIgnore) { _percentileToIgnore = percentileToIgnore; }
+
+      Polarity GetIntensityPolarity() { return _intensityPolarity; }
+      void SetIntensityPolarity(Polarity intensityPolarity) { _intensityPolarity = intensityPolarity; }
+
+      int GetHistogramBins() { return _histogramBins; }
+      void SetHistogramBins(int histogramBins) { _histogramBins = histogramBins; }
 
       cv::Scalar GetHandDotHsvRange(int n) { return _handDotHsvRange[n]; }
       void SetHandDotHsvRange(int n, cv::Scalar handDotHsvRange) { _handDotHsvRange[n] = handDotHsvRange; }
 
-      cv::SimpleBlobDetector::Params GetSbdParams() { return _sbdParams; }
-      void SetSbdParams(cv::SimpleBlobDetector::Params sbdParams) { _sbdParams = sbdParams; }
+      cv::SimpleBlobDetector::Params GetHandDetectorParams() { return _handDetectorParams; }
+      void SetHandDetectorParams(cv::SimpleBlobDetector::Params handDetectorParams) { _handDetectorParams = handDetectorParams; }
 
     private:
+      // number of horizontal regions to split the frame in (default is 3: upper, middle and lower).
+      int _horizontalRegions;
+
+      // number of vertical regions to split the frame in (default is 5: one for each finger).
+      int _verticalRegions;
+
       // mode used in defining region position and sizes.
       Mode _regionMode;
 
-      // significance of pixel values (i.e. is distance directly or inversely proportional to pixel value).
-      Polarity _intensityPolarity;
-
-      // percentage of nearest pixels to ignore (to avoid false detections from noise etc.)
-      float _percentileToIgnore;
-
-      // number of horizontal regions to split the frame in (default is 3: upper, middle and lower).
-      int _horzRegions;
-
-      // number of vertical regions to split the frame in (default is 5: one for each finger).
-      int _vertRegions;
-
-      // minimum object distance supported by camera.
-      float _minDistance;
-      
-      // maximum object distance supported by camera.
-      float _maxDistance;
-
-      // number of bins used in histogram calculation.
-      int _histogramBins;
-
       // height of the central region (for hand hunting mode), other regions evenly distributed in remaining height.
-      float _centerRegionHeight;
+      float _regionHeight;
 
       // width of the central region (for hand hunting mode), other regions evenly distributed in remaining width.
-      float _centerRegionsWidth;
+      float _regionWidth;
 
       // percentage of frame to analyze horizontally (reduce for head protection mode).
       float _horizontalCoverage;
@@ -146,11 +137,28 @@ namespace Vision
       bool _snapToEdges;
 
       // point at which the search regions are centered.
-      cv::Point _center;
+      cv::Point _defaultCenter;
 
+      // minimum object distance supported by camera.
+      float _minimumDistance;
+      
+      // maximum object distance supported by camera.
+      float _maximumDistance;
+
+      // percentage of nearest pixels to ignore (to avoid false detections from noise etc.)
+      float _percentileToIgnore;
+
+      // significance of pixel values (i.e. is distance directly or inversely proportional to pixel value).
+      Polarity _intensityPolarity;
+
+      // number of bins used in histogram calculation.
+      int _histogramBins;
+
+      // color range of dot on hand indicating its position.
       cv::Scalar _handDotHsvRange[2];
 
-      cv::SimpleBlobDetector::Params _sbdParams;
+      // OpenCV blob detector params for finding do on hand.
+      cv::SimpleBlobDetector::Params _handDetectorParams;
     };
   }
 

@@ -1,6 +1,51 @@
 # Changelog
+- [Todo]: Features to add before next version.
+- [Unreleased]: Features not yet in a version.
+- [vx.y.z] - YYYY-MM-DD: Release version and date.
+- Added: List of new key features/upgrades.
+- Details: Per-commit changes/additions/removals.
+- Bugs: Known or discovered issues with version.
+
+## [Todo]
+- Configuration load/save to file using LibConfig.
 
 ## [Unreleased]
+
+## [v0.0.2] - 2017-12-30
+- Received R200 camera and Up Board.
+- Last version of 2017.
+- Depth and TrafficLight working with R200.
+
+### Added
+- Production realtime menu bypass mode.
+- Coverage setting to alter depth region.
+- Consecutive depth vibration threshold.
+- OpenCV Release binaries and configurations.
+- Realsense SDK to work with R200 camera.
+
+### Details
+- Fixed various compilation cast warnings.
+- Added Coverage setting and mechanics to DepthObstacle.
+- Consolidated DepthObstacle modes and related settings.
+- Added readmes to describe use of top level folders.
+- Added Realtime Menu bypass for headless production use.
+- Enabled Depth and TrafficLight in TestRealtimeCapture.
+- Reorganized dependencies into Debug/Release folders.
+- Depth vibration considers farthest of last N frames.
+- Display vibration status window using greyscale Mat.
+- Reworked Simulate Control depth to vibration mapping.
+- Improved Histogram to accept variable range/size.
+- Reworked Realtime Capture to work with R200 camera.
+- Switched to Realsenes SDK, got rid of librealsense.
+- Compiled and added Release OpenCV 3.3.0 binaries.
+- Fixed Release Configuration include/library paths.
+- Reorganized Configuration initialization in Menu.
+- Moved parameter initialization to default functions.
+
+### Bugs
+- Creates blank folders on C:\ root.
+- Finger vibration assignments are mirrored.
+- Memory leak with Realsense SDK libpxc.dll.
 
 ## [v0.0.1] - 2017-11-19
 - Initial alpha version.
@@ -10,7 +55,6 @@
 
 ### Bugs
 - Creates blank folders on C:\ root.
-
 
 ## [pre-alpha] - 2017-09-13 to 2017-11-18
 ### Summary
@@ -44,7 +88,7 @@
 - Implement	TrafficLight Module
 - Include	OpenCV library
 
-### Added
+### Details
 - Refactored Menu into separate classes Simulate and Realtime.
 - Reorganized project, renamed some files, added filters.
 - Completed parameters rework for Control/TrafficLight, added Load/SaveConfig functions, cleaned up.
