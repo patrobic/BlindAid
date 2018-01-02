@@ -2,32 +2,29 @@
 
 #include <conio.h>
 
-#include "LoadConfig.h"
-#include "SaveConfig.h"
+#include "MenuSimulate.h"
+#include "MenuRealtime.h"
+#include "Config.h"
 
-#include "..\Modules\ModuleCore.h"
+#include "..\Modules\Core.h"
 
 class MainMenu
 {
 public:
-
   MainMenu();
   void operator()();
 
 private:
-  void Realtime();
-  void Simulate();
-  void Settings();
+  void Run();
+  void ShowMenu();
+  void LoadSettings();
 
-  void LoadFile(Capture::Parameters::MediaType mode, std::string depthPath);
+  RealtimeMenu _realtime;
+  SimulateMenu _simulate;
 
-  void TestVideo(std::string colorVideoPath, std::string depthPath, int count);
-  void TestPhoto(std::string colorPath, std::string depthPath, int count);
+  Configuration _configuration;
 
-  void TestRealtimeCapture();
-  void TestRealtimeControl(std::string colorPath, std::string depthPath, int count);
-
-  Core _core;
+  Core::Core *_core;
   Core::Parameters _params;
   Core::Data _results;
 };

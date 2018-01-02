@@ -8,30 +8,41 @@
 class IData
 {
 public:
+  virtual bool Valid() = 0;
   virtual void Clear() = 0;
   // TODO: check that parameters are valid in all Modules.
   // virtual bool Valid() = 0;
 
+  int GetStatus() { return _status; }
+  void SetStatus(bool status) { _status = status; }
+
 protected:
+  bool _status = true;
 
 };
 
 struct Circle
 {
-  enum Color
-  {
-    Red,
-    Green,
-    Yellow
-  };
+  enum Color { Red, Green, Yellow };
 
   Circle() { _radius = 0; }
-  Circle(cv::Point center, int radius, Color color) { _center = center; _radius = radius; _color = color; }
+  Circle(cv::Point center, float radius, Color color) { _center = center; _radius = radius; _color = color; }
   void Clear() { _center = cv::Point(0, 0); _radius = 0; _color = Red; }
 
+  float CartesianDistance(Circle &c2)
+  {
+    return (float)cv::norm(_center - c2._center);
+  }
+
+  float RadiusDifference(Circle &c2)
+  {
+    return abs(_radius - c2._radius);
+  }
+
   cv::Point _center;
-  int _radius;
+  float _radius;
   Color _color;
+  int _count = 0;
 };
 
 struct Region

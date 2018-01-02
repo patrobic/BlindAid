@@ -194,7 +194,7 @@
       <FileName>IModule.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DetectBase">
+  <Class Name="IDetect">
     <Position X="7.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -204,7 +204,7 @@
   <Class Name="IParameters" Collapsed="true">
     <Position X="29.5" Y="0.5" Width="1.5" />
     <NestedTypes>
-      <Enum Name="IParameters::Toggle" Collapsed="true">
+      <Enum Name="SwitchableParameters::Toggle" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>IParameters.h</NewMemberFileName>
         </TypeIdentifier>

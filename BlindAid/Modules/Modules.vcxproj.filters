@@ -13,61 +13,85 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{3d1eb98a-26df-4ffe-91d7-046ec1e72114}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parameters">
+      <UniqueIdentifier>{e9c2f4db-be08-4d0f-95af-778115441091}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SimulateCapture.h">
+    <ClInclude Include="Serial.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthObstacle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SimulateControl.h">
+    <ClInclude Include="StopSign.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DetectDepthObstacle.h">
+    <ClInclude Include="TrafficLightBlobDetector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DetectFace.h">
+    <ClInclude Include="TrafficLightDeepLearning.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DetectStopSign.h">
+    <ClInclude Include="CaptureRealtime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DetectTrafficLight.h">
+    <ClInclude Include="ControlRealtime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DetectVehicle.h">
+    <ClInclude Include="Core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IModule.h">
+    <ClInclude Include="Display.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IParameters.h">
+    <ClInclude Include="Record.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptureSimulate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlSimulate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IData.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IModule.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IParameters.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IResult.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptureParameters.h">
+      <Filter>Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlParameters.h">
+      <Filter>Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="VisionParameters.h">
+      <Filter>Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="IDetect.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="TrafficLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Users\patri\Downloads\librealsense-master\librealsense-master\examples\example.hpp">
+    <ClInclude Include="Capture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleRecord.h">
+    <ClInclude Include="Control.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleVision.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleDisplay.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleCore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleControl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleCapture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Serial.h">
-      <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="BaseCapture.h">
       <Filter>Header Files</Filter>
@@ -77,47 +101,53 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ModuleControl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleCore.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleDisplay.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleVision.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SimulateCapture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SimulateControl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DetectDepthObstacle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DetectFace.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DetectStopSign.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DetectTrafficLight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DetectVehicle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleCapture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleRecord.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Serial.cpp">
       <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DepthObstacle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StopSign.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TrafficLightBlobDetector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TrafficLightDeepLearning.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptureRealtime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ControlRealtime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Display.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Record.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptureSimulate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ControlSimulate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Capture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Control.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TrafficLight.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BaseCapture.cpp">
       <Filter>Source Files</Filter>
