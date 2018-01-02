@@ -1,5 +1,7 @@
 #include "ControlRealtime.h"
 
+#include <iomanip>
+
 using namespace std;
 using namespace std::chrono;
 using namespace cv;
@@ -61,16 +63,19 @@ namespace Control
 
     void Realtime::GenerateControlString()
     {
-      _controlMessage = _params->GetRealtimeParams()->GetMessageStart();
+      stringstream ss;
+
+      ss << _params->GetRealtimeParams()->GetMessageStart();
 
       for (int i = 0; i < 5; ++i)
-        _controlMessage += to_string(_vibrationIntensity[i]->Get());
+        ss << setw(3) << setfill('0') << (int)_vibrationIntensity[i]->Get();
 
-      // TODO: acquire option messages from correct source, according to _optionSignals[].
       for (int i = 0; i < _params->GetOptionSignalsCount(); ++i)
-        _controlMessage += to_string(_vibrationIntensity[VERT_REGIONS]->Get());
+        ss << setw(3) << setfill('0') << (int)0; // TODO: acquire option messages from correct source, according to _optionSignals[].
 
-      _controlMessage += _params->GetRealtimeParams()->GetMessageEnd();
+      ss << _params->GetRealtimeParams()->GetMessageEnd();
+
+      _controlMessage = ss.str();
     }
   }
 }

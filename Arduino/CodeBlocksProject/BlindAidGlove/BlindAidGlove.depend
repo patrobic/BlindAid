@@ -408,3 +408,13 @@
 1510290666 source:c:\projects\arduino\blindaidglove\functions.cpp
 	"Functions.h"
 
+1514867730 source:c:\projects\blindaid\arduino\codeblocksproject\blindaidglove\blindaidglove.ino
+	<Arduino.h>
+	"Functions.h"
+
+1514844896 c:\projects\blindaid\arduino\codeblocksproject\blindaidglove\functions.h
+	<Arduino.h>
+
+1514844896 source:c:\projects\blindaid\arduino\codeblocksproject\blindaidglove\functions.cpp
+	"Functions.h"
+

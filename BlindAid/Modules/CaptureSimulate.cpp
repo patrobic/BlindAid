@@ -44,7 +44,7 @@ namespace Capture
     void Simulate::LoadPhoto()
     {
       *_output->GetRgbImage() = imread(_params->GetSimulateParams()->GetColorSimDataPath());
-      *_output->GetDepthImage() = imread(_params->GetSimulateParams()->GetDepthSimDataPath());
+      *_output->GetDepthImage() = imread(_params->GetSimulateParams()->GetDepthSimDataPath(), CV_16UC1);
 
       if (_output->GetRgbImage()->cols == 0 || _output->GetRgbImage()->rows == 0) throw("could not open image.");
     }

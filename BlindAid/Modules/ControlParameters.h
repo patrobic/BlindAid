@@ -116,7 +116,7 @@ namespace Control
       _maximumDepthSpec = 5.f;
       _optionSignals[0] = TrafficLight;
       _optionSignals[1] = NearObstacle;
-      _optionSignalsCount = 1;
+      _optionSignalsCount = 2;
 
       _consecutiveCount = 3;
     }

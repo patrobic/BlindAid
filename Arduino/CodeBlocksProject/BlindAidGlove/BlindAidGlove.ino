@@ -22,5 +22,5 @@ void loop()
     ReceiveData();
     ParseValues();
     ControlMotors();
-    SendResponse();
+    //SendResponse();
 }

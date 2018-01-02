@@ -13,6 +13,7 @@ private:
   void ShowMenu();
   void SetParameters();
 
+  void TestRealtimeProduction();
   void TestRealtimeCapture();
   void TestRealtimeControl(std::string colorPath, std::string depthPath, int count);
   void TestRecord(std::string path);

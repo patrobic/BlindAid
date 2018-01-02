@@ -49,10 +49,10 @@ namespace Record
   void Record::SaveToDisk()
   {
     if(_params->GetType() == Parameters::Type::Color || _params->GetType() == Parameters::Type::Both)
-      imwrite(_params->GetPath() + "\\" + _folderName + "\\color_" + to_string(_index) + ".jpg", *_input->GetRgbImage());
+      imwrite(_params->GetPath() + "\\" + _folderName + "\\color_" + to_string(_index) + ".png", *_input->GetRgbImage());
 
     if (_params->GetType() == Parameters::Type::Depth || _params->GetType() == Parameters::Type::Both)
-      imwrite(_params->GetPath() + "\\" + _folderName + "\\depth_" + to_string(_index) + ".jpg", *_input->GetDepthImage());
+      imwrite(_params->GetPath() + "\\" + _folderName + "\\depth_" + to_string(_index) + ".png", *_input->GetDepthImage());
 
     ++_index;
   }

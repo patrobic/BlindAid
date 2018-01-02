@@ -29,7 +29,8 @@ namespace Display
   void Display::DrawDepthObstacles()
   {
     _input->GetCurrentDepthImage()->convertTo(_depthOverlay, CV_8UC1, 1.f / 8.f, -0.5 / 8.f); // , 255.0 / (5 - 0.5));
-    cvtColor(_depthOverlay, _depthOverlay, CV_GRAY2BGR);
+    if(_depthOverlay.channels() == 1)
+      cvtColor(_depthOverlay, _depthOverlay, CV_GRAY2BGR);
 
     Rect rect;
     for (int i = 0; i < HORZ_REGIONS; ++i)

@@ -32,6 +32,7 @@ void RealtimeMenu::ShowMenu()
 
     cout << "\
 +========== Realtime =========+\n\
+| a: Realtime Production      |\n\
 | c: Realtime Capture         |\n\
 | t: Realtime Control         |\n\
 | r: Realtime Capture+Record  |\n\
@@ -41,11 +42,14 @@ void RealtimeMenu::ShowMenu()
 
     switch (in)
     {
+    case 'a':
+      TestRealtimeProduction();
+      break;
     case 'c':
       TestRealtimeCapture();
       break;
     case 't':
-      TestRealtimeControl("TrafficLight\\tlight1.jpg", "depthMap.png", 1);
+      TestRealtimeControl("TrafficLight\\tlight1.jpg", "DepthObstacle\\depth.png", 1);
       break;
     case 'r':
       TestRecord("Record");
@@ -69,6 +73,18 @@ void RealtimeMenu::Process()
   (*_core)();
 }
 
+void RealtimeMenu::TestRealtimeProduction()
+{
+  _params->GetCaptureParams()->SetMode(SwitchableParameters::Mode::Realtime);
+  _params->GetControlParams()->SetMode(SwitchableParameters::Mode::Realtime);
+
+  _params->GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Video);
+  _params->GetCaptureParams()->SetType(SwitchableParameters::Type::Both);
+
+  Process();
+  destroyAllWindows();
+}
+
 void RealtimeMenu::TestRealtimeCapture()
 {
   _params->GetCaptureParams()->SetMode(SwitchableParameters::Mode::Realtime);
@@ -86,6 +102,7 @@ void RealtimeMenu::TestRealtimeControl(string colorPath, string depthPath, int c
   _params->GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
   _params->GetControlParams()->SetMode(SwitchableParameters::Mode::Realtime);
   _params->GetVisionParams()->GetDepthObstacleParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
+  _params->GetVisionParams()->GetTrafficLightParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
   _params->GetVisionParams()->GetStopSignParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
   _params->GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Photo);
   _params->GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + depthPath);
