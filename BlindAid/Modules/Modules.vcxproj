@@ -113,12 +113,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)..\..\Dependencies\opencv\include;$(ProjectDir)..\..\Dependencies\realsense\include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(ProjectDir)..\..\Dependencies\opencv\x64\Debug\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\Debug\lib</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)..\..\Dependencies\opencv\include;$(ProjectDir)..\..\Dependencies\realsense\include;$(ProjectDir)..\..\Dependencies\python\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(ProjectDir)..\..\Dependencies\opencv\x64\Debug\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\Debug\lib;$(ProjectDir)..\..\Dependencies\python\x64\Debug\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)..\..\Dependencies\opencv\include;$(ProjectDir)..\..\Dependencies\realsense\include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(ProjectDir)..\..\Dependencies\opencv\x64\Release\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\Release\lib</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)..\..\Dependencies\opencv\include;$(ProjectDir)..\..\Dependencies\realsense\include;$(ProjectDir)..\..\Dependencies\python\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(ProjectDir)..\..\Dependencies\opencv\x64\Release\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\Release\lib;$(ProjectDir)..\..\Dependencies\python\x64\Release\lib</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -132,7 +132,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Dependencies\opencv\include;$(ProjectDir)..\..\Dependencies\realsense\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Dependencies\opencv\include;$(ProjectDir)..\..\Dependencies\realsense\include;$(ProjectDir)..\..\Dependencies\python\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\Dependencies\opencv\x64\vc14\lib;</AdditionalLibraryDirectories>
@@ -159,7 +159,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Dependencies\opencv\include;$(ProjectDir)..\..\Dependencies\realsense\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Dependencies\opencv\include;$(ProjectDir)..\..\Dependencies\realsense\include;$(ProjectDir)..\..\Dependencies\python\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

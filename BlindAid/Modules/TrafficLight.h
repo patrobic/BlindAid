@@ -10,7 +10,7 @@ namespace Vision
     class Result : public IResult
     {
     public:
-      enum Color { Red, Green, Yellow };
+      enum Color { None, Red, Green, Yellow };
 
       Result() { _radius = 0; }
       Result(cv::Point center, float radius, Color color) { _center = center; _radius = radius; _color = color; _count = 1; }
@@ -38,6 +38,7 @@ namespace Vision
 
       std::vector<Result> Get() { return FilterByConsecutiveCount(); }
       void Set(std::vector<Result> &results) { MatchPoints(results); }
+      void SetSingle(Result::Color color) { if (_results.at(0)._color == color) _results.at(0)._count++; else if (_results.size() == 0) _results.push_back(Result(cv::Point(320, 240), 10, color)); else _results.at(0) = Result(cv::Point(320, 240), 10, color); }
       int Size() { return (int)_results.size(); }
       Result& At(int i) { return _results.at(i); }
       void SetParams(int consecutiveCount, int maximumDistance, int maximumRadiusDiff)

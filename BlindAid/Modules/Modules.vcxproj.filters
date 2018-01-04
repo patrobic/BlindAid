@@ -93,12 +93,6 @@
     <ClInclude Include="Control.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BaseCapture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseControl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Serial.cpp">
@@ -147,12 +141,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TrafficLight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseCapture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseControl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

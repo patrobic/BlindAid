@@ -221,7 +221,8 @@ namespace Vision
 
         void Defaults()
         {
-
+          _colorImageSize = cv::Size(224, 224);
+          _confidenceThreshold = 0.8f;
         }
 
         bool Valid()
@@ -229,9 +230,18 @@ namespace Vision
           return true;
         }
 
-      private:
-        // TODO: deep learning parameters once class is implemented.
+        cv::Size GetColorImageSize() { return _colorImageSize; }
+        void SetColorImageSize(cv::Size colorImageSize) { _colorImageSize = colorImageSize; }
 
+        float GetConfidenceThreshold() { return _confidenceThreshold; }
+        void SetConfidenceThreshold(float confidenceThreshold) { _confidenceThreshold = confidenceThreshold; }
+
+      private:
+        cv::Size _colorImageSize;
+
+        float _confidenceThreshold;
+
+        // TODO: deep learning parameters once class is implemented.
       };
     }
 
@@ -247,7 +257,7 @@ namespace Vision
         _blobDetectorParams.Defaults();
         _deepLearningParams.Defaults();
 
-        _mode = BlobDetector;
+        _mode = DeepLearning;
         _topRegionToAnalyze = 0.5f;
         _consecutiveCount = 4;
         _maximumDistance = 25;
@@ -263,7 +273,7 @@ namespace Vision
 
       DeepLearning::Parameters *GetDeepLearningParams() { return &_deepLearningParams; }
 
-      const Mode &GetMode() const { return _mode; }
+      const Mode GetMode() const { return _mode; }
       void SetMode(Mode mode) { _mode = mode; }
 
       float GetUpperRegionToAnalyze() { return _topRegionToAnalyze; }

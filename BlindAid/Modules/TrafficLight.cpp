@@ -8,7 +8,7 @@ namespace Vision
   {
     Base *Base::MakeTrafficLight(IParameters *params, IData *input, IData *output)
     {
-      if (((SwitchableParameters*)params)->GetMode() == Parameters::Mode::BlobDetector)
+      if (((TrafficLight::Parameters*)params)->GetMode() == Parameters::Mode::BlobDetector)
         return new BlobDetector::BlobDetector(params, input, output);
       else
         return new DeepLearning::DeepLearning(params, input, output);

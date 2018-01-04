@@ -94,12 +94,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(IncludePath);$(ProjectDir)..\..\Dependencies\opencv\include'$(ProjectDir)..\..\Dependencies\libconfig\include;$(ProjectDir)..\..\Dependencies\realsense\include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(ProjectDir)..\..\Dependencies\opencv\x64\Debug\lib;$(ProjectDir)..\..\Dependencies\libconfig\x64\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\Debug\lib</LibraryPath>
+    <IncludePath>$(IncludePath);$(ProjectDir)..\..\Dependencies\opencv\include'$(ProjectDir)..\..\Dependencies\libconfig\include;$(ProjectDir)..\..\Dependencies\realsense\include;$(ProjectDir)..\..\Dependencies\python\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(ProjectDir)..\..\Dependencies\opencv\x64\Debug\lib;$(ProjectDir)..\..\Dependencies\libconfig\x64\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\Debug\lib;$(ProjectDir)..\..\Dependencies\python\x64\Debug\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);;$(ProjectDir)..\..\Dependencies\opencv\include'$(ProjectDir)..\..\Dependencies\libconfig\include;$(ProjectDir)..\..\Dependencies\realsense\include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(ProjectDir)..\..\Dependencies\opencv\x64\Release\lib;$(ProjectDir)..\..\Dependencies\libconfig\x64\Release\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\Release\lib</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);;$(ProjectDir)..\..\Dependencies\opencv\include'$(ProjectDir)..\..\Dependencies\libconfig\include;$(ProjectDir)..\..\Dependencies\realsense\include;$(ProjectDir)..\..\Dependencies\python\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(ProjectDir)..\..\Dependencies\opencv\x64\Release\lib;$(ProjectDir)..\..\Dependencies\libconfig\x64\Release\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\Release\lib;$(ProjectDir)..\..\Dependencies\python\x64\Release\lib</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -113,12 +113,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(ProjectDir)..\..\Dependencies\opencv\include;$(ProjectDir)..\..\Dependencies\libconfig\include;$(ProjectDir)..\..\Dependencies\realsense\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(ProjectDir)..\..\Dependencies\opencv\include;$(ProjectDir)..\..\Dependencies\libconfig\include;$(ProjectDir)..\..\Dependencies\realsense\include;$(ProjectDir)..\..\Dependencies\python\include</AdditionalIncludeDirectories>
       <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Dependencies\opencv\x64\Debug\lib;$(ProjectDir)..\..\Dependencies\libconfig\x64\Debug\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\Debug\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);opencv_core330d.lib;opencv_highgui330d.lib;opencv_imgcodecs330d.lib;opencv_imgproc330d.lib;opencv_objdetect330d.lib;opencv_features2d330d.lib;opencv_videoio330d.lib;libconfig.lib;libpxc_d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Dependencies\opencv\x64\Debug\lib;$(ProjectDir)..\..\Dependencies\libconfig\x64\Debug\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\Debug\lib;$(ProjectDir)..\..\Dependencies\python\x64\Debug\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);opencv_core330d.lib;opencv_highgui330d.lib;opencv_imgcodecs330d.lib;opencv_imgproc330d.lib;opencv_objdetect330d.lib;opencv_features2d330d.lib;opencv_videoio330d.lib;libconfig.lib;libpxc_d.lib;Python36_d.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\opencv\x64\Debug\bin\*.dll" "$(OutDir)"
@@ -150,13 +150,13 @@ xcopy /d /y /r "$(ProjectDir)\..\..\Dependencies\misc\x64\Debug\bin\*.dll" "$(Ou
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>;$(ProjectDir)..\..\Dependencies\opencv\include;$(ProjectDir)..\..\Dependencies\libconfig\include;$(ProjectDir)..\..\Dependencies\realsense\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>;$(ProjectDir)..\..\Dependencies\opencv\include;$(ProjectDir)..\..\Dependencies\libconfig\include;$(ProjectDir)..\..\Dependencies\realsense\include;$(ProjectDir)..\..\Dependencies\python\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Dependencies\opencv\x64\Release\lib;$(ProjectDir)..\..\Dependencies\libconfig\x64\Release\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\Release\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);opencv_core330.lib;opencv_highgui330.lib;opencv_imgcodecs330.lib;opencv_imgproc330.lib;opencv_objdetect330.lib;opencv_features2d330.lib;opencv_videoio330.lib;libconfig.lib;libpxc.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Dependencies\opencv\x64\Release\lib;$(ProjectDir)..\..\Dependencies\libconfig\x64\Release\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\Release\lib;$(ProjectDir)..\..\Dependencies\python\x64\Release\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);opencv_core330.lib;opencv_highgui330.lib;opencv_imgcodecs330.lib;opencv_imgproc330.lib;opencv_objdetect330.lib;opencv_features2d330.lib;opencv_videoio330.lib;libconfig.lib;libpxc.lib;python36.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\opencv\x64\Release\bin\*.dll" "$(OutDir)"
