@@ -19,6 +19,13 @@ namespace Vision {
       {
         // TODO
         // integrate with deep learning API of choice.
+
+        // Acquire Mat color image.
+        _input->GetRgbImage();
+
+        // Write detection results.
+        //_output->Set();
+
       }
     }
   }
