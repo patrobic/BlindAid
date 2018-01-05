@@ -12,7 +12,7 @@ namespace Control
   {
     Simulate::Simulate(IParameters *params, IData *input, IData *output) : Base(params, input, output)
     {
-      _vibration = Mat(1, 5, CV_8UC1);
+      *_input->GetVibrationImage() = Mat(1, 5, CV_8UC1);
     }
 
     void Simulate::Process()
@@ -37,15 +37,9 @@ namespace Control
       for (int i = 0; i < 5; ++i)
       {
         cout << setw(4) << (int)_vibrationIntensity[i]->Get();
-        _vibration.at<uchar>(Point(i, 0)) = (int)_vibrationIntensity[i]->Get();
+        _input->GetVibrationImage()->at<uchar>(Point(i, 0)) = (int)_vibrationIntensity[i]->Get();
       }
       cout << ").\n";
-
-      namedWindow("Vibration Image", WINDOW_NORMAL);
-      moveWindow("Vibration Image", _params->GetSimulateParams()->GetVibrationWindowPosition().x, _params->GetSimulateParams()->GetVibrationWindowPosition().y);
-      resizeWindow("Vibration Image", (int)_params->GetSimulateParams()->GetVibrationWindowScale() * 5, (int)_params->GetSimulateParams()->GetVibrationWindowScale());
-      imshow("Vibration Image", _vibration);
-      waitKey(1);
     }
     
     void Simulate::PrintTrafficLights()

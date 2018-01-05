@@ -116,8 +116,8 @@ void RealtimeMenu::TestRealtimeControl(string colorPath, string depthPath, int c
 void RealtimeMenu::TestRecord(string path)
 {
   _params->GetRecordParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
-  _params->GetRecordParams()->SetType(SwitchableParameters::Type::Color);
-  _params->GetCaptureParams()->SetType(SwitchableParameters::Type::Color);
+  _params->GetRecordParams()->SetType(SwitchableParameters::Type::Both);
+  _params->GetCaptureParams()->SetType(SwitchableParameters::Type::Both);
   _params->GetRecordParams()->SetPath(PATH);
 
   TestRealtimeCapture();

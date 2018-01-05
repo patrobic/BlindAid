@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
+#include <conio.h>
 
 using namespace std;
 using namespace std::chrono;
@@ -15,29 +16,35 @@ namespace Record
 {
   Record::Record(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
   {
-    CreateFolder();
+
   }
 
   void Record::CreateFolder()
   {
-    time_t t = time(0);
-    struct tm now;
-    localtime_s(&now, &t);
+    if (_firstRun)
+    {
+      time_t t = time(0);
+      struct tm now;
+      localtime_s(&now, &t);
 
-    _folderName = to_string(now.tm_year + 1900) + '-' + to_string(now.tm_mon + 1) + '-' + to_string(now.tm_mday)
-      + '_' + to_string(now.tm_hour) + '-' + to_string(now.tm_min) + '-' + to_string(now.tm_sec);
+      _folderName = to_string(now.tm_year + 1900) + '-' + to_string(now.tm_mon + 1) + '-' + to_string(now.tm_mday)
+        + '_' + to_string(now.tm_hour) + '-' + to_string(now.tm_min) + '-' + to_string(now.tm_sec);
 
-    string path = _params->GetPath() + "\\" + _folderName;
-    system(("mkdir " + path).c_str());
+      string path = _params->GetPath() + "\\" + _folderName;
+      system(("mkdir " + path).c_str());
 
-    if (!(GetFileAttributesA(path.c_str()) & FILE_ATTRIBUTE_DIRECTORY))
-      throw exception("failed to create Record directory.");
+      if (!(GetFileAttributesA(path.c_str()) & FILE_ATTRIBUTE_DIRECTORY))
+        throw exception("failed to create Record directory.");
+
+      _firstRun = false;
+    }
   }
 
   void Record::Process()
   {
     steady_clock::time_point start = steady_clock::now();
 
+    CreateFolder();
     SaveToDisk();
 
     steady_clock::time_point end = steady_clock::now();
@@ -48,12 +55,23 @@ namespace Record
 
   void Record::SaveToDisk()
   {
-    if(_params->GetType() == Parameters::Type::Color || _params->GetType() == Parameters::Type::Both)
-      imwrite(_params->GetPath() + "\\" + _folderName + "\\color_" + to_string(_index) + ".png", *_input->GetRgbImage());
+    if (_kbhit())
+    {
+      if (_params->GetType() == Parameters::Type::Color || _params->GetType() == Parameters::Type::Both)
+      {
+        imwrite(_params->GetPath() + "\\" + _folderName + "\\color_" + to_string(_index) + ".png", *_input->GetCurrentColorImage());
+        imwrite(_params->GetPath() + "\\" + _folderName + "\\colorOverlay_" + to_string(_index) + ".png", *_input->GetColorOverlayImage());
+      }
 
-    if (_params->GetType() == Parameters::Type::Depth || _params->GetType() == Parameters::Type::Both)
-      imwrite(_params->GetPath() + "\\" + _folderName + "\\depth_" + to_string(_index) + ".png", *_input->GetDepthImage());
+      if (_params->GetType() == Parameters::Type::Depth || _params->GetType() == Parameters::Type::Both)
+      {
+        imwrite(_params->GetPath() + "\\" + _folderName + "\\depth_" + to_string(_index) + ".png", *_input->GetCurrentDepthImage());
+        imwrite(_params->GetPath() + "\\" + _folderName + "\\depthOverlay_" + to_string(_index) + ".png", *_input->GetDepthOverlayImage());
+        imwrite(_params->GetPath() + "\\" + _folderName + "\\vibration_" + to_string(_index) + ".png", *_input->GetVibrationImage());
+      }
+      ++_index;
 
-    ++_index;
+      _getch();
+    }
   }
 }

@@ -15,10 +15,10 @@ namespace Core
   void Core::CreateModules()
   {
     _capture = Capture::Base::MakeCapture(_params->GetCaptureParams(), NULL, _output->GetCaptureResults());
-    _record = new Record::Record(_params->GetRecordParams(), _output->GetCaptureResults(), NULL);
     _vision = new Vision::Vision(_params->GetVisionParams(), _output->GetCaptureResults(), _output->GetVisionResults());
     _control = Control::Base::MakeControl(_params->GetControlParams(), _output->GetVisionResults(), _output->GetCaptureResults());
     _display = new Display::Display(_params->GetDisplayParams(), _output->GetVisionResults(), NULL);
+    _record = new Record::Record(_params->GetRecordParams(), _output->GetVisionResults(), NULL);
   }
 
   void Core::Process()
@@ -33,10 +33,10 @@ namespace Core
         if (!_output->GetCaptureResults()->GetStatus())
           break;
 
-        (*_record)();
         (*_vision)();
         (*_control)();
         (*_display)();
+        (*_record)();
       }
       catch (exception e)
       {

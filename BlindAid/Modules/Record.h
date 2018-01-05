@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IModule.h"
-#include "Capture.h"
+#include "Vision.h"
 
 namespace Record
 {
@@ -13,6 +13,7 @@ namespace Record
     void Defaults()
     {
       _path = "";
+      _manualTrigger = false;
     }
 
     bool Valid()
@@ -23,9 +24,15 @@ namespace Record
     std::string GetPath() { return _path; }
     void SetPath(std::string path) { _path = path; }
 
+    bool GetManualTrigger() { return _manualTrigger; }
+    void SetManualTrigger(bool manualTrigger) { _manualTrigger = manualTrigger; }
+
   private:
     // path at which to save image stream.
     std::string _path;
+
+    // set whether images are captured continuously or on demand.
+    bool _manualTrigger;
   };
 
   class Data : public IData
@@ -41,7 +48,7 @@ namespace Record
 
   };
 
-  class Record : public IModule<Parameters, Capture::Data, Data>
+  class Record : public IModule<Parameters, Vision::Data, Data>
   {
   public:
 
@@ -55,5 +62,6 @@ namespace Record
 
     std::string _folderName;
     int _index = 0;
+    bool _firstRun = true;
   };
 }

@@ -28,6 +28,11 @@ namespace Vision
     void SetCurrentColorImage(cv::Mat *mat) { _currentColorImage = mat; }
     void SetCurrentDepthImage(cv::Mat *mat) { _currentDepthImage = mat; }
 
+    cv::Mat *GetDepthOverlayImage() { return &_depthOverlayImage; }
+    cv::Mat *GetColorOverlayImage() { return &_colorOverlayImage; }
+    cv::Mat *GetVibrationImage() { return &_vibrationImage; }
+    cv::Mat *GetHsvImage() { return &_hsvImage; }
+
   private:
     DepthObstacle::Data _dodResults;
     TrafficLight::Data _tldResults;
@@ -35,6 +40,11 @@ namespace Vision
 
     cv::Mat *_currentColorImage;
     cv::Mat *_currentDepthImage;
+
+    cv::Mat _colorOverlayImage;
+    cv::Mat _depthOverlayImage;
+    cv::Mat _vibrationImage;
+    cv::Mat _hsvImage;
   };
 
   class Vision : public IModule<Parameters, Capture::Data, Data>
