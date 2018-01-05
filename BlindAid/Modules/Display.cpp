@@ -29,7 +29,7 @@ namespace Display
   void Display::DrawDepthObstacles()
   {
     _input->GetCurrentDepthImage()->convertTo(_depthOverlay, CV_8UC1, 1.f / 8.f, -0.5 / 8.f); // , 255.0 / (5 - 0.5));
-    if(_depthOverlay.channels() == 1)
+    if (_depthOverlay.channels() == 1)
       cvtColor(_depthOverlay, _depthOverlay, CV_GRAY2BGR);
 
     Rect rect;
@@ -46,16 +46,19 @@ namespace Display
 
   void Display::DrawTrafficLights()
   {
+    Scalar color[4] = { Scalar(0, 0, 255), Scalar(0, 255, 0), Scalar(0, 255, 255), Scalar(255, 0, 0) };
+    string name[4] = { "Red", "Green", "Yellow", "None" };
+
     vector<Vision::TrafficLight::Result> result = _input->GetTrafficLightResults()->Get();
 
-    for (int i = 0; i < result.size(); ++i)
-    {
-      Scalar color[3] = { Scalar(0, 0, 255), Scalar(0, 255, 0), Scalar(0, 255, 255) };
-      string name[3] = { "Red", "Green", "Yellow" };
-
-      circle(*_input->GetCurrentColorImage(), result.at(i)._center, (int)result.at(i)._radius + 2, color[result.at(i)._color], 2);
-      putText(*_input->GetCurrentColorImage(), name[result.at(i)._color] + "TrafficLight" + to_string(i), Point(result.at(i)._center.x - (int)result.at(i)._radius, result.at(i)._center.y - (int)result.at(i)._radius), FONT_HERSHEY_PLAIN, 1, color[result.at(i)._color]);
-    }
+    if (result.size() == 1 && result.at(0)._center == Point(0, 0))
+      putText(*_input->GetCurrentColorImage(), name[result.at(0)._color] + "TrafficLight", Point(20, 20), FONT_HERSHEY_PLAIN, 2, color[result.at(0)._color], 2);
+    else
+      for (int i = 0; i < result.size(); ++i)
+      {
+        circle(*_input->GetCurrentColorImage(), result.at(i)._center, (int)result.at(i)._radius + 2, color[result.at(i)._color], 2);
+        putText(*_input->GetCurrentColorImage(), name[result.at(i)._color] + "TrafficLight" + to_string(i), Point(result.at(i)._center.x - (int)result.at(i)._radius, result.at(i)._center.y - (int)result.at(i)._radius), FONT_HERSHEY_PLAIN, 1, color[result.at(i)._color], 2);
+      }
   }
 
   void Display::DrawStopSign()

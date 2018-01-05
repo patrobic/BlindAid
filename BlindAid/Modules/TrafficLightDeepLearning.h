@@ -19,7 +19,7 @@ namespace Vision
         void PreprocessImage();
         void RunDeepLearning();
 
-        void StoreResults();
+        void UpdateResults();
 
         cv::Mat _preprocessedImage;
 

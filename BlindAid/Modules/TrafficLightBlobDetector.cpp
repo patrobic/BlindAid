@@ -12,12 +12,11 @@ namespace Vision
       BlobDetector::BlobDetector(IParameters *params, IData *input, IData *output) : Base(params, input, output),
         _h(_hsvChannels[0]), _s(_hsvChannels[1]), _v(_hsvChannels[2]), _b(_bgrChannels[0]), _g(_bgrChannels[1]), _r(_bgrChannels[2])
       {
-
+        _output->SetParams(_params->GetConsecutiveCount(), _params->GetMaximumDistance(), _params->GetMaximumRadiusDiff());
       }
 
       void BlobDetector::Process()
       {
-        _output->SetParams(_params->GetConsecutiveCount(), _params->GetMaximumDistance(), _params->GetMaximumRadiusDiff());
         MaskColors();
         DetectBlobs();
         //ConfirmWithBox();

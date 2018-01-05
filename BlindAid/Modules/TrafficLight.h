@@ -10,10 +10,16 @@ namespace Vision
     class Result : public IResult
     {
     public:
-      enum Color { None, Red, Green, Yellow };
+      enum Color { Red, Green, Yellow, None };
 
       Result() { _radius = 0; }
       Result(cv::Point center, float radius, Color color) { _center = center; _radius = radius; _color = color; _count = 1; }
+      Result(Color color, float confidence[3])
+      {
+        for (int i = 0; i < 3; ++i)
+          _confidence[i] = confidence[i];
+      }
+
       void Clear() { _center = cv::Point(0, 0); _radius = 0; _color = Red; }
 
       float CartesianDistance(Result &c2) { return (float)cv::norm(_center - c2._center); }
@@ -24,11 +30,13 @@ namespace Vision
       float _radius;
       Color _color;
       int _count = 0;
+      float _confidence[3];
     };
 
     class Data : public IData
     {
     public:
+      Data() { _results.push_back(Result(cv::Point(0, 0), 10, Result::Color::None)); }
       void Clear() { _results.clear(); }
 
       bool Valid()
@@ -38,11 +46,25 @@ namespace Vision
 
       std::vector<Result> Get() { return FilterByConsecutiveCount(); }
       void Set(std::vector<Result> &results) { MatchPoints(results); }
-      void SetSingle(Result::Color color) { if (_results.at(0)._color == color) _results.at(0)._count++; else if (_results.size() == 0) _results.push_back(Result(cv::Point(320, 240), 10, color)); else _results.at(0) = Result(cv::Point(320, 240), 10, color); }
+      void Set(Result::Color color, float confidence[3])
+      {
+        if (_results.at(0)._color == color)
+        {
+          _results.at(0)._count++;
+          for (int i = 0; i < 3; ++i)
+            _results.at(0)._confidence[i] = confidence[i];
+        }
+        else if (_results.size() == 0)
+          _results.push_back(Result(color, confidence));
+        else
+          _results.at(0) = Result(color, confidence);
+      }
+
       int Size() { return (int)_results.size(); }
       Result& At(int i) { return _results.at(i); }
-      void SetParams(int consecutiveCount, int maximumDistance, int maximumRadiusDiff)
-      { _consecutiveCount = consecutiveCount; _maximumDistance = maximumDistance; _maximumRadiusDiff = maximumRadiusDiff; }
+      void SetParams(int consecutiveCount, int maximumDistance, int maximumRadiusDiff) {
+        _consecutiveCount = consecutiveCount; _maximumDistance = maximumDistance; _maximumRadiusDiff = maximumRadiusDiff;
+      }
 
       std::vector<Result> FilterByConsecutiveCount();
       void MatchPoints(std::vector<Result> &results);
