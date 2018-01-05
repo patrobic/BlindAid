@@ -72,7 +72,7 @@ namespace Control
 
       for (int i = 0; i < _params->GetOptionSignalsCount(); ++i)
         if(_params->GetOptionSignals(i) == Control::Parameters::OptionSignals::TrafficLight)
-          ss << setw(3) << setfill('0') << (int)_input->GetTrafficLightResults()->At(0)._color;
+          ss << setw(3) << setfill('0') << (int)_input->GetTrafficLightResults()->GetColor();
         else if(_params->GetOptionSignals(i) == Control::Parameters::OptionSignals::NearObstacle)
           ss << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetMinRowIntensity(1);
         else

@@ -12,7 +12,7 @@ namespace Control
   {
     Simulate::Simulate(IParameters *params, IData *input, IData *output) : Base(params, input, output)
     {
-      *_input->GetVibrationImage() = Mat(1, 5, CV_8UC1);
+
     }
 
     void Simulate::Process()

@@ -257,7 +257,7 @@ namespace Vision
         _blobDetectorParams.Defaults();
         _deepLearningParams.Defaults();
 
-        _mode = DeepLearning;
+        _mode = BlobDetector;
         _upperRegionRatio = 0.5f;
         _centerRegionRatio = 0.8f;
         _consecutiveCount = 4;

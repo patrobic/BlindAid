@@ -103,7 +103,7 @@ namespace Control
       _maximumVibration = 255.f;
       _maximumDepthSpec = 5.f;
 
-      _localAudioEnabled = true;
+      _localAudioEnabled = false;
       _optionSignals[0] = TrafficLight;
       _optionSignals[1] = None;
       _optionSignalsCount = 2;

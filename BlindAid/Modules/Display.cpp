@@ -8,7 +8,7 @@ namespace Display
 {
   Display::Display(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
   {
-    _depthOverlay = Mat(Size(628, 468), CV_8UC3);
+    *_input->GetVibrationImage() = Mat(1, 5, CV_8UC1);
   }
 
   void Display::Process()

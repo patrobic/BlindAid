@@ -87,7 +87,5 @@ namespace Display
     void DrawTrafficLights();
     void DrawStopSign();
     void DisplayImage();
-
-    cv::Mat _depthOverlay;
   };
 }

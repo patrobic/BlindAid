@@ -41,7 +41,7 @@ namespace Vision
       }
 
       std::vector<Result> Get() { return FilterByConsecutiveCount(); }
-      Result::Color GetColor() { if (_results.at(0)._count > _consecutiveCount) return _results.at(0)._color; else return Result::Color::None; }
+      Result::Color GetColor() { if (_results.size() > 0 && _results.at(0)._count > _consecutiveCount) return _results.at(0)._color; else return Result::Color::None; }
       // for blob detector version
       void Set(std::vector<Result> &results) { MatchPoints(results); }
       // for deep learning version
