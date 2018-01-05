@@ -177,7 +177,7 @@ namespace Vision
           _colorRanges[0][1] = cv::Scalar(10, 255, 255);
           _colorRanges[1][0] = cv::Scalar(40, 110, 150);
           _colorRanges[1][1] = cv::Scalar(80, 255, 255);
-          _colorRanges[2][0] = cv::Scalar(10, 110, 150);
+          _colorRanges[2][0] = cv::Scalar(10, 90, 150);
           _colorRanges[2][1] = cv::Scalar(40, 255, 255);
 
           _blobParams.filterByArea = true;
