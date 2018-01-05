@@ -14,11 +14,7 @@ namespace Vision
 
       Result() { _radius = 0; }
       Result(cv::Point center, float radius, Color color) { _center = center; _radius = radius; _color = color; _count = 1; }
-      Result(Color color, float confidence[3])
-      {
-        for (int i = 0; i < 3; ++i)
-          _confidence[i] = confidence[i];
-      }
+      Result(Color color, float confidence[3]) { for (int i = 0; i < 3; ++i) _confidence[i] = confidence[i]; }
 
       void Clear() { _center = cv::Point(0, 0); _radius = 0; _color = Red; }
 
@@ -45,26 +41,25 @@ namespace Vision
       }
 
       std::vector<Result> Get() { return FilterByConsecutiveCount(); }
+      Result::Color GetColor() { if (_results.at(0)._count > _consecutiveCount) return _results.at(0)._color; else return Result::Color::None; }
+      // for blob detector version
       void Set(std::vector<Result> &results) { MatchPoints(results); }
+      // for deep learning version
       void Set(Result::Color color, float confidence[3])
       {
-        if (_results.at(0)._color == color)
-        {
-          _results.at(0)._count++;
-          for (int i = 0; i < 3; ++i)
-            _results.at(0)._confidence[i] = confidence[i];
-        }
-        else if (_results.size() == 0)
-          _results.push_back(Result(color, confidence));
-        else
-          _results.at(0) = Result(color, confidence);
+        if (_results.at(0)._color != color)
+          _results.at(0)._count = 0;
+
+        for (int i = 0; i < 3; ++i)
+          _results.at(0)._confidence[i] = confidence[i];
+
+        _results.at(0)._color = color;
+        _results.at(0)._count++;
       }
 
       int Size() { return (int)_results.size(); }
       Result& At(int i) { return _results.at(i); }
-      void SetParams(int consecutiveCount, int maximumDistance, int maximumRadiusDiff) {
-        _consecutiveCount = consecutiveCount; _maximumDistance = maximumDistance; _maximumRadiusDiff = maximumRadiusDiff;
-      }
+      void SetParams(int consecutiveCount, int maximumDistance, int maximumRadiusDiff) { _consecutiveCount = consecutiveCount; _maximumDistance = maximumDistance; _maximumRadiusDiff = maximumRadiusDiff; }
 
       std::vector<Result> FilterByConsecutiveCount();
       void MatchPoints(std::vector<Result> &results);

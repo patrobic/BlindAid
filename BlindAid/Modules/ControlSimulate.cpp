@@ -56,14 +56,13 @@ namespace Control
 
       cout << "  [AUDIO] ";
       if (result.size() == 1 && result.at(0)._center == Point(0, 0))
-        cout << "red=" << result.at(0)._confidence[0] << ", green=" << result.at(0)._confidence[1] << ", none=" << result.at(0)._confidence[2] << ".\n";
+        cout << "Red, Green, None (" << result.at(0)._confidence[0] << ", " << result.at(0)._confidence[1] << ", " << result.at(0)._confidence[2] << ").\n";
       else
       {
         for (int i = 0; i < result.size(); ++i)
           lights << name[_input->GetTrafficLightResults()->At(i)._color] << ", ";
         if (result.size() > 0) cout << " TrafficLights(" << lights.str() << "Total: " << result.size() << ")";
       }
-      // TODO: print confidence values of Red, Green, None, and chosen type.
     }
 
     void Simulate::PrintStopSign()

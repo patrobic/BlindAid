@@ -31,10 +31,10 @@ namespace Vision
         Mat redRegionLower;
         inRange(*_input->GetHsvImage(), _params->GetBlobDetectorParams()->GetColorRange(0, 0), cv::Scalar(180, 255, 255), redRegionUpper);
         inRange(*_input->GetHsvImage(), cv::Scalar(0, 150, 180), _params->GetBlobDetectorParams()->GetColorRange(0, 1), redRegionLower);
-        _blobMask[0] = (redRegionUpper + redRegionLower)(Rect(0, 0, redRegionUpper.cols, (int)(redRegionUpper.rows*_params->GetUpperRegionToAnalyze())));
+        _blobMask[0] = (redRegionUpper + redRegionLower)(Rect((int)(redRegionUpper.cols * (1 - _params->GetCenterRegionRatio()) / 2), 0, (int)(redRegionUpper.rows  * _params->GetCenterRegionRatio()), (int)(redRegionUpper.rows*_params->GetUpperRegionRatio())));
 
         for (int i = 1; i < 3; ++i)
-          inRange((*_input->GetHsvImage())(Rect(0, 0, redRegionUpper.cols, (int)(redRegionUpper.rows*_params->GetUpperRegionToAnalyze()))), _params->GetBlobDetectorParams()->GetColorRange(i, 0), _params->GetBlobDetectorParams()->GetColorRange(i, 1), _blobMask[i]);
+          inRange((*_input->GetHsvImage())(Rect(0, 0, redRegionUpper.cols, (int)(redRegionUpper.rows*_params->GetUpperRegionRatio()))), _params->GetBlobDetectorParams()->GetColorRange(i, 0), _params->GetBlobDetectorParams()->GetColorRange(i, 1), _blobMask[i]);
 
         //threshold(_h, _hMask, 170, 255, THRESH_TOZERO);
         //threshold(_hMask, _hMask, 190, 255, THRESH_TOZERO_INV);

@@ -258,7 +258,8 @@ namespace Vision
         _deepLearningParams.Defaults();
 
         _mode = DeepLearning;
-        _topRegionToAnalyze = 0.5f;
+        _upperRegionRatio = 0.5f;
+        _centerRegionRatio = 0.8f;
         _consecutiveCount = 4;
         _maximumDistance = 25;
         _maximumRadiusDiff = 5;
@@ -276,8 +277,11 @@ namespace Vision
       const Mode GetMode() const { return _mode; }
       void SetMode(Mode mode) { _mode = mode; }
 
-      float GetUpperRegionToAnalyze() { return _topRegionToAnalyze; }
-      void SetLowerRegionToAnalyzer(float topRegionToAnalyzeR) { _topRegionToAnalyze = topRegionToAnalyzeR; }
+      float GetUpperRegionRatio() { return _upperRegionRatio; }
+      void SetUpperRegionRatio(float upperRegionRatio) { _upperRegionRatio = upperRegionRatio; }
+
+      float GetCenterRegionRatio() { return _centerRegionRatio; }
+      void SetCenterRegionRatio(float lowerRegionRatio) { _centerRegionRatio = lowerRegionRatio; }
 
       int GetConsecutiveCount() { return _consecutiveCount; }
       void SetConsecutiveCount(int consecutiveCount) { _consecutiveCount = consecutiveCount; }
@@ -299,7 +303,10 @@ namespace Vision
       Mode _mode;
 
       // upper region to inspect for traffic lights.
-      float _topRegionToAnalyze;
+      float _upperRegionRatio;
+      
+      // horizontal fraction of image to analyze, centered.
+      float _centerRegionRatio;
 
       // consecutive detection
       int _consecutiveCount;

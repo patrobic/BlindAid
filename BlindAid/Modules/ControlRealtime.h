@@ -15,8 +15,9 @@ namespace Control
     private:
       void Process();
       void ConnectToArduino();
-      void CommandArduino();
-      void GenerateControlString();
+      void SendControl();
+      void GenerateString();
+      void PlayAudio();
 
       CSerial _serial;
       std::string _controlMessage;
