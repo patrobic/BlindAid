@@ -54,7 +54,10 @@ namespace Vision
           sbd->detect(_blobMask[i], keypoints);
 
           for (int j = 0; j < keypoints.size(); j++)
+          {
             points.push_back(Result(keypoints[j].pt, keypoints[j].size, (Result::Color)i));
+            points.at(j)._center.x += (int)(_input->GetRgbImage()->cols * (1 - _params->GetCenterRegionRatio()) / 2);
+          }
         }
 
         _output->Set(points);

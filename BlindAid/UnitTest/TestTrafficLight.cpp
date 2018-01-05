@@ -59,13 +59,18 @@ namespace UnitTest
       };
 
       Core::Parameters params;
-      Core::Data results;
-      Core::Core core(&params, NULL, &results);
-
       params.GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
       params.GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
-      params.GetCaptureParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
+      params.GetVisionParams()->GetDepthObstacleParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
+      params.GetDisplayParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
+      params.GetVisionParams()->GetTrafficLightParams()->SetMode(Vision::TrafficLight::Parameters::Mode::BlobDetector);
+      params.GetVisionParams()->GetTrafficLightParams()->SetConsecutiveCount(0);
+      params.GetVisionParams()->GetTrafficLightParams()->SetCenterRegionRatio(1.f);
+      params.GetVisionParams()->GetTrafficLightParams()->SetUpperRegionRatio(1.f);
       params.GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Photo);
+
+      Core::Data results;
+      Core::Core core(&params, NULL, &results);
 
       for (int i = 0; i < testData.size(); ++i)
       {
