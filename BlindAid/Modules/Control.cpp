@@ -14,7 +14,7 @@ namespace Control
 
   Base::Base(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
   {
-    for(int i = 0; i < VERT_REGIONS + 2; ++i) _vibrationIntensity[i] = new Result(_params->GetConsecutiveCount());
+    for (int i = 0; i < VERT_REGIONS + 2; ++i) _vibrationIntensity[i] = new Result(_params->GetConsecutiveCount());
   }
 
   void Base::MapVibrationValues()

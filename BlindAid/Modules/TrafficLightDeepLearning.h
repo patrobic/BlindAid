@@ -1,6 +1,7 @@
 #pragma once
 
 #include "TrafficLight.h"
+#include "Python.h"
 
 namespace Vision
 {
@@ -15,7 +16,17 @@ namespace Vision
 
       private:
         void Process();
+        void PreprocessImage();
         void RunDeepLearning();
+
+        void UpdateResults();
+
+        cv::Mat _preprocessedImage;
+
+        PyObject *_pyColorImage;
+        PyObject *_pyRedConfidence;
+        PyObject *_pyGreenConfidence;
+        PyObject *_pyNoneConfidence;
 
       };
     }

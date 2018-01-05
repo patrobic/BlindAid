@@ -46,12 +46,17 @@ namespace Control
     {
       string name[3] = { "Red", "Green", "Yellow" };
       stringstream lights;
-      int trafficLightCount = _input->GetTrafficLightResults()->Size();
+      vector<Vision::TrafficLight::Result> result = _input->GetTrafficLightResults()->Get();
 
       cout << "  [AUDIO] ";
-      for (int i = 0; i < trafficLightCount; ++i)
-        lights << name[_input->GetTrafficLightResults()->At(i)._color] << ", ";
-      if (trafficLightCount > 0) cout << " TrafficLights(" << lights.str() << "Total: " << trafficLightCount << ")";
+      if (result.size() == 1 && result.at(0)._center == Point(0, 0))
+        cout << "Red, Green, None (" << result.at(0)._confidence[0] << ", " << result.at(0)._confidence[1] << ", " << result.at(0)._confidence[2] << ").\n";
+      else
+      {
+        for (int i = 0; i < result.size(); ++i)
+          lights << name[_input->GetTrafficLightResults()->At(i)._color] << ", ";
+        if (result.size() > 0) cout << " TrafficLights(" << lights.str() << "Total: " << result.size() << ")";
+      }
     }
 
     void Simulate::PrintStopSign()

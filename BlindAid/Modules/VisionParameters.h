@@ -221,7 +221,8 @@ namespace Vision
 
         void Defaults()
         {
-
+          _colorImageSize = cv::Size(224, 224);
+          _confidenceThreshold = 0.8f;
         }
 
         bool Valid()
@@ -229,9 +230,18 @@ namespace Vision
           return true;
         }
 
-      private:
-        // TODO: deep learning parameters once class is implemented.
+        cv::Size GetColorImageSize() { return _colorImageSize; }
+        void SetColorImageSize(cv::Size colorImageSize) { _colorImageSize = colorImageSize; }
 
+        float GetConfidenceThreshold() { return _confidenceThreshold; }
+        void SetConfidenceThreshold(float confidenceThreshold) { _confidenceThreshold = confidenceThreshold; }
+
+      private:
+        cv::Size _colorImageSize;
+
+        float _confidenceThreshold;
+
+        // TODO: deep learning parameters once class is implemented.
       };
     }
 
@@ -247,8 +257,9 @@ namespace Vision
         _blobDetectorParams.Defaults();
         _deepLearningParams.Defaults();
 
-        _mode = BlobDetector;
-        _topRegionToAnalyze = 0.5f;
+        _mode = DeepLearning;
+        _upperRegionRatio = 0.5f;
+        _centerRegionRatio = 0.8f;
         _consecutiveCount = 4;
         _maximumDistance = 25;
         _maximumRadiusDiff = 5;
@@ -263,11 +274,14 @@ namespace Vision
 
       DeepLearning::Parameters *GetDeepLearningParams() { return &_deepLearningParams; }
 
-      const Mode &GetMode() const { return _mode; }
+      const Mode GetMode() const { return _mode; }
       void SetMode(Mode mode) { _mode = mode; }
 
-      float GetUpperRegionToAnalyze() { return _topRegionToAnalyze; }
-      void SetLowerRegionToAnalyzer(float topRegionToAnalyzeR) { _topRegionToAnalyze = topRegionToAnalyzeR; }
+      float GetUpperRegionRatio() { return _upperRegionRatio; }
+      void SetUpperRegionRatio(float upperRegionRatio) { _upperRegionRatio = upperRegionRatio; }
+
+      float GetCenterRegionRatio() { return _centerRegionRatio; }
+      void SetCenterRegionRatio(float lowerRegionRatio) { _centerRegionRatio = lowerRegionRatio; }
 
       int GetConsecutiveCount() { return _consecutiveCount; }
       void SetConsecutiveCount(int consecutiveCount) { _consecutiveCount = consecutiveCount; }
@@ -289,7 +303,10 @@ namespace Vision
       Mode _mode;
 
       // upper region to inspect for traffic lights.
-      float _topRegionToAnalyze;
+      float _upperRegionRatio;
+      
+      // horizontal fraction of image to analyze, centered.
+      float _centerRegionRatio;
 
       // consecutive detection
       int _consecutiveCount;

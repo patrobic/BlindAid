@@ -102,8 +102,10 @@ namespace Control
       _minimumVibration = 0.25f;
       _maximumVibration = 255.f;
       _maximumDepthSpec = 5.f;
+
+      _localAudioEnabled = true;
       _optionSignals[0] = TrafficLight;
-      _optionSignals[1] = NearObstacle;
+      _optionSignals[1] = None;
       _optionSignalsCount = 2;
 
       _consecutiveCount = 3;
@@ -135,6 +137,9 @@ namespace Control
     float GetMaximumDepthSpec() { return _maximumDepthSpec; }
     void SetMaximumDepthSpec(float maximumDepthSpec) { _maximumDepthSpec = maximumDepthSpec; }
 
+    bool GetLocalAudioEnabled() { return _localAudioEnabled; }
+    void SetLocalAudioEnabled(bool localAudioEnabled) { _localAudioEnabled = localAudioEnabled; }
+
     OptionSignals GetOptionSignals(int i) { return _optionSignals[i]; }
     void SetOptionSignals(OptionSignals optionSignals, int i) { _optionSignals[i] = (OptionSignals)optionSignals; }
 
@@ -164,6 +169,9 @@ namespace Control
 
     // camera maximum depth distance (in meters), i.e. distance at pixel = 255.
     float _maximumDepthSpec;
+
+    // enable or disable local beeper on up board.
+    bool _localAudioEnabled;
 
     // what do the last two (6th & 7th) sent signals represent.
     OptionSignals _optionSignals[2];
