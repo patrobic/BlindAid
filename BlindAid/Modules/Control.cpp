@@ -2,6 +2,9 @@
 #include "ControlRealtime.h"
 #include "ControlSimulate.h"
 
+using namespace std;
+using namespace cv;
+
 namespace Control
 {
   Base *Base::MakeControl(IParameters *params, IData *input, IData *output)
@@ -27,7 +30,8 @@ namespace Control
 
       _vibrationIntensity[i]->Update(intensity);
 
-      _input->GetVibrationImage()->at<uchar>(cv::Point(i, 0)) = (int)_vibrationIntensity[i]->Get();
+      (*_input->GetVibrationImage())(cv::Rect(i*100 + 1, 0, 100 - 2, 100)).setTo((int)_vibrationIntensity[i]->Get());
+      putText(*_input->GetVibrationImage(), to_string((int)_vibrationIntensity[i]->Get()), Point(i * 100 + 20, 60), FONT_HERSHEY_PLAIN, 2, (int)_vibrationIntensity[i]->Get() > 127 ? 0 : 255, 2);
     }
   }
 

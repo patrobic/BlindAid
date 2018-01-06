@@ -17,7 +17,7 @@ namespace Display
       _vibrationWindowPosition = cv::Point(1000, 600);
       _colorWindowScale = 0.4f;
       _depthWindowScale = 1.0f;
-      _vibrationWindowScale = 50.f;
+      _vibrationWindowScale = 1.f;
     }
 
     bool Valid()

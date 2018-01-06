@@ -8,7 +8,7 @@ namespace Display
 {
   Display::Display(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
   {
-    *_input->GetVibrationImage() = Mat(1, 5, CV_8UC1);
+    *_input->GetVibrationImage() = Mat(100, 500, CV_8UC1);
   }
 
   void Display::Process()
@@ -91,7 +91,7 @@ namespace Display
 
       namedWindow("Vibration Image", WINDOW_NORMAL);
       moveWindow("Vibration Image", _params->GetVibrationWindowPosition().x, _params->GetVibrationWindowPosition().y);
-      resizeWindow("Vibration Image", (int)_params->GetVibrationWindowScale() * 5, (int)_params->GetVibrationWindowScale());
+      resizeWindow("Vibration Image", (int)(_input->GetVibrationImage()->cols * _params->GetVibrationWindowScale()), (int)(_input->GetVibrationImage()->rows * _params->GetVibrationWindowScale()));
       imshow("Vibration Image", *_input->GetVibrationImage());
       waitKey(1);
     }
