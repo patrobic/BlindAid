@@ -13,7 +13,7 @@ namespace Control
 
       void Defaults()
       {
-        _serialPort = 2;
+        _serialPort = 4;
         _baudRate = 9600;
         _messageStart = '<';
         _messageEnd = '>';
@@ -106,7 +106,7 @@ namespace Control
       _localAudioEnabled = false;
       _optionSignals[0] = TrafficLight;
       _optionSignals[1] = None;
-      _optionSignalsCount = 2;
+      _optionSignalsCount = 0;
 
       _consecutiveCount = 3;
     }
