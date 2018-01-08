@@ -23,10 +23,10 @@ namespace Vision
       Circle _circle;
     };
 
-    class Detect : public IDetect<Parameters, Capture::Data, Data>
+    class Base : public IDetect<Parameters, Capture::Data, Data>
     {
     public:
-      Detect(IParameters *params, IData *input, IData *output);
+      Base(IParameters *params, IData *input, IData *output);
 
     private:
       void Process();

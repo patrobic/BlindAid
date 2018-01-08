@@ -8,7 +8,7 @@ namespace Display
 {
   Display::Display(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
   {
-    *_input->GetVibrationImage() = Mat(100, 500, CV_8UC1);
+
   }
 
   void Display::Process()
@@ -33,14 +33,17 @@ namespace Display
       cvtColor(*_input->GetDepthOverlayImage(), *_input->GetDepthOverlayImage(), CV_GRAY2BGR);
 
     Rect rect;
-    for (int i = 0; i < HORZ_REGIONS; ++i)
+    for (int j = 0; j < VERT_REGIONS; ++j)
     {
-      for (int j = 0; j < VERT_REGIONS; ++j)
-      {
+      for (int i = 0; i < HORZ_REGIONS; ++i)
+    {
         rect = _input->GetDepthObstacleResults()->GetRegionBounds(j, i);
         rectangle(*_input->GetDepthOverlayImage(), rect, Scalar(0, 0, 255), 2);
         putText(*_input->GetDepthOverlayImage(), to_string(_input->GetDepthObstacleResults()->GetRegionIntensity(j, i)), Point(rect.x + (int)(0.5 * rect.width) - 25, rect.y + (int)(0.5 * rect.height)), FONT_HERSHEY_PLAIN, 1.25, Scalar(0, 0, 255), 2);
       }
+
+      (*_input->GetDepthOverlayImage())(cv::Rect(j * 60, 0, 60, 30)).setTo((int)_input->GetDepthObstacleResults()->GetVibrationIntensity()[j]->Get());
+      putText(*_input->GetDepthOverlayImage(), to_string((int)_input->GetDepthObstacleResults()->GetVibrationIntensity()[j]->Get()), Point(j * 60 + 7, 22), FONT_HERSHEY_PLAIN, 1.5, (int)_input->GetDepthObstacleResults()->GetVibrationIntensity()[j]->Get() > 127 ? Scalar(0, 0, 0) : Scalar(255, 255, 255), 2);
     }
   }
 
@@ -54,7 +57,16 @@ namespace Display
     vector<Vision::TrafficLight::Result> result = _input->GetTrafficLightResults()->Get();
 
     if (result.size() == 1 && result.at(0)._center == Point(0, 0))
-      putText(*_input->GetCurrentColorImage(), name[result.at(0)._color] + "TrafficLight", Point(20, 20), FONT_HERSHEY_PLAIN, 2, color[result.at(0)._color], 2);
+    {
+      (*_input->GetColorOverlayImage())(cv::Rect(360, 0, 400, 60)).setTo(Scalar((result.at(0)._color == 3) * 127, (result.at(0)._color == 1) * 255 + (result.at(0)._color == 3) * 128, (result.at(0)._color == 0) * 255 + (result.at(0)._color == 3) * 128));
+      putText(*_input->GetColorOverlayImage(), name[result.at(0)._color], Point(400, 45), FONT_HERSHEY_PLAIN, 3, color[result.at(0)._color], 2);
+
+      for (int j = 0; j < 3; ++j)
+      {
+        (*_input->GetColorOverlayImage())(cv::Rect(j * 120, 0, 120, 60)).setTo(Scalar((j==2)*127, (j == 1) * 127 * result.at(0)._confidence[j] + 128, (j==0)*127 * result.at(0)._confidence[j] + 128));
+        putText(*_input->GetColorOverlayImage(), to_string(result.at(0)._confidence[j]).substr(0, 4), Point(j * 120 + 10, 45), FONT_HERSHEY_PLAIN, 3, result.at(0)._confidence[j] > 0.5f ? Scalar(0, 0, 0) : Scalar(255, 255, 255), 2);
+      }
+    }
     else
       for (int i = 0; i < result.size(); ++i)
       {
@@ -87,12 +99,6 @@ namespace Display
       moveWindow("Depth Image", _params->GetDepthWindowPosition().x, _params->GetDepthWindowPosition().y);
       resizeWindow("Depth Image", (int)(_input->GetDepthOverlayImage()->cols * _params->GetDepthWindowScale()), (int)(_input->GetDepthOverlayImage()->rows * _params->GetDepthWindowScale()));
       imshow("Depth Image", *_input->GetDepthOverlayImage());
-      waitKey(1);
-
-      namedWindow("Vibration Image", WINDOW_NORMAL);
-      moveWindow("Vibration Image", _params->GetVibrationWindowPosition().x, _params->GetVibrationWindowPosition().y);
-      resizeWindow("Vibration Image", (int)(_input->GetVibrationImage()->cols * _params->GetVibrationWindowScale()), (int)(_input->GetVibrationImage()->rows * _params->GetVibrationWindowScale()));
-      imshow("Vibration Image", *_input->GetVibrationImage());
       waitKey(1);
     }
   }

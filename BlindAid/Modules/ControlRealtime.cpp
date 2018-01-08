@@ -36,7 +36,6 @@ namespace Control
     {
       steady_clock::time_point start = steady_clock::now();
 
-      MapVibrationValues();
       GenerateString();
       SendControl();
       PlayAudio();
@@ -68,7 +67,7 @@ namespace Control
       ss << _params->GetRealtimeParams()->GetMessageStart();
 
       for (int i = 0; i < 5; ++i)
-        ss << setw(3) << setfill('0') << (int)_vibrationIntensity[i]->Get();
+        ss << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetVibrationIntensity()[i]->Get();
 
       for (int i = 0; i < _params->GetOptionSignalsCount(); ++i)
         if(_params->GetOptionSignals(i) == Control::Parameters::OptionSignals::TrafficLight)

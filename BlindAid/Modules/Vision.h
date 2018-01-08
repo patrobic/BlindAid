@@ -30,7 +30,6 @@ namespace Vision
 
     cv::Mat *GetDepthOverlayImage() { return &_depthOverlayImage; }
     cv::Mat *GetColorOverlayImage() { return &_colorOverlayImage; }
-    cv::Mat *GetVibrationImage() { return &_vibrationImage; }
 
   private:
     DepthObstacle::Data _dodResults;
@@ -42,7 +41,6 @@ namespace Vision
 
     cv::Mat _colorOverlayImage;
     cv::Mat _depthOverlayImage;
-    cv::Mat _vibrationImage;
   };
 
   class Vision : public IModule<Parameters, Capture::Data, Data>
@@ -54,8 +52,8 @@ namespace Vision
     void CreateModules();
     void Process();
     
-    DepthObstacle::Detect *_depthObstacle;
+    DepthObstacle::Base *_depthObstacle;
     TrafficLight::Base *_trafficLight;
-    StopSign::Detect *_stopSign;
+    StopSign::Base *_stopSign;
   };
 }

@@ -19,7 +19,6 @@ namespace Control
     {
       steady_clock::time_point start = steady_clock::now();
 
-      MapVibrationValues();
       PrintDepthObstacle();
       PrintTrafficLights();
       PrintStopSign();
@@ -35,10 +34,7 @@ namespace Control
 
       cout << "  [GLOVE] Thumb, Index, Middle, Ring, Pinky (";
       for (int i = 0; i < 5; ++i)
-      {
-        cout << setw(4) << (int)_vibrationIntensity[i]->Get();
-        _input->GetVibrationImage()->at<uchar>(Point(i, 0)) = (int)_vibrationIntensity[i]->Get();
-      }
+        cout << setw(4) << (int)_input->GetDepthObstacleResults()->GetVibrationIntensity()[i]->Get();
       cout << ").\n";
     }
     

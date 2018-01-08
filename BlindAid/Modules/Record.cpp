@@ -67,7 +67,6 @@ namespace Record
       {
         imwrite(_params->GetPath() + "\\" + _folderName + "\\depth_" + to_string(_index) + ".png", *_input->GetCurrentDepthImage());
         imwrite(_params->GetPath() + "\\" + _folderName + "\\depthOverlay_" + to_string(_index) + ".png", *_input->GetDepthOverlayImage());
-        imwrite(_params->GetPath() + "\\" + _folderName + "\\vibration_" + to_string(_index) + ".png", *_input->GetVibrationImage());
       }
       ++_index;
 

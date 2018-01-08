@@ -22,6 +22,8 @@
     <ClInclude Include="Capture.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="ControlParameters.h" />
+    <ClInclude Include="DepthObstacleFixedRegions.h" />
+    <ClInclude Include="DepthObstacleHandPosition.h" />
     <ClInclude Include="IDetect.h" />
     <ClInclude Include="IResult.h" />
     <ClInclude Include="CaptureParameters.h" />
@@ -47,6 +49,8 @@
   <ItemGroup>
     <ClCompile Include="Capture.cpp" />
     <ClCompile Include="Control.cpp" />
+    <ClCompile Include="DepthObstacleFixedRegions.cpp" />
+    <ClCompile Include="DepthObstacleHandPosition.cpp" />
     <ClCompile Include="TrafficLight.cpp" />
     <ClCompile Include="DepthObstacle.cpp" />
     <ClCompile Include="StopSign.cpp" />

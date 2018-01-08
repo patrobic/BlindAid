@@ -1,4 +1,6 @@
 #include "DepthObstacle.h"
+#include "DepthObstacleFixedRegions.h"
+#include "DepthObstacleHandPosition.h"
 
 using namespace std;
 using namespace cv;
@@ -7,60 +9,25 @@ namespace Vision
 {
   namespace DepthObstacle
   {
-    Detect::Detect(IParameters *params, IData *input, IData *output) : IDetect(params, input, output)
+    Base *Base::MakeDepthObstacle(IParameters *params, IData *input, IData *output)
     {
-
+      if (((DepthObstacle::Parameters*)params)->GetMode() == Parameters::Mode::FixedRegions)
+        return new FixedRegions::FixedRegions(params, input, output);
+      else
+        return new HandPosition::HandPosition(params, input, output);
     }
 
-    void Detect::Process()
+    Base::Base(IParameters *params, IData *input, IData *output) : IDetect(params, input, output)
     {
-      MaskShadows();
-      SetCenterPoint();
-      SeparateRegions();
-      FindMaxInRegions();
+      _output->SetHandPosition(_params->GetDefaultCenter());
     }
 
-    void Detect::MaskShadows()
+    void Base::MaskShadows()
     {
       inRange(*_input->GetDepthImage(), _params->GetMinimumDistance(), _params->GetMaximumDistance(), _maskImage);
     }
 
-    void Detect::SetCenterPoint()
-    {
-      switch (_params->GetRegionMode())
-      {
-      case(Parameters::Mode::Dynamic):
-        DetectHand();
-        break;
-      case(Parameters::Mode::Static):
-        _output->SetHandPosition(_params->GetDefaultCenter());
-        break;
-      case(Parameters::Mode::Reduced):
-        _output->SetHandPosition(Point(_input->GetDepthImage()->cols / 2, _input->GetDepthImage()->rows * 1 / 3));
-        break;
-      }
-    }
-
-    void Detect::DetectHand()
-    {
-      // TODO: detect position of hand
-      // use blobfinder hardcoded to expected color and size range of dot on glove, and limit to lower third of frame.
-
-      Mat handDotMask;
-      inRange(*_input->GetHsvImage(), _params->GetHandDotHsvRange(0), _params->GetHandDotHsvRange(1), handDotMask);
-
-      Ptr<SimpleBlobDetector> sbd = SimpleBlobDetector::create(_params->GetHandDetectorParams());
-
-      vector<KeyPoint> keyPoints;
-      sbd->detect(*_input->GetDepthImage(), keyPoints);
-
-      if (keyPoints.size() == 0)
-        _output->SetHandPosition(Point(_input->GetDepthImage()->cols / 2, _input->GetDepthImage()->rows / 2));
-      else
-        _output->SetHandPosition(keyPoints.at(0).pt);
-    }
-
-    void Detect::SeparateRegions()
+    void Base::SeparateRegions()
     {
       Point tl;
       Point br;
@@ -85,7 +52,7 @@ namespace Vision
         }
     }
 
-    void Detect::FindMaxInRegions()
+    void Base::FindMaxInRegions()
     {
       Mat hist;
       int size[] = { _params->GetHistogramBins() };
@@ -116,6 +83,21 @@ namespace Vision
             }
           }
         }
+    }
+
+    void Base::MapVibrationValues()
+    {
+      float slope = 0.f;
+      for (int i = 0; i < VERT_REGIONS; ++i)
+      {
+        float intensity = 0.f;
+        for (int j = 0; j < HORZ_REGIONS; ++j)
+        {
+          slope = (_params->GetMaximumVibration() - _params->GetMinimumVibration()) / (_params->GetFarthestBound(i, j) - _params->GetNearestBound()); // calculate the slope between nearest and farthest points.
+          intensity = max(intensity, min(_params->GetMaximumVibration(), _params->GetMaximumVibration() - max(0.f, _output->GetRegionIntensity(i, j) - _params->GetNearestBound()) * slope)); // map the value to a vibration intensity ratio, and the maximum for that finger.
+        }
+        _output->GetVibrationIntensity()[i]->Update(intensity);
+      }
     }
   }
 }
