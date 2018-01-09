@@ -18,6 +18,7 @@ namespace Vision
       void BlobDetector::Process()
       {
         MaskColors();
+        PreprocessImages();
         DetectBlobs();
         //ConfirmWithBox();
       }
@@ -35,7 +36,10 @@ namespace Vision
 
         for (int i = 1; i < 3; ++i)
           inRange((*_input->GetHsvImage())(Rect((int)(redRegionUpper.cols * (1 - _params->GetCenterRegionRatio()) / 2), 0, (int)(redRegionUpper.cols  * _params->GetCenterRegionRatio()), (int)(redRegionUpper.rows*_params->GetUpperRegionRatio()))), _params->GetBlobDetectorParams()->GetColorRange(i, 0), _params->GetBlobDetectorParams()->GetColorRange(i, 1), _blobMask[i]);
+      }
 
+      void BlobDetector::PreprocessImages()
+      {
         //threshold(_h, _hMask, 170, 255, THRESH_TOZERO);
         //threshold(_hMask, _hMask, 190, 255, THRESH_TOZERO_INV);
         //dilate(_redMask, _redMask, Mat(), Point(-1, -1), 1);
@@ -45,22 +49,19 @@ namespace Vision
       {
         Ptr<SimpleBlobDetector> sbd = SimpleBlobDetector::create(*_params->GetBlobDetectorParams()->GetBlobParams());
 
-        vector<Result> points;
-
         for (int i = 0; i < 3; ++i)
         {
           vector<KeyPoint> keypoints;
-
           sbd->detect(_blobMask[i], keypoints);
 
           for (int j = 0; j < keypoints.size(); j++)
           {
             keypoints[j].pt.x += (int)(_input->GetRgbImage()->cols * (1 - _params->GetCenterRegionRatio()) / 2);
-            points.push_back(Result(keypoints[j].pt, keypoints[j].size, (Result::Color)i));
+            _output->Set(Result(keypoints[j].pt, keypoints[j].size, (Result::Color)i));
           }
         }
 
-        _output->Set(points);
+        _output->MatchPoints();
       }
 
       void BlobDetector::ConfirmWithBox()
@@ -69,12 +70,12 @@ namespace Vision
         Mat box;
         Rect rect;
         for (int color = 0; color < 3; ++color)
-          for (int i = 0; i < _output->Size(); ++i)
+          for (int i = 0; i < _output->GetAll()->size(); ++i)
           {
-            rect.x = std::max(0, _output->At(i)._center.x - _output->Size() * sizeFactor);
-            rect.y = std::max(0, _output->At(i)._center.y - _output->Size() * sizeFactor);
-            rect.width = std::min(_input->GetRgbImage()->cols - rect.x - 1, _output->Size() * 2 * sizeFactor);
-            rect.height = std::min(_input->GetRgbImage()->rows - rect.y - 1, _output->Size() * 2 * sizeFactor);
+            rect.x = std::max(0, (int)(_output->GetAll()->at(i).GetCenter().x - _output->GetAll()->size() * sizeFactor));
+            rect.y = std::max(0, (int)(_output->GetAll()->at(i).GetCenter().y - _output->GetAll()->size() * sizeFactor));
+            rect.width = std::min(_input->GetRgbImage()->cols - rect.x - 1, (int)(_output->GetAll()->size() * 2 * sizeFactor));
+            rect.height = std::min(_input->GetRgbImage()->rows - rect.y - 1, (int)(_output->GetAll()->size() * 2 * sizeFactor));
 
             box = _v(rect);
 

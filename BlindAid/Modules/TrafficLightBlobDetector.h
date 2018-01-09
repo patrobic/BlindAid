@@ -16,6 +16,7 @@ namespace Vision
       private:
         void Process();
         void MaskColors();
+        void PreprocessImages();
         void DetectBlobs();
         void ConfirmWithBox();
 

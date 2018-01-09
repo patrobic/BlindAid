@@ -67,7 +67,7 @@ namespace Control
       ss << _params->GetRealtimeParams()->GetMessageStart();
 
       for (int i = 0; i < 5; ++i)
-        ss << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetVibrationIntensity()[i]->Get();
+        ss << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetVibrationIntensity()[i]->GetFiltered();
 
       for (int i = 0; i < _params->GetOptionSignalsCount(); ++i)
         if(_params->GetOptionSignals(i) == Control::Parameters::OptionSignals::TrafficLight)
@@ -85,7 +85,7 @@ namespace Control
     void Realtime::PlayAudio()
     {
       // TODO: put this in a thread to disable locking.
-      if (_input->GetTrafficLightResults()->Size() > 0 && _params->GetLocalAudioEnabled())
+      if (_params->GetLocalAudioEnabled())
         if (_input->GetTrafficLightResults()->GetColor() == Vision::TrafficLight::Result::Color::Red)
           PlaySound("TrafficLightRed.wav", NULL, SND_FILENAME);
         else if (_input->GetTrafficLightResults()->GetColor() == Vision::TrafficLight::Result::Color::Green)

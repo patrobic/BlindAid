@@ -19,6 +19,9 @@
     <Filter Include="Parameters">
       <UniqueIdentifier>{e9c2f4db-be08-4d0f-95af-778115441091}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{548b12a5-3108-4d72-94e9-17b8e4874500}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Serial.h">
@@ -98,6 +101,18 @@
     </ClInclude>
     <ClInclude Include="DepthObstacleHandPosition.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthObstacleData.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="TrafficLightData.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="TrafficLightParameters.h">
+      <Filter>Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthObstacleParameters.h">
+      <Filter>Parameters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

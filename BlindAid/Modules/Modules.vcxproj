@@ -22,8 +22,10 @@
     <ClInclude Include="Capture.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="ControlParameters.h" />
+    <ClInclude Include="DepthObstacleData.h" />
     <ClInclude Include="DepthObstacleFixedRegions.h" />
     <ClInclude Include="DepthObstacleHandPosition.h" />
+    <ClInclude Include="DepthObstacleParameters.h" />
     <ClInclude Include="IDetect.h" />
     <ClInclude Include="IResult.h" />
     <ClInclude Include="CaptureParameters.h" />
@@ -31,6 +33,7 @@
     <ClInclude Include="DepthObstacle.h" />
     <ClInclude Include="StopSign.h" />
     <ClInclude Include="TrafficLightBlobDetector.h" />
+    <ClInclude Include="TrafficLightData.h" />
     <ClInclude Include="TrafficLightDeepLearning.h" />
     <ClInclude Include="IModule.h" />
     <ClInclude Include="IParameters.h" />
@@ -39,6 +42,7 @@
     <ClInclude Include="ControlRealtime.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="Display.h" />
+    <ClInclude Include="TrafficLightParameters.h" />
     <ClInclude Include="Vision.h" />
     <ClInclude Include="Record.h" />
     <ClInclude Include="Serial.h" />

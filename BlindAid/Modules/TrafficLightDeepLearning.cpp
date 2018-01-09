@@ -23,7 +23,7 @@ namespace Vision {
 
       void DeepLearning::PreprocessImage()
       {
-        // Get the color image, crop to only the top half (since traffic lights are only expected in upper fraction of frame), and resize to size required by deep learning.
+        // GetFiltered the color image, crop to only the top half (since traffic lights are only expected in upper fraction of frame), and resize to size required by deep learning.
         resize((*_input->GetRgbImage())(Rect((int)(_input->GetRgbImage()->cols * (1 - _params->GetCenterRegionRatio()) / 2), 0, (int)(_input->GetRgbImage()->cols *  _params->GetCenterRegionRatio()), (int)(_input->GetRgbImage()->rows*_params->GetUpperRegionRatio()))), _preprocessedImage, _params->GetDeepLearningParams()->GetColorImageSize());
 
         // convert/assign opencv mat to python pyobject (numpy arrray).
@@ -56,7 +56,7 @@ namespace Vision {
               success = false;
           }
           if (success)
-            _output->Set((Result::Color)i, confidence);
+            _output->Set(Result(confidence));
         }
       }
     }

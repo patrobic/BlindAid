@@ -34,7 +34,7 @@ namespace Control
 
       cout << "  [GLOVE] Thumb, Index, Middle, Ring, Pinky (";
       for (int i = 0; i < 5; ++i)
-        cout << setw(4) << (int)_input->GetDepthObstacleResults()->GetVibrationIntensity()[i]->Get();
+        cout << setw(4) << (int)_input->GetDepthObstacleResults()->GetVibrationIntensity()[i]->GetFiltered();
       cout << ").\n";
     }
     
@@ -42,15 +42,16 @@ namespace Control
     {
       string name[3] = { "Red", "Green", "Yellow" };
       stringstream lights;
-      vector<Vision::TrafficLight::Result> result = _input->GetTrafficLightResults()->Get();
+      vector<Vision::TrafficLight::Result> result = _input->GetTrafficLightResults()->GetFiltered();
 
       cout << "  [AUDIO] ";
-      if (result.size() == 1 && result.at(0)._center == Point(0, 0))
-        cout << "Red, Green, None (" << result.at(0)._confidence[0] << ", " << result.at(0)._confidence[1] << ", " << result.at(0)._confidence[2] << ").\n";
+      if (result.size() == 1 && result.at(0).GetCenter() == Point(0, 0))
+        cout << "Red, Green, None (" << result.at(0).GetConfidence((Vision::TrafficLight::Result::Color)0) << ", " << result.at(0).GetConfidence((Vision::TrafficLight::Result::Color)1) << ", " << result.at(0).GetConfidence((Vision::TrafficLight::Result::Color)2) << ").\n";
       else
       {
+
         for (int i = 0; i < result.size(); ++i)
-          lights << name[_input->GetTrafficLightResults()->At(i)._color] << ", ";
+          lights << name[_input->GetTrafficLightResults()->GetAll()->at(i).GetColor()] << ", ";
         if (result.size() > 0) cout << " TrafficLights(" << lights.str() << "Total: " << result.size() << ")";
       }
     }
