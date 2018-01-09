@@ -37,25 +37,27 @@ namespace Vision {
         // 2. Retrieve results (if necessary) in _pyCOLORConfidence variable.
 
         // TEMP: store dummy values for testing.
-        _pyRedConfidence = PyFloat_FromDouble(0.05);
+        _pyRedConfidence = PyFloat_FromDouble(0.6);
         _pyGreenConfidence = PyFloat_FromDouble(0.15);
-        _pyNoneConfidence = PyFloat_FromDouble(0.8);
+        _pyYellowConfidence = PyFloat_FromDouble(0.05);
+        _pyNoneConfidence = PyFloat_FromDouble(0.2);
       }
 
       void DeepLearning::UpdateResults()
       {
-        float red = (float)PyFloat_AsDouble(_pyRedConfidence);
-        float green = (float)PyFloat_AsDouble(_pyGreenConfidence);
-        float none = (float)PyFloat_AsDouble(_pyNoneConfidence);
+        float confidence[4] = { (float)PyFloat_AsDouble(_pyRedConfidence), (float)PyFloat_AsDouble(_pyGreenConfidence), (float)PyFloat_AsDouble(_pyYellowConfidence), (float)PyFloat_AsDouble(_pyNoneConfidence) };
 
-        float confidence[3] = { red, green, none };
-
-        if (red > green && red > none && red > _params->GetDeepLearningParams()->GetConfidenceThreshold())
-          _output->Set(Result::Red, confidence);
-        else if (green > red && green > none && green > _params->GetDeepLearningParams()->GetConfidenceThreshold())
-          _output->Set(Result::Green, confidence);
-        else
-          _output->Set(Result::None, confidence);
+        for (int i = 0; i < 4; ++i)
+        {
+          bool success = true;
+          for (int j = 0; j < 4; ++j)
+          {
+            if (confidence[i] < confidence[j])
+              success = false;
+          }
+          if (success)
+            _output->Set((Result::Color)i, confidence);
+        }
       }
     }
   }

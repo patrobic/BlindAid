@@ -26,6 +26,7 @@ namespace Vision
         PyObject *_pyColorImage;
         PyObject *_pyRedConfidence;
         PyObject *_pyGreenConfidence;
+        PyObject *_pyYellowConfidence;
         PyObject *_pyNoneConfidence;
 
       };

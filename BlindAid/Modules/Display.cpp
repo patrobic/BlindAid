@@ -58,13 +58,13 @@ namespace Display
 
     if (result.size() == 1 && result.at(0)._center == Point(0, 0))
     {
-      (*_input->GetColorOverlayImage())(cv::Rect(360, 0, 400, 60)).setTo(Scalar((result.at(0)._color == 3) * 127, (result.at(0)._color == 1) * 255 + (result.at(0)._color == 3) * 128, (result.at(0)._color == 0) * 255 + (result.at(0)._color == 3) * 128));
-      putText(*_input->GetColorOverlayImage(), name[result.at(0)._color], Point(400, 45), FONT_HERSHEY_PLAIN, 3, color[result.at(0)._color], 2);
+      (*_input->GetColorOverlayImage())(cv::Rect(480, 0, 240, 60)).setTo(Scalar(255, 255, 255));
+      putText(*_input->GetColorOverlayImage(), name[result.at(0)._color], Point(500, 45), FONT_HERSHEY_PLAIN, 3, color[result.at(0)._color], 2);
 
-      for (int j = 0; j < 3; ++j)
+      for (int j = 0; j < 4; ++j)
       {
-        (*_input->GetColorOverlayImage())(cv::Rect(j * 120, 0, 120, 60)).setTo(Scalar((j==2)*127, (j == 1) * 127 * result.at(0)._confidence[j] + 128, (j==0)*127 * result.at(0)._confidence[j] + 128));
-        putText(*_input->GetColorOverlayImage(), to_string(result.at(0)._confidence[j]).substr(0, 4), Point(j * 120 + 10, 45), FONT_HERSHEY_PLAIN, 3, result.at(0)._confidence[j] > 0.5f ? Scalar(0, 0, 0) : Scalar(255, 255, 255), 2);
+        (*_input->GetColorOverlayImage())(cv::Rect(j * 120, 0, 120, 60)).setTo(color[j] * max(0.25f, result.at(0)._confidence[j]));
+        putText(*_input->GetColorOverlayImage(), to_string(result.at(0)._confidence[j]).substr(0, 4), Point(j * 120 + 10, 45), FONT_HERSHEY_PLAIN, 3, Scalar(255, 255, 255), 2);
       }
     }
     else

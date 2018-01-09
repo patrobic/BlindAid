@@ -272,8 +272,8 @@ namespace Vision
           _colorRanges[2][1] = cv::Scalar(40, 255, 255);
 
           _blobParams.filterByArea = true;
-          _blobParams.minArea = 4 * 4;
-          _blobParams.maxArea = 60 * 60;
+          _blobParams.minArea = 10 * 10;
+          _blobParams.maxArea = 150 * 150;
           _blobParams.filterByCircularity = true;
           _blobParams.minCircularity = 0.1f;
           _blobParams.filterByConvexity = true;
@@ -313,7 +313,7 @@ namespace Vision
         void Defaults()
         {
           _colorImageSize = cv::Size(224, 224);
-          _confidenceThreshold = 0.8f;
+          _confidenceThreshold = 0.3f;
         }
 
         bool Valid()
@@ -348,7 +348,7 @@ namespace Vision
         _blobDetectorParams.Defaults();
         _deepLearningParams.Defaults();
 
-        _mode = DeepLearning;
+        _mode = BlobDetector;
         _upperRegionRatio = 0.5f;
         _centerRegionRatio = 0.8f;
         _consecutiveCount = 4;

@@ -14,7 +14,7 @@ namespace Vision
 
       Result() { _radius = 0; }
       Result(cv::Point center, float radius, Color color) { _center = center; _radius = radius; _color = color; _count = 1; }
-      Result(Color color, float confidence[3]) { for (int i = 0; i < 3; ++i) _confidence[i] = confidence[i]; }
+      Result(Color color, float confidence[4]) { for (int i = 0; i < 4; ++i) _confidence[i] = confidence[i]; }
 
       void Clear() { _center = cv::Point(0, 0); _radius = 0; _color = Red; }
 
@@ -26,7 +26,7 @@ namespace Vision
       float _radius;
       Color _color;
       int _count = 0;
-      float _confidence[3];
+      float _confidence[4];
     };
 
     class Data : public IData
@@ -45,12 +45,12 @@ namespace Vision
       // for blob detector version
       void Set(std::vector<Result> &results) { MatchPoints(results); }
       // for deep learning version
-      void Set(Result::Color color, float confidence[3])
+      void Set(Result::Color color, float confidence[4])
       {
         if (_results.at(0)._color != color)
           _results.at(0)._count = 0;
 
-        for (int i = 0; i < 3; ++i)
+        for (int i = 0; i < 4; ++i)
           _results.at(0)._confidence[i] = confidence[i];
 
         _results.at(0)._color = color;
