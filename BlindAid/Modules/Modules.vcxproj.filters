@@ -114,6 +114,21 @@
     <ClInclude Include="DepthObstacleParameters.h">
       <Filter>Parameters</Filter>
     </ClInclude>
+    <ClInclude Include="CaptureData.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="VisionData.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlData.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreParameters.h">
+      <Filter>Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreData.h">
+      <Filter>Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Serial.cpp">

@@ -28,7 +28,7 @@ namespace Display
 
   void Display::DrawDepthObstacles()
   {
-    _input->GetCurrentDepthImage()->convertTo(*_input->GetDepthOverlayImage(), CV_8UC1, 1.f / 8.f, -0.5 / 8.f); // , 255.0 / (5 - 0.5));
+    _output->GetDepthImage()->convertTo(*_input->GetDepthOverlayImage(), CV_8UC1, 1.f / 8.f, -0.5 / 8.f); // , 255.0 / (5 - 0.5));
     if (_input->GetDepthOverlayImage()->channels() == 1)
       cvtColor(*_input->GetDepthOverlayImage(), *_input->GetDepthOverlayImage(), CV_GRAY2BGR);
 
@@ -37,24 +37,24 @@ namespace Display
     {
       for (int i = 0; i < HORZ_REGIONS; ++i)
     {
-        rect = _input->GetDepthObstacleResults()->GetRegionBounds(j, i);
+        rect = _input->GetDepthObstacleResults()->GetRegion(j, i);
         rectangle(*_input->GetDepthOverlayImage(), rect, Scalar(0, 0, 255), 2);
-        putText(*_input->GetDepthOverlayImage(), to_string(_input->GetDepthObstacleResults()->GetRegionIntensity(j, i)), Point(rect.x + (int)(0.5 * rect.width) - 25, rect.y + (int)(0.5 * rect.height)), FONT_HERSHEY_PLAIN, 1.25, Scalar(0, 0, 255), 2);
+        putText(*_input->GetDepthOverlayImage(), to_string(_input->GetDepthObstacleResults()->GetDepth(j, i)), Point(rect.x + (int)(0.5 * rect.width) - 25, rect.y + (int)(0.5 * rect.height)), FONT_HERSHEY_PLAIN, 1.25, Scalar(0, 0, 255), 2);
       }
 
-      (*_input->GetDepthOverlayImage())(cv::Rect(j * 60, 0, 60, 30)).setTo((int)_input->GetDepthObstacleResults()->GetVibrationIntensity()[j]->GetFiltered());
-      putText(*_input->GetDepthOverlayImage(), to_string((int)_input->GetDepthObstacleResults()->GetVibrationIntensity()[j]->GetFiltered()), Point(j * 60 + 7, 22), FONT_HERSHEY_PLAIN, 1.5, (int)_input->GetDepthObstacleResults()->GetVibrationIntensity()[j]->GetFiltered() > 127 ? Scalar(0, 0, 0) : Scalar(255, 255, 255), 2);
+      (*_input->GetDepthOverlayImage())(cv::Rect(j * 60, 0, 60, 30)).setTo((int)_input->GetDepthObstacleResults()->GetVibration(j)->Get());
+      putText(*_input->GetDepthOverlayImage(), to_string((int)_input->GetDepthObstacleResults()->GetVibration(j)->Get()), Point(j * 60 + 7, 22), FONT_HERSHEY_PLAIN, 1.5, (int)_input->GetDepthObstacleResults()->GetVibration(j)->Get() > 127 ? Scalar(0, 0, 0) : Scalar(255, 255, 255), 2);
     }
   }
 
   void Display::DrawTrafficLights()
   {
-    _input->GetCurrentColorImage()->copyTo(*_input->GetColorOverlayImage());
+    _output->GetColorImage()->copyTo(*_input->GetColorOverlayImage());
 
     Scalar color[4] = { Scalar(0, 0, 255), Scalar(0, 255, 0), Scalar(0, 255, 255), Scalar(255, 0, 0) };
     string name[4] = { "Red", "Green", "Yellow", "None" };
 
-    vector<Vision::TrafficLight::Result> result = _input->GetTrafficLightResults()->GetFiltered();
+    vector<Vision::TrafficLight::Result> result = _input->GetTrafficLightResults()->Get();
 
     if (result.size() == 1 && result.at(0).GetCenter() == Point(0, 0))
     {
@@ -93,7 +93,7 @@ namespace Display
       waitKey(1);
     }
 
-    if (_input->GetCurrentDepthImage()->rows > 0 && _input->GetCurrentDepthImage()->cols > 0)
+    if (_output->GetColorImage()->rows > 0 && _output->GetDepthImage()->cols > 0)
     {
       namedWindow("Depth Image", WINDOW_NORMAL);
       moveWindow("Depth Image", _params->GetDepthWindowPosition().x, _params->GetDepthWindowPosition().y);

@@ -8,8 +8,6 @@ namespace Vision {
     namespace DeepLearning {
       DeepLearning::DeepLearning(IParameters *params, IData *input, IData *output) : Base(params, input, output)
       {
-        _output->SetParams(_params->GetConsecutiveCount(), _params->GetMaximumDistance(), _params->GetMaximumRadiusDiff());
-
         // Initialize python environment.
         Py_Initialize();
       }
@@ -24,7 +22,7 @@ namespace Vision {
       void DeepLearning::PreprocessImage()
       {
         // GetFiltered the color image, crop to only the top half (since traffic lights are only expected in upper fraction of frame), and resize to size required by deep learning.
-        resize((*_input->GetRgbImage())(Rect((int)(_input->GetRgbImage()->cols * (1 - _params->GetCenterRegionRatio()) / 2), 0, (int)(_input->GetRgbImage()->cols *  _params->GetCenterRegionRatio()), (int)(_input->GetRgbImage()->rows*_params->GetUpperRegionRatio()))), _preprocessedImage, _params->GetDeepLearningParams()->GetColorImageSize());
+        resize((*_input->GetColorImage())(Rect((int)(_input->GetColorImage()->cols * (1 - _params->GetCenterRegionRatio()) / 2), 0, (int)(_input->GetColorImage()->cols *  _params->GetCenterRegionRatio()), (int)(_input->GetColorImage()->rows*_params->GetUpperRegionRatio()))), _preprocessedImage, _params->GetDeepLearningParams()->GetColorImageSize());
 
         // convert/assign opencv mat to python pyobject (numpy arrray).
         // TODO: _pyColorImage = _prprocessedImage.ptr(0);

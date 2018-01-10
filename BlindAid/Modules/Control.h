@@ -3,23 +3,10 @@
 #include "IModule.h"
 #include "Vision.h"
 #include "ControlParameters.h"
+#include "ControlData.h"
 
 namespace Control
 {
-  class Data : public IData
-  {
-  public:
-    bool Valid()
-    {
-      return true;
-    }
-
-    void Clear() { }
-
-  private:
-
-  };
-
   class Base : public IModule<Parameters, Vision::Data, Data>
   {
   public:

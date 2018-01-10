@@ -5,10 +5,11 @@
 using namespace std;
 using namespace cv;
 
-MainMenu::MainMenu():
+MainMenu::MainMenu() :
   _realtime(_core, &_params, &_results),
   _simulate(_core, &_params, &_results),
-  _configuration(&_params)
+  _configuration(&_params),
+  _results(&_params)
 {
   
 }

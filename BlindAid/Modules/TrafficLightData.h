@@ -11,11 +11,9 @@ namespace Vision
     public:
       enum Color { Red, Green, Yellow, None };
 
-      Result() { _radius = 0; }
       Result(cv::Point center, float radius, Color color) { _center = center; _radius = radius; _count = 1; }
       Result(float confidence[4]) { for (int i = 0; i < 4; ++i) _confidence[i] = confidence[i]; }
-
-      void Clear() { _center = cv::Point(0, 0); _radius = 0; }
+      void Clear() { _count = 0; }
 
       cv::Point GetCenter() { return _center; }
       float GetRadius() { return _radius; }
@@ -26,7 +24,7 @@ namespace Vision
       void SetCenter(cv::Point center) { _center = center; }
       void SetRadius(float radius) { _radius = radius; }
       void SetCount(int count) { _count = count; }
-      void Update(Result result) { for (int i = 0; i > 4; ++i) _confidence[i] = result.GetConfidence((Result::Color)i); _count = result.GetCount() + 1; }
+      void Set(Result result) { for (int i = 0; i > 4; ++i) _confidence[i] = result.GetConfidence((Result::Color)i); _count = result.GetCount() + 1; }
       void SetConfidence(float confidence, int index) { _confidence[index] = confidence; }
       void SetColor(Color color) { for (int i = 0; i > 4; ++i) _confidence[i] = 0.f; _confidence[color] = 1.f; }
 
@@ -44,25 +42,21 @@ namespace Vision
     class Data : public IData
     {
     public:
-      Data() { _results.push_back(Result(cv::Point(0, 0), 10, Result::Color::None)); }
+      Data(Parameters *params) { _consecutiveCount = params->GetConsecutiveCount(); _maximumDistance = params->GetMaximumDistance(); _maximumRadiusDiff = params->GetMaximumRadiusDiff(); }
       void Clear() { _results.clear(); }
-
-      bool Valid()
-      {
-        return true;
-      }
-
-      std::vector<Result> *GetAll() { return &_results; }
-      std::vector<Result> GetFiltered() { return FilterByConsecutiveCount(); }
+      bool Valid() { return true; }
       
+      std::vector<Result> *GetAll() { return &_results; }
+      std::vector<Result> Get() { return FilterByConsecutiveCount(); }
       Result::Color GetColor()
       {
-        std::vector<Result> temp = GetFiltered();
+        _temp.clear();
+        _temp = FilterByConsecutiveCount();
 
         // if more than 1 light exists, it will prioritize return value in enum order (Red, Green, Yellow, None).
         for (int j = 0; j < 4; ++j)
-          for (int i = 0; i < temp.size(); ++i)
-            if (temp[i].GetColor() == j)
+          for (int i = 0; i < _temp.size(); ++i)
+            if (_temp[i].GetColor() == j)
               return (Result::Color)j;
 
         return Result::Color::None;
@@ -71,16 +65,15 @@ namespace Vision
       void Set(Result result)
       {
         if (result.GetCenter() == cv::Point(0, 0))
-          _results[0].Update(result);
+          _results[0].Set(result);
         else
-          _temp.push_back(result);
+          _unfiltered.push_back(result);
       }
 
-      void SetParams(int consecutiveCount, int maximumDistance, int maximumRadiusDiff) { _consecutiveCount = consecutiveCount; _maximumDistance = maximumDistance; _maximumRadiusDiff = maximumRadiusDiff; }
 
       void MatchPoints()
       {
-        std::vector<Result> matched; // stores new detections that match previous ones in position and size.
+        _temp.clear(); // stores new detections that match previous ones in position and size.
 
         double distance;
         double radiusDifference;
@@ -98,18 +91,18 @@ namespace Vision
           found = false;
 
           // find nearest pair of current and previous points.
-          for (int i = 0; i < _temp.size(); ++i)
+          for (int i = 0; i < _unfiltered.size(); ++i)
             for (int j = 0; j < _results.size(); ++j)
             {
-              distance = _temp.at(i).CartesianDistance(_results.at(j));
-              radiusDifference = _temp.at(i).RadiusDifference(_results.at(j));
-              sameColor = _temp.at(i).SameColor(_results.at(j));
+              distance = _unfiltered.at(i).CartesianDistance(_results.at(j));
+              radiusDifference = _unfiltered.at(i).RadiusDifference(_results.at(j));
+              sameColor = _unfiltered.at(i).SameColor(_results.at(j));
 
               // consider two points a pair candidate if distanace and radius thresholds are met, only if it is the closest pair found yet.
               if (distance < minimumDistance && radiusDifference < _maximumRadiusDiff && sameColor)
               {
                 minimumDistance = distance;
-                minimumRadiusDifference = _temp.at(i).RadiusDifference(_results.at(j));
+                minimumRadiusDifference = _unfiltered.at(i).RadiusDifference(_results.at(j));
                 nearestCurrent = i;
                 nearestPrevious = j;
                 found = true;
@@ -119,36 +112,37 @@ namespace Vision
           // circle qualifies as existing if its distance to nearest circle is close and radius is similar.
           if (minimumDistance < _maximumDistance && minimumRadiusDifference < _maximumRadiusDiff)
           {
-            _temp.at(nearestCurrent).SetCount(_results.at(nearestPrevious).GetCount() + 1); // retreive and increment count from matched point
-            matched.push_back(_temp.at(nearestCurrent)); // insert matched point into temporary vector
-            _temp.erase(_temp.begin() + nearestCurrent); // remove matched point from incoming vector
+            _unfiltered.at(nearestCurrent).SetCount(_results.at(nearestPrevious).GetCount() + 1); // retreive and increment count from matched point
+            _temp.push_back(_unfiltered.at(nearestCurrent)); // insert matched point into temporary vector
+            _unfiltered.erase(_unfiltered.begin() + nearestCurrent); // remove matched point from incoming vector
             _results.erase(_results.begin() + nearestPrevious); // remove matched point from previous vector also
           }
           else if (found == true)
-            _temp.erase(_temp.begin() + nearestCurrent);
+            _unfiltered.erase(_unfiltered.begin() + nearestCurrent);
         } while (minimumDistance < _maximumDistance);
 
-        _results = matched; // store points that were matched with detections from previous frame.
-        _results.insert(_results.end(), _temp.begin(), _temp.end()); // also store points that were newly detected this frame.
+        _results = _temp; // store points that were matched with detections from previous frame.
+        _results.insert(_results.end(), _unfiltered.begin(), _unfiltered.end()); // also store points that were newly detected this frame.
 
-        _temp.clear();
+        _unfiltered.clear();
       }
 
+    private:
       std::vector<Result> FilterByConsecutiveCount()
       {
-        std::vector<Result> filtered;
+        _temp.clear();
 
         for (int i = 0; i < _results.size(); ++i)
         {
           if (_results.at(i).GetCount() > _consecutiveCount)
-            filtered.push_back(_results.at(i));
+            _temp.push_back(_results.at(i));
         }
 
-        return filtered;
+        return _temp;
       }
 
-    private:
       std::vector<Result> _results;
+      std::vector<Result> _unfiltered;
       std::vector<Result> _temp;
 
       int _consecutiveCount;

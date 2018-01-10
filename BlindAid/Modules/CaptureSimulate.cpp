@@ -37,16 +37,16 @@ namespace Capture
       if (!_cap.isOpened())
         _cap.open(_params->GetSimulateParams()->GetColorSimDataPath());
 
-      _cap.read(*_output->GetRgbImage());
+      _cap.read(*_output->GetColorImage());
       *_output->GetDepthImage() = imread(_params->GetSimulateParams()->GetDepthSimDataPath());
     }
 
     void Simulate::LoadPhoto()
     {
-      *_output->GetRgbImage() = imread(_params->GetSimulateParams()->GetColorSimDataPath());
+      *_output->GetColorImage() = imread(_params->GetSimulateParams()->GetColorSimDataPath());
       *_output->GetDepthImage() = imread(_params->GetSimulateParams()->GetDepthSimDataPath(), CV_16UC1);
 
-      if (_output->GetRgbImage()->cols == 0 || _output->GetRgbImage()->rows == 0) throw("could not open image.");
+      if (_output->GetColorImage()->cols == 0 || _output->GetColorImage()->rows == 0) throw("could not open image.");
     }
 
     void Simulate::LoadSequence()
@@ -54,8 +54,8 @@ namespace Capture
       string path = _params->GetSimulateParams()->GetColorSimDataPath() + "\\color_" + to_string(_index) + ".jpg";
       if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
       {
-        *_output->GetRgbImage() = imread(_params->GetSimulateParams()->GetColorSimDataPath() + "\\color_" + to_string(_index) + ".jpg");
-        if (_output->GetRgbImage()->cols == 0 || _output->GetRgbImage()->rows == 0)
+        *_output->GetColorImage() = imread(_params->GetSimulateParams()->GetColorSimDataPath() + "\\color_" + to_string(_index) + ".jpg");
+        if (_output->GetColorImage()->cols == 0 || _output->GetColorImage()->rows == 0)
           _output->SetStatus(false);
       }
 

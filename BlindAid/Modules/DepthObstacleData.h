@@ -9,71 +9,38 @@ namespace Vision
     class Result
     {
     public:
-      Result(int size)
-      {
-        _vibration.resize(size);
-      }
-
-      void Update(float intensity)
-      {
-        _vibration[index++%_vibration.size()] = intensity;
-      }
-
-      float GetFiltered()
-      {
-        float intensity = (float)INT_MAX;
-
-        for (int i = 0; i < _vibration.size(); ++i)
-          intensity = std::min(intensity, _vibration[i]);
-
-        return intensity;
-      }
+      Result(int size) { _vibration.resize(size); }
+      void Set(float intensity) { _vibration[_index++%_vibration.size()] = intensity; }
+      float Get() { float intensity = (float)INT_MAX; for (int i = 0; i < _vibration.size(); ++i) intensity = std::min(intensity, _vibration[i]); return intensity; }
 
     private:
-      int index = 0;
-
+      int _index = 0;
       std::vector<float> _vibration;
     };
 
     class Data : public IData
     {
     public:
-      void Clear() { for (int i = 0; i < VERT_REGIONS; ++i) for (int j = 0; j < HORZ_REGIONS; ++j) _regions[i][j].Clear(); _handPosition = cv::Point(0, 0); }
+      Data(Parameters *params) { for (int i = 0; i < 5; ++i) _vibration.push_back(Result(params->GetConsecutiveCount())); }
+      void Clear() { }
+      bool Valid() { return true; }
 
-      bool Valid()
-      {
-        return true;
-      }
-
-      cv::Rect GetRegionBounds(int col, int row) { return _regions[col][row]._region; }
-      void SetRegionBounds(int col, int row, cv::Rect region) { _regions[col][row]._region = region; }
-
-      int GetRegionIntensity(int col, int row) { return _regions[col][row]._intensity; }
-      void SetRegionIntensity(int col, int row, int intensity) { _regions[col][row]._intensity = intensity; }
-
+      cv::Rect GetRegion(int col, int row) { return _regions[col][row]; }
+      int GetDepth(int col, int row) { return _depth[col][row]; }
       cv::Point GetHandPosition() { return _handPosition; }
+   
+      float GetMaxVibration() { float max = 0.f; for (int i = 0; i < VERT_REGIONS; ++i) max = std::max(max, _vibration[i].Get()); return max; }
+      Result *GetVibration(int index) { return &_vibration.at(index); }
+
+      void SetRegion(int col, int row, cv::Rect region) { _regions[col][row] = region; }
+      void SetDepth(int col, int row, int depth) { _depth[col][row] = depth; }
       void SetHandPosition(cv::Point handPosition) { _handPosition = handPosition; }
 
-      int GetMinColIntensity(int col) {
-        int min = 255;
-        for (int i = 0; i < HORZ_REGIONS; ++i)
-          min = std::min(min, _regions[col][i]._intensity);
-        return min;
-      }
-
-      int GetMinRowIntensity(int row) {
-        int min = 255;
-        for (int i = 0; i < HORZ_REGIONS; ++i)
-          min = std::min(min, _regions[i][row]._intensity);
-        return min;
-      }
-
-      Result **GetVibrationIntensity() { return _vibrationIntensity; }
-
     private:
+      cv::Rect _regions[VERT_REGIONS][HORZ_REGIONS];
+      int _depth[VERT_REGIONS][HORZ_REGIONS];
       cv::Point _handPosition;
-      std::array<std::array<Region, HORZ_REGIONS>, VERT_REGIONS> _regions;
-      Result *_vibrationIntensity[VERT_REGIONS + 2];
+      std::vector<Result> _vibration;
     };
   }
 }

@@ -67,13 +67,13 @@ namespace Control
       ss << _params->GetRealtimeParams()->GetMessageStart();
 
       for (int i = 0; i < 5; ++i)
-        ss << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetVibrationIntensity()[i]->GetFiltered();
+        ss << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetVibration(i)->Get();
 
       for (int i = 0; i < _params->GetOptionSignalsCount(); ++i)
         if(_params->GetOptionSignals(i) == Control::Parameters::OptionSignals::TrafficLight)
           ss << setw(3) << setfill('0') << (int)_input->GetTrafficLightResults()->GetColor();
         else if(_params->GetOptionSignals(i) == Control::Parameters::OptionSignals::NearObstacle)
-          ss << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetMinRowIntensity(1);
+          ss << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetMaxVibration();
         else
           ss << setw(3) << setfill('0') << (int)0;
 

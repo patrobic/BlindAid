@@ -24,7 +24,7 @@ namespace Capture
       _pp->Init();
       Intel::RealSense::Capture::Device *device = _pp->QueryCaptureManager()->QueryDevice();
 
-      *_output->GetRgbImage() = Mat(_params->GetRealtimeParams()->GetColorResolution(), CV_8UC3, Mat::AUTO_STEP);
+      *_output->GetColorImage() = Mat(_params->GetRealtimeParams()->GetColorResolution(), CV_8UC3, Mat::AUTO_STEP);
       *_output->GetDepthImage() = Mat(_params->GetRealtimeParams()->GetDepthResolution(), CV_16U, Mat::AUTO_STEP);
     }
 
@@ -50,7 +50,7 @@ namespace Capture
     void Realtime::GetColorFrame()
     {
       _sample->color->AcquireAccess(Intel::RealSense::ImageAccess::ACCESS_READ, Intel::RealSense::PixelFormat::PIXEL_FORMAT_BGR, &_color);
-      _output->GetRgbImage()->data = _color.planes[0];
+      _output->GetColorImage()->data = _color.planes[0];
 
       CreateHsvImage();
       _sample->color->ReleaseAccess(&_color);

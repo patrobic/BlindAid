@@ -12,7 +12,7 @@ namespace Vision
       BlobDetector::BlobDetector(IParameters *params, IData *input, IData *output) : Base(params, input, output),
         _h(_hsvChannels[0]), _s(_hsvChannels[1]), _v(_hsvChannels[2]), _b(_bgrChannels[0]), _g(_bgrChannels[1]), _r(_bgrChannels[2])
       {
-        _output->SetParams(_params->GetConsecutiveCount(), _params->GetMaximumDistance(), _params->GetMaximumRadiusDiff());
+
       }
 
       void BlobDetector::Process()
@@ -25,7 +25,7 @@ namespace Vision
 
       void BlobDetector::MaskColors()
       {
-        split(*_input->GetRgbImage(), _bgrChannels);
+        split(*_input->GetColorImage(), _bgrChannels);
         split(*_input->GetHsvImage(), _hsvChannels);
 
         Mat redRegionUpper;
@@ -56,7 +56,7 @@ namespace Vision
 
           for (int j = 0; j < keypoints.size(); j++)
           {
-            keypoints[j].pt.x += (int)(_input->GetRgbImage()->cols * (1 - _params->GetCenterRegionRatio()) / 2);
+            keypoints[j].pt.x += (int)(_input->GetColorImage()->cols * (1 - _params->GetCenterRegionRatio()) / 2);
             _output->Set(Result(keypoints[j].pt, keypoints[j].size, (Result::Color)i));
           }
         }
@@ -74,8 +74,8 @@ namespace Vision
           {
             rect.x = std::max(0, (int)(_output->GetAll()->at(i).GetCenter().x - _output->GetAll()->size() * sizeFactor));
             rect.y = std::max(0, (int)(_output->GetAll()->at(i).GetCenter().y - _output->GetAll()->size() * sizeFactor));
-            rect.width = std::min(_input->GetRgbImage()->cols - rect.x - 1, (int)(_output->GetAll()->size() * 2 * sizeFactor));
-            rect.height = std::min(_input->GetRgbImage()->rows - rect.y - 1, (int)(_output->GetAll()->size() * 2 * sizeFactor));
+            rect.width = std::min(_input->GetColorImage()->cols - rect.x - 1, (int)(_output->GetAll()->size() * 2 * sizeFactor));
+            rect.height = std::min(_input->GetColorImage()->rows - rect.y - 1, (int)(_output->GetAll()->size() * 2 * sizeFactor));
 
             box = _v(rect);
 

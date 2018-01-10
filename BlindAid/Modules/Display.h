@@ -62,7 +62,7 @@ namespace Display
 
   };
 
-  class Display : public IModule<Parameters, Vision::Data, Data>
+  class Display : public IModule<Parameters, Vision::Data, Capture::Data>
   {
   public:
     Display(IParameters *params, IData *input, IData *output);

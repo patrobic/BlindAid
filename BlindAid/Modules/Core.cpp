@@ -17,8 +17,8 @@ namespace Core
     _capture = Capture::Base::MakeCapture(_params->GetCaptureParams(), NULL, _output->GetCaptureResults());
     _vision = new Vision::Vision(_params->GetVisionParams(), _output->GetCaptureResults(), _output->GetVisionResults());
     _control = Control::Base::MakeControl(_params->GetControlParams(), _output->GetVisionResults(), _output->GetCaptureResults());
-    _display = new Display::Display(_params->GetDisplayParams(), _output->GetVisionResults(), NULL);
-    _record = new Record::Record(_params->GetRecordParams(), _output->GetVisionResults(), NULL);
+    _display = new Display::Display(_params->GetDisplayParams(), _output->GetVisionResults(), _output->GetCaptureResults());
+    _record = new Record::Record(_params->GetRecordParams(), _output->GetVisionResults(), _output->GetCaptureResults());
   }
 
   void Core::Process()

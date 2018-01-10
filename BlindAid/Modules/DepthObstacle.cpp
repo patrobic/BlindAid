@@ -48,7 +48,7 @@ namespace Vision
             if (j == _params->GetHorizontalRegions() - 1) br.y = (int)(_input->GetDepthImage()->rows * (1 + _params->GetVerticalCoverage()) / 2);
           }
 
-          _output->SetRegionBounds(i, j, Rect(tl, br) & Rect(0, 0, _input->GetDepthImage()->cols, _input->GetDepthImage()->rows));
+          _output->SetRegion(i, j, Rect(tl, br) & Rect(0, 0, _input->GetDepthImage()->cols, _input->GetDepthImage()->rows));
         }
     }
 
@@ -66,7 +66,7 @@ namespace Vision
       for (int i = 0; i < _params->GetHorizontalRegions(); ++i)
         for (int j = 0; j < _params->GetVerticalRegions(); ++j)
         {
-          calcHist(&(*_input->GetDepthImage())(_output->GetRegionBounds(j, i)), 1, channels, _maskImage(_output->GetRegionBounds(j, i)), hist, 1, size, ranges, true, false);
+          calcHist(&(*_input->GetDepthImage())(_output->GetRegion(j, i)), 1, channels, _maskImage(_output->GetRegion(j, i)), hist, 1, size, ranges, true, false);
           normalize(hist, hist, 0, hist.rows, NORM_MINMAX, -1, Mat());
 
           sum = (float)cv::sum(hist)[0];
@@ -78,7 +78,7 @@ namespace Vision
 
             if (total > sum * _params->GetPercentileToIgnore())
             {
-              _output->SetRegionIntensity(j, i, (int)(_params->GetMinimumDistance() + k * (_params->GetMaximumDistance() - _params->GetMinimumDistance()) / (float)_params->GetHistogramBins()));
+              _output->SetDepth(j, i, (int)(_params->GetMinimumDistance() + k * (_params->GetMaximumDistance() - _params->GetMinimumDistance()) / (float)_params->GetHistogramBins()));
               break;
             }
           }
@@ -94,9 +94,9 @@ namespace Vision
         for (int j = 0; j < HORZ_REGIONS; ++j)
         {
           slope = (_params->GetMaximumVibration() - _params->GetMinimumVibration()) / (_params->GetFarthestBound(i, j) - _params->GetNearestBound()); // calculate the slope between nearest and farthest points.
-          intensity = max(intensity, min(_params->GetMaximumVibration(), _params->GetMaximumVibration() - max(0.f, _output->GetRegionIntensity(i, j) - _params->GetNearestBound()) * slope)); // map the value to a vibration intensity ratio, and the maximum for that finger.
+          intensity = max(intensity, min(_params->GetMaximumVibration(), _params->GetMaximumVibration() - max(0.f, _output->GetDepth(i, j) - _params->GetNearestBound()) * slope)); // map the value to a vibration intensity ratio, and the maximum for that finger.
         }
-        _output->GetVibrationIntensity()[i]->Update(intensity);
+        _output->GetVibration(i)->Set(intensity);
       }
     }
   }

@@ -59,13 +59,13 @@ namespace Record
     {
       if (_params->GetType() == Parameters::Type::Color || _params->GetType() == Parameters::Type::Both)
       {
-        imwrite(_params->GetPath() + "\\" + _folderName + "\\color_" + to_string(_index) + ".png", *_input->GetCurrentColorImage());
+        imwrite(_params->GetPath() + "\\" + _folderName + "\\color_" + to_string(_index) + ".png", *_output->GetColorImage());
         imwrite(_params->GetPath() + "\\" + _folderName + "\\colorOverlay_" + to_string(_index) + ".png", *_input->GetColorOverlayImage());
       }
 
       if (_params->GetType() == Parameters::Type::Depth || _params->GetType() == Parameters::Type::Both)
       {
-        imwrite(_params->GetPath() + "\\" + _folderName + "\\depth_" + to_string(_index) + ".png", *_input->GetCurrentDepthImage());
+        imwrite(_params->GetPath() + "\\" + _folderName + "\\depth_" + to_string(_index) + ".png", *_output->GetDepthImage());
         imwrite(_params->GetPath() + "\\" + _folderName + "\\depthOverlay_" + to_string(_index) + ".png", *_input->GetDepthOverlayImage());
       }
       ++_index;

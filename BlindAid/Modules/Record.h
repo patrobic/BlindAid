@@ -2,6 +2,7 @@
 
 #include "IModule.h"
 #include "Vision.h"
+#include "Capture.h"
 
 namespace Record
 {
@@ -48,7 +49,7 @@ namespace Record
 
   };
 
-  class Record : public IModule<Parameters, Vision::Data, Data>
+  class Record : public IModule<Parameters, Vision::Data, Capture::Data>
   {
   public:
 

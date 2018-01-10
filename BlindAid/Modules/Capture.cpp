@@ -19,6 +19,6 @@ namespace Capture
 
   void Base::CreateHsvImage()
   {
-    cvtColor(*_output->GetRgbImage(), *_output->GetHsvImage(), CV_BGR2HSV);
+    cvtColor(*_output->GetColorImage(), *_output->GetHsvImage(), CV_BGR2HSV);
   }
 }

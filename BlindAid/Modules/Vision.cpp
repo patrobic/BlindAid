@@ -16,9 +16,6 @@ namespace Vision
     _depthObstacle = DepthObstacle::Base::MakeDepthObstacle(_params->GetDepthObstacleParams(), _input, _output->GetDepthObstacleResults());
     _trafficLight = TrafficLight::Base::MakeTrafficLight(_params->GetTrafficLightParams(), _input, _output->GetTrafficLightResults());
     _stopSign = new StopSign::Base(_params->GetStopSignParams(), _input, _output->GetStopSignResults());
-
-    _output->SetCurrentColorImage(_input->GetRgbImage());
-    _output->SetCurrentDepthImage(_input->GetDepthImage());
   }
 
   void Vision::Process()

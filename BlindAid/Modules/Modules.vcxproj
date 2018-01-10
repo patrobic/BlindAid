@@ -20,8 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Capture.h" />
+    <ClInclude Include="CaptureData.h" />
     <ClInclude Include="Control.h" />
+    <ClInclude Include="ControlData.h" />
     <ClInclude Include="ControlParameters.h" />
+    <ClInclude Include="CoreData.h" />
+    <ClInclude Include="CoreParameters.h" />
     <ClInclude Include="DepthObstacleData.h" />
     <ClInclude Include="DepthObstacleFixedRegions.h" />
     <ClInclude Include="DepthObstacleHandPosition.h" />
@@ -48,6 +52,7 @@
     <ClInclude Include="Serial.h" />
     <ClInclude Include="CaptureSimulate.h" />
     <ClInclude Include="ControlSimulate.h" />
+    <ClInclude Include="VisionData.h" />
     <ClInclude Include="VisionParameters.h" />
   </ItemGroup>
   <ItemGroup>

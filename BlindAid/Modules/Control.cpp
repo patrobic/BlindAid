@@ -17,6 +17,6 @@ namespace Control
 
   Base::Base(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
   {
-    for (int i = 0; i < VERT_REGIONS + 2; ++i) _input->GetDepthObstacleResults()->GetVibrationIntensity()[i] = new Vision::DepthObstacle::Result(_params->GetConsecutiveCount());
+
   }
 }

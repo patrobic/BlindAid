@@ -92,6 +92,8 @@ namespace Vision
 
         _mode = Mode::FixedRegions;
 
+        _consecutiveCount = 3;
+
         _horizontalRegions = HORZ_REGIONS;
         _verticalRegions = VERT_REGIONS;
 
@@ -142,6 +144,9 @@ namespace Vision
 
       Mode GetMode() { return _mode; }
       void SetMode(Mode mode) { _mode = mode; }
+
+      int GetConsecutiveCount() { return _consecutiveCount; }
+      void SetConsecutiveCount(int consecutiveCount) { _consecutiveCount = consecutiveCount; }
 
       float GetRegionHeight() { return _regionHeight; }
       void SetRegionHeight(float centerRegionHeight) { _regionHeight = centerRegionHeight; }
@@ -206,6 +211,9 @@ namespace Vision
 
       // mode used in defining region position and sizes.
       Mode _mode;
+
+      // number of frames for which the farthest object will be chosen.
+      int _consecutiveCount;
 
       // height of the central region (for hand hunting mode), other regions evenly distributed in remaining height.
       float _regionHeight;

@@ -34,7 +34,7 @@ namespace Control
 
       cout << "  [GLOVE] Thumb, Index, Middle, Ring, Pinky (";
       for (int i = 0; i < 5; ++i)
-        cout << setw(4) << (int)_input->GetDepthObstacleResults()->GetVibrationIntensity()[i]->GetFiltered();
+        cout << setw(4) << (int)_input->GetDepthObstacleResults()->GetVibration(i)->Get();
       cout << ").\n";
     }
     
@@ -42,7 +42,7 @@ namespace Control
     {
       string name[3] = { "Red", "Green", "Yellow" };
       stringstream lights;
-      vector<Vision::TrafficLight::Result> result = _input->GetTrafficLightResults()->GetFiltered();
+      vector<Vision::TrafficLight::Result> result = _input->GetTrafficLightResults()->Get();
 
       cout << "  [AUDIO] ";
       if (result.size() == 1 && result.at(0).GetCenter() == Point(0, 0))
