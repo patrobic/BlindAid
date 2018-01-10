@@ -7,7 +7,11 @@ namespace Capture
   class Data : public IData
   {
   public:
-    void Clear() {}
+    void Clear()
+    {
+    
+    }
+
     bool Valid()
     {
       return true;

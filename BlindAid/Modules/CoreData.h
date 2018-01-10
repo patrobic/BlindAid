@@ -19,7 +19,12 @@ namespace Core
       _controlResults = new Control::Data();
       _displayResults = new Display::Data();
     }
-    void Clear() {}
+
+    void Clear()
+    {
+    
+    }
+    
     bool Valid()
     {
       return true;

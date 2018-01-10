@@ -68,6 +68,5 @@ namespace Core
 
     // scale of console window.
     float _consoleWindowScale;
-
   };
 }

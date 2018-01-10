@@ -12,7 +12,10 @@ namespace Control
       return true;
     }
 
-    void Clear() { }
+    void Clear()
+    {
+    
+    }
 
   private:
 

@@ -11,26 +11,109 @@ namespace Vision
     public:
       enum Color { Red, Green, Yellow, None };
 
-      Result(cv::Point center, float radius, Color color) { _center = center; _radius = radius; _count = 1; }
-      Result(float confidence[4]) { for (int i = 0; i < 4; ++i) _confidence[i] = confidence[i]; }
-      void Clear() { _count = 0; }
+      Result(cv::Point center, float radius, Color color)
+      {
+        _center = center;
+        _radius = radius;
+        _count = 1;
+      }
 
-      cv::Point GetCenter() { return _center; }
-      float GetRadius() { return _radius; }
-      int GetCount() { return _count; }
-      float GetConfidence(Color color) { return _confidence[color]; }
-      Color GetColor() { float max = 0.f; int index = 0; for (int i = 0; i < 4; ++i) if (_confidence[i] > max) { max = _confidence[i]; index = i; } return (Color)index; }
+      Result(float confidence[4])
+      {
+        for (int i = 0; i < 4; ++i)
+          _confidence[i] = confidence[i];
+      }
 
-      void SetCenter(cv::Point center) { _center = center; }
-      void SetRadius(float radius) { _radius = radius; }
-      void SetCount(int count) { _count = count; }
-      void Set(Result result) { for (int i = 0; i > 4; ++i) _confidence[i] = result.GetConfidence((Result::Color)i); _count = result.GetCount() + 1; }
-      void SetConfidence(float confidence, int index) { _confidence[index] = confidence; }
-      void SetColor(Color color) { for (int i = 0; i > 4; ++i) _confidence[i] = 0.f; _confidence[color] = 1.f; }
+      void Clear()
+      {
+        _count = 0;
+      }
 
-      float CartesianDistance(Result &c2) { return (float)cv::norm(_center - c2._center); }
-      float RadiusDifference(Result &c2) { return abs(_radius - c2._radius); }
-      bool SameColor(Result &c2) { return GetColor() == c2.GetColor(); }
+      cv::Point GetCenter()
+      {
+        return _center;
+      }
+
+      float GetRadius()
+      {
+        return _radius;
+      }
+
+      int GetCount()
+      {
+        return _count;
+      }
+
+      float GetConfidence(Color color)
+      {
+        return _confidence[color];
+      }
+
+      Color GetColor()
+      {
+        float max = 0.f;
+        int index = 0;
+
+        for (int i = 0; i < 4; ++i)
+          if (_confidence[i] > max)
+          {
+            max = _confidence[i];
+            index = i;
+          }
+
+        return (Color)index;
+      }
+
+      void SetCenter(cv::Point center)
+      {
+        _center = center;
+      }
+
+      void SetRadius(float radius)
+      {
+        _radius = radius;
+      }
+
+      void SetCount(int count)
+      {
+        _count = count;
+      }
+
+      void Set(Result result)
+      {
+        for (int i = 0; i > 4; ++i)
+          _confidence[i] = result.GetConfidence((Result::Color)i);
+
+        _count = result.GetCount() + 1;
+      }
+
+      void SetConfidence(float confidence, int index)
+      {
+        _confidence[index] = confidence;
+      }
+
+      void SetColor(Color color)
+      {
+        for (int i = 0; i > 4; ++i)
+          _confidence[i] = 0.f;
+
+        _confidence[color] = 1.f;
+      }
+
+      float CartesianDistance(Result &c2)
+      {
+        return (float)cv::norm(_center - c2._center);
+      }
+
+      float RadiusDifference(Result &c2)
+      {
+        return abs(_radius - c2._radius);
+      }
+
+      bool SameColor(Result &c2)
+      {
+        return GetColor() == c2.GetColor();
+      }
 
     private:
       cv::Point _center;
@@ -42,12 +125,33 @@ namespace Vision
     class Data : public IData
     {
     public:
-      Data(Parameters *params) { _consecutiveCount = params->GetConsecutiveCount(); _maximumDistance = params->GetMaximumDistance(); _maximumRadiusDiff = params->GetMaximumRadiusDiff(); }
-      void Clear() { _results.clear(); }
-      bool Valid() { return true; }
-      
-      std::vector<Result> *GetAll() { return &_results; }
-      std::vector<Result> Get() { return FilterByConsecutiveCount(); }
+      Data(Parameters *params)
+      {
+        _consecutiveCount = params->GetConsecutiveCount();
+        _maximumDistance = params->GetMaximumDistance();
+        _maximumRadiusDiff = params->GetMaximumRadiusDiff();
+      }
+
+      void Clear()
+      {
+        _results.clear();
+      }
+
+      bool Valid()
+      {
+        return true;
+      }
+
+      std::vector<Result> *GetAll()
+      {
+        return &_results;
+      }
+
+      std::vector<Result> Get()
+      {
+        return FilterByConsecutiveCount();
+      }
+
       Result::Color GetColor()
       {
         _temp.clear();
@@ -69,7 +173,6 @@ namespace Vision
         else
           _unfiltered.push_back(result);
       }
-
 
       void MatchPoints()
       {
