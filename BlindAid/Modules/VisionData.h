@@ -13,6 +13,7 @@ namespace Vision
     {
       _dodResults = new DepthObstacle::Data(params->GetDepthObstacleParams());
       _tldResults = new TrafficLight::Data(params->GetTrafficLightParams());
+      _ssdResults = new StopSign::Data();
     }
 
     void Clear() {}

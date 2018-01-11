@@ -30,8 +30,6 @@ namespace Control
 
     void Simulate::PrintDepthObstacle()
     {
-      string signals[7] = { "Thumb", "Index", "Middle", "Ring", "Pinky", "Option1", "Option2" };
-
       cout << "  [GLOVE] Thumb, Index, Middle, Ring, Pinky (";
       for (int i = 0; i < 5; ++i)
         cout << setw(4) << (int)_input->GetDepthObstacleResults()->GetVibration(i)->Get();
@@ -40,7 +38,6 @@ namespace Control
     
     void Simulate::PrintTrafficLights()
     {
-      string name[3] = { "Red", "Green", "Yellow" };
       stringstream lights;
       vector<Vision::TrafficLight::Result> result = _input->GetTrafficLightResults()->Get();
 
@@ -51,7 +48,7 @@ namespace Control
       {
 
         for (int i = 0; i < result.size(); ++i)
-          lights << name[_input->GetTrafficLightResults()->GetAll()->at(i).GetColor()] << ", ";
+          lights << _input->GetTrafficLightResults()->_names[_input->GetTrafficLightResults()->GetAll()->at(i).GetColor()] << ", ";
         if (result.size() > 0) cout << " TrafficLights(" << lights.str() << "Total: " << result.size() << ")";
       }
     }

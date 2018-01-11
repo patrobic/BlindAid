@@ -22,9 +22,9 @@ namespace Vision
   {
     steady_clock::time_point start = steady_clock::now();
 
-    (*_stopSign)();
-    (*_trafficLight)();
     (*_depthObstacle)();
+    (*_trafficLight)();
+    (*_stopSign)();
 
     steady_clock::time_point end = steady_clock::now();
     duration<double> time_span = duration_cast<duration<double>>(end - start);

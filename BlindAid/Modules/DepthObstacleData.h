@@ -53,6 +53,8 @@ namespace Vision
         return true;
       }
 
+      std::string _names[7] = { "Thumb", "Index", "Middle", "Ring", "Pinky", "Option1", "Option2" };
+
       cv::Rect GetRegion(int col, int row)
       {
         return _regions[col][row];

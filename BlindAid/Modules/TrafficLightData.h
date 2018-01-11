@@ -142,6 +142,9 @@ namespace Vision
         return true;
       }
 
+      std::string _names[4] = { "Red", "Green", "Yellow", "None" };
+      cv::Scalar _colors[4] = { cv::Scalar(0, 0, 255), cv::Scalar(0, 255, 0), cv::Scalar(0, 255, 255), cv::Scalar(255, 0, 0) };
+
       std::vector<Result> *GetAll()
       {
         return &_results;

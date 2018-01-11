@@ -3,42 +3,47 @@
 #include "IDetect.h"
 #include "Capture.h"
 
-struct Circle
-{
-  enum Color { Red, Green, Yellow };
-
-  Circle() { _radius = 0; }
-  Circle(cv::Point center, float radius, Color color) { _center = center; _radius = radius; _color = color; }
-  void Clear() { _center = cv::Point(0, 0); _radius = 0; _color = Red; }
-
-  float CartesianDistance(Circle &c2)
-  {
-    return (float)cv::norm(_center - c2._center);
-  }
-
-  float RadiusDifference(Circle &c2)
-  {
-    return abs(_radius - c2._radius);
-  }
-
-  cv::Point _center;
-  float _radius;
-  Color _color;
-  int _count = 0;
-};
-
 namespace Vision
 {
   namespace StopSign
   {
+    struct Circle
+    {
+      enum Color { Red, Green, Yellow };
+      
+      Circle() { Clear(); }
+
+      Circle(cv::Point center, float radius, Color color)
+      {
+        _center = center;
+        _radius = radius;
+        _color = color;
+        _count = 0;
+      }
+
+      void Clear()
+      {
+        _center = cv::Point(0, 0);
+        _radius = 0;
+        _color = Red;
+        _count = 0;
+      }
+
+      float CartesianDistance(Circle &c2) { return (float)cv::norm(_center - c2._center); }
+      float RadiusDifference(Circle &c2) { return abs(_radius - c2._radius); }
+
+      cv::Point _center = cv::Point(0, 0);
+      float _radius = 0.f;
+      Color _color = Red;
+      int _count = 0;
+    };
+
     class Data : public IData
     {
     public:
+      Data() {}
       void Clear() { _circle.Clear(); }
-      bool Valid()
-      {
-        return true;
-      }
+      bool Valid() { return true; }
 
       Circle GetRegion() { return _circle; }
       void SetRegion(Circle circle) { _circle = circle; }
