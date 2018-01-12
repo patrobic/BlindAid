@@ -103,7 +103,7 @@ namespace Vision
     private:
       cv::Rect _regions[VERT_REGIONS][HORZ_REGIONS];
       int _depth[VERT_REGIONS][HORZ_REGIONS];
-      cv::Point _handPosition;
+      cv::Point _handPosition = cv::Point(0, 0);
       std::vector<Result> _vibration;
     };
   }

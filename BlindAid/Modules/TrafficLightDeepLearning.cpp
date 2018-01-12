@@ -35,26 +35,26 @@ namespace Vision {
         // 2. Retrieve results (if necessary) in _pyCOLORConfidence variable.
 
         // TEMP: store dummy values for testing.
-        _pyRedConfidence = PyFloat_FromDouble(0.6);
-        _pyGreenConfidence = PyFloat_FromDouble(0.15);
-        _pyYellowConfidence = PyFloat_FromDouble(0.05);
-        _pyNoneConfidence = PyFloat_FromDouble(0.2);
+        float confidence[4] = { 0.6f, 0.15f, 0.05f, 0.2f };
+        for (int i = 0; i < 4; ++i)
+          _pyConfidence[i] = PyFloat_FromDouble(confidence[i]);
       }
 
       void DeepLearning::UpdateResults()
       {
-        float confidence[4] = { (float)PyFloat_AsDouble(_pyRedConfidence), (float)PyFloat_AsDouble(_pyGreenConfidence), (float)PyFloat_AsDouble(_pyYellowConfidence), (float)PyFloat_AsDouble(_pyNoneConfidence) };
+        for (int i = 0; i < 4; ++i)
+          _confidence[i] = (float)PyFloat_AsDouble(_pyConfidence[i]);
 
         for (int i = 0; i < 4; ++i)
         {
           bool success = true;
           for (int j = 0; j < 4; ++j)
           {
-            if (confidence[i] < confidence[j])
+            if (_confidence[i] < _confidence[j])
               success = false;
           }
           if (success)
-            _output->Set(Result(confidence));
+            _output->Set(Result(_confidence));
         }
       }
     }

@@ -13,7 +13,7 @@ namespace Control
 
       void Defaults()
       {
-        _serialPort = 4;
+        _serialPort = 2;
         _baudRate = 9600;
         _messageStart = '<';
         _messageEnd = '>';
@@ -89,7 +89,12 @@ namespace Control
 
       _handPolarity = Left;
 
-      _localAudioEnabled = false;
+      _localAudioEnabled = true;
+      _audioDelay = 1000;
+      
+      bool colors[4] = { true, false, false, false };
+      for (int i = 0; i < 4; ++i) _audioColorsEnabled[i] = colors[i];
+
       _optionSignals[0] = TrafficLight;
       _optionSignals[1] = None;
       _optionSignalsCount = 0;
@@ -109,6 +114,12 @@ namespace Control
     bool GetLocalAudioEnabled() { return _localAudioEnabled; }
     void SetLocalAudioEnabled(bool localAudioEnabled) { _localAudioEnabled = localAudioEnabled; }
 
+    int GetAudioDelay() { return _audioDelay; }
+    void SetAudioDelay(int audioDelay) { _audioDelay = audioDelay; }
+
+    bool GetAudioColorsEnabled(int index) { return _audioColorsEnabled[index]; }
+    void SetAudioColorsEnabled(bool audioColorsEnabled, int index) { _audioColorsEnabled[index] = audioColorsEnabled; }
+
     OptionSignals GetOptionSignals(int i) { return _optionSignals[i]; }
     void SetOptionSignals(OptionSignals optionSignals, int i) { _optionSignals[i] = (OptionSignals)optionSignals; }
 
@@ -127,6 +138,12 @@ namespace Control
 
     // enable or disable local beeper on up board.
     bool _localAudioEnabled;
+
+    // delay between repititions of traffic light warning.
+    int _audioDelay;
+
+    // which colors to enable warnings for.
+    bool _audioColorsEnabled[4];
 
     // what do the last two (6th & 7th) sent signals represent.
     OptionSignals _optionSignals[2];

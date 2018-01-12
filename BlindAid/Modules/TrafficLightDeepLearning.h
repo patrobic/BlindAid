@@ -24,11 +24,8 @@ namespace Vision
         cv::Mat _preprocessedImage;
 
         PyObject *_pyColorImage;
-        PyObject *_pyRedConfidence;
-        PyObject *_pyGreenConfidence;
-        PyObject *_pyYellowConfidence;
-        PyObject *_pyNoneConfidence;
-
+        PyObject *_pyConfidence[4];
+        float _confidence[4];
       };
     }
   }

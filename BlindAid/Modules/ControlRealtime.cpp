@@ -14,6 +14,9 @@ namespace Control
   {
     Realtime::Realtime(IParameters *params, IData *input, IData *output) : Base(params, input, output)
     {
+      if(_params->GetLocalAudioEnabled())
+        _audioThread = new std::thread(&Realtime::TPlayAudio, this);
+
       ConnectToArduino();
     }
 
@@ -38,7 +41,6 @@ namespace Control
 
       GenerateString();
       SendControl();
-      PlayAudio();
 
       steady_clock::time_point end = steady_clock::now();
       duration<double> time_span = duration_cast<duration<double>>(end - start);
@@ -50,9 +52,9 @@ namespace Control
       int bytesSent = 0;
 
       _receivedLength = _serial.ReadData(_receivedMessage, 256);
-      
+
       if (_receivedLength > 0)
-        cout <<"[ BTRECV] " << _receivedMessage << " (" << _receivedLength << " bytes).\n";
+        cout << "[ BTRECV] " << _receivedMessage << " (" << _receivedLength << " bytes).\n";
 
       bytesSent = _serial.SendData(_controlMessage.c_str(), (int)_controlMessage.length());
 
@@ -70,9 +72,9 @@ namespace Control
         ss << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetVibration(i)->Get();
 
       for (int i = 0; i < _params->GetOptionSignalsCount(); ++i)
-        if(_params->GetOptionSignals(i) == Control::Parameters::OptionSignals::TrafficLight)
+        if (_params->GetOptionSignals(i) == Control::Parameters::OptionSignals::TrafficLight)
           ss << setw(3) << setfill('0') << (int)_input->GetTrafficLightResults()->GetColor();
-        else if(_params->GetOptionSignals(i) == Control::Parameters::OptionSignals::NearObstacle)
+        else if (_params->GetOptionSignals(i) == Control::Parameters::OptionSignals::NearObstacle)
           ss << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetMaxVibration();
         else
           ss << setw(3) << setfill('0') << (int)0;
@@ -82,18 +84,16 @@ namespace Control
       _controlMessage = ss.str();
     }
 
-    void Realtime::PlayAudio()
+    void Realtime::TPlayAudio()
     {
-      // TODO: put this in a thread to disable locking.
-      if (_params->GetLocalAudioEnabled())
-        if (_input->GetTrafficLightResults()->GetColor() == Vision::TrafficLight::Result::Color::Red)
-          PlaySound("TrafficLightRed.wav", NULL, SND_FILENAME);
-        else if (_input->GetTrafficLightResults()->GetColor() == Vision::TrafficLight::Result::Color::Green)
-          PlaySound("TrafficLightGreen.wav", NULL, SND_FILENAME);
-        else if (_input->GetTrafficLightResults()->GetColor() == Vision::TrafficLight::Result::Color::Yellow)
-          PlaySound("TrafficLighYellow.wav", NULL, SND_FILENAME);
-        else
-          PlaySound("TrafficLightNo.wav", NULL, SND_FILENAME);
+      while (true)
+      {
+        for (int i = 0; i < 4; ++i)
+          if (_input->GetTrafficLightResults()->GetColor() == (Vision::TrafficLight::Result::Color)i && _params->GetAudioColorsEnabled(i))
+            PlaySound(_audioFiles[i].c_str(), NULL, SND_FILENAME);
+
+        Sleep(_params->GetAudioDelay());
+      }
     }
   }
 }

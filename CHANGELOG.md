@@ -11,6 +11,69 @@
 
 ## [Unreleased]
 
+## [v0.0.6] - 2017-12-30
+- Received R200 camera and Up Board.
+- Last version of 2017.
+- Depth and TrafficLight working with R200.
+
+### Added
+- 
+
+### Details
+- 
+
+## [v0.0.5] - 2017-01-12
+- Tested physical circuit working 100%.
+- TrafficLight/DepthObstacle split into 2 modes.
+- Depth/TrafficLight result overlay on images.
+- Results/Data/Parameters split source files.
+
+### Added
+- Removed CurrentImage notion from Vision Module.
+- Split TrafficLight to BlobDetector/DeepLearning.
+- Moved Data/Results/Parameters to separate files.
+- Refactored DepthObstacle Data/Results classes.
+- Refactored TrafficLight Data/Results classes.
+- Display DepthObstacle Results on Depth overlay.
+- Display TrafficLight Results on Color overlay.
+- Split DepthObstacle to FixedRegions/HandPosition.
+- Refactored code from Control to DepthObstacle.
+- Compiled Arduino Code from CodeBlocks.
+
+### Fixed
+- TrafficLight UnitTest not compiling.
+- StopSign initialization crash bug.
+
+## [v0.0.4] - 2018-01-06
+- First overlay of results on display image.
+
+### Added
+- Overlay Vibration values on Depth image.
+
+### Fixed
+- TrafficLight blob position shifted bug.
+
+## [v0.0.3] - 2018-01-05
+- Python added ready to integrate DeepLearning.
+- Verbal traffic light feedback recorded.
+- Arduino Proteus circuit simulation redone.
+
+### Added
+- Saved sample Color and Depth images/overlays.
+- Saving of overlay images in Record Module.
+- Color and Depth overlay images to Capture Module.
+- Fixed TrafficLight UnitTest and dependencies.
+- TrafficLight audio voice feedback messages.
+- Improved single TrafficLight Results class.
+- Template for TrafficLight DeepLearning Module.
+- Python libraries for DeepLearning Integration.
+- Redesigned Proteus Arduino circuit simulation.
+
+### Fixed
+- DepthObstacle only detecting bottom third.
+- TrafficLight Result unhandled exception.
+- Creation of blank folders in Record Module.
+
 ## [v0.0.2] - 2017-12-30
 - Received R200 camera and Up Board.
 - Last version of 2017.

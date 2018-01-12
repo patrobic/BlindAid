@@ -15,7 +15,7 @@ namespace Vision
       {
         _center = center;
         _radius = radius;
-        _count = 1;
+        _confidence[color] = 1;
       }
 
       Result(float confidence[4])
@@ -81,7 +81,7 @@ namespace Vision
 
       void Set(Result result)
       {
-        for (int i = 0; i > 4; ++i)
+        for (int i = 0; i < 4; ++i)
           _confidence[i] = result.GetConfidence((Result::Color)i);
 
         _count = result.GetCount() + 1;
@@ -116,10 +116,10 @@ namespace Vision
       }
 
     private:
-      cv::Point _center;
-      float _radius;
-      int _count = 0;
-      float _confidence[4];
+      cv::Point _center = cv::Point(0, 0);
+      float _radius = 0.f;
+      int _count = 1;
+      float _confidence[4] = { 0.f, 0.f, 0.f, 0.f };
     };
 
     class Data : public IData
@@ -127,6 +127,9 @@ namespace Vision
     public:
       Data(Parameters *params)
       {
+        float confidence[4] = { 0.f, 0.f, 0.f, 1 };
+        _results.push_back(Result(confidence));
+
         _consecutiveCount = params->GetConsecutiveCount();
         _maximumDistance = params->GetMaximumDistance();
         _maximumRadiusDiff = params->GetMaximumRadiusDiff();
@@ -150,6 +153,11 @@ namespace Vision
         return &_results;
       }
 
+      Result GetSingle()
+      {
+        return _results.at(0);
+      }
+
       std::vector<Result> Get()
       {
         return FilterByConsecutiveCount();
@@ -157,16 +165,21 @@ namespace Vision
 
       Result::Color GetColor()
       {
-        _temp.clear();
-        _temp = FilterByConsecutiveCount();
+        if (_results.size() == 1 && _results.at(0).GetCenter() == cv::Point(0, 0))
+          return _results.at(0).GetColor();
+        else
+        {
+          _temp.clear();
+          _temp = FilterByConsecutiveCount();
 
-        // if more than 1 light exists, it will prioritize return value in enum order (Red, Green, Yellow, None).
-        for (int j = 0; j < 4; ++j)
-          for (int i = 0; i < _temp.size(); ++i)
-            if (_temp[i].GetColor() == j)
-              return (Result::Color)j;
+          // if more than 1 light exists, it will prioritize return value in enum order (Red, Green, Yellow, None).
+          for (int j = 0; j < 4; ++j)
+            for (int i = 0; i < _temp.size(); ++i)
+              if (_temp[i].GetColor() == j)
+                return (Result::Color)j;
 
-        return Result::Color::None;
+          return Result::Color::None;
+        }
       }
 
       void Set(Result result)
@@ -251,9 +264,9 @@ namespace Vision
       std::vector<Result> _unfiltered;
       std::vector<Result> _temp;
 
-      int _consecutiveCount;
-      int _maximumDistance;
-      int _maximumRadiusDiff;
+      int _consecutiveCount = 0;
+      int _maximumDistance = 0;
+      int _maximumRadiusDiff = 0;
     };
   }
 }
