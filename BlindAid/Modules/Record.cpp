@@ -55,7 +55,7 @@ namespace Record
 
   void Record::SaveToDisk()
   {
-    if (_kbhit())
+    if (_kbhit() || !_params->GetManualTrigger())
     {
       if (_params->GetType() == Parameters::Type::Color || _params->GetType() == Parameters::Type::Both)
       {
@@ -70,7 +70,8 @@ namespace Record
       }
       ++_index;
 
-      _getch();
+      while(_kbhit())
+        _getch();
     }
   }
 }

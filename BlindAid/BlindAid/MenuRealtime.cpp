@@ -107,7 +107,6 @@ void RealtimeMenu::TestRealtimeControl(string colorPath, string depthPath, int c
   _params->GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Photo);
   _params->GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + depthPath);
   _params->GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + colorPath);
-  _params->SetRepeat(10000);
 
   Process();
   destroyAllWindows();
@@ -118,7 +117,7 @@ void RealtimeMenu::TestRecord(string path)
   _params->GetRecordParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
   _params->GetRecordParams()->SetType(SwitchableParameters::Type::Both);
   _params->GetCaptureParams()->SetType(SwitchableParameters::Type::Both);
-  _params->GetRecordParams()->SetPath(PATH);
+  _params->GetRecordParams()->SetPath(PATH + path);
 
   TestRealtimeCapture();
 }
