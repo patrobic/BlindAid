@@ -5,30 +5,23 @@
 - Added: List of new key features/upgrades.
 - Details: Per-commit changes/additions/removals.
 - Bugs: Known or discovered issues with version.
+- Fixed: Issues that have been resolved.
 
 ## [Todo]
 - Configuration load/save to file using LibConfig.
 
 ## [Unreleased]
 
-## [v0.0.6] - 2017-12-30
-- Received R200 camera and Up Board.
-- Last version of 2017.
-- Depth and TrafficLight working with R200.
-
-### Added
-- 
-
-### Details
-- 
-
-## [v0.0.5] - 2017-01-12
+## [v0.1.0] - 2017-01-12
+- End of Phase 2.
 - Tested physical circuit working 100%.
 - TrafficLight/DepthObstacle split into 2 modes.
 - Depth/TrafficLight result overlay on images.
 - Results/Data/Parameters split source files.
+- Audio feedback thread for red TrafficLight.
 
 ### Added
+- Improved TrafficLight Audio feedback thread.
 - Removed CurrentImage notion from Vision Module.
 - Split TrafficLight to BlobDetector/DeepLearning.
 - Moved Data/Results/Parameters to separate files.
