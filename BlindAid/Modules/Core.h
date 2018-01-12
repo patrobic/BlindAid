@@ -29,6 +29,8 @@ namespace Core
 
       _consoleWindowPosition = cv::Point(0, 300);
       _consoleWindowScale = 1.f;
+
+      _exePath = "C:\\Projects\\BlindAid\\";
     }
 
     bool Valid()
@@ -47,12 +49,15 @@ namespace Core
 
     int GetRepeat() { return _repeat; }
     void SetRepeat(int repeat) { _repeat = repeat; }
- 
+
     cv::Point GetConsoleWindowPosition() { return _consoleWindowPosition; }
     void SetConsoleWindowPosition(cv::Point point) { _consoleWindowPosition = point; }
 
     float GetConsoleWindowScale() { return _consoleWindowScale; }
     void SetConsoleWindowScale(float scale) { _consoleWindowScale = scale; }
+
+    std::string GetExePath() { return _exePath; }
+    void SetExePath(std::string executablePath) { _exePath = executablePath; }
 
   private:
     Capture::Parameters _captureParams;
@@ -71,6 +76,9 @@ namespace Core
 
     // scale of console window.
     float _consoleWindowScale;
+
+    // path of executable (used to calculate relative paths).
+    std::string _exePath;
 
   };
 

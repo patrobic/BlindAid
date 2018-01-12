@@ -1,32 +1,47 @@
 #include "Menu.h"
 
 #include <windows.h>
+#include <Pathcch.h>
+#include <Shlwapi.h>    // For PathRemoveFileSpec()
 
+#pragma comment(lib, "Shlwapi.lib")
 using namespace std;
 using namespace cv;
 
-MainMenu::MainMenu():
+MainMenu::MainMenu() :
   _realtime(_core, &_params, &_results),
   _simulate(_core, &_params, &_results),
   _configuration(&_params)
 {
-  
+
 }
 
 void MainMenu::operator()()
 {
+  Setup();
+
+  Process();
+}
+
+void MainMenu::Setup()
+{
   HWND consoleWindow = GetConsoleWindow();
   SetWindowPos(consoleWindow, 0, _params.GetConsoleWindowPosition().x, _params.GetConsoleWindowPosition().y, (int)_params.GetConsoleWindowScale(), (int)_params.GetConsoleWindowScale(), TRUE);
 
-  if (_params.GetMode() == SwitchableParameters::Mode::Realtime)
-    Run();
-  else
-    ShowMenu();
+  TCHAR path[MAX_PATH];
+  int size = MAX_PATH;
+  DWORD length = GetModuleFileName(NULL, path, size);
+  PathRemoveFileSpec(path);
+
+  _params.SetExePath(path);
 }
 
-void MainMenu::Run()
+void MainMenu::Process()
 {
-  _realtime.Process();
+  if (_params.GetMode() == SwitchableParameters::Mode::Realtime)
+    _realtime.Process();
+  else
+    ShowMenu();
 }
 
 void MainMenu::ShowMenu()

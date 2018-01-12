@@ -147,7 +147,7 @@ namespace Control
     void SetOptionSignalsCount(int optionSignalsCount) { _optionSignalsCount = optionSignalsCount; }
 
     int GetConsecutiveCount() { return _consecutiveCount; }
-    void SetConsecutiveCount(int consecutiveCount) { _consecutiveCount = consecutiveCount; }
+    void SetSmoothingCount(int consecutiveCount) { _consecutiveCount = consecutiveCount; }
 
   private:
     // realtime control parameters.

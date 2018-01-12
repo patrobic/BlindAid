@@ -126,7 +126,7 @@ xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\libconfig\x64\Debug\bin\*.dl
 xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\realsense\x64\Debug\bin\*.dll" "$(OutDir)"
 xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\python\x64\Debug\bin\*.dll" "$(OutDir)"
 xcopy /d /y /r "$(ProjectDir)\..\..\Dependencies\misc\x64\Debug\bin\*.dll" "$(OutDir)"
-xcopy /d /y /s /r "$(ProjectDir)\..\..\Audio\*.wav" "$(OutDir)"</Command>
+xcopy /d /y /s /r "$(ProjectDir)\Resources\*" "$(OutDir)"</Command>
     </PostBuildEvent>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>

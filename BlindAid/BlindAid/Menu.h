@@ -14,8 +14,10 @@ public:
   MainMenu();
   void operator()();
 
+  void Setup();
+
 private:
-  void Run();
+  void Process();
   void ShowMenu();
   void LoadSettings();
 
@@ -27,4 +29,6 @@ private:
   Core::Core *_core;
   Core::Parameters _params;
   Core::Data _results;
+
+  std::string _exePath;
 };

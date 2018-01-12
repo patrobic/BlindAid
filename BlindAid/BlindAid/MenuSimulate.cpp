@@ -55,16 +55,16 @@ void SimulateMenu::ShowMenu()
       TestSequence();
       break;
     case 'd':
-      TestPhoto("TrafficLight\\tlight", "depthMap.png", 1);
+      TestPhoto("TrafficLight\\tlight", "DepthObstacle\\depth.png", 1);
       break;
     case 't':
-      TestPhoto("TrafficLight\\tlight", "depthMap.png", 15);
+      TestPhoto("TrafficLight\\tlight", "DepthObstacle\\depth.png", 15);
       break;
     case 's':
-      TestPhoto("StopSign\\stop", "depthMap.png", 8);
+      TestPhoto("StopSign\\stop", "DepthObstacle\\depth.png", 8);
       break;
     case 'v':
-      TestVideo("TrafficLight\\tlight", "depthMap.png", 4);
+      TestVideo("TrafficLight\\tlight", "DepthObstacle\\depth.png", 4);
       break;
     }
   } while (in != 'q' && in != 'Q');
@@ -96,7 +96,8 @@ void SimulateMenu::LoadFile(Capture::Simulate::Parameters::MediaType mode, strin
   _params->GetCaptureParams()->GetSimulateParams()->SetMediaType(mode);
   _params->GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + depthPath);
   _params->GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + name);
-  _params->GetVisionParams()->GetTrafficLightParams()->SetConsecutiveCount(0);
+  _params->GetVisionParams()->GetTrafficLightParams()->SetSmoothingCount(0);
+  _params->GetControlParams()->SetSmoothingCount(1);
 
   Process();
   waitKey();
@@ -119,7 +120,8 @@ void SimulateMenu::TestPhoto(string colorPath, string depthPath, int count)
 {
   _params->GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Photo);
   _params->GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + depthPath);
-  _params->GetVisionParams()->GetTrafficLightParams()->SetConsecutiveCount(0);
+  _params->GetVisionParams()->GetTrafficLightParams()->SetSmoothingCount(0);
+  _params->GetControlParams()->SetSmoothingCount(1);
 
   for (int i = 1; i <= count; ++i)
   {
@@ -134,7 +136,8 @@ void SimulateMenu::TestPhoto(string colorPath, string depthPath, int count)
 void SimulateMenu::TestSequence()
 {
   _params->GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Sequence);
-  _params->GetVisionParams()->GetTrafficLightParams()->SetConsecutiveCount(0);
+  _params->GetVisionParams()->GetTrafficLightParams()->SetSmoothingCount(0);
+  _params->GetControlParams()->SetSmoothingCount(1);
 
   string path;
   cout << "Enter folder name (date): ";

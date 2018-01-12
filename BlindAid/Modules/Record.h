@@ -12,8 +12,8 @@ namespace Record
 
     void Defaults()
     {
-      _path = "";
-      _manualTrigger = false;
+      _path = "C:\\BlindAidRecord\\";
+      _manualTrigger = true;
     }
 
     bool Valid()

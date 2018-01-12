@@ -85,16 +85,20 @@ namespace Control
 
     void Realtime::PlayAudio()
     {
-      // TODO: put this in a thread to disable locking.
       if (_input->GetTrafficLightResults()->Size() > 0 && _params->GetLocalAudioEnabled())
-        if (_input->GetTrafficLightResults()->GetColor() == Vision::TrafficLight::Result::Color::Red)
-          PlaySound("TrafficLightRed.wav", NULL, SND_FILENAME);
-        else if (_input->GetTrafficLightResults()->GetColor() == Vision::TrafficLight::Result::Color::Green)
-          PlaySound("TrafficLightGreen.wav", NULL, SND_FILENAME);
-        else if (_input->GetTrafficLightResults()->GetColor() == Vision::TrafficLight::Result::Color::Yellow)
-          PlaySound("TrafficLighYellow.wav", NULL, SND_FILENAME);
-        else
-          PlaySound("TrafficLightNo.wav", NULL, SND_FILENAME);
+        thread audioThread(&Realtime::TPlayAudio, this, _input->GetTrafficLightResults()->GetColor());
+    }
+
+    void Realtime::TPlayAudio(Vision::TrafficLight::Result::Color color)
+    {
+      if (color == Vision::TrafficLight::Result::Color::Red)
+        PlaySound("Resources\\TrafficLightRed.wav", NULL, SND_FILENAME);
+      else if (color == Vision::TrafficLight::Result::Color::Green)
+        PlaySound("Resources\\TrafficLightGreen.wav", NULL, SND_FILENAME);
+      else if (color == Vision::TrafficLight::Result::Color::Yellow)
+        PlaySound("Resources\\TrafficLighYellow.wav", NULL, SND_FILENAME);
+      else
+        PlaySound("Resources\\TrafficLightNo.wav", NULL, SND_FILENAME);
     }
   }
 }

@@ -284,7 +284,7 @@ namespace Vision
       void SetCenterRegionRatio(float lowerRegionRatio) { _centerRegionRatio = lowerRegionRatio; }
 
       int GetConsecutiveCount() { return _consecutiveCount; }
-      void SetConsecutiveCount(int consecutiveCount) { _consecutiveCount = consecutiveCount; }
+      void SetSmoothingCount(int consecutiveCount) { _consecutiveCount = consecutiveCount; }
 
       int GetMaximumDistance() { return _maximumDistance; }
       void SetMaximumDistance(int maximumDistance) { _maximumDistance = maximumDistance; }

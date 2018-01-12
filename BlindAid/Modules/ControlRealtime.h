@@ -19,6 +19,8 @@ namespace Control
       void GenerateString();
       void PlayAudio();
 
+      void TPlayAudio(Vision::TrafficLight::Result::Color color);
+
       CSerial _serial;
       std::string _controlMessage;
       const char *_receivedMessage[256];
