@@ -50,6 +50,6 @@ namespace Core
 
       if (GetAsyncKeyState(VK_ESCAPE))
         break;
-    } while (_params->GetCaptureParams()->GetSimulateParams()->GetMediaType() == Capture::Simulate::Parameters::MediaType::Video || _frame < _params->GetRepeat());
+    } while (_params->GetCaptureParams()->GetSimulateParams()->GetMediaType() == Capture::Simulate::Parameters::MediaType::Video || _frame < _params->GetRepeat() || _params->GetRepeat() == 0);
   }
 }

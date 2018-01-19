@@ -22,14 +22,16 @@ namespace Control
 
     void Realtime::ConnectToArduino()
     {
-      static bool connected = _serial.Open(_params->GetRealtimeParams()->GetSerialPort(), _params->GetRealtimeParams()->GetBaudRate());
+      string port = "\\\\.\\COM" + to_string(_params->GetRealtimeParams()->GetSerialPort());
+      _serial = new SerialPort(&port[0]);
 
-      while (!connected)
+      while (!_serial->isConnected())
       {
         cout << "connection failed!\n";
 
         Sleep(1000);
-        connected = _serial.Open(_params->GetRealtimeParams()->GetSerialPort(), _params->GetRealtimeParams()->GetBaudRate());
+        delete _serial;
+        _serial = new SerialPort(&port[0]);
       }
 
       cout << "connection success!\n";
@@ -51,12 +53,12 @@ namespace Control
     {
       int bytesSent = 0;
 
-      _receivedLength = _serial.ReadData(_receivedMessage, 256);
+      _receivedLength = _serial->readSerialPort(_receivedMessage, 256);
 
       if (_receivedLength > 0)
         cout << "[ BTRECV] " << _receivedMessage << " (" << _receivedLength << " bytes).\n";
 
-      bytesSent = _serial.SendData(_controlMessage.c_str(), (int)_controlMessage.length());
+      bytesSent = _serial->writeSerialPort(_controlMessage, _messageLength);
 
       if (bytesSent > 0)
         cout << "[ BTSEND]" << _controlMessage << " (" << bytesSent << " bytes).\n";
@@ -81,7 +83,9 @@ namespace Control
 
       ss << _params->GetRealtimeParams()->GetMessageEnd();
 
-      _controlMessage = ss.str();
+      _messageLength = ss.str().length();
+      for(int i = 0; i < _messageLength; ++i)
+        _controlMessage[i] = ss.str().at(i);
     }
 
     void Realtime::TPlayAudio()

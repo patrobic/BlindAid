@@ -21,7 +21,7 @@ namespace Core
       _controlParams.Defaults();
       _displayParams.Defaults();
 
-      _mode = Simulate;
+      _mode = Realtime;
       _repeat = 0;
 
       _consoleWindowPosition = cv::Point(0, 300);

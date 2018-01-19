@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Control.h"
-#include "Serial.h"
+#include "SerialPort.h"
 
 namespace Control
 {
@@ -19,9 +19,10 @@ namespace Control
       void GenerateString();
       void TPlayAudio();
 
-      CSerial _serial;
-      std::string _controlMessage;
-      const char *_receivedMessage[256];
+      SerialPort *_serial;
+      char _controlMessage[256];
+      int _messageLength = 0;
+      char _receivedMessage[256];
       int _receivedLength = 0;
 
       std::thread *_audioThread;

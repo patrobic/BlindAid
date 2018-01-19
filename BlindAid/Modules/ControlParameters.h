@@ -13,7 +13,7 @@ namespace Control
 
       void Defaults()
       {
-        _serialPort = 2;
+        _serialPort = 4;
         _baudRate = 9600;
         _messageStart = '<';
         _messageEnd = '>';

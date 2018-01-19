@@ -129,6 +129,9 @@
     <ClInclude Include="CoreData.h">
       <Filter>Data</Filter>
     </ClInclude>
+    <ClInclude Include="SerialPort.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Serial.cpp">
@@ -184,6 +187,9 @@
     </ClCompile>
     <ClCompile Include="DepthObstacleHandPosition.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SerialPort.cpp">
+      <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
