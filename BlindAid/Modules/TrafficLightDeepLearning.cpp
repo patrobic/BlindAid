@@ -2,6 +2,7 @@
 
 using namespace std;
 using namespace cv;
+using namespace std::chrono;
 
 namespace Vision {
   namespace TrafficLight {
@@ -14,9 +15,15 @@ namespace Vision {
 
       void DeepLearning::Process()
       {
+        steady_clock::time_point start = steady_clock::now();
+
         PreprocessImage();
         RunDeepLearning();
         UpdateResults();
+
+        steady_clock::time_point end = steady_clock::now();
+        duration<double> time_span = duration_cast<duration<double>>(end - start);
+        cout << "[TRAF-DL] Traffic lights detected.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n";
       }
 
       void DeepLearning::PreprocessImage()

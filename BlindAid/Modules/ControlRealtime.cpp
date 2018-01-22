@@ -67,7 +67,7 @@ namespace Control
 
       //_receivedLength = _serial->readSerialPort(_receivedMessage, 256);
       //if (_receivedLength > 0)
-      //  cout << "[ BTRECV] Received string = " << _receivedMessage << ".\t(" << _receivedLength << " bytes)\n";
+      //  cout << "[BT-RECV] Received string = " << _receivedMessage << ".\t(" << _receivedLength << " bytes)\n";
 
       _sent = false;
       thread controlThread(&Realtime::TSendControl, this);
@@ -77,7 +77,7 @@ namespace Control
       controlThread.join();
 
       if (bytesSent > 0)
-        cout << "[ BTSEND] Sent msg " << _controlMessage << ".\t(" << bytesSent * _messageLength << " bytes)\n";
+        cout << "[BT-SEND] Sent msg " << _controlMessage << ".\t(" << bytesSent * _messageLength << " bytes)\n";
     }
 
     void Realtime::GenerateString()

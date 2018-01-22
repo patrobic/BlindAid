@@ -2,6 +2,7 @@
 
 using namespace std;
 using namespace cv;
+using namespace std::chrono;
 
 namespace Vision
 {
@@ -17,10 +18,16 @@ namespace Vision
 
       void BlobDetector::Process()
       {
+        steady_clock::time_point start = steady_clock::now();
+        
         MaskColors();
         PreprocessImages();
         DetectBlobs();
         //ConfirmWithBox();
+
+        steady_clock::time_point end = steady_clock::now();
+        duration<double> time_span = duration_cast<duration<double>>(end - start);
+        cout << "[TRAF-BD] Traffic lights detected.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n";
       }
 
       void BlobDetector::MaskColors()
