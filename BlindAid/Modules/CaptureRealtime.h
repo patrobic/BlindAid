@@ -16,7 +16,9 @@ namespace Capture
 
     private:
       void Process();
+      void ReadCamera();
       void ConnectToCamera();
+      void InitializeCamera();
       void GetColorFrame();
       void GetDepthFrame();
 

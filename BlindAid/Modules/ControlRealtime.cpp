@@ -16,31 +16,33 @@ namespace Control
     {
       if(_params->GetLocalAudioEnabled())
         _audioThread = new std::thread(&Realtime::TPlayAudio, this);
-
-      ConnectToArduino();
+   
+      cout << "[  GLOVE] Connecting to controller.\n";
     }
 
     void Realtime::ConnectToArduino()
     {
       string port = "\\\\.\\COM" + to_string(_params->GetRealtimeParams()->GetSerialPort());
+  
       _serial = new SerialPort(&port[0]);
 
       while (!_serial->isConnected())
       {
-        cout << "connection failed!\n";
-
+        cout << "[  GLOVE] Connection failed, attempting to reconnect (port #" << _params->GetRealtimeParams()->GetSerialPort() << ").\n";
         Sleep(1000);
+
         delete _serial;
         _serial = new SerialPort(&port[0]);
       }
 
-      cout << "connection success!\n";
+      cout << "[  GLOVE] Connection success!\n";
     }
 
     void Realtime::Process()
     {
       steady_clock::time_point start = steady_clock::now();
 
+      ConnectToArduino();
       GenerateString();
       SendControl();
 
@@ -83,7 +85,7 @@ namespace Control
 
       ss << _params->GetRealtimeParams()->GetMessageEnd();
 
-      _messageLength = ss.str().length();
+      _messageLength = (int)ss.str().length();
       for(int i = 0; i < _messageLength; ++i)
         _controlMessage[i] = ss.str().at(i);
     }

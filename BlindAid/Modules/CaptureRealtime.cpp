@@ -1,5 +1,7 @@
 #include "CaptureRealtime.h"
 
+#include <Windows.h>
+
 using namespace std;
 using namespace cv;
 using namespace std::chrono;
@@ -10,13 +12,15 @@ namespace Capture
   {
     Realtime::Realtime(IParameters *params, IData *input, IData *output) : Base(params, input, output)
     {
-      ConnectToCamera();
+      cout << "[ CAMERA] Connecting to camera.\n";
+      
+      InitializeCamera();
     }
 
-    void Realtime::ConnectToCamera()
+    void Realtime::InitializeCamera()
     {
       _pp = Intel::RealSense::SenseManager::CreateInstance();
-   
+
       Intel::RealSense::DataDesc desc = {};
       desc.deviceInfo.streams = Intel::RealSense::Capture::STREAM_TYPE_COLOR | Intel::RealSense::Capture::STREAM_TYPE_DEPTH;
       _pp->EnableStreams(&desc);
@@ -32,8 +36,8 @@ namespace Capture
     {
       steady_clock::time_point start = steady_clock::now();
 
-      _pp->AcquireFrame(false);
-      _sample = _pp->QuerySample();
+      ReadCamera();
+      ConnectToCamera();
 
       if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
         GetColorFrame();
@@ -45,6 +49,26 @@ namespace Capture
       steady_clock::time_point end = steady_clock::now();
       duration<double> time_span = duration_cast<duration<double>>(end - start);
       cout << "[CAPTURE] Frame loaded (" << time_span.count() * 1000 << "ms).\n";
+    }
+
+    void Realtime::ReadCamera()
+    {
+      _pp->AcquireFrame(false);
+      _sample = _pp->QuerySample();
+    }
+
+    void Realtime::ConnectToCamera()
+    {
+      while (_sample->color == NULL || _sample->depth == NULL)
+      {
+        cout << "[ CAMERA] Connection failed, waiting for camera.\n";
+        Sleep(1000);
+        
+        InitializeCamera();
+        ReadCamera();
+      }
+
+      cout << "[ CAMERA] Connection success.\n";
     }
 
     void Realtime::GetColorFrame()

@@ -20,7 +20,7 @@ SerialPort::SerialPort(char *portName)
                                 NULL);
     if (this->handler == INVALID_HANDLE_VALUE){
         if (GetLastError() == ERROR_FILE_NOT_FOUND){
-            printf("ERROR: Handle was not attached. Reason: %s not available\n", portName);
+            //printf("ERROR: Handle was not attached. Reason: %s not available\n", portName);
         }
     else
         {
