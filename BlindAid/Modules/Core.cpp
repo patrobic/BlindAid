@@ -31,7 +31,7 @@ namespace Core
       {
         (*_capture)();
         if (!_output->GetCaptureResults()->GetStatus())
-          break;
+          continue;
 
         (*_vision)();
         (*_control)();
@@ -46,7 +46,7 @@ namespace Core
       steady_clock::time_point end = steady_clock::now();
       duration<double> time_span = duration_cast<duration<double>>(end - start);
 
-      cout << "[   CORE] Frame #" << to_string(_frame++) << " processed (" << time_span.count() * 1000 << "ms).\n";
+      cout << "[   CORE] Frame #" << to_string(_frame++) << " processing done.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n\n";
 
       if (GetAsyncKeyState(VK_ESCAPE))
         break;

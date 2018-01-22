@@ -42,36 +42,36 @@ namespace Record
 
   void Record::Process()
   {
-    steady_clock::time_point start = steady_clock::now();
+    if (_kbhit() || !_params->GetManualTrigger())
+    {
+      steady_clock::time_point start = steady_clock::now();
 
-    CreateFolder();
-    SaveToDisk();
+      CreateFolder();
+      SaveToDisk();
 
-    steady_clock::time_point end = steady_clock::now();
-    duration<double> time_span = duration_cast<duration<double>>(end - start);
+      steady_clock::time_point end = steady_clock::now();
+      duration<double> time_span = duration_cast<duration<double>>(end - start);
 
-    cout << "[RECORD ] Frame recorded (" << time_span.count() * 1000 << "ms).\n";
+      cout << "[ RECORD] Images recorded to disk.\t(" << setw(5) << (int)(time_span.count() * 1000) << "ms).\n";
+    }
   }
 
   void Record::SaveToDisk()
   {
-    if (_kbhit() || !_params->GetManualTrigger())
+    if (_params->GetType() == Parameters::Type::Color || _params->GetType() == Parameters::Type::Both)
     {
-      if (_params->GetType() == Parameters::Type::Color || _params->GetType() == Parameters::Type::Both)
-      {
-        imwrite(_params->GetPath() + "\\" + _folderName + "\\color_" + to_string(_index) + ".png", *_output->GetColorImage());
-        imwrite(_params->GetPath() + "\\" + _folderName + "\\colorOverlay_" + to_string(_index) + ".png", *_input->GetColorOverlayImage());
-      }
-
-      if (_params->GetType() == Parameters::Type::Depth || _params->GetType() == Parameters::Type::Both)
-      {
-        imwrite(_params->GetPath() + "\\" + _folderName + "\\depth_" + to_string(_index) + ".png", *_output->GetDepthImage());
-        imwrite(_params->GetPath() + "\\" + _folderName + "\\depthOverlay_" + to_string(_index) + ".png", *_input->GetDepthOverlayImage());
-      }
-      ++_index;
-
-      while(_kbhit())
-        _getch();
+      imwrite(_params->GetPath() + "\\" + _folderName + "\\color_" + to_string(_index) + ".png", *_output->GetColorImage());
+      imwrite(_params->GetPath() + "\\" + _folderName + "\\colorOverlay_" + to_string(_index) + ".png", *_input->GetColorOverlayImage());
     }
+
+    if (_params->GetType() == Parameters::Type::Depth || _params->GetType() == Parameters::Type::Both)
+    {
+      imwrite(_params->GetPath() + "\\" + _folderName + "\\depth_" + to_string(_index) + ".png", *_output->GetDepthImage());
+      imwrite(_params->GetPath() + "\\" + _folderName + "\\depthOverlay_" + to_string(_index) + ".png", *_input->GetDepthOverlayImage());
+    }
+    ++_index;
+
+    while (_kbhit())
+      _getch();
   }
 }

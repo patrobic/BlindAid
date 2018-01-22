@@ -29,7 +29,7 @@ namespace Capture
       steady_clock::time_point end = steady_clock::now();
       duration<double> time_span = duration_cast<duration<double>>(end - start);
 
-      cout << "[CAPTURE] Frame loaded (" << time_span.count() * 1000 << "ms).\n";
+      cout << "[CAPTURE] Images acquired from camera.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n";
     }
 
     void Simulate::LoadVideo()

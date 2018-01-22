@@ -15,11 +15,15 @@ namespace Control
     private:
       void Process();
       void ConnectToArduino();
+      void Connect();
       void SendControl();
       void GenerateString();
       void TPlayAudio();
+      void TSendControl();
 
       SerialPort *_serial;
+      std::string _port;
+      std::atomic<bool> _sent = false;
       char _controlMessage[256];
       int _messageLength = 0;
       char _receivedMessage[256];

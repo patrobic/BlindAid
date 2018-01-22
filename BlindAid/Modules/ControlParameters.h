@@ -13,7 +13,7 @@ namespace Control
 
       void Defaults()
       {
-        _serialPort = 4;
+        _serialPort = 3;
         _baudRate = 9600;
         _messageStart = '<';
         _messageEnd = '>';
@@ -89,7 +89,7 @@ namespace Control
 
       _handPolarity = Left;
 
-      _localAudioEnabled = true;
+      _localAudioEnabled = false;
       _audioDelay = 1000;
       
       bool colors[4] = { true, false, false, false };

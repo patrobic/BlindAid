@@ -18,12 +18,14 @@ namespace Capture
       void Process();
       void ReadCamera();
       void ConnectToCamera();
+      void ValidateConnection();
       void InitializeCamera();
       void GetColorFrame();
       void GetDepthFrame();
 
       Intel::RealSense::SenseManager *_pp;
-      const Intel::RealSense::Capture::Sample *_sample;
+      Intel::RealSense::Capture::Sample *_sample;
+      Intel::RealSense::Capture::Device *_device;
       Intel::RealSense::ImageData _color;
       Intel::RealSense::ImageData _depth;
     };

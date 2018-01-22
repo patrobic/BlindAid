@@ -23,7 +23,7 @@ namespace Display
     steady_clock::time_point end = steady_clock::now();
     duration<double> time_span = duration_cast<duration<double>>(end - start);
 
-    cout << "[DISPLAY] Frame displayed (" << time_span.count() * 1000 << "ms).\n";
+    cout << "[DISPLAY] Results displayed to screen.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n";
   }
 
   void Display::DrawDepthObstacles()

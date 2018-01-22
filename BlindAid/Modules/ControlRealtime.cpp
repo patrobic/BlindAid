@@ -1,6 +1,5 @@
 #include "ControlRealtime.h"
 
-#include <iomanip>
 #include <Windows.h>
 #pragma comment(lib, "Winmm.lib")
 
@@ -14,56 +13,71 @@ namespace Control
   {
     Realtime::Realtime(IParameters *params, IData *input, IData *output) : Base(params, input, output)
     {
-      if(_params->GetLocalAudioEnabled())
+      if (_params->GetLocalAudioEnabled())
         _audioThread = new std::thread(&Realtime::TPlayAudio, this);
-   
-      cout << "[  GLOVE] Connecting to controller.\n";
+
+      ConnectToArduino();
     }
 
     void Realtime::ConnectToArduino()
     {
-      string port = "\\\\.\\COM" + to_string(_params->GetRealtimeParams()->GetSerialPort());
-  
-      _serial = new SerialPort(&port[0]);
-
-      while (!_serial->isConnected())
+      static bool firstConnect = true;
+      if (firstConnect)
       {
-        cout << "[  GLOVE] Connection failed, attempting to reconnect (port #" << _params->GetRealtimeParams()->GetSerialPort() << ").\n";
-        Sleep(1000);
+        cout << "[  GLOVE] Connecting to controller (port #" << _params->GetRealtimeParams()->GetSerialPort() << ")...\n";
+        Connect();
+        firstConnect = false;
+      }
+      else
+      {
+        do {
+          cout << "[  GLOVE] Controller connection failed, attempting to reconnect (port #" << _params->GetRealtimeParams()->GetSerialPort() << ")...\n";
+          Sleep(1000);
 
-        delete _serial;
-        _serial = new SerialPort(&port[0]);
+          Connect();
+        } while (!_serial->isConnected());
       }
 
-      cout << "[  GLOVE] Connection success!\n";
+        cout << "[  GLOVE] Connected to controller successfully.\n";
+    }
+
+    void Realtime::Connect()
+    {
+      _port = "\\\\.\\COM" + to_string(_params->GetRealtimeParams()->GetSerialPort());
+
+      delete _serial;
+      _serial = new SerialPort(&_port[0]);
     }
 
     void Realtime::Process()
     {
       steady_clock::time_point start = steady_clock::now();
 
-      ConnectToArduino();
       GenerateString();
       SendControl();
 
       steady_clock::time_point end = steady_clock::now();
       duration<double> time_span = duration_cast<duration<double>>(end - start);
-      cout << "[CONTROL] Frame executed (" << time_span.count() * 1000 << "ms).\n";
+      cout << "[CONTROL] Control data sent to glove.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n";
     }
 
     void Realtime::SendControl()
     {
       int bytesSent = 0;
 
-      _receivedLength = _serial->readSerialPort(_receivedMessage, 256);
+      //_receivedLength = _serial->readSerialPort(_receivedMessage, 256);
+      //if (_receivedLength > 0)
+      //  cout << "[ BTRECV] Received string = " << _receivedMessage << ".\t(" << _receivedLength << " bytes)\n";
 
-      if (_receivedLength > 0)
-        cout << "[ BTRECV] " << _receivedMessage << " (" << _receivedLength << " bytes).\n";
-
+      _sent = false;
+      thread controlThread(&Realtime::TSendControl, this);
       bytesSent = _serial->writeSerialPort(_controlMessage, _messageLength);
+      _sent = true;
+
+      controlThread.join();
 
       if (bytesSent > 0)
-        cout << "[ BTSEND]" << _controlMessage << " (" << bytesSent << " bytes).\n";
+        cout << "[ BTSEND] Sent msg " << _controlMessage << ".\t(" << bytesSent * _messageLength << " bytes)\n";
     }
 
     void Realtime::GenerateString()
@@ -86,7 +100,7 @@ namespace Control
       ss << _params->GetRealtimeParams()->GetMessageEnd();
 
       _messageLength = (int)ss.str().length();
-      for(int i = 0; i < _messageLength; ++i)
+      for (int i = 0; i < _messageLength; ++i)
         _controlMessage[i] = ss.str().at(i);
     }
 
@@ -100,6 +114,13 @@ namespace Control
 
         Sleep(_params->GetAudioDelay());
       }
+    }
+
+    void Realtime::TSendControl()
+    {
+      Sleep(5);
+      if (_sent == false)
+        ConnectToArduino();
     }
   }
 }
