@@ -34,6 +34,7 @@
     <ClInclude Include="MenuRealtime.h" />
     <ClInclude Include="ConfigSave.h" />
     <ClInclude Include="MenuSimulate.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
@@ -42,6 +43,9 @@
     <ProjectReference Include="..\Modules\Modules.vcxproj">
       <Project>{4e97e47c-8b4a-4528-a98a-0fe82a8b1675}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="BlindAid.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DD1BF88B-B634-46C9-A80F-FFA17C02A6F0}</ProjectGuid>
