@@ -6,7 +6,7 @@
 using namespace std;
 using namespace cv;
 
-#define PATH "C:\\Projects\\BlindAid\\TestData\\"
+#define PATH "C:\\Users\\Salma\\Documents\\CapstoneML\\BlindAid\\BlindAid\\TestData\\"
 
 SimulateMenu::SimulateMenu(Core::Core *core, Core::Parameters *params, Core::Data *data)
 {
@@ -58,7 +58,8 @@ void SimulateMenu::ShowMenu()
       TestPhoto("TrafficLight\\tlight", "DepthObstacle\\depth.png", 1);
       break;
     case 't':
-      TestPhoto("TrafficLight\\tlight", "DepthObstacle\\depth.png", 15);
+      TestPhoto("UniqueIntersections\\tlight", "DepthObstacle\\depth.png",42);
+	 //TestPhoto("TrafficLight\\tlight", "DepthObstacle\\depth.png", 21);
       break;
     case 's':
       TestPhoto("StopSign\\stop", "DepthObstacle\\depth.png", 8);

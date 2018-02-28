@@ -96,14 +96,14 @@
 /* #undef HAVE_HALIDE */
 
 /* Define to 1 if you have the <inttypes.h> header file. */
-/* #undef HAVE_INTTYPES_H */
+#define HAVE_INTTYPES_H 1
 
 /* Intel Perceptual Computing SDK library */
 /* #undef HAVE_INTELPERC */
 
 /* Intel Integrated Performance Primitives */
 #define HAVE_IPP
-#define HAVE_IPP_ICV_ONLY
+#define HAVE_IPP_ICV
 #define HAVE_IPP_IW
 
 /* Intel IPP Async */
@@ -154,7 +154,7 @@
 #define HAVE_PNG
 
 /* Posix threads (pthreads) */
-/* #undef HAVE_PTHREADS */
+/* #undef HAVE_PTHREAD */
 
 /* parallel_for with pthreads */
 /* #undef HAVE_PTHREADS_PF */

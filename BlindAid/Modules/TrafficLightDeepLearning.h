@@ -1,7 +1,9 @@
 #pragma once
 
 #include "TrafficLight.h"
-#include "Python.h"
+#include <opencv2/dnn.hpp>
+using namespace cv;
+using namespace cv::dnn; 
 
 namespace Vision
 {
@@ -18,13 +20,21 @@ namespace Vision
         void Process();
         void PreprocessImage();
         void RunDeepLearning();
-
         void UpdateResults();
+		std::vector<cv::String> readClassNames(const char *filename);
+		void getMaxClass(const cv::Mat &probBlob, int *classId, double *classProb);
+
+		cv::String dependenciesPath;
+		cv::String modelFile ;
+		cv::String config ;
+		cv::String imageFile ;
+		cv::String inBlobName ;
+		cv::String outBlobName ;
+		cv::String classNamesFile ;
+
+		dnn::Net net;
 
         cv::Mat _preprocessedImage;
-
-        PyObject *_pyColorImage;
-        PyObject *_pyConfidence[4];
         float _confidence[4];
       };
     }

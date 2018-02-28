@@ -1,0 +1,1093 @@
+node {
+  name: "input_1"
+  op: "Placeholder"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv1/convolution"
+  op: "Conv2D"
+  input: "input_1"
+  input: "conv1/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 2
+        i: 2
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "conv1/BiasAdd"
+  op: "BiasAdd"
+  input: "conv1/convolution"
+  input: "conv1/bias"
+}
+node {
+  name: "conv1/Relu"
+  op: "Relu"
+  input: "conv1/BiasAdd"
+}
+node {
+  name: "maxpool1/MaxPool"
+  op: "MaxPool"
+  input: "conv1/Relu"
+  attr {
+    key: "ksize"
+    value {
+      list {
+        i: 1
+        i: 3
+        i: 3
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "VALID"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 2
+        i: 2
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire2_squeeze/convolution"
+  op: "Conv2D"
+  input: "maxpool1/MaxPool"
+  input: "fire2_squeeze/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire2_squeeze/BiasAdd"
+  op: "BiasAdd"
+  input: "fire2_squeeze/convolution"
+  input: "fire2_squeeze/bias"
+}
+node {
+  name: "fire2_squeeze/Relu"
+  op: "Relu"
+  input: "fire2_squeeze/BiasAdd"
+}
+node {
+  name: "fire2_expand1/convolution"
+  op: "Conv2D"
+  input: "fire2_squeeze/Relu"
+  input: "fire2_expand1/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire2_expand1/BiasAdd"
+  op: "BiasAdd"
+  input: "fire2_expand1/convolution"
+  input: "fire2_expand1/bias"
+}
+node {
+  name: "fire2_expand1/Relu"
+  op: "Relu"
+  input: "fire2_expand1/BiasAdd"
+}
+node {
+  name: "fire2_expand2/convolution"
+  op: "Conv2D"
+  input: "fire2_squeeze/Relu"
+  input: "fire2_expand2/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire2_expand2/BiasAdd"
+  op: "BiasAdd"
+  input: "fire2_expand2/convolution"
+  input: "fire2_expand2/bias"
+}
+node {
+  name: "fire2_expand2/Relu"
+  op: "Relu"
+  input: "fire2_expand2/BiasAdd"
+}
+node {
+  name: "merge_1/concat"
+  op: "ConcatV2"
+  input: "fire2_expand1/Relu"
+  input: "fire2_expand2/Relu"
+  input: "merge_1/concat/axis"
+}
+node {
+  name: "fire3_squeeze/convolution"
+  op: "Conv2D"
+  input: "merge_1/concat"
+  input: "fire3_squeeze/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire3_squeeze/BiasAdd"
+  op: "BiasAdd"
+  input: "fire3_squeeze/convolution"
+  input: "fire3_squeeze/bias"
+}
+node {
+  name: "fire3_squeeze/Relu"
+  op: "Relu"
+  input: "fire3_squeeze/BiasAdd"
+}
+node {
+  name: "fire3_expand1/convolution"
+  op: "Conv2D"
+  input: "fire3_squeeze/Relu"
+  input: "fire3_expand1/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire3_expand1/BiasAdd"
+  op: "BiasAdd"
+  input: "fire3_expand1/convolution"
+  input: "fire3_expand1/bias"
+}
+node {
+  name: "fire3_expand1/Relu"
+  op: "Relu"
+  input: "fire3_expand1/BiasAdd"
+}
+node {
+  name: "fire3_expand2/convolution"
+  op: "Conv2D"
+  input: "fire3_squeeze/Relu"
+  input: "fire3_expand2/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire3_expand2/BiasAdd"
+  op: "BiasAdd"
+  input: "fire3_expand2/convolution"
+  input: "fire3_expand2/bias"
+}
+node {
+  name: "fire3_expand2/Relu"
+  op: "Relu"
+  input: "fire3_expand2/BiasAdd"
+}
+node {
+  name: "merge_2/concat"
+  op: "ConcatV2"
+  input: "fire3_expand1/Relu"
+  input: "fire3_expand2/Relu"
+  input: "merge_2/concat/axis"
+}
+node {
+  name: "fire4_squeeze/convolution"
+  op: "Conv2D"
+  input: "merge_2/concat"
+  input: "fire4_squeeze/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire4_squeeze/BiasAdd"
+  op: "BiasAdd"
+  input: "fire4_squeeze/convolution"
+  input: "fire4_squeeze/bias"
+}
+node {
+  name: "fire4_squeeze/Relu"
+  op: "Relu"
+  input: "fire4_squeeze/BiasAdd"
+}
+node {
+  name: "fire4_expand1/convolution"
+  op: "Conv2D"
+  input: "fire4_squeeze/Relu"
+  input: "fire4_expand1/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire4_expand1/BiasAdd"
+  op: "BiasAdd"
+  input: "fire4_expand1/convolution"
+  input: "fire4_expand1/bias"
+}
+node {
+  name: "fire4_expand1/Relu"
+  op: "Relu"
+  input: "fire4_expand1/BiasAdd"
+}
+node {
+  name: "fire4_expand2/convolution"
+  op: "Conv2D"
+  input: "fire4_squeeze/Relu"
+  input: "fire4_expand2/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire4_expand2/BiasAdd"
+  op: "BiasAdd"
+  input: "fire4_expand2/convolution"
+  input: "fire4_expand2/bias"
+}
+node {
+  name: "fire4_expand2/Relu"
+  op: "Relu"
+  input: "fire4_expand2/BiasAdd"
+}
+node {
+  name: "merge_3/concat"
+  op: "ConcatV2"
+  input: "fire4_expand1/Relu"
+  input: "fire4_expand2/Relu"
+  input: "merge_3/concat/axis"
+}
+node {
+  name: "maxpool4/MaxPool"
+  op: "MaxPool"
+  input: "merge_3/concat"
+  attr {
+    key: "ksize"
+    value {
+      list {
+        i: 1
+        i: 3
+        i: 3
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "VALID"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 2
+        i: 2
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire5_squeeze/convolution"
+  op: "Conv2D"
+  input: "maxpool4/MaxPool"
+  input: "fire5_squeeze/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire5_squeeze/BiasAdd"
+  op: "BiasAdd"
+  input: "fire5_squeeze/convolution"
+  input: "fire5_squeeze/bias"
+}
+node {
+  name: "fire5_squeeze/Relu"
+  op: "Relu"
+  input: "fire5_squeeze/BiasAdd"
+}
+node {
+  name: "fire5_expand1/convolution"
+  op: "Conv2D"
+  input: "fire5_squeeze/Relu"
+  input: "fire5_expand1/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire5_expand1/BiasAdd"
+  op: "BiasAdd"
+  input: "fire5_expand1/convolution"
+  input: "fire5_expand1/bias"
+}
+node {
+  name: "fire5_expand1/Relu"
+  op: "Relu"
+  input: "fire5_expand1/BiasAdd"
+}
+node {
+  name: "fire5_expand2/convolution"
+  op: "Conv2D"
+  input: "fire5_squeeze/Relu"
+  input: "fire5_expand2/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire5_expand2/BiasAdd"
+  op: "BiasAdd"
+  input: "fire5_expand2/convolution"
+  input: "fire5_expand2/bias"
+}
+node {
+  name: "fire5_expand2/Relu"
+  op: "Relu"
+  input: "fire5_expand2/BiasAdd"
+}
+node {
+  name: "merge_4/concat"
+  op: "ConcatV2"
+  input: "fire5_expand1/Relu"
+  input: "fire5_expand2/Relu"
+  input: "merge_4/concat/axis"
+}
+node {
+  name: "fire6_squeeze/convolution"
+  op: "Conv2D"
+  input: "merge_4/concat"
+  input: "fire6_squeeze/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire6_squeeze/BiasAdd"
+  op: "BiasAdd"
+  input: "fire6_squeeze/convolution"
+  input: "fire6_squeeze/bias"
+}
+node {
+  name: "fire6_squeeze/Relu"
+  op: "Relu"
+  input: "fire6_squeeze/BiasAdd"
+}
+node {
+  name: "fire6_expand1/convolution"
+  op: "Conv2D"
+  input: "fire6_squeeze/Relu"
+  input: "fire6_expand1/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire6_expand1/BiasAdd"
+  op: "BiasAdd"
+  input: "fire6_expand1/convolution"
+  input: "fire6_expand1/bias"
+}
+node {
+  name: "fire6_expand1/Relu"
+  op: "Relu"
+  input: "fire6_expand1/BiasAdd"
+}
+node {
+  name: "fire6_expand2/convolution"
+  op: "Conv2D"
+  input: "fire6_squeeze/Relu"
+  input: "fire6_expand2/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire6_expand2/BiasAdd"
+  op: "BiasAdd"
+  input: "fire6_expand2/convolution"
+  input: "fire6_expand2/bias"
+}
+node {
+  name: "fire6_expand2/Relu"
+  op: "Relu"
+  input: "fire6_expand2/BiasAdd"
+}
+node {
+  name: "merge_5/concat"
+  op: "ConcatV2"
+  input: "fire6_expand1/Relu"
+  input: "fire6_expand2/Relu"
+  input: "merge_5/concat/axis"
+}
+node {
+  name: "fire7_squeeze/convolution"
+  op: "Conv2D"
+  input: "merge_5/concat"
+  input: "fire7_squeeze/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire7_squeeze/BiasAdd"
+  op: "BiasAdd"
+  input: "fire7_squeeze/convolution"
+  input: "fire7_squeeze/bias"
+}
+node {
+  name: "fire7_squeeze/Relu"
+  op: "Relu"
+  input: "fire7_squeeze/BiasAdd"
+}
+node {
+  name: "fire7_expand1/convolution"
+  op: "Conv2D"
+  input: "fire7_squeeze/Relu"
+  input: "fire7_expand1/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire7_expand1/BiasAdd"
+  op: "BiasAdd"
+  input: "fire7_expand1/convolution"
+  input: "fire7_expand1/bias"
+}
+node {
+  name: "fire7_expand1/Relu"
+  op: "Relu"
+  input: "fire7_expand1/BiasAdd"
+}
+node {
+  name: "fire7_expand2/convolution"
+  op: "Conv2D"
+  input: "fire7_squeeze/Relu"
+  input: "fire7_expand2/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire7_expand2/BiasAdd"
+  op: "BiasAdd"
+  input: "fire7_expand2/convolution"
+  input: "fire7_expand2/bias"
+}
+node {
+  name: "fire7_expand2/Relu"
+  op: "Relu"
+  input: "fire7_expand2/BiasAdd"
+}
+node {
+  name: "merge_6/concat"
+  op: "ConcatV2"
+  input: "fire7_expand1/Relu"
+  input: "fire7_expand2/Relu"
+  input: "merge_6/concat/axis"
+}
+node {
+  name: "fire8_squeeze/convolution"
+  op: "Conv2D"
+  input: "merge_6/concat"
+  input: "fire8_squeeze/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire8_squeeze/BiasAdd"
+  op: "BiasAdd"
+  input: "fire8_squeeze/convolution"
+  input: "fire8_squeeze/bias"
+}
+node {
+  name: "fire8_squeeze/Relu"
+  op: "Relu"
+  input: "fire8_squeeze/BiasAdd"
+}
+node {
+  name: "fire8_expand1/convolution"
+  op: "Conv2D"
+  input: "fire8_squeeze/Relu"
+  input: "fire8_expand1/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire8_expand1/BiasAdd"
+  op: "BiasAdd"
+  input: "fire8_expand1/convolution"
+  input: "fire8_expand1/bias"
+}
+node {
+  name: "fire8_expand1/Relu"
+  op: "Relu"
+  input: "fire8_expand1/BiasAdd"
+}
+node {
+  name: "fire8_expand2/convolution"
+  op: "Conv2D"
+  input: "fire8_squeeze/Relu"
+  input: "fire8_expand2/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire8_expand2/BiasAdd"
+  op: "BiasAdd"
+  input: "fire8_expand2/convolution"
+  input: "fire8_expand2/bias"
+}
+node {
+  name: "fire8_expand2/Relu"
+  op: "Relu"
+  input: "fire8_expand2/BiasAdd"
+}
+node {
+  name: "merge_7/concat"
+  op: "ConcatV2"
+  input: "fire8_expand1/Relu"
+  input: "fire8_expand2/Relu"
+  input: "merge_7/concat/axis"
+}
+node {
+  name: "maxpool8/MaxPool"
+  op: "MaxPool"
+  input: "merge_7/concat"
+  attr {
+    key: "ksize"
+    value {
+      list {
+        i: 1
+        i: 3
+        i: 3
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "VALID"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 2
+        i: 2
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire9_squeeze/convolution"
+  op: "Conv2D"
+  input: "maxpool8/MaxPool"
+  input: "fire9_squeeze/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire9_squeeze/BiasAdd"
+  op: "BiasAdd"
+  input: "fire9_squeeze/convolution"
+  input: "fire9_squeeze/bias"
+}
+node {
+  name: "fire9_squeeze/Relu"
+  op: "Relu"
+  input: "fire9_squeeze/BiasAdd"
+}
+node {
+  name: "fire9_expand1/convolution"
+  op: "Conv2D"
+  input: "fire9_squeeze/Relu"
+  input: "fire9_expand1/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire9_expand1/BiasAdd"
+  op: "BiasAdd"
+  input: "fire9_expand1/convolution"
+  input: "fire9_expand1/bias"
+}
+node {
+  name: "fire9_expand1/Relu"
+  op: "Relu"
+  input: "fire9_expand1/BiasAdd"
+}
+node {
+  name: "fire9_expand2/convolution"
+  op: "Conv2D"
+  input: "fire9_squeeze/Relu"
+  input: "fire9_expand2/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "fire9_expand2/BiasAdd"
+  op: "BiasAdd"
+  input: "fire9_expand2/convolution"
+  input: "fire9_expand2/bias"
+}
+node {
+  name: "fire9_expand2/Relu"
+  op: "Relu"
+  input: "fire9_expand2/BiasAdd"
+}
+node {
+  name: "merge_8/concat"
+  op: "ConcatV2"
+  input: "fire9_expand1/Relu"
+  input: "fire9_expand2/Relu"
+  input: "merge_8/concat/axis"
+}
+node {
+  name: "conv10/convolution"
+  op: "Conv2D"
+  input: "merge_8/concat"
+  input: "conv10/kernel"
+  attr {
+    key: "padding"
+    value {
+      s: "VALID"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "conv10/BiasAdd"
+  op: "BiasAdd"
+  input: "conv10/convolution"
+  input: "conv10/bias"
+}
+node {
+  name: "avgpool10/AvgPool"
+  op: "AvgPool"
+  input: "conv10/BiasAdd"
+  attr {
+    key: "ksize"
+    value {
+      list {
+        i: 1
+        i: 13
+        i: 13
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "VALID"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 13
+        i: 13
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "flatten/Reshape"
+  op: "Flatten"
+  input: "avgpool10/AvgPool"
+}
+node {
+  name: "softmax/Softmax"
+  op: "Softmax"
+  input: "flatten/Reshape"
+}
+
+
+
+
+
+
