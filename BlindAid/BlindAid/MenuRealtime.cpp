@@ -59,7 +59,7 @@ void RealtimeMenu::ShowMenu()
 
 void RealtimeMenu::SetParameters()
 {
-  _params->Defaults();
+ // _params->Defaults();
   _params->GetRecordParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
   _params->GetCaptureParams()->SetMode(SwitchableParameters::Mode::Realtime);
   _params->GetControlParams()->SetMode(SwitchableParameters::Mode::Realtime);

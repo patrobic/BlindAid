@@ -91,7 +91,7 @@ namespace Control
 
       for (int i = 0; i < _params->GetOptionSignalsCount(); ++i)
         if (_params->GetOptionSignals(i) == Control::Parameters::OptionSignals::TrafficLight)
-          ss << setw(3) << setfill('0') << (int)_input->GetTrafficLightResults()->GetColor();
+          ss << setw(3) << setfill('0') << (_input->GetTrafficLightResults()->GetColor() == Vision::TrafficLight::Result::Color::Red)?255:0;
         else if (_params->GetOptionSignals(i) == Control::Parameters::OptionSignals::NearObstacle)
           ss << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetMaxVibration();
         else

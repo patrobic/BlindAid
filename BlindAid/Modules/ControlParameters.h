@@ -13,7 +13,7 @@ namespace Control
 
       void Defaults()
       {
-        _serialPort = 3;
+        _serialPort = 4;
         _baudRate = 9600;
         _messageStart = '<';
         _messageEnd = '>';
@@ -97,7 +97,7 @@ namespace Control
 
       _optionSignals[0] = TrafficLight;
       _optionSignals[1] = None;
-      _optionSignalsCount = 0;
+      _optionSignalsCount = 1;
     }
 
     bool Valid()

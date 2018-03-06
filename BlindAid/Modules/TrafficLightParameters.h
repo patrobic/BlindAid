@@ -135,6 +135,8 @@ namespace Vision
       int GetMaximumRadiusDiff() { return _maximumRadiusDiff; }
       void SetMaximumRadiusDiff(int maximumRadiusDiff) { _maximumRadiusDiff = maximumRadiusDiff; }
 
+      std::string _path;
+
     private:
       // parameters specific to blob detector mode.
       BlobDetector::Parameters _blobDetectorParams;

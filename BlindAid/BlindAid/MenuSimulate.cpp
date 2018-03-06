@@ -73,7 +73,7 @@ void SimulateMenu::ShowMenu()
 
 void SimulateMenu::SetParameters()
 {
-  _params->Defaults();
+  //_params->Defaults();
   _params->GetRecordParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
   _params->GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
   _params->GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);

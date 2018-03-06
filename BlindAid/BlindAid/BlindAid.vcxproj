@@ -130,7 +130,8 @@ xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\libconfig\x64\Debug\bin\*.dl
 xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\realsense\x64\Debug\bin\*.dll" "$(OutDir)"
 xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\python\x64\Debug\bin\*.dll" "$(OutDir)"
 xcopy /d /y /r "$(ProjectDir)\..\..\Dependencies\misc\x64\Debug\bin\*.dll" "$(OutDir)"
-xcopy /d /y /s /r "$(ProjectDir)\..\Resources\Audio\*.wav" "$(OutDir)"</Command>
+xcopy /d /y /s /r "$(ProjectDir)\..\Resources\Audio\*.wav" "$(OutDir)"
+xcopy /d /y /s /r "$(ProjectDir)\..\Resources\MachineLearning\model*" "$(OutDir)"</Command>
     </PostBuildEvent>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -170,7 +171,8 @@ xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\libconfig\x64\Release\bin\*.
 xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\realsense\x64\Release\bin\*.dll" "$(OutDir)"
 xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\python\x64\Release\bin\*.dll" "$(OutDir)"
 xcopy /d /y /r "$(ProjectDir)\..\..\Dependencies\misc\x64\Release\bin\*.dll" "$(OutDir)"
-xcopy /d /y /s /r "$(ProjectDir)\..\Resources\Audio\*.wav" "$(OutDir)"</Command>
+xcopy /d /y /s /r "$(ProjectDir)\..\Resources\Audio\*.wav" "$(OutDir)"
+xcopy /d /y /s /r "$(ProjectDir)\..\Resources\MachineLearning\model*" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

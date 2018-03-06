@@ -32,7 +32,6 @@ namespace Vision
         double _classProb;
         float _confidence[4];
 
-        cv::String _path = "C:\\Projects\\BlindAid\\MachineLearning\\";
         int _map[4] = { 3, 0, 1, 2 };
       };
     }

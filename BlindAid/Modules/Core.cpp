@@ -14,6 +14,7 @@ namespace Core
 
   void Core::CreateModules()
   {
+    _params->GetVisionParams()->GetTrafficLightParams()->_path = _params->GetExePath();
     _capture = Capture::Base::MakeCapture(_params->GetCaptureParams(), NULL, _output->GetCaptureResults());
     _vision = new Vision::Vision(_params->GetVisionParams(), _output->GetCaptureResults(), _output->GetVisionResults());
     _control = Control::Base::MakeControl(_params->GetControlParams(), _output->GetVisionResults(), _output->GetCaptureResults());
