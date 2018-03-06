@@ -185,7 +185,12 @@ namespace Vision
       void Set(Result result)
       {
         if (result.GetCenter() == cv::Point(0, 0))
+        {
+          if (result.GetColor() == _results[0].GetColor())
+            result.SetCount(_results[0].GetCount());
+          
           _results[0].Set(result);
+        }
         else
           _unfiltered.push_back(result);
       }

@@ -43,7 +43,8 @@ namespace Control
 
       cout << "  [AUDIO] ";
       if (result.size() == 1 && result.at(0).GetCenter() == Point(0, 0))
-        cout << "Red, Green, None (" << result.at(0).GetConfidence((Vision::TrafficLight::Result::Color)0) << ", " << result.at(0).GetConfidence((Vision::TrafficLight::Result::Color)1) << ", " << result.at(0).GetConfidence((Vision::TrafficLight::Result::Color)2) << ").\n";
+        cout << _input->GetTrafficLightResults()->_names[result.at(0).GetColor()] << " (" << setprecision(3) << result.at(0).GetConfidence(result.at(0).GetColor()) * 100 << "%).\n";
+        //"Red, Green, None (" << result.at(0).GetConfidence((Vision::TrafficLight::Result::Color)0) << ", " << result.at(0).GetConfidence((Vision::TrafficLight::Result::Color)1) << ", " << result.at(0).GetConfidence((Vision::TrafficLight::Result::Color)2) << ").\n";
       else
       {
 
