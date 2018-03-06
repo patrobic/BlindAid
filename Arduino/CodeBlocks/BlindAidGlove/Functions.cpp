@@ -5,6 +5,8 @@ char receivedChars[numChars] = {'<', '0', '0', '0', '0', '0', '0', '0', '0', '0'
 boolean newData = false;
 int controlValues[7];
 int analogPins[7] = { 3, 5, 6, 9, 10, 11 };
+unsigned long timeThreshold = 1000;
+unsigned long start = 0;
 
 void InitializePins()
 {
@@ -36,6 +38,7 @@ void ReceiveData()
                 recvInProgress = false;
                 ndx = 0;
                 newData = true;
+                start = millis();
             }
         }
 
@@ -48,14 +51,21 @@ void ReceiveData()
 void ParseValues()
 {
     String str(receivedChars);
-    for(int i = 0; i < 7; ++i)
-        controlValues[i] = str.substring(3*i, 3*i+3).toInt();
+
+    if(millis() - start < timeThreshold)
+        for(int i = 0; i < 7; ++i)
+            controlValues[i] = str.substring(3*i, 3*i+3).toInt();
+    else
+        for(int i = 0; i < 7; ++i)
+            controlValues[i] = 0;
 }
 
 void ControlMotors()
 {
     for(int i = 0; i < 5; ++i)
-        analogWrite(analogPins[i] , controlValues[i]);
+        analogWrite(analogPins[i+1] , controlValues[i]);
+
+    analogWrite(analogPins[0] , controlValues[5]);
 
     newData = false;
 }
