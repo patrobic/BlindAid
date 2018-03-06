@@ -122,7 +122,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\Dependencies\opencv\x64\Debug\lib;$(ProjectDir)..\..\Dependencies\libconfig\x64\Debug\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\Debug\lib;$(ProjectDir)..\..\Dependencies\python\x64\Debug\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);opencv_core330d.lib;opencv_highgui330d.lib;opencv_imgcodecs330d.lib;opencv_imgproc330d.lib;opencv_objdetect330d.lib;opencv_features2d330d.lib;opencv_videoio330d.lib;libconfig.lib;libpxc_d.lib;Python36_d.lib</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);opencv_world340d.lib;libconfig.lib;libpxc_d.lib;Python36_d.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /d /y /s /r "$(ProjectDir)\..\..\Dependencies\opencv\x64\Debug\bin\*.dll" "$(OutDir)"
