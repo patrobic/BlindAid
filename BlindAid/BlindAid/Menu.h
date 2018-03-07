@@ -13,7 +13,7 @@ class MainMenu
 public:
   MainMenu();
   void operator()();
-  Core::Parameters *GetParameters() { return _params; }
+  Core::Parameters *GetParameters() { return &_params; }
 
 private:
   void Setup();

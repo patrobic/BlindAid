@@ -39,7 +39,7 @@ void MainMenu::Setup()
 void MainMenu::Process()
 {
   if (_params.GetMode() == SwitchableParameters::Mode::Realtime)
-    _realtime.Process();
+    _realtime.Production();
   else
     ShowMenu();
 }
