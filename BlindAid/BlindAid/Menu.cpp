@@ -20,7 +20,6 @@ MainMenu::MainMenu() :
 void MainMenu::operator()()
 {
   Setup();
-
   Process();
 }
 

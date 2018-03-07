@@ -13,10 +13,10 @@ class MainMenu
 public:
   MainMenu();
   void operator()();
-
-  void Setup();
+  Core::Parameters *GetParameters() { return _params; }
 
 private:
+  void Setup();
   void Process();
   void ShowMenu();
   void LoadSettings();
