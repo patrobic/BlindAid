@@ -106,6 +106,8 @@ namespace Vision
         _consecutiveCount = 4;
         _maximumDistance = 25;
         _maximumRadiusDiff = 5;
+
+        _confidenceThreshold = 0.9f;
       }
 
       bool Valid()
@@ -135,6 +137,9 @@ namespace Vision
       int GetMaximumRadiusDiff() { return _maximumRadiusDiff; }
       void SetMaximumRadiusDiff(int maximumRadiusDiff) { _maximumRadiusDiff = maximumRadiusDiff; }
 
+      float GetConfidenceThreshold() { return _confidenceThreshold; }
+      void SetConfidenceThreshold(float confidenceThreshold) { _confidenceThreshold = confidenceThreshold; }
+
       std::string _path;
 
     private:
@@ -159,6 +164,9 @@ namespace Vision
       //  maximum distance and radius difference thresholds.
       int _maximumDistance;
       int _maximumRadiusDiff;
+
+      // minimum confidence required for a color other than none to be detected.
+      float _confidenceThreshold;
     };
   }
 }

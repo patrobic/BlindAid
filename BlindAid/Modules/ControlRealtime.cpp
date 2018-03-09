@@ -21,32 +21,13 @@ namespace Control
 
     void Realtime::ConnectToArduino()
     {
-      static bool firstConnect = true;
-      if (firstConnect)
-      {
-        cout << "[  GLOVE] Connecting to controller (port #" << _params->GetRealtimeParams()->GetSerialPort() << ")...\n";
-        Connect();
-        firstConnect = false;
+      cout << "[  GLOVE] Connecting to controller (port #" << _params->GetRealtimeParams()->GetSerialPort() << ")...\n";
+      Connect();
 
-        while (!_serial->isConnected())
-        {
-          cout << "[  GLOVE] Controller connection failed, attempting to reconnect (port #" << _params->GetRealtimeParams()->GetSerialPort() << ")...\n";
-          Sleep(1000);
+      while (!_serial->isConnected())
+        Reconnect();
 
-          Connect();
-        }
-      }
-      else
-      {
-        do {
-          cout << "[  GLOVE] Controller connection failed, attempting to reconnect (port #" << _params->GetRealtimeParams()->GetSerialPort() << ")...\n";
-          Sleep(1000);
-
-          Connect();
-        } while (!_serial->isConnected());
-      }
-
-        cout << "[  GLOVE] Connected to controller successfully.\n";
+      cout << "[  GLOVE] Connected to controller successfully.\n";
     }
 
     void Realtime::Connect()
@@ -55,6 +36,14 @@ namespace Control
 
       delete _serial;
       _serial = new SerialPort(&_port[0]);
+    }
+
+    void Realtime::Reconnect()
+    {
+      cout << "[  GLOVE] Controller connection failed, attempting to reconnect (port #" << _params->GetRealtimeParams()->GetSerialPort() << ")...\n";
+      Sleep(1000);
+
+      Connect();
     }
 
     void Realtime::Process()
@@ -95,11 +84,11 @@ namespace Control
       ss << _params->GetRealtimeParams()->GetMessageStart();
 
       for (int i = 0; i < 5; ++i)
-        ss << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetVibration((_params->GetHandPolarity() == Control::Parameters::HandPolarity::Left)?i:(4-i))->Get();
+        ss << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetVibration((_params->GetHandPolarity() == Control::Parameters::HandPolarity::Left) ? i : (4 - i))->Get();
 
       for (int i = 0; i < _params->GetOptionSignalsCount(); ++i)
         if (_params->GetOptionSignals(i) == Control::Parameters::OptionSignals::TrafficLight)
-          ss << setw(3) << setfill('0') << ((_input->GetTrafficLightResults()->GetColor() == Vision::TrafficLight::Result::Color::Red)?_params->GetBeeperIntensity():0);
+          ss << setw(3) << setfill('0') << ((_input->GetTrafficLightResults()->GetColor() == Vision::TrafficLight::Result::Color::Red) ? _params->GetBeeperIntensity() : 0);
         else if (_params->GetOptionSignals(i) == Control::Parameters::OptionSignals::NearObstacle)
           ss << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetMaxVibration();
         else
@@ -128,7 +117,12 @@ namespace Control
     {
       Sleep(5);
       if (_sent == false)
-        ConnectToArduino();
+      {
+        do Reconnect();
+        while (!_serial->isConnected());
+
+        cout << "[  GLOVE] Connected to controller successfully.\n";
+      }
     }
   }
 }

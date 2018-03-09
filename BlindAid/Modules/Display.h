@@ -71,6 +71,8 @@ namespace Display
     void Process();
     void DrawDepthObstacles();
     void DrawTrafficLights();
+    void DrawTrafficLightBD();
+    void DrawTrafficLightDL();
     void DrawStopSign();
     void DisplayImage();
   };

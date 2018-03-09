@@ -5,11 +5,11 @@ using namespace std::chrono;
 using namespace cv;
 using namespace cv::dnn;
 
-namespace Vision 
+namespace Vision
 {
-  namespace TrafficLight 
+  namespace TrafficLight
   {
-    namespace DeepLearning 
+    namespace DeepLearning
     {
       DeepLearning::DeepLearning(IParameters *params, IData *input, IData *output) : Base(params, input, output)
       {
@@ -34,15 +34,15 @@ namespace Vision
         steady_clock::time_point end = steady_clock::now();
         duration<double> time_span = duration_cast<duration<double>>(end - start);
         cout << "[TRAF-DL] Traffic lights detected.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n";
-        cout << "  [COLOR] " << _output->_names[_map[_classId]] << " (" << setprecision(3) << _classProb * 100 << "%).\n";
       }
 
       void DeepLearning::PreprocessImage()
       {
-        resize((*_input->GetColorImage())(Rect((int)(_input->GetColorImage()->cols * (1 - _params->GetCenterRegionRatio()) / 2), 0,
+        _output->SetRegion(Rect((int)(_input->GetColorImage()->cols * (1 - _params->GetCenterRegionRatio()) / 2), 0,
           (int)(_input->GetColorImage()->cols *  _params->GetCenterRegionRatio()),
-          (int)(_input->GetColorImage()->rows*_params->GetUpperRegionRatio()))),
-          _preprocessedImage, _params->GetDeepLearningParams()->GetColorImageSize());
+          (int)(_input->GetColorImage()->rows*_params->GetUpperRegionRatio())));
+
+        resize((*_input->GetColorImage())(_output->GetRegion()), _preprocessedImage, _params->GetDeepLearningParams()->GetColorImageSize());
       }
 
       void DeepLearning::MachineLearning()

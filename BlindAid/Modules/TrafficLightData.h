@@ -118,7 +118,7 @@ namespace Vision
     private:
       cv::Point _center = cv::Point(0, 0);
       float _radius = 0.f;
-      int _count = 1;
+      int _count = 0;
       float _confidence[4] = { 0.f, 0.f, 0.f, 0.f };
     };
 
@@ -133,6 +133,7 @@ namespace Vision
         _consecutiveCount = params->GetConsecutiveCount();
         _maximumDistance = params->GetMaximumDistance();
         _maximumRadiusDiff = params->GetMaximumRadiusDiff();
+        _confidenceThreshold = params->GetConfidenceThreshold();
       }
 
       void Clear()
@@ -166,7 +167,7 @@ namespace Vision
       Result::Color GetColor()
       {
         if (_results.size() == 1 && _results.at(0).GetCenter() == cv::Point(0, 0))
-          return _results.at(0).GetColor();
+          return (_results.at(0).GetConfidence(_results.at(0).GetColor()) > _confidenceThreshold) ? _results.at(0).GetColor() : Result::Color::None;
         else
         {
           _temp.clear();
@@ -188,7 +189,7 @@ namespace Vision
         {
           if (result.GetColor() == _results[0].GetColor())
             result.SetCount(_results[0].GetCount());
-          
+
           _results[0].Set(result);
         }
         else
@@ -251,6 +252,9 @@ namespace Vision
         _unfiltered.clear();
       }
 
+      cv::Rect GetRegion() { return _region; }
+      void SetRegion(cv::Rect rect) { _region = rect; }
+
     private:
       std::vector<Result> FilterByConsecutiveCount()
       {
@@ -269,9 +273,12 @@ namespace Vision
       std::vector<Result> _unfiltered;
       std::vector<Result> _temp;
 
+      cv::Rect _region;
+
       int _consecutiveCount = 0;
       int _maximumDistance = 0;
       int _maximumRadiusDiff = 0;
+      float _confidenceThreshold = 0;
     };
   }
 }

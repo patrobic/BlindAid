@@ -21,7 +21,7 @@ void SimulateMenu::operator()()
 }
 
 void SimulateMenu::ShowMenu()
-{  
+{
   char in;
   system("cls");
 
@@ -148,7 +148,7 @@ void SimulateMenu::TestSequence()
   _params->GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + path);
   _results->GetCaptureResults()->SetStatus(true);
 
-  while(_results->GetCaptureResults()->GetStatus())
+  while (_results->GetCaptureResults()->GetStatus())
     Process();
 
   destroyAllWindows();

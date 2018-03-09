@@ -16,6 +16,7 @@ namespace Control
       void Process();
       void ConnectToArduino();
       void Connect();
+      void Reconnect();
       void SendControl();
       void GenerateString();
       void TPlayAudio();

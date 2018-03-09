@@ -36,7 +36,7 @@ namespace Display
     for (int j = 0; j < VERT_REGIONS; ++j)
     {
       for (int i = 0; i < HORZ_REGIONS; ++i)
-    {
+      {
         rect = _input->GetDepthObstacleResults()->GetRegion(j, i);
         rectangle(*_input->GetDepthOverlayImage(), rect, Scalar(0, 0, 255), 2);
         putText(*_input->GetDepthOverlayImage(), to_string(_input->GetDepthObstacleResults()->GetDepth(j, i)), Point(rect.x + (int)(0.5 * rect.width) - 25, rect.y + (int)(0.5 * rect.height)), FONT_HERSHEY_PLAIN, 1.25, Scalar(0, 0, 255), 2);
@@ -51,28 +51,36 @@ namespace Display
   {
     _output->GetColorImage()->copyTo(*_input->GetColorOverlayImage());
 
+    rectangle(*_input->GetColorOverlayImage(), _input->GetTrafficLightResults()->GetRegion(), Scalar(0, 0, 255), 4);
+
     if (_input->GetTrafficLightResults()->GetAll()->size() == 1 && _input->GetTrafficLightResults()->GetAll()->at(0).GetCenter() == Point(0, 0))
-    {
-      Vision::TrafficLight::Result first = _input->GetTrafficLightResults()->GetAll()->at(0);
-
-      (*_input->GetColorOverlayImage())(cv::Rect(480, 0, 240, 60)).setTo(Scalar(255, 255, 255));
-      putText(*_input->GetColorOverlayImage(), _input->GetTrafficLightResults()->_names[first.GetColor()], Point(500, 45), FONT_HERSHEY_PLAIN, 3, _input->GetTrafficLightResults()->_colors[first.GetColor()], 2);
-
-      for (int j = 0; j < 4; ++j)
-      {
-        (*_input->GetColorOverlayImage())(cv::Rect(j * 120, 0, 120, 60)).setTo(_input->GetTrafficLightResults()->_colors[j] * max(0.25f, first.GetConfidence((Vision::TrafficLight::Result::Color)j)));
-        putText(*_input->GetColorOverlayImage(), to_string(first.GetConfidence((Vision::TrafficLight::Result::Color)j)).substr(0, 4), Point(j * 120 + 10, 45), FONT_HERSHEY_PLAIN, 3, Scalar(255, 255, 255), 2);
-      }
-    }
+      DrawTrafficLightDL();
     else
-    {
-      vector<Vision::TrafficLight::Result> result = _input->GetTrafficLightResults()->Get();
+      DrawTrafficLightBD();
+  }
 
-      for (int i = 0; i < result.size(); ++i)
-      {
-        circle(*_input->GetColorOverlayImage(), result.at(i).GetCenter(), (int)result.at(i).GetRadius() + 2, _input->GetTrafficLightResults()->_colors[result.at(i).GetColor()], 2);
-        putText(*_input->GetColorOverlayImage(), _input->GetTrafficLightResults()->_names[result.at(i).GetColor()] + "TrafficLight" + to_string(i), Point(result.at(i).GetCenter().x - (int)result.at(i).GetRadius(), result.at(i).GetCenter().y - (int)result.at(i).GetRadius()), FONT_HERSHEY_PLAIN, 1, _input->GetTrafficLightResults()->_colors[result.at(i).GetColor()]);
-      }
+  void Display::DrawTrafficLightBD()
+  {
+    vector<Vision::TrafficLight::Result> result = _input->GetTrafficLightResults()->Get();
+
+    for (int i = 0; i < result.size(); ++i)
+    {
+      circle(*_input->GetColorOverlayImage(), result.at(i).GetCenter(), (int)result.at(i).GetRadius() + 2, _input->GetTrafficLightResults()->_colors[result.at(i).GetColor()], 2);
+      putText(*_input->GetColorOverlayImage(), _input->GetTrafficLightResults()->_names[result.at(i).GetColor()] + "TrafficLight" + to_string(i), Point(result.at(i).GetCenter().x - (int)result.at(i).GetRadius(), result.at(i).GetCenter().y - (int)result.at(i).GetRadius()), FONT_HERSHEY_PLAIN, 1, _input->GetTrafficLightResults()->_colors[result.at(i).GetColor()]);
+    }
+  }
+
+  void Display::DrawTrafficLightDL()
+  {
+    Vision::TrafficLight::Result first = _input->GetTrafficLightResults()->GetAll()->at(0);
+
+    (*_input->GetColorOverlayImage())(cv::Rect(480, 0, 240, 60)).setTo(Scalar(255, 255, 255));
+    putText(*_input->GetColorOverlayImage(), _input->GetTrafficLightResults()->_names[_input->GetTrafficLightResults()->GetColor()], Point(500, 45), FONT_HERSHEY_PLAIN, 3, _input->GetTrafficLightResults()->_colors[_input->GetTrafficLightResults()->GetColor()], 2);
+
+    for (int j = 0; j < 4; ++j)
+    {
+      (*_input->GetColorOverlayImage())(cv::Rect(j * 120, 0, 120, 60)).setTo(_input->GetTrafficLightResults()->_colors[j] * max(0.25f, first.GetConfidence((Vision::TrafficLight::Result::Color)j)));
+      putText(*_input->GetColorOverlayImage(), to_string(first.GetConfidence((Vision::TrafficLight::Result::Color)j)).substr(0, 4), Point(j * 120 + 10, 45), FONT_HERSHEY_PLAIN, 3, Scalar(255, 255, 255), 2);
     }
   }
 
