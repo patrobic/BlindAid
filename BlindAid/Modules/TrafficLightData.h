@@ -154,33 +154,35 @@ namespace Vision
         return &_results;
       }
 
-      Result GetSingle()
-      {
-        return _results.at(0);
-      }
-
       std::vector<Result> Get()
       {
         return FilterByConsecutiveCount();
       }
 
+      float GetConfidence(Result::Color color)
+      {
+        return _results.at(0).GetConfidence(color);
+      }
+
       Result::Color GetColor()
       {
-        if (_results.size() == 1 && _results.at(0).GetCenter() == cv::Point(0, 0))
-          return (_results.at(0).GetConfidence(_results.at(0).GetColor()) > _confidenceThreshold) ? _results.at(0).GetColor() : Result::Color::None;
-        else
-        {
-          _temp.clear();
-          _temp = FilterByConsecutiveCount();
+        _temp.clear();
+        _temp = FilterByConsecutiveCount();
 
-          // if more than 1 light exists, it will prioritize return value in enum order (Red, Green, Yellow, None).
-          for (int j = 0; j < 4; ++j)
-            for (int i = 0; i < _temp.size(); ++i)
-              if (_temp[i].GetColor() == j)
-                return (Result::Color)j;
+        if (_temp.size() > 0)
+          if (_temp.at(0).GetCenter() == cv::Point(0, 0))
+            if (_temp.at(0).GetConfidence(_temp.at(0).GetColor()) > _confidenceThreshold) 
+              return _temp.at(0).GetColor();
+          else
+          {
+            // if more than 1 light exists, it will prioritize return value in enum order (Red, Green, Yellow, None).
+            for (int j = 0; j < 4; ++j)
+              for (int i = 0; i < _temp.size(); ++i)
+                if (_temp[i].GetColor() == j)
+                  return (Result::Color)j;
+          }
 
-          return Result::Color::None;
-        }
+        return Result::Color::None;
       }
 
       void Set(Result result)
