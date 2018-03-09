@@ -27,6 +27,14 @@ namespace Control
         cout << "[  GLOVE] Connecting to controller (port #" << _params->GetRealtimeParams()->GetSerialPort() << ")...\n";
         Connect();
         firstConnect = false;
+
+        while (!_serial->isConnected())
+        {
+          cout << "[  GLOVE] Controller connection failed, attempting to reconnect (port #" << _params->GetRealtimeParams()->GetSerialPort() << ")...\n";
+          Sleep(1000);
+
+          Connect();
+        }
       }
       else
       {
