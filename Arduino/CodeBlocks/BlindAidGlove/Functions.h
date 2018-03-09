@@ -6,7 +6,7 @@
 void InitializePins();
 void ReceiveData();
 void ParseValues();
-void ControlMotors();
+void ControlFeedback();
 void SendResponse();
 
 #endif // FUNCTIONS_H_INCLUDED

@@ -60,12 +60,15 @@ void ParseValues()
             controlValues[i] = 0;
 }
 
-void ControlMotors()
+void ControlFeedback()
 {
     for(int i = 0; i < 5; ++i)
         analogWrite(analogPins[i+1] , controlValues[i]);
 
-    analogWrite(analogPins[0] , controlValues[5]);
+    if((millis() / 250) % 2 == 0)
+        analogWrite(analogPins[0], controlValues[5]);
+    else
+        analogWrite(analogPins[0], 0);
 
     newData = false;
 }

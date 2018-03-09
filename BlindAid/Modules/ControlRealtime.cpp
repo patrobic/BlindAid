@@ -87,11 +87,11 @@ namespace Control
       ss << _params->GetRealtimeParams()->GetMessageStart();
 
       for (int i = 0; i < 5; ++i)
-        ss << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetVibration(i)->Get();
+        ss << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetVibration((_params->GetHandPolarity() == Control::Parameters::HandPolarity::Left)?i:(4-i))->Get();
 
       for (int i = 0; i < _params->GetOptionSignalsCount(); ++i)
         if (_params->GetOptionSignals(i) == Control::Parameters::OptionSignals::TrafficLight)
-          ss << setw(3) << setfill('0') << (_input->GetTrafficLightResults()->GetColor() == Vision::TrafficLight::Result::Color::Red)?255:0;
+          ss << setw(3) << setfill('0') << ((_input->GetTrafficLightResults()->GetColor() == Vision::TrafficLight::Result::Color::Red)?_params->GetBeeperIntensity():0);
         else if (_params->GetOptionSignals(i) == Control::Parameters::OptionSignals::NearObstacle)
           ss << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetMaxVibration();
         else

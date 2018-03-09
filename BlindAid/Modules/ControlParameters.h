@@ -87,7 +87,7 @@ namespace Control
       _realtimeParams.Defaults();
       _simulateParams.Defaults();
 
-      _handPolarity = Left;
+      _handPolarity = Right;
 
       _localAudioEnabled = false;
       _audioDelay = 1000;
@@ -98,6 +98,7 @@ namespace Control
       _optionSignals[0] = TrafficLight;
       _optionSignals[1] = None;
       _optionSignalsCount = 1;
+      _beeperIntensity = 150;
     }
 
     bool Valid()
@@ -126,6 +127,9 @@ namespace Control
     int GetOptionSignalsCount() { return _optionSignalsCount; }
     void SetOptionSignalsCount(int optionSignalsCount) { _optionSignalsCount = optionSignalsCount; }
 
+    int GetBeeperIntensity() { return _beeperIntensity; }
+    void SetBeeperIntensity(int beeperIntensity) { _beeperIntensity = beeperIntensity; }
+
   private:
     // realtime control parameters.
     Realtime::Parameters _realtimeParams;
@@ -150,5 +154,8 @@ namespace Control
 
     // how many option signals are actually enabled.
     int _optionSignalsCount;
+
+    // PWM value of the beeper.
+    int _beeperIntensity;
   };
 }
