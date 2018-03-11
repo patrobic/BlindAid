@@ -38,16 +38,7 @@ namespace Capture
 
       ConnectToCamera();
       ReadCamera();
-
-      try {
-        if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
-          GetColorFrame();
-        if (_params->GetType() == SwitchableParameters::Type::Depth || _params->GetType() == SwitchableParameters::Type::Both)
-          GetDepthFrame();
-      }
-      catch (...) { _output->SetStatus(false); }
-
-      _pp->ReleaseFrame();
+      GetFrames();
 
       steady_clock::time_point end = steady_clock::now();
       duration<double> time_span = duration_cast<duration<double>>(end - start);
@@ -86,6 +77,27 @@ namespace Capture
       }
 
       cout << "[ CAMERA] Connected to acquisition successfully.\n";
+    }
+
+    void Realtime::GetFrames()
+    {
+      _output->_colorImageMutex.lock();
+      
+      try {
+        if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
+          GetColorFrame();
+        if (_params->GetType() == SwitchableParameters::Type::Depth || _params->GetType() == SwitchableParameters::Type::Both)
+          GetDepthFrame();
+      }
+      catch (...) {
+        _output->_colorImageMutex.unlock();
+        _output->SetStatus(false);
+      }
+
+      _pp->ReleaseFrame();
+
+      _output->_colorImageMutex.unlock();
+      _output->_newColorFrame = true;
     }
 
     void Realtime::GetColorFrame()

@@ -14,6 +14,7 @@ namespace Capture
 
     private:
       void Process();
+      void LoadFile();
       void LoadVideo();
       void LoadPhoto();
       void LoadSequence();

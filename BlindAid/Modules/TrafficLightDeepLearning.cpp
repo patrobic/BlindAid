@@ -25,24 +25,25 @@ namespace Vision
 
       void DeepLearning::Process()
       {
-        steady_clock::time_point start = steady_clock::now();
+        static bool firstRun = true;
+        if(firstRun)
+          _processThread = new std::thread(&DeepLearning::TProcess, this);
 
-        PreprocessImage();
-        MachineLearning();
-        UpdateResults();
-
-        steady_clock::time_point end = steady_clock::now();
-        duration<double> time_span = duration_cast<duration<double>>(end - start);
-        cout << "[TRAF-DL] Traffic lights detected.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n";
+        firstRun = false;
       }
 
       void DeepLearning::PreprocessImage()
       {
+        _input->_colorImageMutex.lock();
+
         _output->SetRegion(Rect((int)(_input->GetColorImage()->cols * (1 - _params->GetCenterRegionRatio()) / 2), 0,
           (int)(_input->GetColorImage()->cols *  _params->GetCenterRegionRatio()),
           (int)(_input->GetColorImage()->rows*_params->GetUpperRegionRatio())));
 
         resize((*_input->GetColorImage())(_output->GetRegion()), _preprocessedImage, _params->GetDeepLearningParams()->GetColorImageSize());
+
+        _input->_colorImageMutex.unlock();
+        _input->_newColorFrame = false;
       }
 
       void DeepLearning::MachineLearning()
@@ -61,7 +62,29 @@ namespace Vision
         for (int i = 0; i < 3; ++i)
           _confidence[_map[i]] = max(0.f, _result.at<float>(i));
 
+        _output->_trafficLightMutex.lock();
         _output->Set(Result(_confidence));
+        _output->_trafficLightMutex.unlock();
+      }
+
+      void DeepLearning::TProcess()
+      {
+        while (true)
+        {
+          if (_input->_newColorFrame)
+          {
+            steady_clock::time_point start = steady_clock::now();
+
+            PreprocessImage();
+            MachineLearning();
+            UpdateResults();
+
+            steady_clock::time_point end = steady_clock::now();
+            duration<double> time_span = duration_cast<duration<double>>(end - start);
+            cout << "[TRAF-DL] Traffic lights detected.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n";
+
+          }
+        }
       }
     }
   }

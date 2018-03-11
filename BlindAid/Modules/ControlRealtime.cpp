@@ -88,7 +88,11 @@ namespace Control
 
       for (int i = 0; i < _params->GetOptionSignalsCount(); ++i)
         if (_params->GetOptionSignals(i) == Control::Parameters::OptionSignals::TrafficLight)
+        {
+          _input->GetTrafficLightResults()->_trafficLightMutex.lock();
           ss << setw(3) << setfill('0') << ((_input->GetTrafficLightResults()->GetColor() == Vision::TrafficLight::Result::Color::Red) ? _params->GetBeeperIntensity() : 0);
+          _input->GetTrafficLightResults()->_trafficLightMutex.unlock();
+        }
         else if (_params->GetOptionSignals(i) == Control::Parameters::OptionSignals::NearObstacle)
           ss << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetMaxVibration();
         else

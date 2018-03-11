@@ -22,6 +22,9 @@ namespace Vision
         void MachineLearning();
         void UpdateResults();
 
+        void TProcess();
+        std::thread *_processThread;
+
         cv::Mat _preprocessedImage;
         cv::Mat _inputBlob;
         cv::Mat _result;

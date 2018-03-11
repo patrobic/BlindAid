@@ -257,6 +257,8 @@ namespace Vision
       cv::Rect GetRegion() { return _region; }
       void SetRegion(cv::Rect rect) { _region = rect; }
 
+      std::mutex _trafficLightMutex;
+
     private:
       std::vector<Result> FilterByConsecutiveCount()
       {

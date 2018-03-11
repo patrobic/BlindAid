@@ -40,6 +40,8 @@ namespace Control
     {
       stringstream lights;
 
+      _input->GetTrafficLightResults()->_trafficLightMutex.lock();
+
       cout << "  [AUDIO] ";
       if (_input->GetTrafficLightResults()->GetAll()->at(0).GetCenter() == Point(0, 0))
       {
@@ -54,6 +56,7 @@ namespace Control
         cout << " TrafficLights(" << lights.str() << "Total: " << _input->GetTrafficLightResults()->Get().size() << ").\n";
       }
 
+      _input->GetTrafficLightResults()->_trafficLightMutex.unlock();
     }
 
     void Simulate::PrintStopSign()

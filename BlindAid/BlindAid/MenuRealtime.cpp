@@ -41,7 +41,7 @@ void RealtimeMenu::ShowMenu()
     switch (in)
     {
     case 'a':
-      Production();
+      TestRealtimeComplete();
       break;
     case 'c':
       TestRealtimeCapture();
@@ -61,53 +61,39 @@ void RealtimeMenu::Process()
     _core = new Core::Core(_params, NULL, _results);
 
   (*_core)();
+
+  destroyAllWindows();
 }
 
-void RealtimeMenu::Production()
+void RealtimeMenu::TestRealtimeComplete()
 {
   _params->GetCaptureParams()->SetMode(SwitchableParameters::Mode::Realtime);
   _params->GetControlParams()->SetMode(SwitchableParameters::Mode::Realtime);
-  _params->GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Video);
-  _params->GetCaptureParams()->SetType(SwitchableParameters::Type::Both);
-  _params->GetRecordParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
 
   Process();
-  destroyAllWindows();
 }
 
 void RealtimeMenu::TestRealtimeCapture()
 {
   _params->GetCaptureParams()->SetMode(SwitchableParameters::Mode::Realtime);
   _params->GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
-  _params->GetVisionParams()->GetStopSignParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
-  _params->GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Video);
-  _params->GetCaptureParams()->SetType(SwitchableParameters::Type::Both);
-  _params->GetRecordParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
 
   Process();
-  destroyAllWindows();
 }
 
 void RealtimeMenu::TestRealtimeControl(string colorPath, string depthPath, int count)
 {
   _params->GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
   _params->GetControlParams()->SetMode(SwitchableParameters::Mode::Realtime);
-  _params->GetVisionParams()->GetDepthObstacleParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
-  _params->GetVisionParams()->GetTrafficLightParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
-  _params->GetVisionParams()->GetStopSignParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
   _params->GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Photo);
   _params->GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(PATH + depthPath);
   _params->GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(PATH + colorPath);
-  _params->GetRecordParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
 
   Process();
-  destroyAllWindows();
 }
 
 void RealtimeMenu::TestRecord(string path)
 {
-  _params->GetRecordParams()->SetType(SwitchableParameters::Type::Both);
-  _params->GetCaptureParams()->SetType(SwitchableParameters::Type::Both);
   _params->GetRecordParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
   _params->GetRecordParams()->SetPath(PATH + path);
 

@@ -17,6 +17,19 @@ namespace Capture
     {
       steady_clock::time_point start = steady_clock::now();
 
+      LoadFile();
+      CreateHsvImage();
+
+      steady_clock::time_point end = steady_clock::now();
+      duration<double> time_span = duration_cast<duration<double>>(end - start);
+
+      cout << "[CAPTURE] Images acquired from camera.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n";
+    }
+
+    void Simulate::LoadFile()
+    {
+      _output->_colorImageMutex.lock();
+
       if (_params->GetSimulateParams()->GetMediaType() == Parameters::MediaType::Video)
         LoadVideo();
       else if (_params->GetSimulateParams()->GetMediaType() == Parameters::MediaType::Photo)
@@ -24,12 +37,8 @@ namespace Capture
       else
         LoadSequence();
 
-      CreateHsvImage();
-
-      steady_clock::time_point end = steady_clock::now();
-      duration<double> time_span = duration_cast<duration<double>>(end - start);
-
-      cout << "[CAPTURE] Images acquired from camera.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n";
+      _output->_colorImageMutex.unlock();
+      _output->_newColorFrame = true;
     }
 
     void Simulate::LoadVideo()

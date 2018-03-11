@@ -98,7 +98,7 @@ namespace Vision
         _verticalRegions = VERT_REGIONS;
 
         _regionHeight = 0.4f;
-        _regionWidth = 0.1f;
+        _regionWidth = 0.2f;
 
         _horizontalCoverage = 0.9f;
         _verticalCoverage = 0.9f;
@@ -106,25 +106,33 @@ namespace Vision
         _snapToEdges = true;
         _defaultCenter = cv::Point(320, 240);
 
-        _minimumDistance = 500;
+        _minimumDistance = 640;
         _maximumDistance = 5000;
-        _percentileToIgnore = 0.01f;
+        _percentileToIgnore = 0.06f;
         _intensityPolarity = Polarity::CloseIsSmall;
         _histogramBins = 256;
 
         float bounds[HORZ_REGIONS][VERT_REGIONS] = {
-          { 700, 800, 900, 800, 700 },
-          { 800, 900, 1000, 900, 800 },
-          { 700, 800, 900, 800, 700 } };
+          { 1000, 1100, 1200, 1100, 1000 },
+          { 1100, 1200, 1300, 1200, 1100 },
+          { 1000, 1100, 1200, 1100, 1000 } };
+        // not sensitive
+          //{ 700, 800, 900, 800, 700 },
+          //{ 800, 900, 1000, 900, 800 },
+          //{ 700, 800, 900, 800, 700 } };
+        // very sensitive
+          //{ 1200, 1300, 1400, 1300, 1200 },
+          //{ 1300, 1400, 1500, 1400, 1300 },
+          //{ 1200, 1300, 1400, 1300, 1200 } };
 
         for (int i = 0; i < HORZ_REGIONS; ++i)
           for (int j = 0; j < VERT_REGIONS; ++j)
             _farthestBound[i][j] = bounds[i][j];
 
-        _nearestBound = 650;
-        _minimumVibration = 0.25f;
+        _minimumVibration = 25.f;
         _maximumVibration = 255.f;
-        _maximumDepthSpec = 5.f;
+
+        _validRatioThreshold = 0.1f;
       }
 
       bool Valid()
@@ -184,17 +192,14 @@ namespace Vision
       float GetFarthestBound(int finger, int level) { return _farthestBound[level][finger]; }
       void SetFarthestBound(int finger, int level, float farthestBound) { _farthestBound[level][finger] = farthestBound; }
 
-      float GetNearestBound() { return _nearestBound; }
-      void SetNearestBound(float nearestBound) { _nearestBound = nearestBound; }
-
       float GetMinimumVibration() { return _minimumVibration; }
       void SetMinimumVibration(float minimumVibration) { _minimumVibration = minimumVibration; }
 
       float GetMaximumVibration() { return _maximumVibration; }
       void SetMaximumVibration(float maximumVibration) { _maximumVibration = maximumVibration; }
 
-      float GetMaximumDepthSpec() { return _maximumDepthSpec; }
-      void SetMaximumDepthSpec(float maximumDepthSpec) { _maximumDepthSpec = maximumDepthSpec; }
+      float GetValidRatioThreshold() { return _validRatioThreshold; }
+      void SetValidRatioThreshold(float validRatioThreshold) { _validRatioThreshold = validRatioThreshold; }
 
     private:
       // parameters specific to blob detector mode.
@@ -258,6 +263,9 @@ namespace Vision
 
       // camera maximum depth distance (in meters), i.e. distance at pixel = 255.
       float _maximumDepthSpec;
+
+      // minimum ratio of non-zero pixels for successful detection.
+      float _validRatioThreshold;
     };
   }
 }

@@ -63,7 +63,7 @@ namespace Capture
 
       void Defaults()
       {
-        _mediaType = Photo;
+        _mediaType = Video;
         _colorSimDataPath = "";
         _depthSimDataPath = "";
       }
