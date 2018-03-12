@@ -22,12 +22,18 @@ namespace Vision
       {
         _start = steady_clock::now();
         
+        CreateHsvImage();
         MaskColors();
         PreprocessImages();
         DetectBlobs();
         //ConfirmWithBox();
 
         LOG(Info, "Traffic lights detected", "BLOBDET", _start);
+      }
+
+      void BlobDetector::CreateHsvImage()
+      {
+        cvtColor(*_input->GetColorImage(), *_input->GetHsvImage(), CV_BGR2HSV);
       }
 
       void BlobDetector::MaskColors()

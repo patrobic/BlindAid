@@ -2,6 +2,7 @@
 
 #include <mutex>
 #include <chrono>
+#include <sstream>
 
 enum LogLevel { Error, Warning, Info };
 
@@ -36,6 +37,4 @@ private:
   std::mutex _printMutex;
 
   std::string _levels[3] = { "ERROR", "WARNING", "INFO" };
-
-  int _time = 0;
 };

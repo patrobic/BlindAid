@@ -26,5 +26,6 @@ namespace Core
     int _frame = 0;
     double _totalTime = 0;
     int _maxTime = 0;
+    std::chrono::steady_clock::time_point _first = std::chrono::steady_clock::now();
   };
 }

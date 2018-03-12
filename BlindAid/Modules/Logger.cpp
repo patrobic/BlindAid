@@ -4,38 +4,43 @@
 #include <iomanip>
 
 using namespace std;
+using namespace std::chrono;
 
-void Logger::operator()(LogLevel level, std::string message, std::string name, std::chrono::steady_clock::time_point start, std::string subName)
+void Logger::operator()(LogLevel level, string message, string name, steady_clock::time_point start, string subName)
 {
   Log(level, message, name, start, subName, true);
 }
 
-void Logger::operator()(LogLevel level, std::string message, std::string name, std::string subName)
+void Logger::operator()(LogLevel level, string message, string name, string subName)
 {
-  Log(level, message, name, chrono::steady_clock::now(), subName, false);
+  Log(level, message, name, steady_clock::now(), subName, false);
 }
 
-void Logger::Log(LogLevel level, std::string message, std::string name, std::chrono::steady_clock::time_point start, std::string subName, bool time)
+void Logger::Log(LogLevel level, string message, string name, steady_clock::time_point start, string subName, bool time)
 {
   if (level <= *_maxLevel)
   {
-    _printMutex.lock();
+    duration<double> dur = duration_cast<duration<double>>(steady_clock::now() - start);
+    stringstream ss;
 
-    cout << "[" << setw(7) << left << _levels[level].c_str() << "] ";
-    cout << "[" << setw(8) << right << name.c_str();
+    ss.clear();
+    ss << "[" << setw(7) << left << _levels[level].c_str() << "] ";
+    ss << "[" << setw(8) << right << name.c_str();
 
     if (subName.size() > 0)
-      cout << "/" << setw(8) << left << subName.c_str() << "] ";
+      ss << "/" << setw(8) << left << subName.c_str() << "] ";
     else
-      cout << setw(11) << "] ";
+      ss << setw(11) << "] ";
 
-    cout << setw(79) << left << message.c_str();
+    ss << setw(79) << left << message.c_str();
 
     if (time)
-      cout << " [" << setw(5) << right << (int)(chrono::duration_cast<chrono::duration<double>>(chrono::steady_clock::now() - start).count() * 1000) << "ms]";
+      ss << " [" << setw(5) << right << (int)(dur.count() * 1000) << "ms]";
 
-    cout << "\n";
+    ss << "\n";
 
+    _printMutex.lock();
+    cout << ss.str();
     _printMutex.unlock();
   }
 }

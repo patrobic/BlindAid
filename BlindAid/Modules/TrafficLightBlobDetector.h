@@ -15,6 +15,7 @@ namespace Vision
 
       private:
         void Process();
+        void CreateHsvImage();
         void MaskColors();
         void PreprocessImages();
         void DetectBlobs();

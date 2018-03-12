@@ -113,7 +113,6 @@ namespace Capture
       _sample->color->AcquireAccess(Intel::RealSense::ImageAccess::ACCESS_READ, Intel::RealSense::PixelFormat::PIXEL_FORMAT_BGR, &_color);
       _output->GetColorImage()->data = _color.planes[0];
 
-      CreateHsvImage();
       _sample->color->ReleaseAccess(&_color);
     }
 

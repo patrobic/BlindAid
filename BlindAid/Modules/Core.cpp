@@ -25,6 +25,8 @@ namespace Core
 
   void Core::Process()
   {
+    _first = steady_clock::now();
+
     do
     {
       _start = steady_clock::now();
@@ -69,11 +71,12 @@ namespace Core
     _maxTime = max(_maxTime, (int)(duration_cast<chrono::duration<double>>(steady_clock::now() - _start).count() * 1000));
     _totalTime += duration_cast<chrono::duration<double>>(steady_clock::now() - _start).count();
 
-    ss << "[Frame #" << setw(5) << _frame++ << "] (mean=" 
+    ss << "[Frame #" << setw(5) << _frame++ << "] (mean="
       << setw(4) << (int)(_totalTime * 1000 / _frame) << "ms, max="
       << setw(4) << _maxTime << "ms, total="
-      << setw(6) << setprecision(3) << fixed << _totalTime << "s)";
- 
+      << setw(6) << setprecision(1) << fixed << _totalTime << "s, rate="
+      << setw(5) << setprecision(2) << fixed << _frame / duration_cast<chrono::duration<double>>(steady_clock::now() - _first).count() << "f/s)";
+
     LOG(Warning, ss.str(), _start);
 
     if ((int)*_params->GetGlobalParameters()->GetLogLevel() > (int)LogLevel::Warning)

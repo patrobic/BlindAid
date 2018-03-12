@@ -21,10 +21,8 @@ namespace Capture
 
       LoadFile();
       
-      if (!_output->GetStop())
+      if (_output->GetStop())
         return;
-
-      CreateHsvImage();
 
       LOG(Info, "Images acquired from disk (" + _colorName + ", " + _depthName + ")", "SIMULATE", _start);
     }

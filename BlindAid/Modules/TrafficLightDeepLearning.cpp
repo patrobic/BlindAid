@@ -73,8 +73,8 @@ namespace Vision
       {
         while (true)
         {
-          if (!_input->GetStatus())
-            break;
+          if (!_input->GetStatus() || _input->GetStop())
+            return;
 
           if (_input->_newColorFrame)
           {
@@ -83,6 +83,9 @@ namespace Vision
             PreprocessImage();
             MachineLearning();
             UpdateResults();
+
+            if (!_input->GetStatus() || _input->GetStop())
+              break;
 
             LOG(Info, "Traffic lights detected", "DEEPLEAR", _start);
           }

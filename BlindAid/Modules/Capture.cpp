@@ -16,9 +16,4 @@ namespace Capture
     else
       return new Simulate::Simulate(params, input, output, logger);
   }
-
-  void Base::CreateHsvImage()
-  {
-    cvtColor(*_output->GetColorImage(), *_output->GetHsvImage(), CV_BGR2HSV);
-  }
 }
