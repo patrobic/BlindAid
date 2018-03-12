@@ -24,10 +24,19 @@ namespace Vision
   {
     _start = steady_clock::now();
 
-    (*_depthObstacle)();
-    (*_trafficLight)();
-    (*_stopSign)();
+    RunModules();
 
     LOG(Info, "Image detection processed", _start);
+  }
+
+  void Vision::RunModules()
+  {
+    if (_params->GetMode() == SwitchableParameters::Type::Depth || _params->GetMode() == SwitchableParameters::Type::Both)
+      (*_depthObstacle)();
+
+    if (_params->GetMode() == SwitchableParameters::Type::Color || _params->GetMode() == SwitchableParameters::Type::Both)
+      (*_trafficLight)();
+
+    //(*_stopSign)();
   }
 }

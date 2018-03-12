@@ -21,8 +21,12 @@ namespace Control
     {
       _start = steady_clock::now();
 
-      PrintDepthObstacle();
-      PrintTrafficLights();
+      if (_params->GetMode() == SwitchableParameters::Type::Depth || _params->GetMode() == SwitchableParameters::Type::Both)
+        PrintDepthObstacle();
+
+      if (_params->GetMode() == SwitchableParameters::Type::Color || _params->GetMode() == SwitchableParameters::Type::Both)
+        PrintTrafficLights();
+
       //PrintStopSign();
 
       LOG(Info, "Control values displayed on screen", "SIMULATE", _start);

@@ -17,45 +17,58 @@ namespace Display
   {
     _start = steady_clock::now();
 
-    DrawDepthObstacles();
-    DrawTrafficLights();
-    DrawStopSign();
-    DisplayImage();
+    if (_params->GetMode() == SwitchableParameters::Type::Depth || _params->GetMode() == SwitchableParameters::Type::Both)
+    {
+      DrawDepthObstacles();
+      DisplayDepthImage();
+    }
+
+    if (_params->GetMode() == SwitchableParameters::Type::Color || _params->GetMode() == SwitchableParameters::Type::Both)
+    {
+      DrawTrafficLights();
+      DisplayColorImage();
+    }
+
+    //DrawStopSign();
 
     LOG(Info, "Results displayed to screen", _start);
   }
 
   void Display::DrawDepthObstacles()
   {
-    _output->GetDepthImage()->convertTo(*_input->GetDepthOverlayImage(), CV_8UC1, 1.f / 8.f, -0.5 / 8.f); // , 255.0 / (5 - 0.5));
-    if (_input->GetDepthOverlayImage()->channels() == 1)
-      cvtColor(*_input->GetDepthOverlayImage(), *_input->GetDepthOverlayImage(), CV_GRAY2BGR);
-
-    Rect rect;
-    for (int j = 0; j < VERT_REGIONS; ++j)
     {
-      for (int i = 0; i < HORZ_REGIONS; ++i)
-      {
-        rect = _input->GetDepthObstacleResults()->GetRegion(j, i);
-        rectangle(*_input->GetDepthOverlayImage(), rect, Scalar(0, 0, 255), 2);
-        putText(*_input->GetDepthOverlayImage(), to_string(_input->GetDepthObstacleResults()->GetDepth(j, i)), Point(rect.x + (int)(0.5 * rect.width) - 25, rect.y + (int)(0.5 * rect.height)), FONT_HERSHEY_PLAIN, 1.25, Scalar(0, 0, 255), 2);
-      }
+      _output->GetDepthImage()->convertTo(*_input->GetDepthOverlayImage(), CV_8UC1, 1.f / 8.f, -0.5 / 8.f); // , 255.0 / (5 - 0.5));
+      if (_input->GetDepthOverlayImage()->channels() == 1)
+        cvtColor(*_input->GetDepthOverlayImage(), *_input->GetDepthOverlayImage(), CV_GRAY2BGR);
 
-      (*_input->GetDepthOverlayImage())(cv::Rect(j * 60, 0, 60, 30)).setTo((int)_input->GetDepthObstacleResults()->GetVibration(j)->Get());
-      putText(*_input->GetDepthOverlayImage(), to_string((int)_input->GetDepthObstacleResults()->GetVibration(j)->Get()), Point(j * 60 + 7, 22), FONT_HERSHEY_PLAIN, 1.5, (int)_input->GetDepthObstacleResults()->GetVibration(j)->Get() > 127 ? Scalar(0, 0, 0) : Scalar(255, 255, 255), 2);
+      Rect rect;
+      for (int j = 0; j < VERT_REGIONS; ++j)
+      {
+        for (int i = 0; i < HORZ_REGIONS; ++i)
+        {
+          rect = _input->GetDepthObstacleResults()->GetRegion(j, i);
+          rectangle(*_input->GetDepthOverlayImage(), rect, Scalar(0, 0, 255), 2);
+          putText(*_input->GetDepthOverlayImage(), to_string(_input->GetDepthObstacleResults()->GetDepth(j, i)), Point(rect.x + (int)(0.5 * rect.width) - 25, rect.y + (int)(0.5 * rect.height)), FONT_HERSHEY_PLAIN, 1.25, Scalar(0, 0, 255), 2);
+        }
+
+        (*_input->GetDepthOverlayImage())(cv::Rect(j * 60, 0, 60, 30)).setTo((int)_input->GetDepthObstacleResults()->GetVibration(j)->Get());
+        putText(*_input->GetDepthOverlayImage(), to_string((int)_input->GetDepthObstacleResults()->GetVibration(j)->Get()), Point(j * 60 + 7, 22), FONT_HERSHEY_PLAIN, 1.5, (int)_input->GetDepthObstacleResults()->GetVibration(j)->Get() > 127 ? Scalar(0, 0, 0) : Scalar(255, 255, 255), 2);
+      }
     }
   }
 
   void Display::DrawTrafficLights()
   {
-    _output->GetColorImage()->copyTo(*_input->GetColorOverlayImage());
+    {
+      _output->GetColorImage()->copyTo(*_input->GetColorOverlayImage());
 
-    rectangle(*_input->GetColorOverlayImage(), _input->GetTrafficLightResults()->GetRegion(), Scalar(0, 0, 255), 4);
+      rectangle(*_input->GetColorOverlayImage(), _input->GetTrafficLightResults()->GetRegion(), Scalar(0, 0, 255), 4);
 
-    if (_input->GetTrafficLightResults()->GetAll()->size() == 1 && _input->GetTrafficLightResults()->GetAll()->at(0).GetCenter() == Point(0, 0))
-      DrawTrafficLightDL();
-    else
-      DrawTrafficLightBD();
+      if (_input->GetTrafficLightResults()->GetAll()->size() == 1 && _input->GetTrafficLightResults()->GetAll()->at(0).GetCenter() == Point(0, 0))
+        DrawTrafficLightDL();
+      else
+        DrawTrafficLightBD();
+    }
   }
 
   void Display::DrawTrafficLightBD()
@@ -90,7 +103,7 @@ namespace Display
     putText(*_input->GetColorOverlayImage(), "StopSign", Point(result.GetRegion()._center.x - (int)result.GetRegion()._radius, result.GetRegion()._center.y - (int)result.GetRegion()._radius), FONT_HERSHEY_PLAIN, 1, Scalar(0, 255, 255));
   }
 
-  void Display::DisplayImage()
+  void Display::DisplayColorImage()
   {
     if (_input->GetColorOverlayImage()->rows > 0 && _input->GetColorOverlayImage()->cols > 0)
     {
@@ -100,8 +113,11 @@ namespace Display
       imshow("Color Image", *_input->GetColorOverlayImage());
       waitKey(1);
     }
+  }
 
-    if (_output->GetColorImage()->rows > 0 && _output->GetDepthImage()->cols > 0)
+  void Display::DisplayDepthImage()
+  {
+    if (_input->GetDepthOverlayImage()->rows > 0 && _input->GetDepthOverlayImage()->cols > 0)
     {
       namedWindow("Depth Image", WINDOW_NORMAL);
       moveWindow("Depth Image", _params->GetDepthWindowPosition().x, _params->GetDepthWindowPosition().y);

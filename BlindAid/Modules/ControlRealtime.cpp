@@ -24,6 +24,7 @@ namespace Control
     void Realtime::ConnectToArduino()
     {
       LOG(Warning, "Connecting to controller (port #" + to_string(_params->GetRealtimeParams()->GetSerialPort()) + ")...", "GLOVE");
+     
       Connect();
 
       while (!_serial->isConnected())

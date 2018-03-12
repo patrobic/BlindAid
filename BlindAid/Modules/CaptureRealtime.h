@@ -18,6 +18,8 @@ namespace Capture
       void Process();
       void ReadCamera();
       void ConnectToCamera();
+      void Connect();
+      void Reconnect();
       void GetFrames();
       void InitializeCamera();
       void GetColorFrame();

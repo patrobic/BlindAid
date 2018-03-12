@@ -38,10 +38,15 @@ namespace Capture
 
       _start = steady_clock::now();
 
-      ConnectToCamera();
+      if (_device == NULL || _sample->color == NULL || _sample->depth == NULL)
+      {
+        Reconnect();
+        LOG(Warning, "Connected to camera successfully", "CAMERA");
+      }
+
       ReadCamera();
       GetFrames();
-  
+
       LOG(Info, "Images captured from camera", "REALTIME", _start);
     }
 
@@ -53,36 +58,37 @@ namespace Capture
 
     void Realtime::ConnectToCamera()
     {
-      if (_device != NULL && _sample->color != NULL && _sample->depth != NULL)
-        return;
+      LOG(Warning, "Connecting to acquisition...", "CAMERA");
+      
+      Connect();
 
-      static bool firstConnect = true;
-      if (firstConnect)
-      {
-        LOG(Warning, "Connecting to acquisition...", "CAMERA");
-        InitializeCamera();
-        ReadCamera();
-        firstConnect = false;
-      }
-      else
-      {
-        while (_device == NULL || _sample->color == NULL || _sample->depth == NULL)
-        {
-          LOG(Warning, "Acquisition connection failed, waiting for camera...", "CAMERA");
-          Sleep(1000);
-
-          InitializeCamera();
-          ReadCamera();
-        }
-      }
+      Reconnect();
 
       LOG(Warning, "Connected to camera successfully", "CAMERA");
+    }
+
+    void Realtime::Connect()
+    {
+        InitializeCamera();
+        ReadCamera();
+    }
+
+    void Realtime::Reconnect()
+    {
+      while (_device == NULL || _sample->color == NULL || _sample->depth == NULL)
+      {
+        LOG(Warning, "Acquisition connection failed, waiting for camera...", "CAMERA");
+        Sleep(1000);
+
+        InitializeCamera();
+        ReadCamera();
+      }
     }
 
     void Realtime::GetFrames()
     {
       _output->_colorImageMutex.lock();
-      
+
       try {
         if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
           GetColorFrame();

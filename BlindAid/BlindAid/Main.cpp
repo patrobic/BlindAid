@@ -78,7 +78,7 @@ void Main::Launcher()
       '-a': Realtime production mode (camera and glove connected).\n\
       '-c': Camera only mode (with debug messages, glove disabled).\n\
       '-d': Debug mode (enabled extra printouts and image windows).\n\
-      '-t': Control only mode (camera disabled, images loaded instead.\n\
+      '-t path': Control only mode (enter saved images folder path).\n\
       '-r #': Record mode enabled (enter interval in ms or 0 for manual).\n\
       '-p #': Set Bluetooth COM port index manually.\n\
       '-?': Help (print flags + descriptions, then exit).\n";
@@ -162,6 +162,24 @@ void Main::Launcher()
       cout << "Please enter valid COM port (usage: -p #).\n";
       return;
     }
+  }
+
+  if (CheckFlag("-coloroff"))
+  {
+    _params.GetCaptureParams()->SetType(SwitchableParameters::Type::Depth);
+    _params.GetVisionParams()->SetType(SwitchableParameters::Type::Depth);
+    _params.GetControlParams()->SetType(SwitchableParameters::Type::Depth);
+
+    cout << "'-coloroff': Disabling color stream.\n";
+  }
+
+  if (CheckFlag("-depthoff"))
+  {
+    _params.GetCaptureParams()->SetType(SwitchableParameters::Type::Color);
+    _params.GetVisionParams()->SetType(SwitchableParameters::Type::Color);
+    _params.GetControlParams()->SetType(SwitchableParameters::Type::Color);
+
+    cout << "'-depthoff': Disabling depth stream.\n";
   }
 }
 

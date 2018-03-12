@@ -14,6 +14,7 @@ namespace Vision
   private:
     void CreateModules();
     void Process();
+    void RunModules();
     
     DepthObstacle::Base *_depthObstacle;
     TrafficLight::Base *_trafficLight;
