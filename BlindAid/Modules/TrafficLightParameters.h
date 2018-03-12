@@ -12,7 +12,10 @@ namespace Vision
       class Parameters : public IParameters
       {
       public:
-        Parameters() { Defaults(); }
+        Parameters(GlobalParameters *params) : IParameters(params)
+        {
+          Defaults();
+        }
 
         void Defaults()
         {
@@ -60,7 +63,10 @@ namespace Vision
       class Parameters : public IParameters
       {
       public:
-        Parameters() { Defaults(); }
+        Parameters(GlobalParameters *params) : IParameters(params)
+        {
+          Defaults();
+        }
 
         void Defaults()
         {
@@ -93,7 +99,10 @@ namespace Vision
     public:
       enum Mode { BlobDetector, DeepLearning };
 
-      Parameters() { Defaults(); }
+      Parameters(GlobalParameters *params) : SwitchableParameters(params), _blobDetectorParams(params), _deepLearningParams(params)
+      {
+        Defaults();
+      }
 
       void Defaults()
       {
@@ -139,8 +148,6 @@ namespace Vision
 
       float GetConfidenceThreshold() { return _confidenceThreshold; }
       void SetConfidenceThreshold(float confidenceThreshold) { _confidenceThreshold = confidenceThreshold; }
-
-      std::string _path;
 
     private:
       // parameters specific to blob detector mode.

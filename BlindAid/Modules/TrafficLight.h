@@ -11,8 +11,8 @@ namespace Vision
     class Base : public IDetect<Parameters, Capture::Data, Data>
     {
     public:
-      Base(IParameters *params, IData *input, IData *output);
-      static Base *Base::MakeTrafficLight(IParameters *params, IData *input, IData *output);
+      Base(IParameters *params, IData *input, IData *output, Logger *logger);
+      static Base *Base::MakeTrafficLight(IParameters *params, IData *input, IData *output, Logger *logger);
 
     protected:
 

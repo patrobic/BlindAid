@@ -11,23 +11,18 @@ namespace Core
   class Parameters : public SwitchableParameters
   {
   public:
-    Parameters() { Defaults(); }
+    Parameters(GlobalParameters *params) : SwitchableParameters(params), _captureParams(params), _recordParams(params), _visionParams(params), _controlParams(params), _displayParams(params)
+    {
+      Defaults();
+    }
 
     void Defaults()
     {
-      _captureParams.Defaults();
-      _recordParams.Defaults();
-      _visionParams.Defaults();
-      _controlParams.Defaults();
-      _displayParams.Defaults();
-
-      _mode = Simulate;
+      _mode = SwitchableParameters::Mode::Simulate;
       _repeat = 1;
 
       _consoleWindowPosition = cv::Point(0, 300);
       _consoleWindowScale = 1.f;
- 
-      _exePath = "C:\\Projects\\BlindAid\\";
     }
 
     bool Valid()
@@ -41,9 +36,6 @@ namespace Core
     Control::Parameters *GetControlParams() { return &_controlParams; }
     Display::Parameters *GetDisplayParams() { return &_displayParams; }
 
-    Mode GetMode() { return _mode; }
-    void SetMode(Mode mode) { _mode = mode; }
-
     int GetRepeat() { return _repeat; }
     void SetRepeat(int repeat) { _repeat = repeat; }
 
@@ -53,8 +45,6 @@ namespace Core
     float GetConsoleWindowScale() { return _consoleWindowScale; }
     void SetConsoleWindowScale(float scale) { _consoleWindowScale = scale; }
 
-    std::string GetExePath() { return _exePath; }
-    void SetExePath(std::string executablePath) { _exePath = executablePath; }
 
   private:
     Capture::Parameters _captureParams;
@@ -62,8 +52,6 @@ namespace Core
     Vision::Parameters _visionParams;
     Control::Parameters _controlParams;
     Display::Parameters _displayParams;
-
-    Mode _mode;
 
     // max number of times to run the detection loop.
     int _repeat;
@@ -74,7 +62,5 @@ namespace Core
     // scale of console window.
     float _consoleWindowScale;
 
-    // path of executable (used to calculate relative paths).
-    std::string _exePath;
   };
 }

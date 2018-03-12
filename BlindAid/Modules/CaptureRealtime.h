@@ -12,14 +12,13 @@ namespace Capture
     class Realtime : public Base
     {
     public:
-      Realtime(IParameters *params, IData *input, IData *output);
+      Realtime(IParameters *params, IData *input, IData *output, Logger *logger);
 
     private:
       void Process();
       void ReadCamera();
       void ConnectToCamera();
       void GetFrames();
-      void ValidateConnection();
       void InitializeCamera();
       void GetColorFrame();
       void GetDepthFrame();

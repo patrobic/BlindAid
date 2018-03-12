@@ -10,8 +10,8 @@ namespace Control
   class Base : public IModule<Parameters, Vision::Data, Data>
   {
   public:
-    Base(IParameters *params, IData *input, IData *output);
-    static Base * MakeControl(IParameters * params, IData * input, IData * output);
+    Base(IParameters *params, IData *input, IData *output, Logger *logger);
+    static Base * MakeControl(IParameters * params, IData * input, IData * output, Logger *logger);
 
   protected:
   };

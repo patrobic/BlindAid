@@ -1,23 +1,17 @@
 #pragma once
 
-#include "..\Modules\Core.h"
+#include "Menu.h"
 
-class SimulateMenu
+class SimulateMenu : public Menu
 {
 public:
-  SimulateMenu(Core::Core * core, Core::Parameters * params, Core::Data * data);
-  void operator()();
+  SimulateMenu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger, Configuration *config);
   void ShowMenu();
-  void SetParameters();
-  void Process();
 
 private:
+  void SetParameters();
   void LoadFile(Capture::Simulate::Parameters::MediaType mode, std::string depthPath);
   void TestVideo(std::string colorVideoPath, std::string depthPath, int count);
   void TestPhoto(std::string colorPath, std::string depthPath, int count);
   void TestSequence();
-
-  Core::Core *_core;
-  Core::Parameters *_params;
-  Core::Data *_results;
 };

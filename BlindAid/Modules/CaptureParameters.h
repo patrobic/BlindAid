@@ -10,7 +10,10 @@ namespace Capture
     class Parameters : public IParameters
     {
     public:
-      Parameters() { Defaults(); }
+      Parameters(GlobalParameters *params) : IParameters(params)
+      {
+        Defaults(); 
+      }
 
       void Defaults()
       {
@@ -59,7 +62,10 @@ namespace Capture
     public:
       enum MediaType { Photo, Video, Sequence };
 
-      Parameters() { Defaults(); }
+      Parameters(GlobalParameters *params) : IParameters(params)
+      {
+        Defaults();
+      }
 
       void Defaults()
       {
@@ -97,7 +103,10 @@ namespace Capture
   class Parameters : public SwitchableParameters
   {
   public:
-    Parameters() { Defaults(); }
+    Parameters(GlobalParameters *params) : SwitchableParameters(params), _realtimeParams(params), _simulateParams(params)
+    {
+      Defaults();
+    }
 
     void Defaults()
     {

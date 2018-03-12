@@ -132,6 +132,12 @@
     <ClInclude Include="SerialPort.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="GlobalParameters.h">
+      <Filter>Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Serial.cpp">
@@ -190,6 +196,9 @@
     </ClCompile>
     <ClCompile Include="SerialPort.cpp">
       <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Interfaces</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

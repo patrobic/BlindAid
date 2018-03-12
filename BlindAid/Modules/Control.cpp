@@ -7,15 +7,15 @@ using namespace cv;
 
 namespace Control
 {
-  Base *Base::MakeControl(IParameters *params, IData *input, IData *output)
+  Base *Base::MakeControl(IParameters *params, IData *input, IData *output, Logger *logger)
   {
     if (((Control::Parameters*)params)->GetMode() == SwitchableParameters::Mode::Realtime)
-      return new Realtime::Realtime(params, input, output);
+      return new Realtime::Realtime(params, input, output, logger);
     else
-      return new Simulate::Simulate(params, input, output);
+      return new Simulate::Simulate(params, input, output, logger);
   }
 
-  Base::Base(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
+  Base::Base(IParameters *params, IData *input, IData *output, Logger *logger) : IModule(params, input, output, logger)
   {
 
   }

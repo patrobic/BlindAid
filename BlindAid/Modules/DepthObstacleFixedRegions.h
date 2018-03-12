@@ -12,7 +12,7 @@ namespace Vision
       class FixedRegions : public Base
       {
       public:
-        FixedRegions(IParameters * params, IData * input, IData * output);
+        FixedRegions(IParameters * params, IData * input, IData * output, Logger *logger);
 
       private:
         void Process();

@@ -10,7 +10,7 @@ namespace Control
     class Realtime : public Base
     {
     public:
-      Realtime(IParameters *params, IData *input, IData *output);
+      Realtime(IParameters *params, IData *input, IData *output, Logger *logger);
 
     private:
       void Process();

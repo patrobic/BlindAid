@@ -9,7 +9,7 @@ namespace Vision
   class Vision : public IModule<Parameters, Capture::Data, Data>
   {
   public:
-    Vision(IParameters *params, IData *input, IData *output);
+    Vision(IParameters *params, IData *input, IData *output, Logger *logger);
 
   private:
     void CreateModules();

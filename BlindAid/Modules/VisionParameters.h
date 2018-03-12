@@ -12,7 +12,10 @@ namespace Vision
     struct Parameters : public SwitchableParameters
     {
     public:
-      Parameters() { Defaults(); }
+      Parameters(GlobalParameters *params) : SwitchableParameters(params)
+      { 
+        Defaults();
+      }
 
       void Defaults()
       {
@@ -32,7 +35,10 @@ namespace Vision
   class Parameters : public SwitchableParameters
   {
   public:
-    Parameters() { Defaults(); }
+    Parameters(GlobalParameters *params) : SwitchableParameters(params), _dodParams(params), _tldParams(params), _ssdParams(params)
+    {
+      Defaults();
+    }
 
     void Defaults()
     {

@@ -9,12 +9,17 @@ namespace Record
   class Parameters : public SwitchableParameters
   {
   public:
-    Parameters() { Defaults(); }
+    Parameters(GlobalParameters *params) : SwitchableParameters(params)
+    {
+      Defaults();
+    }
 
     void Defaults()
     {
       _path = "C:\\BlindAidRecord\\";
       _manualTrigger = true;
+
+      _toggle = Disabled;
     }
 
     bool Valid()
@@ -52,8 +57,7 @@ namespace Record
   class Record : public IModule<Parameters, Vision::Data, Capture::Data>
   {
   public:
-
-    Record(IParameters *params, IData *input, IData *output);
+    Record(IParameters *params, IData *input, IData *output, Logger *logger);
 
     void CreateFolder();
 

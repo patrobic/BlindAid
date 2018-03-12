@@ -30,9 +30,11 @@
     <ClInclude Include="DepthObstacleFixedRegions.h" />
     <ClInclude Include="DepthObstacleHandPosition.h" />
     <ClInclude Include="DepthObstacleParameters.h" />
+    <ClInclude Include="GlobalParameters.h" />
     <ClInclude Include="IDetect.h" />
     <ClInclude Include="IResult.h" />
     <ClInclude Include="CaptureParameters.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="SerialPort.h" />
     <ClInclude Include="TrafficLight.h" />
     <ClInclude Include="DepthObstacle.h" />
@@ -61,6 +63,7 @@
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="DepthObstacleFixedRegions.cpp" />
     <ClCompile Include="DepthObstacleHandPosition.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="SerialPort.cpp" />
     <ClCompile Include="TrafficLight.cpp" />
     <ClCompile Include="DepthObstacle.cpp" />

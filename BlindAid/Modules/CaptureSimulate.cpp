@@ -4,26 +4,25 @@ using namespace std;
 using namespace std::chrono;
 using namespace cv;
 
+#define NAME "CAPTURE"
+
 namespace Capture
 {
   namespace Simulate
   {
-    Simulate::Simulate(IParameters *params, IData *input, IData *output) : Base(params, input, output)
+    Simulate::Simulate(IParameters *params, IData *input, IData *output, Logger *logger) : Base(params, input, output, logger)
     {
 
     }
 
     void Simulate::Process()
     {
-      steady_clock::time_point start = steady_clock::now();
+      _start = steady_clock::now();
 
       LoadFile();
       CreateHsvImage();
 
-      steady_clock::time_point end = steady_clock::now();
-      duration<double> time_span = duration_cast<duration<double>>(end - start);
-
-      cout << "[CAPTURE] Images acquired from camera.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n";
+      LOG(Info, "Images acquired from disk", "SIMULATE", _start);
     }
 
     void Simulate::LoadFile()

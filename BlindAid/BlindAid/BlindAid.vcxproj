@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="ConfigLoad.cpp" />
-    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="MenuMain.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MenuRealtime.cpp" />
     <ClCompile Include="ConfigSave.cpp" />
@@ -29,7 +29,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h" />
+    <ClInclude Include="Main.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="MenuMain.h" />
     <ClInclude Include="ConfigLoad.h" />
     <ClInclude Include="MenuRealtime.h" />
     <ClInclude Include="ConfigSave.h" />

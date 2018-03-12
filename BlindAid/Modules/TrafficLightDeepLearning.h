@@ -13,7 +13,7 @@ namespace Vision
       class DeepLearning : public Base
       {
       public:
-        DeepLearning(IParameters *params, IData *input, IData *output);
+        DeepLearning(IParameters *params, IData *input, IData *output, Logger *logger);
 
       private:
         void LoadNetwork();

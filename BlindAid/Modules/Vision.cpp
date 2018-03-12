@@ -4,31 +4,30 @@ using namespace std;
 using namespace std::chrono;
 using namespace cv;
 
+#define NAME "VISION"
+
 namespace Vision
 {
-  Vision::Vision(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
+  Vision::Vision(IParameters *params, IData *input, IData *output, Logger *logger) : IModule(params, input, output, logger)
   {
     CreateModules();
   }
 
   void Vision::CreateModules()
   {
-    _depthObstacle = DepthObstacle::Base::MakeDepthObstacle(_params->GetDepthObstacleParams(), _input, _output->GetDepthObstacleResults());
-    _trafficLight = TrafficLight::Base::MakeTrafficLight(_params->GetTrafficLightParams(), _input, _output->GetTrafficLightResults());
-    _stopSign = new StopSign::Base(_params->GetStopSignParams(), _input, _output->GetStopSignResults());
+    _depthObstacle = DepthObstacle::Base::MakeDepthObstacle(_params->GetDepthObstacleParams(), _input, _output->GetDepthObstacleResults(), _logger);
+    _trafficLight = TrafficLight::Base::MakeTrafficLight(_params->GetTrafficLightParams(), _input, _output->GetTrafficLightResults(), _logger);
+    _stopSign = new StopSign::Base(_params->GetStopSignParams(), _input, _output->GetStopSignResults(), _logger);
   }
 
   void Vision::Process()
   {
-    steady_clock::time_point start = steady_clock::now();
+    _start = steady_clock::now();
 
     (*_depthObstacle)();
     (*_trafficLight)();
     (*_stopSign)();
 
-    steady_clock::time_point end = steady_clock::now();
-    duration<double> time_span = duration_cast<duration<double>>(end - start);
-
-    cout << "[ VISION] Image detection processed.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n";
+    LOG(Info, "Image detection processed", _start);
   }
 }

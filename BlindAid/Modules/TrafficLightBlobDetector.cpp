@@ -4,13 +4,15 @@ using namespace std;
 using namespace cv;
 using namespace std::chrono;
 
+#define NAME "TLIGHT"
+
 namespace Vision
 {
   namespace TrafficLight
   {
     namespace BlobDetector
     {
-      BlobDetector::BlobDetector(IParameters *params, IData *input, IData *output) : Base(params, input, output),
+      BlobDetector::BlobDetector(IParameters *params, IData *input, IData *output, Logger *logger) : Base(params, input, output, logger),
         _h(_hsvChannels[0]), _s(_hsvChannels[1]), _v(_hsvChannels[2]), _b(_bgrChannels[0]), _g(_bgrChannels[1]), _r(_bgrChannels[2])
       {
 
@@ -18,16 +20,14 @@ namespace Vision
 
       void BlobDetector::Process()
       {
-        steady_clock::time_point start = steady_clock::now();
+        _start = steady_clock::now();
         
         MaskColors();
         PreprocessImages();
         DetectBlobs();
         //ConfirmWithBox();
 
-        steady_clock::time_point end = steady_clock::now();
-        duration<double> time_span = duration_cast<duration<double>>(end - start);
-        cout << "[TRAF-BD] Traffic lights detected.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n";
+        LOG(Info, "Traffic lights detected", "BLOBDET", _start);
       }
 
       void BlobDetector::MaskColors()

@@ -12,9 +12,11 @@ using namespace std;
 using namespace std::chrono;
 using namespace cv;
 
+#define NAME "RECORD"
+
 namespace Record
 {
-  Record::Record(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
+  Record::Record(IParameters *params, IData *input, IData *output, Logger *logger) : IModule(params, input, output, logger)
   {
 
   }
@@ -44,15 +46,12 @@ namespace Record
   {
     if (_kbhit() || !_params->GetManualTrigger())
     {
-      steady_clock::time_point start = steady_clock::now();
+      _start = steady_clock::now();
 
       CreateFolder();
       SaveToDisk();
 
-      steady_clock::time_point end = steady_clock::now();
-      duration<double> time_span = duration_cast<duration<double>>(end - start);
-
-      cout << "[ RECORD] Images recorded to disk.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n";
+      LOG(Info, "Images recorded to disk", _start);
     }
   }
 

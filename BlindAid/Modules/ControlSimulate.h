@@ -11,7 +11,7 @@ namespace Control
     class Simulate : public Base
     {
     public:
-      Simulate(IParameters *params, IData *input, IData *output);
+      Simulate(IParameters *params, IData *input, IData *output, Logger *logger);
 
     private:
       void Process();

@@ -5,20 +5,22 @@ using namespace std::chrono;
 using namespace cv;
 using namespace cv::dnn;
 
+#define NAME "TLIGHT"
+
 namespace Vision
 {
   namespace TrafficLight
   {
     namespace DeepLearning
     {
-      DeepLearning::DeepLearning(IParameters *params, IData *input, IData *output) : Base(params, input, output)
+      DeepLearning::DeepLearning(IParameters *params, IData *input, IData *output, Logger *logger) : Base(params, input, output, logger)
       {
         LoadNetwork();
       }
 
       void DeepLearning::LoadNetwork()
       {
-        _net = readNetFromTensorflow(_params->_path + "\\model.pb", _params->_path + "\\modeln.pbtxt");
+        _net = readNetFromTensorflow(_params->GetGlobalParameters()->GetExePath() + "\\model.pb", _params->GetGlobalParameters()->GetExePath() + "\\modeln.pbtxt");
         if (_net.empty())
           throw("Can't load network by using the model file.");
       }
@@ -73,16 +75,13 @@ namespace Vision
         {
           if (_input->_newColorFrame)
           {
-            steady_clock::time_point start = steady_clock::now();
+            _start = steady_clock::now();
 
             PreprocessImage();
             MachineLearning();
             UpdateResults();
 
-            steady_clock::time_point end = steady_clock::now();
-            duration<double> time_span = duration_cast<duration<double>>(end - start);
-            cout << "[TRAF-DL] Traffic lights detected.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n";
-
+            LOG(Info, "Traffic lights detected", "DEEPLEAR", _start);
           }
         }
       }

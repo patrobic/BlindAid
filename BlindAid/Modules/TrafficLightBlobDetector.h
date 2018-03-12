@@ -11,7 +11,7 @@ namespace Vision
       class BlobDetector : public Base
       {
       public:
-        BlobDetector(IParameters *params, IData *input, IData *output);
+        BlobDetector(IParameters *params, IData *input, IData *output, Logger *logger);
 
       private:
         void Process();

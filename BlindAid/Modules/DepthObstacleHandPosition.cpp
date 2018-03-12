@@ -4,20 +4,22 @@ using namespace std;
 using namespace cv;
 using namespace std::chrono;
 
+#define NAME "OBSTACLE"
+
 namespace Vision
 {
   namespace DepthObstacle
   {
     namespace HandPosition
     {
-      HandPosition::HandPosition(IParameters *params, IData *input, IData *output) : Base(params, input, output)
+      HandPosition::HandPosition(IParameters *params, IData *input, IData *output, Logger *logger) : Base(params, input, output, logger)
       {
 
       }
 
       void HandPosition::Process()
       {
-        steady_clock::time_point start = steady_clock::now();
+        _start = steady_clock::now();
 
         MaskShadows();
         FindHandPosition();
@@ -25,9 +27,7 @@ namespace Vision
         FindMaxInRegions();
         MapVibrationValues();
       
-        steady_clock::time_point end = steady_clock::now();
-        duration<double> time_span = duration_cast<duration<double>>(end - start);
-        cout << "[OBST-HP] Depth obstacles detected.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n";
+        LOG(Info, "Depth obstacles detected", "HANDPOS", _start);
       }
 
       void HandPosition::FindHandPosition()

@@ -8,7 +8,10 @@ namespace Display
   class Parameters : public SwitchableParameters
   {
   public:
-    Parameters() { Defaults(); }
+    Parameters(GlobalParameters *params) : SwitchableParameters(params)
+    {
+      Defaults();
+    }
 
     void Defaults()
     {
@@ -16,6 +19,8 @@ namespace Display
       _depthWindowPosition = cv::Point(800, 0);
       _colorWindowScale = 0.4f;
       _depthWindowScale = 1.0f;
+
+      _toggle = Disabled;
     }
 
     bool Valid()
@@ -65,7 +70,7 @@ namespace Display
   class Display : public IModule<Parameters, Vision::Data, Capture::Data>
   {
   public:
-    Display(IParameters *params, IData *input, IData *output);
+    Display(IParameters *params, IData *input, IData *output, Logger *logger);
 
   private:
     void Process();

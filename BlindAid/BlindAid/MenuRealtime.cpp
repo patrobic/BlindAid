@@ -1,6 +1,3 @@
-#include <iostream>
-#include <conio.h>
-
 #include "MenuRealtime.h"
 
 using namespace std;
@@ -8,16 +5,9 @@ using namespace cv;
 
 #define PATH "C:\\Projects\\BlindAid\\TestData\\"
 
-RealtimeMenu::RealtimeMenu(Core::Core *core, Core::Parameters *params, Core::Data *data)
+RealtimeMenu::RealtimeMenu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger, Configuration *config) : Menu(core, params, data, logger, config)
 {
-  _core = core;
-  _params = params;
-  _results = data;
-}
 
-void RealtimeMenu::operator()()
-{
-  ShowMenu();
 }
 
 void RealtimeMenu::ShowMenu()
@@ -53,16 +43,6 @@ void RealtimeMenu::ShowMenu()
       TestRecord("Record");
     }
   } while (in != 'q' && in != 'Q');
-}
-
-void RealtimeMenu::Process()
-{
-  if (_core == NULL)
-    _core = new Core::Core(_params, NULL, _results);
-
-  (*_core)();
-
-  destroyAllWindows();
 }
 
 void RealtimeMenu::TestRealtimeComplete()

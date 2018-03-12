@@ -1,34 +1,39 @@
 #pragma once
 
+#include <iostream>
 #include <conio.h>
 
-#include "MenuSimulate.h"
-#include "MenuRealtime.h"
 #include "Config.h"
-
+#include "..\Modules\GlobalParameters.h"
 #include "..\Modules\Core.h"
 
-class MainMenu
+class Menu
 {
 public:
-  MainMenu();
-  void operator()();
-  Core::Parameters *GetParameters() { return &_params; }
+  Menu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger, Configuration *config)
+  {
+    _core = core;
+    _params = params;
+    _results = data;
+    _logger = logger;
+    _config = config;
+  }
 
-private:
-  void Setup();
-  void Process();
-  void ShowMenu();
-  void LoadSettings();
+  virtual void ShowMenu() = 0;
 
-  RealtimeMenu _realtime;
-  SimulateMenu _simulate;
+protected:
+  void Process()
+  {
+    if (_core == NULL)
+      _core = new Core::Core(_params, NULL, _results, _logger);
 
-  Configuration _configuration;
+    (*_core)();
+  }
 
   Core::Core *_core;
-  Core::Parameters _params;
-  Core::Data _results;
+  Core::Parameters *_params;
+  Core::Data *_results;
 
-  std::string _exePath;
+  Logger *_logger;
+  Configuration *_config;
 };

@@ -7,11 +7,13 @@ using namespace std;
 using namespace std::chrono;
 using namespace cv;
 
+#define NAME "CONTROL"
+
 namespace Control
 {
   namespace Realtime
   {
-    Realtime::Realtime(IParameters *params, IData *input, IData *output) : Base(params, input, output)
+    Realtime::Realtime(IParameters *params, IData *input, IData *output, Logger *logger) : Base(params, input, output, logger)
     {
       if (_params->GetLocalAudioEnabled())
         _audioThread = new std::thread(&Realtime::TPlayAudio, this);
@@ -21,13 +23,13 @@ namespace Control
 
     void Realtime::ConnectToArduino()
     {
-      cout << "[  GLOVE] Connecting to controller (port #" << _params->GetRealtimeParams()->GetSerialPort() << ")...\n";
+      LOG(Warning, "Connecting to controller (port #" + to_string(_params->GetRealtimeParams()->GetSerialPort()) + ")...", "GLOVE");
       Connect();
 
       while (!_serial->isConnected())
         Reconnect();
 
-      cout << "[  GLOVE] Connected to controller successfully.\n";
+      LOG(Warning, "Connected to controller successfully", "GLOVE");
     }
 
     void Realtime::Connect()
@@ -40,7 +42,7 @@ namespace Control
 
     void Realtime::Reconnect()
     {
-      cout << "[  GLOVE] Controller connection failed, attempting to reconnect (port #" << _params->GetRealtimeParams()->GetSerialPort() << ")...\n";
+      LOG(Warning, "Controller connection failed, attempting to reconnect (port #" + to_string(_params->GetRealtimeParams()->GetSerialPort()) + ")...", "GLOVE");
       Sleep(1000);
 
       Connect();
@@ -48,14 +50,12 @@ namespace Control
 
     void Realtime::Process()
     {
-      steady_clock::time_point start = steady_clock::now();
+      _start = steady_clock::now();
 
       GenerateString();
       SendControl();
 
-      steady_clock::time_point end = steady_clock::now();
-      duration<double> time_span = duration_cast<duration<double>>(end - start);
-      cout << "[CONTROL] Control data sent to glove.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n";
+      LOG(Info, "Control data sent to glove", _start);
     }
 
     void Realtime::SendControl()
@@ -74,7 +74,7 @@ namespace Control
       controlThread.join();
 
       if (bytesSent > 0)
-        cout << "[BT-SEND] Sent msg " << _controlMessage << ".\t(" << bytesSent * _messageLength << " bytes)\n";
+        LOG(Info, "Sent message '" + string(_controlMessage) + "' (" + to_string(bytesSent * _messageLength) + " bytes)", "BT-SEND");
     }
 
     void Realtime::GenerateString()
@@ -125,7 +125,7 @@ namespace Control
         do Reconnect();
         while (!_serial->isConnected());
 
-        cout << "[  GLOVE] Connected to controller successfully.\n";
+        LOG(Warning, "Connected to controller successfully", "GLOVE");
       }
     }
   }

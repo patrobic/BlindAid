@@ -1,6 +1,3 @@
-#include <iostream>
-#include <conio.h>
-
 #include "MenuSimulate.h"
 
 using namespace std;
@@ -8,16 +5,9 @@ using namespace cv;
 
 #define PATH "C:\\Projects\\BlindAid\\TestData\\"
 
-SimulateMenu::SimulateMenu(Core::Core *core, Core::Parameters *params, Core::Data *data)
+SimulateMenu::SimulateMenu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger, Configuration *config) : Menu(core, params, data, logger, config)
 {
-  _core = core;
-  _params = params;
-  _results = data;
-}
 
-void SimulateMenu::operator()()
-{
-  ShowMenu();
 }
 
 void SimulateMenu::ShowMenu()
@@ -78,14 +68,6 @@ void SimulateMenu::SetParameters()
   _params->GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
   _params->GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
   _params->GetDisplayParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
-}
-
-void SimulateMenu::Process()
-{
-  if (_core == NULL)
-    _core = new Core::Core(_params, NULL, _results);
-
-  (*_core)();
 }
 
 void SimulateMenu::LoadFile(Capture::Simulate::Parameters::MediaType mode, string depthPath)

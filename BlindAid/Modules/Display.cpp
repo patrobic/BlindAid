@@ -4,26 +4,25 @@ using namespace std;
 using namespace std::chrono;
 using namespace cv;
 
+#define NAME "DISPLAY"
+
 namespace Display
 {
-  Display::Display(IParameters *params, IData *input, IData *output) : IModule(params, input, output)
+  Display::Display(IParameters *params, IData *input, IData *output, Logger *logger) : IModule(params, input, output, logger)
   {
 
   }
 
   void Display::Process()
   {
-    steady_clock::time_point start = steady_clock::now();
+    _start = steady_clock::now();
 
     DrawDepthObstacles();
     DrawTrafficLights();
     DrawStopSign();
     DisplayImage();
 
-    steady_clock::time_point end = steady_clock::now();
-    duration<double> time_span = duration_cast<duration<double>>(end - start);
-
-    cout << "[DISPLAY] Results displayed to screen.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n";
+    LOG(Info, "Results displayed to screen", _start);
   }
 
   void Display::DrawDepthObstacles()

@@ -9,8 +9,8 @@ namespace Capture
   class Base : public IModule<Parameters, IData, Data>
   {
   public:
-    Base(IParameters *params, IData *input, IData *output);
-    static Base *MakeCapture(Capture::Parameters *params, IData *input, IData *output);
+    Base(IParameters *params, IData *input, IData *output, Logger *logger);
+    static Base *MakeCapture(Capture::Parameters *params, IData *input, IData *output, Logger *logger);
 
   protected:
     void CreateHsvImage();

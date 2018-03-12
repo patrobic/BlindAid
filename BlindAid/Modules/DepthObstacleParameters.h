@@ -12,7 +12,10 @@ namespace Vision
       class Parameters : public IParameters
       {
       public:
-        Parameters() { Defaults(); }
+        Parameters(GlobalParameters *params) : IParameters(params)
+        {
+          Defaults();
+        }
 
         void Defaults()
         {
@@ -34,7 +37,10 @@ namespace Vision
       class Parameters : public IParameters
       {
       public:
-        Parameters() { Defaults(); }
+        Parameters(GlobalParameters *params) : IParameters(params)
+        {
+          Defaults();
+        }
 
         void Defaults()
         {
@@ -81,7 +87,10 @@ namespace Vision
       enum Mode { FixedRegions, HandPosition, Reduced };
       enum Polarity { CloseIsSmall, CloseIsLarge };
 
-      Parameters() { Defaults(); }
+      Parameters(GlobalParameters *params) : SwitchableParameters(params), _fixedRegionsParams(params), _handPositionParams(params)
+      {
+        Defaults();
+      }
 
       void Defaults()
       {

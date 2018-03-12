@@ -55,7 +55,7 @@ namespace Vision
     class Base : public IDetect<Parameters, Capture::Data, Data>
     {
     public:
-      Base(IParameters *params, IData *input, IData *output);
+      Base(IParameters *params, IData *input, IData *output, Logger *logger);
 
     private:
       void Process();

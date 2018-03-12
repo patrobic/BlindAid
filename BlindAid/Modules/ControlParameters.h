@@ -9,7 +9,10 @@ namespace Control
     class Parameters : public IParameters
     {
     public:
-      Parameters() { Defaults(); }
+      Parameters(GlobalParameters *params) : IParameters(params)
+      {
+        Defaults();
+      }
 
       void Defaults()
       {
@@ -57,7 +60,10 @@ namespace Control
     class Parameters : public IParameters
     {
     public:
-      Parameters() { Defaults(); }
+      Parameters(GlobalParameters *params) : IParameters(params)
+      {
+        Defaults();
+      }
 
       void Defaults()
       {
@@ -80,7 +86,10 @@ namespace Control
     enum OptionSignals { None, LowerUpper, TrafficLight, NearObstacle };
     enum HandPolarity { Left, Right };
 
-    Parameters() { Defaults(); }
+    Parameters(GlobalParameters *params) : SwitchableParameters(params), _realtimeParams(params), _simulateParams(params)
+    {
+      Defaults();
+    }
 
     void Defaults()
     {

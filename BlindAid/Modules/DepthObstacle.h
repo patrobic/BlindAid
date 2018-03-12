@@ -13,8 +13,8 @@ namespace Vision
     class Base : public IDetect<Parameters, Capture::Data, Data>
     {
     public:
-      Base(IParameters *params, IData *input, IData *output);
-      static Base *Base::MakeDepthObstacle(IParameters *params, IData *input, IData *output);
+      Base(IParameters *params, IData *input, IData *output, Logger *logger);
+      static Base *Base::MakeDepthObstacle(IParameters *params, IData *input, IData *output, Logger *logger);
 
     protected:
       void MaskShadows();

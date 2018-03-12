@@ -3,21 +3,36 @@
 #define HORZ_REGIONS 3
 #define VERT_REGIONS 5
 
+class GlobalParameters;
+
 // Interface for detection module parameters.
 class IParameters
 {
 public:
+  IParameters(GlobalParameters *params)
+  {
+    _globalParameters = params;
+  }
+
   virtual bool Valid() = 0;
   virtual void Defaults() = 0;
 
   bool GetToggle() { return true; }
 
-private:
+  GlobalParameters *GetGlobalParameters() { return _globalParameters; }
+
+protected:
+  GlobalParameters *_globalParameters;
 };
 
 class SwitchableParameters : public IParameters
 {
 public:
+  SwitchableParameters(GlobalParameters *params) : IParameters(params)
+  {
+
+  }
+
   // TODO: check that data is valid when received by a module.
   virtual bool Valid() = 0;
 
@@ -34,7 +49,7 @@ public:
   Type GetType() { return _type; }
   void SetType(Type type) { _type = type; }
 
-private:
+protected:
   // allows toggling a module between enabled and disabled.
   Toggle _toggle = Toggle::Enabled;
 

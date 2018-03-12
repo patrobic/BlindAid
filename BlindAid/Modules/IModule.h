@@ -14,8 +14,10 @@
 #include "opencv2\features2d.hpp"
 
 #include "IParameters.h"
+#include "GlobalParameters.h"
 #include "IData.h"
 #include "IResult.h"
+#include "Logger.h"
 
 class IIModule
 {
@@ -30,11 +32,12 @@ template<class Params, class Input, class Output>
 class IModule : public IIModule
 {
 public:
-  IModule(IParameters *params, IData *input, IData *output)
+  IModule(IParameters *params, IData *input, IData *output, Logger *logger)
   {
     _params = static_cast<Params*>(params);
     _input = static_cast<Input*>(input);
     _output = static_cast<Output*>(output);
+    _logger = logger;
   }
 
   void operator()()
@@ -70,4 +73,7 @@ protected:
   Params *_params;
   Input *_input;
   Output *_output;
+  Logger *_logger;
+
+  std::chrono::steady_clock::time_point _start = std::chrono::steady_clock::now();
 };

@@ -6,11 +6,13 @@ using namespace std;
 using namespace cv;
 using namespace std::chrono;
 
+#define NAME "CAPTURE"
+
 namespace Capture
 {
   namespace Realtime
   {
-    Realtime::Realtime(IParameters *params, IData *input, IData *output) : Base(params, input, output)
+    Realtime::Realtime(IParameters *params, IData *input, IData *output, Logger *logger) : Base(params, input, output, logger)
     {
       ConnectToCamera();
     }
@@ -34,15 +36,13 @@ namespace Capture
     {
       _output->SetStatus(true);
 
-      steady_clock::time_point start = steady_clock::now();
+      _start = steady_clock::now();
 
       ConnectToCamera();
       ReadCamera();
       GetFrames();
-
-      steady_clock::time_point end = steady_clock::now();
-      duration<double> time_span = duration_cast<duration<double>>(end - start);
-      cout << "[CAPTURE] Images captured from camera.\t(" << setw(5) << (int)(time_span.count() * 1000) << " ms)\n";
+  
+      LOG(Info, "Images captured from camera", "REALTIME", _start);
     }
 
     void Realtime::ReadCamera()
@@ -59,7 +59,7 @@ namespace Capture
       static bool firstConnect = true;
       if (firstConnect)
       {
-        cout << "[ CAMERA] Connecting to acquisition...\n";
+        LOG(Warning, "Connecting to acquisition...", "CAMERA");
         InitializeCamera();
         ReadCamera();
         firstConnect = false;
@@ -68,7 +68,7 @@ namespace Capture
       {
         while (_device == NULL || _sample->color == NULL || _sample->depth == NULL)
         {
-          cout << "[ CAMERA] Acquisition connection failed, waiting for camera...\n";
+          LOG(Warning, "Acquisition connection failed, waiting for camera...", "CAMERA");
           Sleep(1000);
 
           InitializeCamera();
@@ -76,7 +76,7 @@ namespace Capture
         }
       }
 
-      cout << "[ CAMERA] Connected to acquisition successfully.\n";
+      LOG(Warning, "Connected to camera successfully", "CAMERA");
     }
 
     void Realtime::GetFrames()
