@@ -21,7 +21,7 @@ namespace Capture
 
       LoadFile();
       
-      if (!_output->GetStatus())
+      if (!_output->GetStop())
         return;
 
       CreateHsvImage();
@@ -68,7 +68,7 @@ namespace Capture
         _colorName = "color_" + to_string(_index) + ".png";
         *_output->GetColorImage() = imread(_params->GetSimulateParams()->GetColorSimDataPath() + "\\" + _colorName);
         if (_output->GetColorImage()->cols == 0 || _output->GetColorImage()->rows == 0)
-          _output->SetStatus(false);
+          _output->SetStop(true);
       }
 
       if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
@@ -76,7 +76,7 @@ namespace Capture
         _depthName = "depth_" + to_string(_index) + ".tiff";
         *_output->GetDepthImage() = imread(_params->GetSimulateParams()->GetDepthSimDataPath() + "\\" + _depthName, IMREAD_UNCHANGED);
         if (_output->GetDepthImage()->cols == 0 || _output->GetDepthImage()->rows == 0)
-          _output->SetStatus(false);
+          _output->SetStop(true);
       }
 
       ++_index;

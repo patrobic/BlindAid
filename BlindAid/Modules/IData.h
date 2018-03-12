@@ -16,7 +16,10 @@ public:
   bool GetStatus() { return _status; }
   void SetStatus(bool status) { _status = status; }
 
+  bool GetStop() { return _stop; }
+  void SetStop(bool stop) { _stop = stop; }
+
 protected:
   bool _status = true;
-
+  bool _stop = false;
 };

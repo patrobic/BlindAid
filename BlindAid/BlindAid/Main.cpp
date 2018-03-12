@@ -169,6 +169,8 @@ void Main::Launcher()
     _params.GetCaptureParams()->SetType(SwitchableParameters::Type::Depth);
     _params.GetVisionParams()->SetType(SwitchableParameters::Type::Depth);
     _params.GetControlParams()->SetType(SwitchableParameters::Type::Depth);
+    _params.GetDisplayParams()->SetType(SwitchableParameters::Type::Depth);
+    _params.GetRecordParams()->SetType(SwitchableParameters::Type::Depth);
 
     cout << "'-coloroff': Disabling color stream.\n";
   }
@@ -178,6 +180,8 @@ void Main::Launcher()
     _params.GetCaptureParams()->SetType(SwitchableParameters::Type::Color);
     _params.GetVisionParams()->SetType(SwitchableParameters::Type::Color);
     _params.GetControlParams()->SetType(SwitchableParameters::Type::Color);
+    _params.GetDisplayParams()->SetType(SwitchableParameters::Type::Color);
+    _params.GetRecordParams()->SetType(SwitchableParameters::Type::Color);
 
     cout << "'-depthoff': Disabling depth stream.\n";
   }

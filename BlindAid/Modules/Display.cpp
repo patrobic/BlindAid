@@ -17,13 +17,13 @@ namespace Display
   {
     _start = steady_clock::now();
 
-    if (_params->GetMode() == SwitchableParameters::Type::Depth || _params->GetMode() == SwitchableParameters::Type::Both)
+    if (_params->GetType() == SwitchableParameters::Type::Depth || _params->GetType() == SwitchableParameters::Type::Both)
     {
       DrawDepthObstacles();
       DisplayDepthImage();
     }
 
-    if (_params->GetMode() == SwitchableParameters::Type::Color || _params->GetMode() == SwitchableParameters::Type::Both)
+    if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
     {
       DrawTrafficLights();
       DisplayColorImage();

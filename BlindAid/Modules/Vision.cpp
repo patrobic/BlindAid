@@ -31,10 +31,10 @@ namespace Vision
 
   void Vision::RunModules()
   {
-    if (_params->GetMode() == SwitchableParameters::Type::Depth || _params->GetMode() == SwitchableParameters::Type::Both)
+    if (_params->GetType() == SwitchableParameters::Type::Depth || _params->GetType() == SwitchableParameters::Type::Both)
       (*_depthObstacle)();
 
-    if (_params->GetMode() == SwitchableParameters::Type::Color || _params->GetMode() == SwitchableParameters::Type::Both)
+    if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
       (*_trafficLight)();
 
     //(*_stopSign)();

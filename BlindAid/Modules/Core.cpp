@@ -31,8 +31,10 @@ namespace Core
 
       RunModules();
 
-      if (!_output->GetCaptureResults()->GetStatus())
+      if (_output->GetCaptureResults()->GetStop())
         return;
+      if (!_output->GetCaptureResults()->GetStatus())
+        continue;
 
       LogStats();
 
@@ -46,9 +48,9 @@ namespace Core
     try
     {
       (*_capture)();
-      if (!_output->GetCaptureResults()->GetStatus())
+      if (!_output->GetCaptureResults()->GetStatus() || _output->GetCaptureResults()->GetStop())
         return;
-
+      
       (*_vision)();
       (*_control)();
       (*_display)();
