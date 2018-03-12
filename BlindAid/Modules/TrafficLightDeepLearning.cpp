@@ -87,7 +87,7 @@ namespace Vision
             if (!_input->GetStatus() || _input->GetStop())
               break;
 
-            LOG(Info, "Traffic lights detected", "DEEPLEAR", _start);
+            LOG(Warning, "Traffic lights detected", "DEEPLEAR", _start);
           }
         }
       }

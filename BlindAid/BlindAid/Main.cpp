@@ -77,7 +77,8 @@ void Main::Launcher()
     cout << "Command line argument flags to choose operation modes:\n\
       '-a': Realtime production mode (camera and glove connected).\n\
       '-c': Camera only mode (with debug messages, glove disabled).\n\
-      '-d': Debug mode (enabled extra printouts and image windows).\n\
+      '-d': Debug mode (enables extra printouts and image windows).\n\
+      '-v': Verbose mode (enables extra printouts, forced by debug).\n\
       '-t path': Control only mode (enter saved images folder path).\n\
       '-r #': Record mode enabled (enter interval in ms or 0 for manual).\n\
       '-p #': Set Bluetooth COM port index manually.\n\
@@ -87,14 +88,18 @@ void Main::Launcher()
     return;
   }
 
-  if (CheckFlag("-d") || VERBOSE)
+  if (CheckFlag("-d"))
   {
-    _bypassMenu = true;
-
     _params.GetDisplayParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
+
+    cout << "'-d': Enabling display debug mode.\n";
+  }
+
+  if (CheckFlag("-v") || VERBOSE)
+  {
     _globalParams.SetLogLevel(LogLevel::Info);
 
-    cout << "'-d': Enabling verbose debug mode.\n";
+    cout << "'-v': Enabling verbose debug mode.\n";
   }
 
   int index = 0;
