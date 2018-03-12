@@ -18,6 +18,10 @@ private:
 
   bool CheckFlag(const std::string & option, int *next = NULL);
 
+  bool FlagToInt(int index, int * value);
+
+  bool FlagToPath(int index, std::string * value);
+
   std::vector<std::string> _args;
   bool _bypassMenu = false;
 

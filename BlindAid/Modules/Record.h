@@ -16,8 +16,8 @@ namespace Record
 
     void Defaults()
     {
-      _path = "C:\\BlindAidRecord\\";
-      _manualTrigger = true;
+      _path = "C:\\Record\\";
+      _interval = 0;
 
       _toggle = Disabled;
     }
@@ -30,15 +30,15 @@ namespace Record
     std::string GetPath() { return _path; }
     void SetPath(std::string path) { _path = path; }
 
-    bool GetManualTrigger() { return _manualTrigger; }
-    void SetManualTrigger(bool manualTrigger) { _manualTrigger = manualTrigger; }
+    int GetInterval() { return _interval; }
+    void SetInterval(int interval) { _interval = interval; }
 
   private:
     // path at which to save image stream.
     std::string _path;
 
     // set whether images are captured continuously or on demand.
-    bool _manualTrigger;
+    int _interval;
   };
 
   class Data : public IData

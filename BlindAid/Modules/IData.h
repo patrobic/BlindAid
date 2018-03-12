@@ -13,7 +13,7 @@ public:
   // TODO: check that parameters are valid in all Modules.
   // virtual bool Valid() = 0;
 
-  int GetStatus() { return _status; }
+  bool GetStatus() { return _status; }
   void SetStatus(bool status) { _status = status; }
 
 protected:

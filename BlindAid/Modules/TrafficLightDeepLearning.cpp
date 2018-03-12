@@ -73,6 +73,9 @@ namespace Vision
       {
         while (true)
         {
+          if (!_input->GetStatus())
+            break;
+
           if (_input->_newColorFrame)
           {
             _start = steady_clock::now();

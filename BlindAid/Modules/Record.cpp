@@ -44,14 +44,14 @@ namespace Record
 
   void Record::Process()
   {
-    if (_kbhit() || !_params->GetManualTrigger())
+    if (_kbhit() || (_params->GetInterval() != 0 && (int)(duration_cast<duration<double>>(steady_clock::now() - _start).count() * 1000) > _params->GetInterval()))
     {
       _start = steady_clock::now();
 
       CreateFolder();
       SaveToDisk();
 
-      LOG(Info, "Images recorded to disk", _start);
+      LOG(Warning, "Images recorded to disk (" + _params->GetPath() + "\\" + _folderName + ")", _start);
     }
   }
 
@@ -60,13 +60,15 @@ namespace Record
     if (_params->GetType() == Parameters::Type::Color || _params->GetType() == Parameters::Type::Both)
     {
       imwrite(_params->GetPath() + "\\" + _folderName + "\\color_" + to_string(_index) + ".png", *_output->GetColorImage());
-      imwrite(_params->GetPath() + "\\" + _folderName + "\\colorOverlay_" + to_string(_index) + ".png", *_input->GetColorOverlayImage());
+      if (!_input->GetColorOverlayImage()->empty())
+        imwrite(_params->GetPath() + "\\" + _folderName + "\\colorOverlay_" + to_string(_index) + ".png", *_input->GetColorOverlayImage());
     }
 
     if (_params->GetType() == Parameters::Type::Depth || _params->GetType() == Parameters::Type::Both)
     {
-      imwrite(_params->GetPath() + "\\" + _folderName + "\\depth_" + to_string(_index) + ".png", *_output->GetDepthImage());
-      imwrite(_params->GetPath() + "\\" + _folderName + "\\depthOverlay_" + to_string(_index) + ".png", *_input->GetDepthOverlayImage());
+      imwrite(_params->GetPath() + "\\" + _folderName + "\\depth_" + to_string(_index) + ".tiff", *_output->GetDepthImage());
+      if (!_input->GetDepthOverlayImage()->empty())
+        imwrite(_params->GetPath() + "\\" + _folderName + "\\depthOverlay_" + to_string(_index) + ".png", *_input->GetDepthOverlayImage());
     }
     ++_index;
 

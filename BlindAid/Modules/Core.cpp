@@ -30,11 +30,15 @@ namespace Core
       _start = steady_clock::now();
 
       RunModules();
+
+      if (!_output->GetCaptureResults()->GetStatus())
+        return;
+
       LogStats();
 
       if (GetAsyncKeyState(VK_ESCAPE))
         break;
-    } while (_params->GetCaptureParams()->GetSimulateParams()->GetMediaType() == Capture::Simulate::Parameters::MediaType::Video || _frame < _params->GetRepeat() || _params->GetRepeat() == 0);
+    } while (_params->GetCaptureParams()->GetSimulateParams()->GetMediaType() != Capture::Simulate::Parameters::MediaType::Photo || _frame < _params->GetRepeat() || _params->GetRepeat() == 0);
   }
 
   void Core::RunModules()

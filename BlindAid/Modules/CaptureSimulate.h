@@ -22,6 +22,8 @@ namespace Capture
       cv::VideoCapture _cap;
 
       int _index = 0;
+      std::string _colorName;
+      std::string _depthName;
     };
   }
 }

@@ -20,9 +20,13 @@ namespace Capture
       _start = steady_clock::now();
 
       LoadFile();
+      
+      if (!_output->GetStatus())
+        return;
+
       CreateHsvImage();
 
-      LOG(Info, "Images acquired from disk", "SIMULATE", _start);
+      LOG(Info, "Images acquired from disk (" + _colorName + ", " + _depthName + ")", "SIMULATE", _start);
     }
 
     void Simulate::LoadFile()
@@ -59,17 +63,18 @@ namespace Capture
 
     void Simulate::LoadSequence()
     {
-      string path = _params->GetSimulateParams()->GetColorSimDataPath() + "\\color_" + to_string(_index) + ".jpg";
       if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
       {
-        *_output->GetColorImage() = imread(_params->GetSimulateParams()->GetColorSimDataPath() + "\\color_" + to_string(_index) + ".jpg");
+        _colorName = "color_" + to_string(_index) + ".png";
+        *_output->GetColorImage() = imread(_params->GetSimulateParams()->GetColorSimDataPath() + "\\" + _colorName);
         if (_output->GetColorImage()->cols == 0 || _output->GetColorImage()->rows == 0)
           _output->SetStatus(false);
       }
 
       if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
       {
-        *_output->GetDepthImage() = imread(_params->GetSimulateParams()->GetDepthSimDataPath() + "\\depth_" + to_string(_index) + ".jpg");
+        _depthName = "depth_" + to_string(_index) + ".tiff";
+        *_output->GetDepthImage() = imread(_params->GetSimulateParams()->GetDepthSimDataPath() + "\\" + _depthName, IMREAD_UNCHANGED);
         if (_output->GetDepthImage()->cols == 0 || _output->GetDepthImage()->rows == 0)
           _output->SetStatus(false);
       }
