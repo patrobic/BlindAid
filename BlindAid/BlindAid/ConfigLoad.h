@@ -1,23 +1,22 @@
 #pragma once
 
+#include "Config.h"
+
 #include <string>
 #include <fstream>
 
 #include "libconfig.h"
-
-#include "..\Modules\IParameters.h"
-#include "..\Modules\Core.h"
 
 using namespace libconfig;
 
 // TODO: this class must be unit-tested somehow, to ensure that ALL values are loaded, and done so correctly.
 // define a sample test config.cfg, load it, and check all Parameters classes to ensure that desired values are found.
 
-class LoadConfiguration
+class LoadConfiguration : public Configuration
 {
 public:
-  LoadConfiguration(Core::Parameters *params, std::string path);
-  void operator()();
+  LoadConfiguration(Core::Parameters *params, Logger *logger);
+  void Configure(std::string path);
 
 private:
   // NOTE: if no values are loaded, parameters will retain their default values as defined in the class.
@@ -45,13 +44,9 @@ private:
   void TrafficLightBlobDetector(Setting &setting, Vision::TrafficLight::BlobDetector::Parameters *parameters);
   void TrafficLightDeepLearning(Setting &setting, Vision::TrafficLight::DeepLearning::Parameters *parameters);
 
-  void LoadStopSign(Setting &setting, Vision::StopSign::Parameters *parameters);
-
   void BaseParams(Setting &setting, IParameters *parameters);
 
 private:
-  Core::Parameters *_params;
   std::string _path;
-
   libconfig::Config _config;
 };

@@ -1,20 +1,19 @@
 #pragma once
 
+#include "Config.h"
+
 #include <string>
 #include <fstream>
 
 #include "libconfig.h"
 
-#include "..\Modules\IParameters.h"
-#include "..\Modules\Core.h"
-
 using namespace libconfig;
 
-class SaveConfiguration
+class SaveConfiguration : public Configuration
 {
 public:
-  SaveConfiguration(Core::Parameters *params, std::string path);
-  void operator()();
+  SaveConfiguration(Core::Parameters *params, Logger *logger);
+  void Configure(std::string path);
 
 private:
   void Core(Setting &setting, Core::Parameters *parameters);
@@ -39,13 +38,9 @@ private:
   void TrafficLightBlobDetector(Setting &setting, Vision::TrafficLight::BlobDetector::Parameters *parameters);
   void TrafficLightDeepLearning(Setting &setting, Vision::TrafficLight::DeepLearning::Parameters *parameters);
 
-  void SaveStopSign(Setting &setting, Vision::StopSign::Parameters *parameters);
-
   void BaseParams(Setting &setting, IParameters *parameters);
 
 private:
-  Core::Parameters *_params;
   std::string _path;
-
   libconfig::Config _config;
 };

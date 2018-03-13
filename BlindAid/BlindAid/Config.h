@@ -1,19 +1,20 @@
 #pragma once
 
+#include "..\Modules\IParameters.h"
 #include "..\Modules\Core.h"
-
-#include "ConfigLoad.h"
-#include "ConfigSave.h"
-
-#define CONFIG_FILE "BlindAid.cfg"
 
 class Configuration
 {
 public:
-  Configuration(Core::Parameters *params);
+  Configuration(Core::Parameters *params, Logger *logger)
+  {
+    _params = params;
+    _logger = logger;
+  }
+  
   void Configure();
 
-private:
-  SaveConfiguration _saveConfig;
-  LoadConfiguration _loadConfig;
+protected:
+  Core::Parameters *_params;
+  Logger *_logger;
 };

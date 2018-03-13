@@ -30,9 +30,6 @@
     <ClInclude Include="DepthObstacle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StopSign.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TrafficLightBlobDetector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -144,9 +141,6 @@
       <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="DepthObstacle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StopSign.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TrafficLightBlobDetector.cpp">

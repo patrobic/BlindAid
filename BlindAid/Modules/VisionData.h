@@ -2,7 +2,6 @@
 
 #include "DepthObstacle.h"
 #include "TrafficLight.h"
-#include "StopSign.h"
 
 namespace Vision
 {
@@ -13,7 +12,6 @@ namespace Vision
     {
       _dodResults = new DepthObstacle::Data(params->GetDepthObstacleParams());
       _tldResults = new TrafficLight::Data(params->GetTrafficLightParams());
-      _ssdResults = new StopSign::Data();
     }
 
     void Clear() {}
@@ -24,7 +22,6 @@ namespace Vision
 
     DepthObstacle::Data *GetDepthObstacleResults() { return _dodResults; }
     TrafficLight::Data *GetTrafficLightResults() { return _tldResults; }
-    StopSign::Data *GetStopSignResults() { return _ssdResults; }
 
     cv::Mat *GetDepthOverlayImage() { return &_depthOverlayImage; }
     cv::Mat *GetColorOverlayImage() { return &_colorOverlayImage; }
@@ -32,7 +29,6 @@ namespace Vision
   private:
     DepthObstacle::Data *_dodResults;
     TrafficLight::Data *_tldResults;
-    StopSign::Data *_ssdResults;
 
     cv::Mat _colorOverlayImage;
     cv::Mat _depthOverlayImage;

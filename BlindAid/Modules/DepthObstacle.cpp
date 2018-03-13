@@ -69,10 +69,6 @@ namespace Vision
           calcHist(&(*_input->GetDepthImage())(_output->GetRegion(j, i)), 1, channels, _maskImage(_output->GetRegion(j, i)), hist, 1, size, ranges, true, false);
 
           // handle the case when too many pixels are not detected (distance too far).
-          //int totalPixels = (int)(*_input->GetDepthImage())(_output->GetRegion(j, i)).total();
-          //int validPixelsByCount = countNonZero((*_input->GetDepthImage())(_output->GetRegion(j, i)));
-          //int validPixelsByHistogram = (int)cv::sum(hist)[0]; // by histogram and mask are always the same, by count is similar but sometimes slightly more.
-          //int validPixelsByMask = countNonZero(_maskImage(_output->GetRegion(j, i)));
           float validRatio = countNonZero(_maskImage(_output->GetRegion(j, i))) / (float)(*_input->GetDepthImage())(_output->GetRegion(j, i)).total();
           if (validRatio < _params->GetValidRatioThreshold())
             _output->SetDepth(j, i, (int)_params->GetMaximumDistance());

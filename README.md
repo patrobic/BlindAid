@@ -2,6 +2,22 @@
 Capstone Project: Assist the blind in moving around safely by warning them of impending obstacles using depth sensing, computer vision, and tactile glove feedback.
 
 ## Launch Flags
+	-a: realtime FINAL mode
+	-c: camera only (disable glove)
+	-d: show images
+	-v: verbose printouts
+	-r: enable recording
+	-t: load recorded images
+	-p: set COM port for BT
+	-?: help
+
+## Shortcut Icons
+	1) the FULL experience, NO display (for final demo).
+	2) disable glove, NO display (mainly for benchmarking).
+	3) FULL experience, WITH images on screen (to give in depth look into program).
+	4) disable glove, WITH images on screen (so we don't have to worry about the glove's battery/connection).
+	
+## Operation Modes
 ### Default (to use menu)
 	blindaid
 	

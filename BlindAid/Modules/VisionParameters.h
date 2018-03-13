@@ -7,35 +7,10 @@
 
 namespace Vision
 {
-  namespace StopSign
-  {
-    struct Parameters : public SwitchableParameters
-    {
-    public:
-      Parameters(GlobalParameters *params) : SwitchableParameters(params)
-      { 
-        Defaults();
-      }
-
-      void Defaults()
-      {
-
-      }
-
-      bool Valid()
-      {
-        return true;
-      }
-
-    private:
-
-    };
-  }
-
   class Parameters : public SwitchableParameters
   {
   public:
-    Parameters(GlobalParameters *params) : SwitchableParameters(params), _dodParams(params), _tldParams(params), _ssdParams(params)
+    Parameters(GlobalParameters *params) : SwitchableParameters(params), _dodParams(params), _tldParams(params)
     {
       Defaults();
     }
@@ -44,7 +19,6 @@ namespace Vision
     {
       _dodParams.Defaults();
       _tldParams.Defaults();
-      _ssdParams.Defaults();
     }
 
     bool Valid()
@@ -54,7 +28,6 @@ namespace Vision
 
     DepthObstacle::Parameters *GetDepthObstacleParams() { return &_dodParams; }
     TrafficLight::Parameters *GetTrafficLightParams() { return &_tldParams; }
-    StopSign::Parameters *GetStopSignParams() { return &_ssdParams; }
 
   private:
     // parameters class for depth obstacle detector.
@@ -62,8 +35,5 @@ namespace Vision
 
     // parameters class for traffic light detector.
     TrafficLight::Parameters _tldParams;
-
-    // parameters class for stop sign detector.
-    StopSign::Parameters _ssdParams;
   };
 }

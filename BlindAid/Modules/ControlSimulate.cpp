@@ -27,8 +27,6 @@ namespace Control
       if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
         PrintTrafficLights();
 
-      //PrintStopSign();
-
       LOG(Info, "Control values displayed on screen", "SIMULATE", _start);
     }
 
@@ -67,12 +65,6 @@ namespace Control
       LOG(Info, ss.str(), "AUDIO");
 
       _input->GetTrafficLightResults()->_trafficLightMutex.unlock();
-    }
-
-    void Simulate::PrintStopSign()
-    {
-      int stopSignCount = _input->GetStopSignResults()->GetRegion()._radius > 0 ? 1 : 0;
-      if (stopSignCount > 0) cout << " StopSign(" << stopSignCount << ")"; cout << ".\n";
     }
   }
 }

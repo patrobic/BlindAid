@@ -5,7 +5,7 @@
 class RealtimeMenu : public Menu
 {
 public:
-  RealtimeMenu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger, Configuration *config);
+  RealtimeMenu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger);
   void ShowMenu();
 
 private:

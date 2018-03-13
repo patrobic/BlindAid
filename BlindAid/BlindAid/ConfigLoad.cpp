@@ -1,13 +1,14 @@
 #include "ConfigLoad.h"
 
-LoadConfiguration::LoadConfiguration(Core::Parameters *params, std::string path)
+LoadConfiguration::LoadConfiguration(Core::Parameters *params, Logger *logger) : Configuration(params, logger)
 {
-  _params = params;
-  _path = path;
+
 }
 
-void LoadConfiguration::operator()()
+void LoadConfiguration::Configure(std::string path)
 {
+  _path = path;
+
   // TODO: exception checking for file exists.
   _config.readFile(_path.c_str());
 
@@ -56,7 +57,6 @@ void LoadConfiguration::Vision(Setting &setting, Vision::Parameters *parameters)
 
   LoadDepthObstacle(setting.lookup("depthobstacle"), parameters->GetDepthObstacleParams());
   LoadTrafficLight(setting.lookup("trafficlight"), parameters->GetTrafficLightParams());
-  LoadStopSign(setting.lookup("stopsign"), parameters->GetStopSignParams());
 }
 
 void LoadConfiguration::Control(Setting &setting, Control::Parameters *parameters)
@@ -104,12 +104,6 @@ void LoadConfiguration::TrafficLightBlobDetector(Setting &setting, Vision::Traff
 
 void LoadConfiguration::TrafficLightDeepLearning(Setting &setting, Vision::TrafficLight::DeepLearning::Parameters *parameters)
 {
-
-}
-
-void LoadConfiguration::LoadStopSign(Setting &setting, Vision::StopSign::Parameters *parameters)
-{
-  BaseParams(setting, parameters);
 
 }
 

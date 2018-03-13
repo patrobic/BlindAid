@@ -1,14 +1,19 @@
-#include "Config.h"
+#include "ConfigMain.h"
 
-Configuration::Configuration(Core::Parameters *params) :
-  _saveConfig(params, CONFIG_FILE),
-  _loadConfig(params, CONFIG_FILE)
+MainConfiguration::MainConfiguration(Core::Parameters *params, Logger *logger) : Configuration(params, logger),
+  _saveConfig(params, logger),
+  _loadConfig(params, logger),
+  _parseConfig(params, logger)
 {
-  // TODO: add this once the loading works correctly.
-  //Configure();
+
 }
 
-void Configuration::Configure()
+void MainConfiguration::Configure(std::vector<std::string> args)
+{
+  _parseConfig.Configure(args);
+}
+
+void MainConfiguration::Configure(std::string file)
 {
   // TODO: implement proper file loading/validating mechanics that creates new file if nonexistant or invalid.
   // if(file exists)
@@ -21,8 +26,8 @@ void Configuration::Configure()
   // else ... no configuration exists at all (new installation).
   //    SaveConfiguration(); ... create a file by saving the default configuration specified in each class's Parameters class.
 
-  if (std::ifstream(CONFIG_FILE))
-    _saveConfig();
+  if (std::ifstream(file))
+    _saveConfig.Configure(file);
 
-  _loadConfig();
+  _loadConfig.Configure(file);
 }

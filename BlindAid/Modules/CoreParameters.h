@@ -21,7 +21,7 @@ namespace Core
       _mode = SwitchableParameters::Mode::Simulate;
       _repeat = 1;
 
-      _consoleWindowPosition = cv::Point(0, 300);
+      _consoleWindowPosition = cv::Point(0, 360);
       _consoleWindowScale = 1.f;
     }
 

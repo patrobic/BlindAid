@@ -38,7 +38,6 @@
     <ClInclude Include="SerialPort.h" />
     <ClInclude Include="TrafficLight.h" />
     <ClInclude Include="DepthObstacle.h" />
-    <ClInclude Include="StopSign.h" />
     <ClInclude Include="TrafficLightBlobDetector.h" />
     <ClInclude Include="TrafficLightData.h" />
     <ClInclude Include="TrafficLightDeepLearning.h" />
@@ -67,7 +66,6 @@
     <ClCompile Include="SerialPort.cpp" />
     <ClCompile Include="TrafficLight.cpp" />
     <ClCompile Include="DepthObstacle.cpp" />
-    <ClCompile Include="StopSign.cpp" />
     <ClCompile Include="TrafficLightBlobDetector.cpp" />
     <ClCompile Include="TrafficLightDeepLearning.cpp" />
     <ClCompile Include="CaptureRealtime.cpp" />

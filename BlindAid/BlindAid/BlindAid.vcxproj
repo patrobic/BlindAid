@@ -19,17 +19,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Config.cpp" />
+    <ClCompile Include="ConfigMain.cpp" />
     <ClCompile Include="ConfigLoad.cpp" />
-    <ClCompile Include="MenuMain.cpp" />
+    <ClCompile Include="ConfigParse.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MenuMain.cpp" />
+    <ClCompile Include="Launcher.cpp" />
     <ClCompile Include="MenuRealtime.cpp" />
     <ClCompile Include="ConfigSave.cpp" />
     <ClCompile Include="MenuSimulate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h" />
-    <ClInclude Include="Main.h" />
+    <ClInclude Include="ConfigMain.h" />
+    <ClInclude Include="ConfigParse.h" />
+    <ClInclude Include="Launcher.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuMain.h" />
     <ClInclude Include="ConfigLoad.h" />

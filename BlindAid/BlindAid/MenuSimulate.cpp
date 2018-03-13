@@ -5,7 +5,7 @@ using namespace cv;
 
 #define PATH "C:\\Projects\\BlindAid\\TestData\\"
 
-SimulateMenu::SimulateMenu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger, Configuration *config) : Menu(core, params, data, logger, config)
+SimulateMenu::SimulateMenu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger) : Menu(core, params, data, logger)
 {
 
 }
@@ -27,7 +27,6 @@ void SimulateMenu::ShowMenu()
 | 3: Load Sequence            |\n\
 | d: Depth Obstacle Detector  |\n\
 | t: Traffic Light Detector   |\n\
-| s: Stop Sign Detector       |\n\
 | v: Video Simulation         |\n\
 +=============================+\n";
 
@@ -48,11 +47,7 @@ void SimulateMenu::ShowMenu()
       TestPhoto("TrafficLight\\tlight", "DepthObstacle\\depth.png", 1);
       break;
     case 't':
-      //TestPhoto("UniqueIntersections\\tlight", "DepthObstacle\\depth.png",42);
       TestPhoto("TrafficLight\\tlight", "DepthObstacle\\depth.png", 21);
-      break;
-    case 's':
-      TestPhoto("StopSign\\stop", "DepthObstacle\\depth.png", 8);
       break;
     case 'v':
       TestVideo("TrafficLight\\tlight", "DepthObstacle\\depth.png", 4);
@@ -63,7 +58,6 @@ void SimulateMenu::ShowMenu()
 
 void SimulateMenu::SetParameters()
 {
-  //_params->Defaults();
   _params->GetRecordParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
   _params->GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
   _params->GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);

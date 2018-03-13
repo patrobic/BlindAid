@@ -17,7 +17,6 @@ namespace Vision
   {
     _depthObstacle = DepthObstacle::Base::MakeDepthObstacle(_params->GetDepthObstacleParams(), _input, _output->GetDepthObstacleResults(), _logger);
     _trafficLight = TrafficLight::Base::MakeTrafficLight(_params->GetTrafficLightParams(), _input, _output->GetTrafficLightResults(), _logger);
-    _stopSign = new StopSign::Base(_params->GetStopSignParams(), _input, _output->GetStopSignResults(), _logger);
   }
 
   void Vision::Process()
@@ -36,7 +35,5 @@ namespace Vision
 
     if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
       (*_trafficLight)();
-
-    //(*_stopSign)();
   }
 }

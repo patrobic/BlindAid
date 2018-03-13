@@ -18,6 +18,5 @@ namespace Vision
     
     DepthObstacle::Base *_depthObstacle;
     TrafficLight::Base *_trafficLight;
-    StopSign::Base *_stopSign;
   };
 }

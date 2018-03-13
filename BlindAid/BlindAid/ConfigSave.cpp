@@ -1,13 +1,14 @@
 #include "ConfigSave.h"
 
-SaveConfiguration::SaveConfiguration(Core::Parameters *params, std::string path)
+SaveConfiguration::SaveConfiguration(Core::Parameters *params, Logger *logger) : Configuration(params, logger)
 {
-  _params = params;
-  _path = path;
+
 }
 
-void SaveConfiguration::operator()()
+void SaveConfiguration::Configure(std::string path)
 {
+  _path = path;
+
   Setting &root = _config.getRoot();
 
   Core(root.add("core", Setting::Type::TypeGroup), _params);
@@ -54,7 +55,6 @@ void SaveConfiguration::Vision(Setting &setting, Vision::Parameters *parameters)
 
   SaveDepthObstacle(setting.add("depthobstacle", Setting::Type::TypeGroup), parameters->GetDepthObstacleParams());
   SaveTrafficLight(setting.add("trafficlight", Setting::Type::TypeGroup), parameters->GetTrafficLightParams());
-  SaveStopSign(setting.add("stopsign", Setting::Type::TypeGroup), parameters->GetStopSignParams());
 }
 
 void SaveConfiguration::Control(Setting &setting, Control::Parameters *parameters)
@@ -102,12 +102,6 @@ void SaveConfiguration::TrafficLightBlobDetector(Setting &setting, Vision::Traff
 
 void SaveConfiguration::TrafficLightDeepLearning(Setting &setting, Vision::TrafficLight::DeepLearning::Parameters *parameters)
 {
-
-}
-
-void SaveConfiguration::SaveStopSign(Setting &setting, Vision::StopSign::Parameters *parameters)
-{
-  BaseParams(setting, parameters);
 
 }
 

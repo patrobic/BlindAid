@@ -10,13 +10,12 @@
 class Menu
 {
 public:
-  Menu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger, Configuration *config)
+  Menu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger)
   {
     _core = core;
     _params = params;
     _results = data;
     _logger = logger;
-    _config = config;
   }
 
   virtual void ShowMenu() = 0;
@@ -33,7 +32,5 @@ protected:
   Core::Core *_core;
   Core::Parameters *_params;
   Core::Data *_results;
-
   Logger *_logger;
-  Configuration *_config;
 };

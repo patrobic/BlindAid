@@ -5,7 +5,7 @@
 class SimulateMenu : public Menu
 {
 public:
-  SimulateMenu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger, Configuration *config);
+  SimulateMenu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger);
   void ShowMenu();
 
 private:

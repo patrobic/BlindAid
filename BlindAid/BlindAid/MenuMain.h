@@ -7,7 +7,7 @@
 class MainMenu : public Menu
 {
 public:
-  MainMenu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger, Configuration *config);
+  MainMenu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger);
   void ShowMenu();
 
 private:

@@ -41,9 +41,6 @@
     <ClCompile Include="TestDepthObstacle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestStopSign.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TestTrafficLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

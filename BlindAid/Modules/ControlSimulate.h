@@ -17,7 +17,6 @@ namespace Control
       void Process();
       void PrintDepthObstacle();
       void PrintTrafficLights();
-      void PrintStopSign();
 
       cv::Mat _depthMat;
       cv::Mat _vibration;

@@ -78,7 +78,6 @@ namespace Display
     void DrawTrafficLights();
     void DrawTrafficLightBD();
     void DrawTrafficLightDL();
-    void DrawStopSign();
     void DisplayColorImage();
     void DisplayDepthImage();
   };
