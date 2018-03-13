@@ -11,10 +11,10 @@ using namespace std;
 
 #define NAME "Launcher"
 
-Launcher::Launcher(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger) : Menu(core, params, data, logger),
-  _menu(core, params, data, logger)
+Launcher::Launcher(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger, MainConfiguration *config, std::vector<std::string> args) : Menu(core, params, data, logger, config),
+  _menu(core, params, data, logger, config)
 {
-
+  _args = args;
 }
 
 void Launcher::ShowMenu()
@@ -38,7 +38,7 @@ void Launcher::Process()
 
 void Launcher::LoadSettings()
 {
-  //_config.Configure();
+  _config->Configure(_args);
 }
 
 void Launcher::SetExePath()

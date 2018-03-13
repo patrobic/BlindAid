@@ -1,12 +1,12 @@
 #pragma once
 
 #include "MenuMain.h"
-#include "Config.h"
+#include "ConfigMain.h"
 
 class Launcher : public Menu
 {
 public:
-  Launcher(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger);
+  Launcher(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger, MainConfiguration *config, std::vector<std::string> args);
   void ShowMenu();
 
 private:
@@ -16,4 +16,6 @@ private:
   void SetWindowPosition();
 
   MainMenu _menu;
+
+  std::vector<std::string> _args;
 };

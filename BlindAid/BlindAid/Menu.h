@@ -3,19 +3,20 @@
 #include <iostream>
 #include <conio.h>
 
-#include "Config.h"
+#include "ConfigMain.h"
 #include "..\Modules\GlobalParameters.h"
 #include "..\Modules\Core.h"
 
 class Menu
 {
 public:
-  Menu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger)
+  Menu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger, MainConfiguration *config)
   {
     _core = core;
     _params = params;
     _results = data;
     _logger = logger;
+    _config = config;
   }
 
   virtual void ShowMenu() = 0;
@@ -33,4 +34,5 @@ protected:
   Core::Parameters *_params;
   Core::Data *_results;
   Logger *_logger;
+  MainConfiguration *_config;
 };

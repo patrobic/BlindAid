@@ -5,7 +5,7 @@ using namespace cv;
 
 #define PATH "C:\\Projects\\BlindAid\\TestData\\"
 
-SimulateMenu::SimulateMenu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger) : Menu(core, params, data, logger)
+SimulateMenu::SimulateMenu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger, MainConfiguration *config) : Menu(core, params, data, logger, config)
 {
 
 }

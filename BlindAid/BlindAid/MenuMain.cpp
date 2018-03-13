@@ -3,9 +3,9 @@
 using namespace std;
 using namespace cv;
 
-MainMenu::MainMenu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger) : Menu(core, params, data, logger),
-  _realtime(core, params, data, logger),
-  _simulate(core, params, data, logger)
+MainMenu::MainMenu(Core::Core *core, Core::Parameters *params, Core::Data *data, Logger *logger, MainConfiguration *config) : Menu(core, params, data, logger, config),
+  _realtime(core, params, data, logger, config),
+  _simulate(core, params, data, logger, config)
 {
 
 }
