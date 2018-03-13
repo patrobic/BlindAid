@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Config.h"
+#include "Class.h"
 
 #include <string>
 #include <fstream>
@@ -9,7 +9,7 @@
 
 using namespace libconfig;
 
-class SaveConfiguration : public Configuration
+class SaveConfiguration : public Class
 {
 public:
   SaveConfiguration(Core::Parameters *params, Logger *logger);

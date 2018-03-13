@@ -97,7 +97,7 @@ namespace Vision
     class Parameters : public SwitchableParameters
     {
     public:
-      enum Mode { BlobDetector, DeepLearning };
+      enum Version { BlobDetector, DeepLearning };
 
       Parameters(GlobalParameters *params) : SwitchableParameters(params), _blobDetectorParams(params), _deepLearningParams(params)
       {
@@ -109,7 +109,7 @@ namespace Vision
         _blobDetectorParams.Defaults();
         _deepLearningParams.Defaults();
 
-        _mode = DeepLearning;
+        _version = DeepLearning;
         _upperRegionRatio = 0.5f;
         _centerRegionRatio = 0.8f;
         _consecutiveCount = 4;
@@ -128,8 +128,8 @@ namespace Vision
 
       DeepLearning::Parameters *GetDeepLearningParams() { return &_deepLearningParams; }
 
-      const Mode GetMode() const { return _mode; }
-      void SetMode(Mode mode) { _mode = mode; }
+      const Version GetVersion() const { return _version; }
+      void SetVersion(Version mode) { _version = mode; }
 
       float GetUpperRegionRatio() { return _upperRegionRatio; }
       void SetUpperRegionRatio(float upperRegionRatio) { _upperRegionRatio = upperRegionRatio; }
@@ -157,7 +157,7 @@ namespace Vision
       DeepLearning::Parameters _deepLearningParams;
 
       // detection mode to use (CV or AI).
-      Mode _mode;
+      Version _version;
 
       // upper region to inspect for traffic lights.
       float _upperRegionRatio;

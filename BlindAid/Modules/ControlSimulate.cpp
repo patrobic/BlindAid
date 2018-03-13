@@ -21,10 +21,10 @@ namespace Control
     {
       _start = steady_clock::now();
 
-      if (_params->GetType() == SwitchableParameters::Type::Depth || _params->GetType() == SwitchableParameters::Type::Both)
+      if (_params->GetGlobalParameters()->GetType() == Depth || _params->GetGlobalParameters()->GetType() == Both)
         PrintDepthObstacle();
 
-      if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
+      if (_params->GetGlobalParameters()->GetType() == Color || _params->GetGlobalParameters()->GetType() == Both)
         PrintTrafficLights();
 
       LOG(Info, "Control values displayed on screen", "SIMULATE", _start);

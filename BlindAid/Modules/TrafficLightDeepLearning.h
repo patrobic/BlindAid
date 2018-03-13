@@ -21,8 +21,10 @@ namespace Vision
         void PreprocessImage();
         void MachineLearning();
         void UpdateResults();
+        void ProcessFunc();
 
         void TProcess();
+        
         std::thread *_processThread;
 
         cv::Mat _preprocessedImage;

@@ -1,6 +1,6 @@
 #include "ConfigLoad.h"
 
-LoadConfiguration::LoadConfiguration(Core::Parameters *params, Logger *logger) : Configuration(params, logger)
+LoadConfiguration::LoadConfiguration(Core::Parameters *params, Logger *logger) : Class(params, logger)
 {
 
 }
@@ -115,6 +115,6 @@ void LoadConfiguration::BaseParams(Setting &setting, IParameters *parameters)
   int toggle;
   setting.lookupValue("toggle", toggle);
 
-  _params->SetMode((SwitchableParameters::Mode)mode);
-  _params->SetToggle((SwitchableParameters::Toggle)toggle);
+  _params->SetMode((Mode)mode);
+  _params->SetToggle((Toggle)toggle);
 }

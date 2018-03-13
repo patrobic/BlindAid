@@ -17,17 +17,20 @@ namespace Display
   {
     _start = steady_clock::now();
 
-    if (_params->GetType() == SwitchableParameters::Type::Depth || _params->GetType() == SwitchableParameters::Type::Both)
+    if (_params->GetGlobalParameters()->GetType() == Depth || _params->GetGlobalParameters()->GetType() == Both)
     {
       DrawDepthObstacles();
       DisplayDepthImage();
     }
 
-    if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
+    if (_params->GetGlobalParameters()->GetType() == Color || _params->GetGlobalParameters()->GetType() == Both)
     {
       DrawTrafficLights();
       DisplayColorImage();
     }
+
+    if (_params->GetMode() == Simulate)
+      system("pause");
 
     LOG(Info, "Results displayed to screen", _start);
   }

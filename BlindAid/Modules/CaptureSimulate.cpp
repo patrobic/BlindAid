@@ -61,7 +61,7 @@ namespace Capture
 
     void Simulate::LoadSequence()
     {
-      if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
+      if (_params->GetGlobalParameters()->GetType() == Color || _params->GetGlobalParameters()->GetType() == Both)
       {
         _colorName = "color_" + to_string(_index) + ".png";
         *_output->GetColorImage() = imread(_params->GetSimulateParams()->GetColorSimDataPath() + "\\" + _colorName);
@@ -69,7 +69,7 @@ namespace Capture
           _output->SetStop(true);
       }
 
-      if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
+      if (_params->GetGlobalParameters()->GetType() == Depth || _params->GetGlobalParameters()->GetType() == Both)
       {
         _depthName = "depth_" + to_string(_index) + ".tiff";
         *_output->GetDepthImage() = imread(_params->GetSimulateParams()->GetDepthSimDataPath() + "\\" + _depthName, IMREAD_UNCHANGED);

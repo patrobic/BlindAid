@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Config.h"
+#include "Class.h"
 
 #include <string>
 #include <fstream>
@@ -12,7 +12,7 @@ using namespace libconfig;
 // TODO: this class must be unit-tested somehow, to ensure that ALL values are loaded, and done so correctly.
 // define a sample test config.cfg, load it, and check all Parameters classes to ensure that desired values are found.
 
-class LoadConfiguration : public Configuration
+class LoadConfiguration : public Class
 {
 public:
   LoadConfiguration(Core::Parameters *params, Logger *logger);

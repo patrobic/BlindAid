@@ -59,11 +59,11 @@ namespace UnitTest
       };
 
       Core::Parameters params;
-      params.GetCaptureParams()->SetMode(SwitchableParameters::Mode::Simulate);
-      params.GetControlParams()->SetMode(SwitchableParameters::Mode::Simulate);
+      params.GetCaptureParams()->SetMode(Simulate);
+      params.GetControlParams()->SetMode(Simulate);
       params.GetVisionParams()->GetDepthObstacleParams()->SetToggle(SwitchableParameters::Toggle::Disabled);
       params.GetDisplayParams()->SetToggle(SwitchableParameters::Toggle::Enabled);
-      params.GetVisionParams()->GetTrafficLightParams()->SetMode(Vision::TrafficLight::Parameters::Mode::BlobDetector);
+      params.GetVisionParams()->GetTrafficLightParams()->SetMode(Vision::TrafficLight::Parameters::Version::BlobDetector);
       params.GetVisionParams()->GetTrafficLightParams()->SetSmoothingCount(0);
       params.GetVisionParams()->GetTrafficLightParams()->SetCenterRegionRatio(1.f);
       params.GetVisionParams()->GetTrafficLightParams()->SetUpperRegionRatio(1.f);

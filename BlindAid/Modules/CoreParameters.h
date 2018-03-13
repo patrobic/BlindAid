@@ -18,7 +18,7 @@ namespace Core
 
     void Defaults()
     {
-      _mode = SwitchableParameters::Mode::Simulate;
+      _mode = Simulate;
       _repeat = 1;
 
       _consoleWindowPosition = cv::Point(0, 360);

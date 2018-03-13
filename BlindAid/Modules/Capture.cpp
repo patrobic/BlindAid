@@ -11,7 +11,7 @@ namespace Capture
 
   Base *Base::MakeCapture(Capture::Parameters *params, IData *input, IData *output, Logger *logger)
   {
-    if (((Capture::Parameters*)params)->GetMode() == SwitchableParameters::Mode::Realtime)
+    if (((Capture::Parameters*)params)->GetMode() == Mode::Realtime)
       return new Realtime::Realtime(params, input, output, logger);
     else
       return new Simulate::Simulate(params, input, output, logger);

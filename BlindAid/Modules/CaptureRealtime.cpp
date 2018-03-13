@@ -90,9 +90,9 @@ namespace Capture
       _output->_colorImageMutex.lock();
 
       try {
-        if (_params->GetType() == SwitchableParameters::Type::Color || _params->GetType() == SwitchableParameters::Type::Both)
+        if (_params->GetGlobalParameters()->GetType() == Color || _params->GetGlobalParameters()->GetType() == Both)
           GetColorFrame();
-        if (_params->GetType() == SwitchableParameters::Type::Depth || _params->GetType() == SwitchableParameters::Type::Both)
+        if (_params->GetGlobalParameters()->GetType() == Depth || _params->GetGlobalParameters()->GetType() == Both)
           GetDepthFrame();
       }
       catch (...) {

@@ -84,7 +84,7 @@ namespace Vision
     class Parameters : public SwitchableParameters
     {
     public:
-      enum Mode { FixedRegions, HandPosition, Reduced };
+      enum Version { FixedRegions, HandPosition, Reduced };
       enum Polarity { CloseIsSmall, CloseIsLarge };
 
       Parameters(GlobalParameters *params) : SwitchableParameters(params), _fixedRegionsParams(params), _handPositionParams(params)
@@ -99,7 +99,7 @@ namespace Vision
         // HandHunting: mode = HandPosition, center = (DYNAMIC), horizontalCoverage = 0.5, verticalCoverage = 0.5, snapToEdges = true
         // HeadProtection: mode = FixedRegions, center = (320, 120), horizontalCoverage = 0.3, verticalCoverage = 0.7, snapToEdges = false
 
-        _mode = Mode::FixedRegions;
+        _version = Version::FixedRegions;
 
         _consecutiveCount = 3;
 
@@ -159,8 +159,8 @@ namespace Vision
       int GetVerticalRegions() { return _verticalRegions; }
       void SetVerticalRegions(int vertRegions) { _verticalRegions = vertRegions; }
 
-      Mode GetMode() { return _mode; }
-      void SetMode(Mode mode) { _mode = mode; }
+      Version GetVersion() { return _version; }
+      void SetVersion(Version mode) { _version = mode; }
 
       int GetConsecutiveCount() { return _consecutiveCount; }
       void SetConsecutiveCount(int consecutiveCount) { _consecutiveCount = consecutiveCount; }
@@ -224,7 +224,7 @@ namespace Vision
       int _verticalRegions;
 
       // mode used in defining region position and sizes.
-      Mode _mode;
+      Version _version;
 
       // number of frames for which the farthest object will be chosen.
       int _consecutiveCount;

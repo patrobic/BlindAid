@@ -16,7 +16,6 @@ namespace Core
     void LogStats();
     void CreateModules();
 
-    // capture and control declared as base class pointer so that it can be declared based on parameter as either simulate or realtime class.
     Capture::Base *_capture;
     Record::Record *_record;
     Vision::Vision *_vision;

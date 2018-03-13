@@ -1,6 +1,6 @@
 #include "ConfigSave.h"
 
-SaveConfiguration::SaveConfiguration(Core::Parameters *params, Logger *logger) : Configuration(params, logger)
+SaveConfiguration::SaveConfiguration(Core::Parameters *params, Logger *logger) : Class(params, logger)
 {
 
 }
