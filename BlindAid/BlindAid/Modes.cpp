@@ -17,7 +17,7 @@ Modes::Modes(Core::Parameters *params, Logger *logger) : Class(params, logger)
 
 string categories[][3] = {
   { "COMMAND", "FLAGS", "CATEGORY" },
-  { "blindaid", "-a | -c | -t <path> | -s <path> -r [delay]", "mode selection" },
+  { "blindaid", "-a | -c | -t <path> | -s <path> -r [delay] [path]", "mode selection" },
   { "", "-d -v [level] -l", "debugging options" },
   { "", "-p <port>", "connection settings" },
   { "", "-do {fr | hp} -tl {dl | bd}", "module selection" },
@@ -32,7 +32,7 @@ string messages[][5] = {
   { "c", "", "Camera Only", "disable glove, print control to screen", "Camera ON / Glove OFF" },
   { "t", "<path>", "Glove Only", "disable camera, load images from disk", "Camera OFF/Glove ON" },
   { "s", "<path>", "Simulate Mode", "disable performance optimizations", "Camera OFF/Glove OFF" },
-  { "r", "[delay]", "Record Enabled", "save images to disk, 0 for manual", "Record ON" },
+  { "r", "[delay] [path]", "Record Enabled", "save images to disk, 0 for manual", "Record ON" },
   { "d", "", "Display Images", "show color/depth images to screen", "Display ON" },
   { "v", "[level]", "Verbose Messages", "print info messages to screen", "Logging ON" },
   { "l", "", "Low Performance", "disable multi threading optimizations", "Threads OFF" },
@@ -59,8 +59,8 @@ void Modes::GetHelp()
 {
   cout << "USAGE: Summary of flags by category.\n";
   for (int i = 0; i < 6; ++i)
-    cout << left << "    " << setw(10) << categories[i][0] << "\t[" << setw(42) << (categories[i][1] + "]") << "\t(" << categories[i][2] << ")\n";
-  
+    cout << left << "    " << setw(10) << categories[i][0] << "\t[" << setw(50) << (categories[i][1] + "]") << "\t(" << categories[i][2] << ")\n";
+
   cout << "\nDETAILS: Description of flags and parameters.\n";
   for (int i = 0; i < 15; ++i)
     cout << left << "    -" << setw(15) << (messages[i][0] + " " + messages[i][1]) << "\t" << setw(23) << messages[i][2] << "\t(" << setw(40) << (messages[i][3] + ")") << (messages[i][4].size() > 0 ? "\t[" + messages[i][4] + "]" : "") << "\n";
@@ -120,15 +120,20 @@ void Modes::SimulateMode(vector<string> params)
 void Modes::EnableRecord(vector<string> params)
 {
   int interval = 0;
+  string path;
+
   if (FlagToInt(params, 0, interval))
     _params->GetRecordParams()->SetInterval(interval);
 
+  if (FlagToString(params, 0, path) || FlagToString(params, 1, path))
+    _params->GetRecordParams()->SetPath(path);
+
   _params->GetGlobalParameters()->SetBypassMenu(true);
   _params->GetRecordParams()->SetToggle(Enabled);
-  
+
   CaptureOnly();
   EnableDisplay();
-  LOG(Warning, "'-r': Enabling Record (save " + (interval > 0 ? "every " + to_string(interval) + "ms" : "on key press") + ")");
+  LOG(Warning, "'-r': Enabling Record (save " + (interval > 0 ? "every " + to_string(interval) + "ms" : "on key press") + " to folder " + _params->GetRecordParams()->GetPath() + ")");
 }
 
 void Modes::EnableDisplay()
@@ -228,10 +233,10 @@ void Modes::DisableDepth()
 
 bool Modes::FlagToInt(vector<string> param, int index, int &number)
 {
-  if (index >= param.size())
+  if (index >= param.size() || param.at(index).length() == 0)
     return false;
 
-  if (param.at(index).length() > 0 && param.at(index).find_first_not_of("0123456789") != string::npos)
+  if (param.at(index).find_first_not_of("0123456789") != string::npos)
     return false;
 
   number = atoi(param.at(index).c_str());
@@ -241,7 +246,10 @@ bool Modes::FlagToInt(vector<string> param, int index, int &number)
 
 bool Modes::FlagToString(vector<string> param, int index, string &str)
 {
-  if (index >= param.size())
+  if (index >= param.size() || param.at(index).length() == 0)
+    return false;
+
+  if (isdigit(param.at(index).at(0)))
     return false;
 
   str = param.at(index);
@@ -251,9 +259,9 @@ bool Modes::FlagToString(vector<string> param, int index, string &str)
 
 bool Modes::FlagToPath(vector<string> param, int index, string &path)
 {
-  if (index >= param.size())
+  if (index >= param.size() || param.at(index).length() == 0)
     return false;
-  
+
   if (!GetFileAttributesA(param.at(index).c_str()) || !FILE_ATTRIBUTE_DIRECTORY || PathIsDirectoryEmpty(param.at(index).c_str()))
     return false;
 

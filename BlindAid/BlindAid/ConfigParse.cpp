@@ -34,8 +34,8 @@ void ParseConfiguration::Configure(std::vector<std::string> args)
 
   if (CheckFlag("-s", 1))
     _modes.SimulateMode(_prms);
-  
-  if (CheckFlag("-r", 1))
+
+  if (CheckFlag("-r", 2))
     _modes.EnableRecord(_prms);
 
   if (CheckFlag("-d"))
@@ -73,7 +73,10 @@ bool ParseConfiguration::CheckFlag(const std::string& option, int numParams)
       _index = i;
 
       for (int j = 1; j <= numParams && (i + j) < _args.size(); ++j)
-        _prms.push_back(_args.at(i + j));
+        if (_args.at(i + j)[0] != '-')
+          _prms.push_back(_args.at(i + j));
+        else
+          break;
 
       return true;
     }

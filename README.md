@@ -2,12 +2,12 @@
 Capstone Project: Assist the blind in moving around safely by warning them of impending obstacles using depth sensing, computer vision, and tactile glove feedback.
 
 ## USAGE: Summary of flags by category.
-    COMMAND     [FLAGS]                                         (CATEGORY)
-    blindaid    [-a | -c | -t <path> | -s <path> -r [delay]]    (mode selection)
-                [-d -v [level] -l]                              (debugging options)
-                [-p <port>]                                     (connection settings)
-                [-do {fr | hp} -tl {dl | bd}]                   (module selection)
-                [-coloroff | -depthoff]                         (channel selection)
+    COMMAND     [FLAGS]                                                 (CATEGORY)
+    blindaid    [-a | -c | -t <path> | -s <path> -r [delay] [path]]     (mode selection)
+                [-d -v [level] -l]                                      (debugging options)
+                [-p <port>]                                             (connection settings)
+                [-do {fr | hp} -tl {dl | bd}]                           (module selection)
+                [-coloroff | -depthoff]                                 (channel selection)
 
 ## DETAILS: Description of flags and parameters.
     -FLAG [ARGUMENT]    DESCRIPTION             (DETAILS)                                       [CHANGES]
@@ -16,7 +16,7 @@ Capstone Project: Assist the blind in moving around safely by warning them of im
     -c                  Camera Only             (disable glove, print control to screen)        [Camera ON / Glove OFF]
     -t <path>           Glove Only              (disable camera, load images from disk)         [Camera OFF/Glove ON]
     -s <path>           Simulate Mode           (disable performance optimizations)             [Camera OFF/Glove OFF]
-    -r [delay]          Record Enabled          (save images to disk, 0 for manual)             [Record ON]
+    -r [delay] [path]   Record Enabled          (save images to disk, 0 for manual)             [Record ON]
     -d                  Display Images          (show color/depth images to screen)             [Display ON]
     -v [level]          Verbose Messages        (print info messages to screen)                 [Logging ON]
     -l                  Low Performance         (disable multi threading optimizations)         [Threads OFF]
@@ -35,7 +35,7 @@ Capstone Project: Assist the blind in moving around safely by warning them of im
     blindaid -s path            Simulate All            (disable camera and glove, only test software loop)
     blindaid -a -d              Realtime w\Debug        (full experience w\image display, low performance)
     blindaid -c -d              Capture w\Debug         (capture only w\display, to demonstrate processing)
-    blindaid -r ms              Record Images           (save images periodically, or 0 for manual trigger)
+    blindaid -r ms              Record Images           (save images periodically, or 0 for manual trigger)	
 	
 ## Shortcut Icons
 	1) the FULL experience, NO display (for final demo).
