@@ -59,7 +59,7 @@ void Modes::GetHelp()
 {
   cout << "USAGE: Summary of flags by category.\n";
   for (int i = 0; i < 6; ++i)
-    cout << left << "    " << setw(10) << categories[i][0] << "\t[" << setw(25) << (categories[i][1] + "]") << "\t(" << categories[i][2] << ")\n";
+    cout << left << "    " << setw(10) << categories[i][0] << "\t[" << setw(42) << (categories[i][1] + "]") << "\t(" << categories[i][2] << ")\n";
   
   cout << "\nDETAILS: Description of flags and parameters.\n";
   for (int i = 0; i < 15; ++i)
