@@ -7,20 +7,23 @@ class Modes : public Class
 public:
   Modes(Core::Parameters *params, Logger *logger);
 
-  void HelpFlag();
-  void DisplayFlag();
-  void VerboseFlag();
-  void RealtimeFlag();
-  void CaptureFlag();
-  void ControlFlag(std::vector<std::string> params);
-  void RecordFlag(std::vector<std::string> params);
-  void PortFlag(std::vector<std::string> params);
-  void ColorFlag();
-  void DepthFlag();
-  void SimulateFlag();
+  void GetHelp();
+  void BypassMenu();
+  void CaptureOnly();
+  void ControlOnly(std::vector<std::string> params);
+  void SimulateMode(std::vector<std::string> params);
+  void EnableRecord(std::vector<std::string> params);
+  void EnableDisplay();
+  void EnableVerbose(std::vector<std::string> params);
+  void LowPerformance();
+  void SetComPort(std::vector<std::string> params);
+  void DepthObstacleMode(std::vector<std::string> params);
+  void TrafficLightMode(std::vector<std::string> params);
+  void DisableColor();
+  void DisableDepth();
 
 private:
-  bool FlagToInt(std::string param, int &number);
-  bool FlagToString(std::string param, std::string &path);
-  bool FlagToPath(std::string param, std::string &path);
+  bool FlagToInt(std::vector<std::string> param, int index, int &number);
+  bool FlagToString(std::vector<std::string> param, int index, std::string &path);
+  bool FlagToPath(std::vector<std::string> param, int index, std::string &path);
 };

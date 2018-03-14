@@ -28,15 +28,17 @@ namespace Vision
       void DeepLearning::Process()
       {
         if (_params->GetMode() == Realtime)
-        {
-          static bool firstRun = true;
-          if (firstRun)
-            _processThread = new std::thread(&DeepLearning::TProcess, this);
-
-          firstRun = false;
-        }
+          CreateThread();
         else
           ProcessFunc();
+      }
+
+      void DeepLearning::CreateThread()
+      {
+        if (_firstRun)
+          _processThread = new std::thread(&DeepLearning::TProcess, this);
+
+        _firstRun = false;
       }
 
       void DeepLearning::ProcessFunc()
@@ -51,6 +53,18 @@ namespace Vision
           return;
 
         LOG(Warning, "Traffic lights detected", "DEEPLEAR", _start);
+      }
+
+      void DeepLearning::TProcess()
+      {
+        while (true)
+        {
+          if (!_input->GetStatus() || _input->GetStop())
+            return;
+
+          if (_input->_newColorFrame)
+            ProcessFunc();
+        }
       }
 
       void DeepLearning::PreprocessImage()
@@ -86,18 +100,6 @@ namespace Vision
         _output->_trafficLightMutex.lock();
         _output->Set(Result(_confidence));
         _output->_trafficLightMutex.unlock();
-      }
-
-      void DeepLearning::TProcess()
-      {
-        while (true)
-        {
-          if (!_input->GetStatus() || _input->GetStop())
-            return;
-
-          if (_input->_newColorFrame)
-            ProcessFunc();
-        }
       }
     }
   }

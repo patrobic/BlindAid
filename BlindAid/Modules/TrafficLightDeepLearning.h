@@ -18,13 +18,13 @@ namespace Vision
       private:
         void LoadNetwork();
         void Process();
+        void CreateThread();
         void PreprocessImage();
         void MachineLearning();
         void UpdateResults();
         void ProcessFunc();
 
         void TProcess();
-        
         std::thread *_processThread;
 
         cv::Mat _preprocessedImage;
@@ -38,6 +38,8 @@ namespace Vision
         float _confidence[4];
 
         int _map[4] = { 3, 0, 1, 2 };
+
+        bool _firstRun = true;
       };
     }
   }

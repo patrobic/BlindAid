@@ -1,5 +1,5 @@
 #include "Menu.h"
-#include "ConfigParse.h"
+#include "Config.h"
 
 #define CONFIG "\\BlindAid.cfg"
 
@@ -10,9 +10,8 @@ void main(int argc, char *argv[])
 
   do {
     Core::Parameters params(&globalParams);
-
-    ParseConfiguration config(&params, &logger);
-    config.Configure(std::vector<std::string>(argv, argv + argc));
+    Configuration config(&params, &logger);
+    config.Configure(std::vector<std::string>(argv, argv + argc), CONFIG);
 
     if (!globalParams.GetBypassMenu())
     {
@@ -26,8 +25,6 @@ void main(int argc, char *argv[])
 
     system("pause");
     system("cls");
-
     cv::destroyAllWindows();
-
   } while (!globalParams.GetBypassMenu());
 }

@@ -49,7 +49,7 @@ namespace Control
 
       _input->GetTrafficLightResults()->_trafficLightMutex.lock();
 
-      if (_input->GetTrafficLightResults()->GetAll()->at(0).GetCenter() == Point(0, 0))
+      if (_input->GetTrafficLightResults()->GetAll()->size() > 0 && _input->GetTrafficLightResults()->GetAll()->at(0).GetCenter() == Point(0, 0))
       {
         for (int i = 0; i < 4; ++i)
           lights << _input->GetTrafficLightResults()->_names[i].substr(0, 2) << "=" << fixed << setprecision(1) << _input->GetTrafficLightResults()->GetConfidence((Vision::TrafficLight::Result::Color)i) * 100 << "% ";

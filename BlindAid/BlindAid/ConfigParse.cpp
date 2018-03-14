@@ -20,37 +20,47 @@ void ParseConfiguration::Configure(std::vector<std::string> args)
 {
   _args = args;
 
-  int index = 0;
-
   if (CheckFlag("-?"))
-    _modes.HelpFlag();
-
-  if (CheckFlag("-d"))
-    _modes.DisplayFlag();
-
-  if (CheckFlag("-v") || VERBOSE)
-    _modes.VerboseFlag();
+    _modes.GetHelp();
 
   if (CheckFlag("-a"))
-    _modes.RealtimeFlag();
+    _modes.BypassMenu();
 
   if (CheckFlag("-c"))
-    _modes.CaptureFlag();
+    _modes.CaptureOnly();
 
   if (CheckFlag("-t", 1))
-    _modes.ControlFlag(_prms);
+    _modes.ControlOnly(_prms);
 
+  if (CheckFlag("-s", 1))
+    _modes.SimulateMode(_prms);
+  
   if (CheckFlag("-r", 1))
-    _modes.RecordFlag(_prms);
+    _modes.EnableRecord(_prms);
+
+  if (CheckFlag("-d"))
+    _modes.EnableDisplay();
+
+  if (CheckFlag("-v", 1) || VERBOSE)
+    _modes.EnableVerbose(_prms);
+
+  if (CheckFlag("-l", 1) || VERBOSE)
+    _modes.LowPerformance();
 
   if (CheckFlag("-p", 1))
-    _modes.PortFlag(_prms);
+    _modes.SetComPort(_prms);
+
+  if (CheckFlag("-do", 1))
+    _modes.DepthObstacleMode(_prms);
+
+  if (CheckFlag("-tl", 1))
+    _modes.TrafficLightMode(_prms);
 
   if (CheckFlag("-coloroff"))
-    _modes.ColorFlag();
+    _modes.DisableColor();
 
   if (CheckFlag("-depthoff"))
-    _modes.DepthFlag();
+    _modes.DisableDepth();
 }
 
 bool ParseConfiguration::CheckFlag(const std::string& option, int numParams)
@@ -58,7 +68,7 @@ bool ParseConfiguration::CheckFlag(const std::string& option, int numParams)
   _prms.clear();
 
   for (int i = 0; i < _args.size(); ++i)
-    if (_args.at(i) == option && (i + 1) < _args.size())
+    if (_args.at(i) == option)
     {
       _index = i;
 

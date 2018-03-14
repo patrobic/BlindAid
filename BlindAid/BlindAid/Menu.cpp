@@ -50,7 +50,7 @@ bool Menu::RealtimeMenu()
     system("cls");
 
     cout << "\
-+========== Realtime ===+\n\
++======= Realtime ======+\n\
 | a: Production         |\n\
 | c: Capture Only       |\n\
 | t: Control Only       |\n\
@@ -62,16 +62,16 @@ bool Menu::RealtimeMenu()
     switch (in)
     {
     case 'a':
-      _modes.RealtimeFlag();
+      _modes.BypassMenu();
       return true;
     case 'c':
-      _modes.CaptureFlag();
+      _modes.CaptureOnly();
       return true;
     case 't':
-      _modes.ControlFlag(vector<string>{PATH + string("Sample")});
+      _modes.ControlOnly(vector<string>{PATH + string("Sample")});
       return true;
     case 'r':
-      _modes.RecordFlag(vector<string>{"0"});
+      _modes.EnableRecord(vector<string>{"0"});
       return true;
     }
   } while (in != 'q' && in != 'Q');
@@ -98,18 +98,16 @@ bool Menu::SimulateMenu()
     switch (in)
     {
     case 'd':
-      _modes.ControlFlag(vector<string>{PATH + string("DepthObstacle")});
-      _modes.CaptureFlag();
-      _modes.ColorFlag();
-      _modes.DisplayFlag();
-      _modes.SimulateFlag();
+      _modes.SimulateMode(vector<string>{PATH + string("DepthObstacle")});
+      _modes.DisableColor();
+      _modes.EnableDisplay();
+      _modes.LowPerformance();
       return true;
     case 't':
-      _modes.ControlFlag(vector<string>{PATH + string("TrafficLight")});
-      _modes.CaptureFlag();
-      _modes.DepthFlag();
-      _modes.DisplayFlag();
-      _modes.SimulateFlag();
+      _modes.SimulateMode(vector<string>{PATH + string("TrafficLight")});
+      _modes.DisableDepth();
+      _modes.EnableDisplay();
+      _modes.LowPerformance();
       return true;
     }
   } while (in != 'q' && in != 'Q');
