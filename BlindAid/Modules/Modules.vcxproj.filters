@@ -141,6 +141,12 @@
     <ClInclude Include="DisplayParams.h">
       <Filter>Parameters</Filter>
     </ClInclude>
+    <ClInclude Include="DepthObstacleResult.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="TrafficLightResult.h">
+      <Filter>Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Serial.cpp">

@@ -70,7 +70,7 @@ namespace Control
 
     void Realtime::CreateMessage()
     {
-      _message.clear();
+      _message.str("");
       _message << _params->GetRealtimeParams()->GetMessageStart();
 
       CreateColorMessage();

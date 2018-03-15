@@ -23,6 +23,9 @@ void ParseConfiguration::Configure(std::vector<std::string> args)
   if (CheckFlag("-?"))
     _modes.GetHelp();
 
+  if (CheckFlag("-c") || CheckFlag("-t") || CheckFlag("-s") || CheckFlag("-r"))
+    _modes.BypassMenu();
+
   if (CheckFlag("-a"))
     _modes.BypassMenu();
 

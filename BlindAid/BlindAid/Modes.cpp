@@ -81,7 +81,6 @@ void Modes::BypassMenu()
 
 void Modes::CaptureOnly()
 {
-  _params->GetGlobalParameters()->SetBypassMenu(true);
   _params->GetControlParams()->SetMode(Simulate);
   LOG(Warning, "'-c': Simulating Control (messages sent to screen)");
 }
@@ -92,7 +91,6 @@ void Modes::ControlOnly(vector<string> params)
 
   if (FlagToPath(params, 0, path))
   {
-    _params->GetGlobalParameters()->SetBypassMenu(true);
     _params->GetCaptureParams()->SetMode(Simulate);
     _params->GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(path);
     _params->GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(path);
@@ -129,7 +127,6 @@ void Modes::EnableRecord(vector<string> params)
   if (FlagToString(params, 0, path) || FlagToString(params, 1, path))
     _params->GetRecordParams()->SetPath(path);
 
-  _params->GetGlobalParameters()->SetBypassMenu(true);
   _params->GetRecordParams()->SetToggle(Enabled);
 
   CaptureOnly();
@@ -160,6 +157,7 @@ void Modes::LowPerformance()
   _params->GetVisionParams()->GetDepthObstacleParams()->SetMode(Simulate);
   _params->GetVisionParams()->GetTrafficLightParams()->SetMode(Simulate);
   _params->GetDisplayParams()->SetMode(Simulate);
+
   LOG(Warning, "'-l': Enabling Low Performance Mode (optimizations disabled)");
 }
 

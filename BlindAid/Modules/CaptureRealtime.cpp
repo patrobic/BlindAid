@@ -21,7 +21,9 @@ namespace Capture
     {
       _start = steady_clock::now();
 
-      Reconnect();
+      if (_device == NULL || _sample->color == NULL || _sample->depth == NULL)
+        Reconnect();
+
       QueryCamera();
       AcquireFrames();
  
@@ -34,8 +36,6 @@ namespace Capture
  
       Connect();
       Reconnect();
- 
-      LOG(Warning, "Connected to camera successfully", "CAMERA");
     }
 
     void Realtime::Connect()
@@ -80,13 +80,18 @@ namespace Capture
       _pp->AcquireFrame(false);
       _sample = _pp->QuerySample();
 
-      if (_sample->color == NULL || _sample->depth == NULL)
-        _output->SetStatus(false);
     }
 
     void Realtime::AcquireFrames()
     {
       _output->_colorImageMutex.lock();
+
+      if (_sample->color == NULL || _sample->depth == NULL)
+      {
+        _output->_colorImageMutex.unlock();
+        _output->SetStatus(false);
+        return;
+      }
 
       if ((_params->GetGlobalParameters()->GetType() & Color) == Color)
         GetColorFrame();

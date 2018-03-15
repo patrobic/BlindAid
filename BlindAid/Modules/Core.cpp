@@ -44,7 +44,8 @@ namespace Core
       if (_output->GetCaptureResults()->GetStop())
         break;
 
-      LogStats();
+      if (_output->GetCaptureResults()->GetStatus())
+        LogStats();
     }
 
     Terminate();
@@ -83,9 +84,6 @@ namespace Core
 
   void Core::Terminate()
   {
-    if (!_params->GetGlobalParameters()->GetBypassMenu())
-      system("pause");
-
     system("cls");
     cv::destroyAllWindows();
   }
