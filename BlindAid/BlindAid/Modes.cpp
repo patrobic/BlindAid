@@ -94,7 +94,6 @@ void Modes::ControlOnly(vector<string> params)
   {
     _params->GetGlobalParameters()->SetBypassMenu(true);
     _params->GetCaptureParams()->SetMode(Simulate);
-    _params->GetCaptureParams()->GetSimulateParams()->SetMediaType(Capture::Simulate::Parameters::MediaType::Sequence);
     _params->GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(path);
     _params->GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(path);
     LOG(Warning, "'-t': Simulating Capture (images loaded from disk, path: '" + path + "')");

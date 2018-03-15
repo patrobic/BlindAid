@@ -1,7 +1,9 @@
 #pragma once
 
-#include "Class.h"
+#include <string>
+#include <fstream>
 
+#include "Class.h"
 #include "ConfigLoad.h"
 #include "ConfigSave.h"
 #include "ConfigParse.h"

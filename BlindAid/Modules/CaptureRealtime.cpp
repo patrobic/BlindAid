@@ -17,6 +17,47 @@ namespace Capture
       ConnectToCamera();
     }
 
+    void Realtime::Process()
+    {
+      _start = steady_clock::now();
+
+      Reconnect();
+      QueryCamera();
+      AcquireFrames();
+ 
+      LOG(Info, "Images captured from camera", "REALTIME", _start);
+    }
+
+    void Realtime::ConnectToCamera()
+    {
+      LOG(Warning, "Connecting to acquisition...", "CAMERA");
+ 
+      Connect();
+      Reconnect();
+ 
+      LOG(Warning, "Connected to camera successfully", "CAMERA");
+    }
+
+    void Realtime::Connect()
+    {
+      InitializeCamera();
+      QueryCamera();
+    }
+
+    void Realtime::Reconnect()
+    {
+      while (_device == NULL || _sample->color == NULL || _sample->depth == NULL)
+      {
+        LOG(Warning, "Acquisition connection failed, waiting for camera...", "CAMERA");
+ 
+        Sleep(1000);
+        InitializeCamera();
+        QueryCamera();
+      }
+
+      LOG(Warning, "Connected to camera successfully", "CAMERA");
+    }
+
     void Realtime::InitializeCamera()
     {
       _pp = Intel::RealSense::SenseManager::CreateInstance();
@@ -32,73 +73,25 @@ namespace Capture
       *_output->GetDepthImage() = Mat(_params->GetRealtimeParams()->GetDepthResolution(), CV_16U, Mat::AUTO_STEP);
     }
 
-    void Realtime::Process()
+    void Realtime::QueryCamera()
     {
       _output->SetStatus(true);
-
-      _start = steady_clock::now();
-
-      if (_device == NULL || _sample->color == NULL || _sample->depth == NULL)
-      {
-        Reconnect();
-        LOG(Warning, "Connected to camera successfully", "CAMERA");
-      }
-
-      ReadCamera();
-      GetFrames();
-
-      LOG(Info, "Images captured from camera", "REALTIME", _start);
-    }
-
-    void Realtime::ReadCamera()
-    {
+      
       _pp->AcquireFrame(false);
       _sample = _pp->QuerySample();
+
+      if (_sample->color == NULL || _sample->depth == NULL)
+        _output->SetStatus(false);
     }
 
-    void Realtime::ConnectToCamera()
-    {
-      LOG(Warning, "Connecting to acquisition...", "CAMERA");
-      
-      Connect();
-
-      Reconnect();
-
-      LOG(Warning, "Connected to camera successfully", "CAMERA");
-    }
-
-    void Realtime::Connect()
-    {
-        InitializeCamera();
-        ReadCamera();
-    }
-
-    void Realtime::Reconnect()
-    {
-      while (_device == NULL || _sample->color == NULL || _sample->depth == NULL)
-      {
-        LOG(Warning, "Acquisition connection failed, waiting for camera...", "CAMERA");
-        Sleep(1000);
-
-        InitializeCamera();
-        ReadCamera();
-      }
-    }
-
-    void Realtime::GetFrames()
+    void Realtime::AcquireFrames()
     {
       _output->_colorImageMutex.lock();
 
-      try {
-        if (_params->GetGlobalParameters()->GetType() == Color || _params->GetGlobalParameters()->GetType() == Both)
-          GetColorFrame();
-        if (_params->GetGlobalParameters()->GetType() == Depth || _params->GetGlobalParameters()->GetType() == Both)
-          GetDepthFrame();
-      }
-      catch (...) {
-        _output->_colorImageMutex.unlock();
-        _output->SetStatus(false);
-      }
+      if ((_params->GetGlobalParameters()->GetType() & Color) == Color)
+        GetColorFrame();
+      if ((_params->GetGlobalParameters()->GetType() & Depth) == Depth)
+        GetDepthFrame();
 
       _pp->ReleaseFrame();
 
@@ -108,23 +101,19 @@ namespace Capture
 
     void Realtime::GetColorFrame()
     {
-      if (_sample->color == NULL) throw exception();
+        _sample->color->AcquireAccess(Intel::RealSense::ImageAccess::ACCESS_READ, Intel::RealSense::PixelFormat::PIXEL_FORMAT_BGR, &_color);
+        _output->GetColorImage()->data = _color.planes[0];
 
-      _sample->color->AcquireAccess(Intel::RealSense::ImageAccess::ACCESS_READ, Intel::RealSense::PixelFormat::PIXEL_FORMAT_BGR, &_color);
-      _output->GetColorImage()->data = _color.planes[0];
-
-      _sample->color->ReleaseAccess(&_color);
+        _sample->color->ReleaseAccess(&_color);
     }
 
     void Realtime::GetDepthFrame()
     {
-      if (_sample->depth == NULL) throw exception();
+        _sample->depth->AcquireAccess(Intel::RealSense::ImageAccess::ACCESS_READ, Intel::RealSense::PixelFormat::PIXEL_FORMAT_DEPTH, &_depth);
+        Mat temp = Mat(_params->GetRealtimeParams()->GetDepthResolution(), CV_16U, _depth.planes[0]);
 
-      _sample->depth->AcquireAccess(Intel::RealSense::ImageAccess::ACCESS_READ, Intel::RealSense::PixelFormat::PIXEL_FORMAT_DEPTH, &_depth);
-      Mat temp = Mat(_params->GetRealtimeParams()->GetDepthResolution(), CV_16U, _depth.planes[0]);
-
-      temp(Rect(0, 0, 628, 468)).copyTo(*_output->GetDepthImage());
-      _sample->depth->ReleaseAccess(&_depth);
+        temp(Rect(0, 0, 628, 468)).copyTo(*_output->GetDepthImage());
+        _sample->depth->ReleaseAccess(&_depth);
     }
   }
 }

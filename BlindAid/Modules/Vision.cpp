@@ -30,10 +30,10 @@ namespace Vision
 
   void Vision::RunModules()
   {
-    if (_params->GetGlobalParameters()->GetType() == Depth || _params->GetGlobalParameters()->GetType() == Both)
+    if ((_params->GetGlobalParameters()->GetType() & Depth) == Depth)
       (*_depthObstacle)();
 
-    if (_params->GetGlobalParameters()->GetType() == Color || _params->GetGlobalParameters()->GetType() == Both)
+    if ((_params->GetGlobalParameters()->GetType() & Color) == Color)
       (*_trafficLight)();
   }
 }

@@ -19,7 +19,6 @@ namespace Core
     void Defaults()
     {
       _mode = Simulate;
-      _repeat = 1;
 
       _consoleWindowPosition = cv::Point(0, 360);
       _consoleWindowScale = 1.f;
@@ -36,9 +35,6 @@ namespace Core
     Control::Parameters *GetControlParams() { return &_controlParams; }
     Display::Parameters *GetDisplayParams() { return &_displayParams; }
 
-    int GetRepeat() { return _repeat; }
-    void SetRepeat(int repeat) { _repeat = repeat; }
-
     cv::Point GetConsoleWindowPosition() { return _consoleWindowPosition; }
     void SetConsoleWindowPosition(cv::Point point) { _consoleWindowPosition = point; }
 
@@ -53,14 +49,10 @@ namespace Core
     Control::Parameters _controlParams;
     Display::Parameters _displayParams;
 
-    // max number of times to run the detection loop.
-    int _repeat;
-
     // position of console window.
     cv::Point _consoleWindowPosition;
 
     // scale of console window.
     float _consoleWindowScale;
-
   };
 }

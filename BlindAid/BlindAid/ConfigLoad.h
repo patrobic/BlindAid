@@ -1,10 +1,6 @@
 #pragma once
 
 #include "Class.h"
-
-#include <string>
-#include <fstream>
-
 #include "libconfig.h"
 
 using namespace libconfig;

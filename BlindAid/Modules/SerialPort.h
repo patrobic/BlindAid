@@ -24,11 +24,11 @@ private:
     COMSTAT status;
     DWORD errors;
 public:
-    SerialPort(char *portName);
+    SerialPort(const char *portName);
     ~SerialPort();
 
     int readSerialPort(char *buffer, unsigned int buf_size);
-    bool writeSerialPort(char *buffer, unsigned int buf_size);
+    bool writeSerialPort(const char *buffer, unsigned int buf_size);
     bool isConnected();
 };
 

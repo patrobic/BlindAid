@@ -60,8 +60,6 @@ namespace Capture
     class Parameters : public IParameters
     {
     public:
-      enum MediaType { Photo, Video, Sequence };
-
       Parameters(GlobalParameters *params) : IParameters(params)
       {
         Defaults();
@@ -69,7 +67,6 @@ namespace Capture
 
       void Defaults()
       {
-        _mediaType = Video;
         _colorSimDataPath = "";
         _depthSimDataPath = "";
       }
@@ -79,9 +76,6 @@ namespace Capture
         return true;
       }
 
-      MediaType GetMediaType() { return _mediaType; }
-      void SetMediaType(MediaType mediaType) { _mediaType = mediaType; }
-
       std::string GetColorSimDataPath() { return _colorSimDataPath; }
       void SetColorSimDataPath(std::string colorSimDataPath) { _colorSimDataPath = colorSimDataPath; }
 
@@ -89,9 +83,6 @@ namespace Capture
       void SetDepthSimDataPath(std::string depthSimDataPath) { _depthSimDataPath = depthSimDataPath; }
 
     private:
-      // indicate whether simulation media is photo or video.
-      MediaType _mediaType = Photo;
-
       // path to color image for simulation.
       std::string _colorSimDataPath;
 

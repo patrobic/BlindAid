@@ -20,25 +20,28 @@ namespace Control
     void Simulate::Process()
     {
       _start = steady_clock::now();
-
-      if (_params->GetGlobalParameters()->GetType() == Depth || _params->GetGlobalParameters()->GetType() == Both)
-        PrintDepthObstacle();
-
-      if (_params->GetGlobalParameters()->GetType() == Color || _params->GetGlobalParameters()->GetType() == Both)
-        PrintTrafficLights();
+      
+      PrintResults();
 
       LOG(Info, "Control values displayed on screen", "SIMULATE", _start);
     }
 
+    void Simulate::PrintResults()
+    {
+      if ((_params->GetGlobalParameters()->GetType() & Color) == Color)
+        PrintTrafficLights();
+      if ((_params->GetGlobalParameters()->GetType() & Depth) == Depth)
+        PrintDepthObstacle();
+    }
     void Simulate::PrintDepthObstacle()
     {
-      stringstream ss;
-      ss << "Vibration values (";
-      for (int i = 0; i < 5; ++i)
-        ss << _input->GetDepthObstacleResults()->_names[i].substr(0, 2) << "=" << (int)_input->GetDepthObstacleResults()->GetVibration(i)->Get() << " ";
-      ss << ")";
+        stringstream ss;
+        ss << "Vibration values (";
+        for (int i = 0; i < 5; ++i)
+          ss << _input->GetDepthObstacleResults()->_names[i].substr(0, 2) << "=" << (int)_input->GetDepthObstacleResults()->GetVibration(i)->Get() << " ";
+        ss << ")";
 
-      LOG(Info, ss.str(), "GLOVE");
+        LOG(Info, ss.str(), "GLOVE");
     }
 
     void Simulate::PrintTrafficLights()

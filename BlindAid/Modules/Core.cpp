@@ -27,41 +27,31 @@ namespace Core
   {
     _first = steady_clock::now();
 
-    do
+    while (!GetAsyncKeyState(VK_ESCAPE))
     {
       _start = steady_clock::now();
 
       RunModules();
 
       if (_output->GetCaptureResults()->GetStop())
-        return;
-      if (!_output->GetCaptureResults()->GetStatus())
-        continue;
+        break;
 
       LogStats();
+    }
 
-      if (GetAsyncKeyState(VK_ESCAPE))
-        break;
-    } while (_params->GetCaptureParams()->GetSimulateParams()->GetMediaType() != Capture::Simulate::Parameters::MediaType::Photo || _frame < _params->GetRepeat() || _params->GetRepeat() == 0);
+    Terminate();
   }
 
   void Core::RunModules()
   {
-    try
-    {
       (*_capture)();
-      if (!_output->GetCaptureResults()->GetStatus() || _output->GetCaptureResults()->GetStop())
+      if (!_output->GetCaptureResults()->GetStatus())
         return;
-      
+
       (*_vision)();
       (*_control)();
       (*_display)();
       (*_record)();
-    }
-    catch (exception e)
-    {
-      cout << e.what();
-    }
   }
 
   void Core::LogStats()
@@ -81,5 +71,14 @@ namespace Core
 
     if ((int)*_params->GetGlobalParameters()->GetLogLevel() > (int)LogLevel::Warning)
       cout << endl;
+  }
+
+  void Core::Terminate()
+  {
+    if (!_params->GetGlobalParameters()->GetBypassMenu())
+      system("pause");
+
+    system("cls");
+    cv::destroyAllWindows();
   }
 }

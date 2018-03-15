@@ -16,7 +16,6 @@ namespace Vision
 
       private:
         void Process();
-
       };
     }
   }

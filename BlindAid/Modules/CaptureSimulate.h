@@ -14,12 +14,9 @@ namespace Capture
 
     private:
       void Process();
-      void LoadFile();
-      void LoadVideo();
-      void LoadPhoto();
-      void LoadSequence();
-
-      cv::VideoCapture _cap;
+      void LoadImageFiles();
+      void LoadColorStream();
+      void LoadDepthStream();
 
       int _index = 0;
       std::string _colorName;

@@ -15,6 +15,7 @@ namespace Control
 
     private:
       void Process();
+      void PrintResults();
       void PrintDepthObstacle();
       void PrintTrafficLights();
 

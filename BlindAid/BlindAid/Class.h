@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <conio.h>
+#include <exception>
 
 #include "..\Modules\Core.h"
 #include "..\Modules\Logger.h"
@@ -14,8 +15,6 @@ public:
     _params = params;
     _logger = logger;
   }
-
-  //virtual void operator()() = 0;
 
 protected:
   Core::Parameters *_params;

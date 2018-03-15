@@ -19,65 +19,39 @@ namespace Capture
     {
       _start = steady_clock::now();
 
-      LoadFile();
-      
-      if (_output->GetStop())
-        return;
+      LoadImageFiles();
 
-      LOG(Info, "Images acquired from disk (" + _colorName + ", " + _depthName + ")", "SIMULATE", _start);
+      if (!_output->GetStop())
+        LOG(Info, "Images acquired from disk (" + _colorName + ", " + _depthName + ")", "SIMULATE", _start);
     }
 
-    void Simulate::LoadFile()
+    void Simulate::LoadImageFiles()
     {
       _output->_colorImageMutex.lock();
 
-      if (_params->GetSimulateParams()->GetMediaType() == Parameters::MediaType::Video)
-        LoadVideo();
-      else if (_params->GetSimulateParams()->GetMediaType() == Parameters::MediaType::Photo)
-        LoadPhoto();
-      else
-        LoadSequence();
+      if ((_params->GetGlobalParameters()->GetType() & Color) == Color)
+        LoadColorStream();
+      if ((_params->GetGlobalParameters()->GetType() & Depth) == Depth)
+        LoadDepthStream();
 
       _output->_colorImageMutex.unlock();
       _output->_newColorFrame = true;
     }
 
-    void Simulate::LoadVideo()
+    void Simulate::LoadColorStream()
     {
-      if (!_cap.isOpened())
-        _cap.open(_params->GetSimulateParams()->GetColorSimDataPath());
-
-      _cap.read(*_output->GetColorImage());
-      *_output->GetDepthImage() = imread(_params->GetSimulateParams()->GetDepthSimDataPath());
-    }
-
-    void Simulate::LoadPhoto()
-    {
-      *_output->GetColorImage() = imread(_params->GetSimulateParams()->GetColorSimDataPath());
-      *_output->GetDepthImage() = imread(_params->GetSimulateParams()->GetDepthSimDataPath(), CV_16UC1);
-
-      if (_output->GetColorImage()->cols == 0 || _output->GetColorImage()->rows == 0) throw("could not open image.");
-    }
-
-    void Simulate::LoadSequence()
-    {
-      if (_params->GetGlobalParameters()->GetType() == Color || _params->GetGlobalParameters()->GetType() == Both)
-      {
         _colorName = "color_" + to_string(_index) + ".png";
         *_output->GetColorImage() = imread(_params->GetSimulateParams()->GetColorSimDataPath() + "\\" + _colorName);
         if (_output->GetColorImage()->cols == 0 || _output->GetColorImage()->rows == 0)
           _output->SetStop(true);
-      }
+    }
 
-      if (_params->GetGlobalParameters()->GetType() == Depth || _params->GetGlobalParameters()->GetType() == Both)
-      {
+    void Simulate::LoadDepthStream()
+    {
         _depthName = "depth_" + to_string(_index) + ".tiff";
         *_output->GetDepthImage() = imread(_params->GetSimulateParams()->GetDepthSimDataPath() + "\\" + _depthName, IMREAD_UNCHANGED);
         if (_output->GetDepthImage()->cols == 0 || _output->GetDepthImage()->rows == 0)
           _output->SetStop(true);
-      }
-
-      ++_index;
     }
   }
 }

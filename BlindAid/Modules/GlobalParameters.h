@@ -4,7 +4,7 @@
 #include "IParameters.h"
 #include "Logger.h"
 
-enum Type { Color, Depth, Both };
+enum Type { Color = 1, Depth = 2, Both = Color | Depth };
 
 class GlobalParameters
 {

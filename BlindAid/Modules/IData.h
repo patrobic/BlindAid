@@ -17,7 +17,7 @@ public:
   void SetStatus(bool status) { _status = status; }
 
   bool GetStop() { return _stop; }
-  void SetStop(bool stop) { _stop = stop; }
+  void SetStop(bool stop) { _stop = stop; _status = false; }
 
 protected:
   bool _status = true;

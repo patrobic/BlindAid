@@ -17,7 +17,6 @@ namespace Vision
       private:
         void Process();
         void FindHandPosition();
-
       };
     }
   }

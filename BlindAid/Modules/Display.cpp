@@ -17,13 +17,13 @@ namespace Display
   {
     _start = steady_clock::now();
 
-    if (_params->GetGlobalParameters()->GetType() == Depth || _params->GetGlobalParameters()->GetType() == Both)
+    if ((_params->GetGlobalParameters()->GetType() & Depth) == Depth)
     {
       DrawDepthObstacles();
       DisplayDepthImage();
     }
 
-    if (_params->GetGlobalParameters()->GetType() == Color || _params->GetGlobalParameters()->GetType() == Both)
+    if ((_params->GetGlobalParameters()->GetType() & Color) == Color)
     {
       DrawTrafficLights();
       DisplayColorImage();
@@ -38,7 +38,7 @@ namespace Display
   void Display::DrawDepthObstacles()
   {
     {
-      _output->GetDepthImage()->convertTo(*_input->GetDepthOverlayImage(), CV_8UC1, 1.f / 8.f, -0.5 / 8.f); // , 255.0 / (5 - 0.5));
+      _output->GetDepthImage()->convertTo(*_input->GetDepthOverlayImage(), CV_8UC1, 1.f / 8.f, -0.5 / 8.f);
       if (_input->GetDepthOverlayImage()->channels() == 1)
         cvtColor(*_input->GetDepthOverlayImage(), *_input->GetDepthOverlayImage(), CV_GRAY2BGR);
 

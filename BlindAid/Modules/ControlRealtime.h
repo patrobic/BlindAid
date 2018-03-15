@@ -17,18 +17,17 @@ namespace Control
       void ConnectToArduino();
       void Connect();
       void Reconnect();
+
       void SendControl();
-      void GenerateString();
+      void CreateMessage();
+      void CreateColorMessage();
+      void CreateDepthMessage();
       void TPlayAudio();
       void TSendControl();
 
       SerialPort *_serial;
-      std::string _port;
       std::atomic<bool> _sent = false;
-      char _controlMessage[256];
-      int _messageLength = 0;
-      char _receivedMessage[256];
-      int _receivedLength = 0;
+      std::stringstream _message;
 
       std::thread *_audioThread;
       std::string _audioFiles[4] = { "TrafficLightRed.wav", "TrafficLightGreen.wav", "TrafficLighYellow.wav", "TrafficLightNo.wav" };

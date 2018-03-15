@@ -57,14 +57,14 @@ namespace Record
 
   void Record::SaveToDisk()
   {
-    if (_params->GetGlobalParameters()->GetType() == Color || _params->GetGlobalParameters()->GetType() == Both)
+    if ((_params->GetGlobalParameters()->GetType() & Color) == Color)
     {
       imwrite(_params->GetPath() + "\\" + _folderName + "\\color_" + to_string(_index) + ".png", *_output->GetColorImage());
       if (!_input->GetColorOverlayImage()->empty())
         imwrite(_params->GetPath() + "\\" + _folderName + "\\colorOverlay_" + to_string(_index) + ".png", *_input->GetColorOverlayImage());
     }
 
-    if (_params->GetGlobalParameters()->GetType() == Depth || _params->GetGlobalParameters()->GetType() == Both)
+    if ((_params->GetGlobalParameters()->GetType() & Depth) == Depth)
     {
       imwrite(_params->GetPath() + "\\" + _folderName + "\\depth_" + to_string(_index) + ".tiff", *_output->GetDepthImage());
       if (!_input->GetDepthOverlayImage()->empty())

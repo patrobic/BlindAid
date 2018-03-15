@@ -11,10 +11,11 @@ namespace Core
     Core(IParameters *params, IData *input, IData *output, Logger *logger);
 
   private:
+    void CreateModules();
     void Process();
     void RunModules();
     void LogStats();
-    void CreateModules();
+    void Terminate();
 
     Capture::Base *_capture;
     Record::Record *_record;
