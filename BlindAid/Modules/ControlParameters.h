@@ -49,9 +49,6 @@ namespace Control
       // control message start and terminating characters.
       char _messageStart;
       char _messageEnd;
-
-      // TODO: any pairing options/memory once we configure BT.
-
     };
   }
 
@@ -83,7 +80,6 @@ namespace Control
   class Parameters : public SwitchableParameters
   {
   public:
-    enum OptionSignals { None, LowerUpper, TrafficLight, NearObstacle };
     enum HandPolarity { Left, Right };
 
     Parameters(GlobalParameters *params) : SwitchableParameters(params), _realtimeParams(params), _simulateParams(params)
@@ -97,16 +93,6 @@ namespace Control
       _simulateParams.Defaults();
 
       _handPolarity = Right;
-
-      _localAudioEnabled = false;
-      _audioDelay = 1000;
-      
-      bool colors[4] = { true, false, false, false };
-      for (int i = 0; i < 4; ++i) _audioColorsEnabled[i] = colors[i];
-
-      _optionSignals[0] = TrafficLight;
-      _optionSignals[1] = None;
-      _optionSignalsCount = 1;
       _beeperIntensity = 150;
     }
 
@@ -121,21 +107,6 @@ namespace Control
     HandPolarity GetHandPolarity() { return _handPolarity; }
     void SetHandPolarity(HandPolarity handPolarity) { _handPolarity = handPolarity; }
 
-    bool GetLocalAudioEnabled() { return _localAudioEnabled; }
-    void SetLocalAudioEnabled(bool localAudioEnabled) { _localAudioEnabled = localAudioEnabled; }
-
-    int GetAudioDelay() { return _audioDelay; }
-    void SetAudioDelay(int audioDelay) { _audioDelay = audioDelay; }
-
-    bool GetAudioColorsEnabled(int index) { return _audioColorsEnabled[index]; }
-    void SetAudioColorsEnabled(bool audioColorsEnabled, int index) { _audioColorsEnabled[index] = audioColorsEnabled; }
-
-    OptionSignals GetOptionSignals(int i) { return _optionSignals[i]; }
-    void SetOptionSignals(OptionSignals optionSignals, int i) { _optionSignals[i] = (OptionSignals)optionSignals; }
-
-    int GetOptionSignalsCount() { return _optionSignalsCount; }
-    void SetOptionSignalsCount(int optionSignalsCount) { _optionSignalsCount = optionSignalsCount; }
-
     int GetBeeperIntensity() { return _beeperIntensity; }
     void SetBeeperIntensity(int beeperIntensity) { _beeperIntensity = beeperIntensity; }
 
@@ -148,21 +119,6 @@ namespace Control
 
     // order of the fingers.
     HandPolarity _handPolarity;
-
-    // enable or disable local beeper on up board.
-    bool _localAudioEnabled;
-
-    // delay between repititions of traffic light warning.
-    int _audioDelay;
-
-    // which colors to enable warnings for.
-    bool _audioColorsEnabled[4];
-
-    // what do the last two (6th & 7th) sent signals represent.
-    OptionSignals _optionSignals[2];
-
-    // how many option signals are actually enabled.
-    int _optionSignalsCount;
 
     // PWM value of the beeper.
     int _beeperIntensity;

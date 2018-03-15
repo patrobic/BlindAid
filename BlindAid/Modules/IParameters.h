@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string>
+#include "opencv2\core.hpp"
+
 #define HORZ_REGIONS 3
 #define VERT_REGIONS 5
 

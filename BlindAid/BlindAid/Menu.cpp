@@ -51,9 +51,10 @@ bool Menu::RealtimeMenu()
 
     cout << "\
 +======= Realtime ======+\n\
-| a: Production         |\n\
+| a: Realtime Mode      |\n\
 | c: Capture Only       |\n\
 | t: Control Only       |\n\
+| t: Simulate Mode      |\n\
 | r: Capture + Record   |\n\
 +=======================+\n";
 
@@ -69,6 +70,9 @@ bool Menu::RealtimeMenu()
       return true;
     case 't':
       _modes.ControlOnly(vector<string>{PATH + string("Sample")});
+      return true;
+    case 's':
+      _modes.SimulateMode(vector<string>{PATH + string("Sample")});
       return true;
     case 'r':
       _modes.EnableRecord(vector<string>{"0"});

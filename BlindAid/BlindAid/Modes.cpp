@@ -108,8 +108,10 @@ void Modes::SimulateMode(vector<string> params)
 
   if (FlagToPath(params, 0, path))
   {
-    CaptureOnly();
-    ControlOnly(params);
+    _params->GetControlParams()->SetMode(Simulate);
+    _params->GetCaptureParams()->SetMode(Simulate);
+    _params->GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(path);
+    _params->GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(path);
     LOG(Warning, "'-s': Simulating All (camera and glove disabled).");
   }
   else

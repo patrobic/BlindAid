@@ -30,11 +30,13 @@
     <ClInclude Include="DepthObstacleFixedRegions.h" />
     <ClInclude Include="DepthObstacleHandPosition.h" />
     <ClInclude Include="DepthObstacleParameters.h" />
+    <ClInclude Include="DisplayParams.h" />
     <ClInclude Include="GlobalParameters.h" />
     <ClInclude Include="IDetect.h" />
     <ClInclude Include="IResult.h" />
     <ClInclude Include="CaptureParameters.h" />
     <ClInclude Include="Logger.h" />
+    <ClInclude Include="RecordParams.h" />
     <ClInclude Include="SerialPort.h" />
     <ClInclude Include="TrafficLight.h" />
     <ClInclude Include="DepthObstacle.h" />

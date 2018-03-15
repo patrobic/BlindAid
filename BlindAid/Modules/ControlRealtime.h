@@ -22,15 +22,11 @@ namespace Control
       void CreateMessage();
       void CreateColorMessage();
       void CreateDepthMessage();
-      void TPlayAudio();
       void TSendControl();
 
       SerialPort *_serial;
       std::atomic<bool> _sent = false;
       std::stringstream _message;
-
-      std::thread *_audioThread;
-      std::string _audioFiles[4] = { "TrafficLightRed.wav", "TrafficLightGreen.wav", "TrafficLighYellow.wav", "TrafficLightNo.wav" };
     };
   }
 }

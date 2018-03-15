@@ -31,7 +31,15 @@ namespace Core
     {
       _start = steady_clock::now();
 
-      RunModules();
+      try
+      {
+        RunModules();
+      }
+      catch (exception e)
+      {
+        cout << "exception: " << e.what() << endl;
+        continue;
+      }
 
       if (_output->GetCaptureResults()->GetStop())
         break;

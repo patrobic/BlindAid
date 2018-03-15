@@ -135,6 +135,12 @@
     <ClInclude Include="Logger.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="RecordParams.h">
+      <Filter>Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="DisplayParams.h">
+      <Filter>Parameters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Serial.cpp">

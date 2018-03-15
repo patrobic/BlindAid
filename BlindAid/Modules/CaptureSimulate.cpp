@@ -34,6 +34,7 @@ namespace Capture
       if ((_params->GetGlobalParameters()->GetType() & Depth) == Depth)
         LoadDepthStream();
 
+      _index++;
       _output->_colorImageMutex.unlock();
       _output->_newColorFrame = true;
     }

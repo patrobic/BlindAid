@@ -13,6 +13,5 @@ namespace Capture
     static Base *MakeCapture(Capture::Parameters *params, IData *input, IData *output, Logger *logger);
 
   protected:
-
   };
 }

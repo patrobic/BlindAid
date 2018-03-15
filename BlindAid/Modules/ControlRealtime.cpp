@@ -15,9 +15,6 @@ namespace Control
   {
     Realtime::Realtime(IParameters *params, IData *input, IData *output, Logger *logger) : Base(params, input, output, logger)
     {
-      if (_params->GetLocalAudioEnabled())
-        _audioThread = new std::thread(&Realtime::TPlayAudio, this);
-
       ConnectToArduino();
     }
 
@@ -104,18 +101,6 @@ namespace Control
         while (!_serial->isConnected());
 
         LOG(Warning, "Connected to controller successfully", "GLOVE");
-      }
-    }
-
-    void Realtime::TPlayAudio()
-    {
-      while (true)
-      {
-        for (int i = 0; i < 4; ++i)
-          if (_input->GetTrafficLightResults()->GetColor() == (Vision::TrafficLight::Result::Color)i && _params->GetAudioColorsEnabled(i))
-            PlaySound(_audioFiles[i].c_str(), NULL, SND_FILENAME);
-
-        Sleep(_params->GetAudioDelay());
       }
     }
   }
