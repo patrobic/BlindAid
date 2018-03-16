@@ -7,11 +7,12 @@ class Menu : public Class
 {
 public:
   Menu(Core::Parameters *params, Logger *logger);
-  bool ShowMenu();
+  void ShowMenu();
 
 private:
-  bool RealtimeMenu();
-  bool SimulateMenu();
+  void RealtimeMenu();
+  void SimulateMenu();
+  std::string RequestUserFlag(std::string message);
 
   Modes _modes;
-  };
+};

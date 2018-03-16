@@ -75,7 +75,7 @@ void Modes::GetHelp()
 
 void Modes::BypassMenu()
 {
-  _params->GetGlobalParameters()->SetBypassMenu(true);
+  _params->GetGlobalParameters()->SetMenuEnabled(false);
   LOG(Warning, "'-a': Running in Realtime mode");
 }
 

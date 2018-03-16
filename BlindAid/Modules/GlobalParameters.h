@@ -18,7 +18,7 @@ public:
   {
     _exePath = "C:\\BlindAid";
     _logLevel = LogLevel::Warning;
-    _bypassMenu = false;
+    _menuEnabled = true;
   }
 
   std::string GetExePath() { return _exePath; }
@@ -27,8 +27,8 @@ public:
   LogLevel *GetLogLevel() { return &_logLevel; }
   void SetLogLevel(LogLevel logLevel) { _logLevel = logLevel; }
 
-  bool GetBypassMenu() { return _bypassMenu; }
-  void SetBypassMenu(bool bypassMenu) { _bypassMenu = bypassMenu; }
+  bool GetMenuEnabled() { return _menuEnabled; }
+  void SetMenuEnabled(bool menuEnabled) { _menuEnabled = menuEnabled; }
 
   Type GetType() { return _type; }
   void SetType(Type type) { _type = type; }
@@ -39,7 +39,7 @@ private:
 
   LogLevel _logLevel;
 
-  bool _bypassMenu;
+  bool _menuEnabled;
 
   // save color, depth, or both
   Type _type = Both;

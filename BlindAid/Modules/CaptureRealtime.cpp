@@ -21,19 +21,23 @@ namespace Capture
     {
       _start = steady_clock::now();
 
+      int counter = 0;
       if (_device == NULL || _sample->color == NULL || _sample->depth == NULL)
+      {
         Reconnect();
-
+        if (counter++ >= 3)
+          throw exception("Controller reconnection failed, aborting (too many retries).");
+      }
       QueryCamera();
       AcquireFrames();
- 
+
       LOG(Info, "Images captured from camera", "REALTIME", _start);
     }
 
     void Realtime::ConnectToCamera()
     {
       LOG(Warning, "Connecting to acquisition...", "CAMERA");
- 
+
       Connect();
       Reconnect();
     }
@@ -46,13 +50,17 @@ namespace Capture
 
     void Realtime::Reconnect()
     {
+      int counter = 0;
       while (_device == NULL || _sample->color == NULL || _sample->depth == NULL)
       {
         LOG(Warning, "Acquisition connection failed, waiting for camera...", "CAMERA");
- 
+
         Sleep(1000);
         InitializeCamera();
         QueryCamera();
+
+        if (counter++ >= 3)
+          throw exception("Acquisition reconnection failed, aborting (too many retries).");
       }
 
       LOG(Warning, "Connected to camera successfully", "CAMERA");
@@ -76,7 +84,7 @@ namespace Capture
     void Realtime::QueryCamera()
     {
       _output->SetStatus(true);
-      
+
       _pp->AcquireFrame(false);
       _sample = _pp->QuerySample();
 
@@ -106,19 +114,19 @@ namespace Capture
 
     void Realtime::GetColorFrame()
     {
-        _sample->color->AcquireAccess(Intel::RealSense::ImageAccess::ACCESS_READ, Intel::RealSense::PixelFormat::PIXEL_FORMAT_BGR, &_color);
-        _output->GetColorImage()->data = _color.planes[0];
+      _sample->color->AcquireAccess(Intel::RealSense::ImageAccess::ACCESS_READ, Intel::RealSense::PixelFormat::PIXEL_FORMAT_BGR, &_color);
+      _output->GetColorImage()->data = _color.planes[0];
 
-        _sample->color->ReleaseAccess(&_color);
+      _sample->color->ReleaseAccess(&_color);
     }
 
     void Realtime::GetDepthFrame()
     {
-        _sample->depth->AcquireAccess(Intel::RealSense::ImageAccess::ACCESS_READ, Intel::RealSense::PixelFormat::PIXEL_FORMAT_DEPTH, &_depth);
-        Mat temp = Mat(_params->GetRealtimeParams()->GetDepthResolution(), CV_16U, _depth.planes[0]);
+      _sample->depth->AcquireAccess(Intel::RealSense::ImageAccess::ACCESS_READ, Intel::RealSense::PixelFormat::PIXEL_FORMAT_DEPTH, &_depth);
+      Mat temp = Mat(_params->GetRealtimeParams()->GetDepthResolution(), CV_16U, _depth.planes[0]);
 
-        temp(Rect(0, 0, 628, 468)).copyTo(*_output->GetDepthImage());
-        _sample->depth->ReleaseAccess(&_depth);
+      temp(Rect(0, 0, 628, 468)).copyTo(*_output->GetDepthImage());
+      _sample->depth->ReleaseAccess(&_depth);
     }
   }
 }

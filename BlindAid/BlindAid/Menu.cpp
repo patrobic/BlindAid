@@ -10,7 +10,7 @@ _modes(params, logger)
 
 }
 
-bool Menu::ShowMenu()
+void Menu::ShowMenu()
 {
   char in;
   cout << "Welcome to BlindAid!\n\n";
@@ -27,28 +27,24 @@ bool Menu::ShowMenu()
     switch (in)
     {
     case '1':
-      if(RealtimeMenu())
-        return true;
-      break;
+      RealtimeMenu();
+      return;
     case '2':
-      if (SimulateMenu())
-        return true;
-      break;
+      SimulateMenu();
+      return;
     }
     system("cls");
-  } while (in != 'q' && in != 'Q');
+  } while (in != 27 && in != 'q' && in != 'Q');
 
   exit(0);
 }
 
-bool Menu::RealtimeMenu()
+void Menu::RealtimeMenu()
 {
   char in;
   system("cls");
 
   do {
-    system("cls");
-
     cout << "\
 +======= Realtime ======+\n\
 | a: Realtime Mode      |\n\
@@ -63,38 +59,33 @@ bool Menu::RealtimeMenu()
     switch (in)
     {
     case 'a':
-      _modes.BypassMenu();
-      return true;
+      return;
     case 'c':
       _modes.CaptureOnly();
       _modes.EnableDisplay();
-      return true;
+      return;
     case 't':
-      _modes.ControlOnly(vector<string>{ string("C:\\Record\\2018-3-12_12-39-30")});
+      _modes.ControlOnly(vector<string>{ string(RequestUserFlag("Enter path to simulation images folder"))});
       _modes.EnableDisplay();
-      return true;
+      return;
     case 's':
-      _modes.SimulateMode(vector<string>{ string("C:\\Record\\2018-3-12_12-39-30")});
+      _modes.SimulateMode(vector<string>{ string(RequestUserFlag("Enter path to simulation images folder"))});
       _modes.EnableDisplay();
-      return true;
+      return;
     case 'r':
-      _modes.EnableRecord(vector<string>{"0"});
+      _modes.EnableRecord(vector<string>{RequestUserFlag("Enter record interval (0 for manual trigger)")});
       _modes.EnableDisplay();
-      return true;
+      return;
     }
-  } while (in != 'q' && in != 'Q');
-
-  return false;
+  } while (in != 27 && in != 'q' && in != 'Q');
 }
 
-bool Menu::SimulateMenu()
+void Menu::SimulateMenu()
 {
   char in;
   system("cls");
 
   do {
-    system("cls");
-
     cout << "\
 +========= Simulation ========+\n\
 | d: Depth Obstacle Detector  |\n\
@@ -106,19 +97,25 @@ bool Menu::SimulateMenu()
     switch (in)
     {
     case 'd':
-      _modes.SimulateMode(vector<string>{PATH + string("DepthObstacle")});
+      _modes.SimulateMode(vector<string>{RequestUserFlag("Enter path to simulation images folder")});
       _modes.DisableColor();
       _modes.EnableDisplay();
       _modes.LowPerformance();
-      return true;
+      return;
     case 't':
-      _modes.SimulateMode(vector<string>{PATH + string("TrafficLight")});
+      _modes.SimulateMode(vector<string>{RequestUserFlag("Enter path to simulation images folder")});
       _modes.DisableDepth();
       _modes.EnableDisplay();
       _modes.LowPerformance();
-      return true;
+      return;
     }
-  } while (in != 'q' && in != 'Q');
+  } while (in != 27 && in != 'q' && in != 'Q');
+}
 
-  return false;
+std::string Menu::RequestUserFlag(std::string message)
+{
+  std::string userInput;
+  cout << message << ".\n>";
+  cin >> userInput;
+  return userInput;
 }

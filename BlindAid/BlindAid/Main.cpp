@@ -1,3 +1,5 @@
+#include <Windows.h>
+
 #include "Menu.h"
 #include "Config.h"
 
@@ -17,7 +19,7 @@ void main(int argc, char *argv[])
       Configuration config(&params, &logger);
       config.Configure(std::vector<std::string>(argv, argv + argc), CONFIG);
 
-      if (!globalParams.GetBypassMenu())
+      if (globalParams.GetMenuEnabled())
       {
         Menu menu(&params, &logger);
         menu.ShowMenu();

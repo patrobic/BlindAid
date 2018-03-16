@@ -15,7 +15,6 @@ namespace Core
     void Process();
     void RunModules();
     void LogStats();
-    void Terminate();
 
     Capture::Base *_capture;
     Record::Record *_record;

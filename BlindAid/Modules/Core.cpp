@@ -27,40 +27,41 @@ namespace Core
   {
     _first = steady_clock::now();
 
-    while (!GetAsyncKeyState(VK_ESCAPE))
+    while (true)
     {
       _start = steady_clock::now();
 
-      try
-      {
-        RunModules();
-      }
-      catch (exception e)
-      {
-        cout << "exception: " << e.what() << endl;
-        continue;
-      }
-
-      if (_output->GetCaptureResults()->GetStop())
-        break;
+      RunModules();
 
       if (_output->GetCaptureResults()->GetStatus())
         LogStats();
-    }
 
-    Terminate();
+      if (GetAsyncKeyState(VK_ESCAPE) & 0x8000 || _output->GetCaptureResults()->GetStop())
+      {
+        if (_params->GetGlobalParameters()->GetMenuEnabled() && _params->GetMode() == Simulate)
+          system("pause");
+
+        system("cls");
+        cv::destroyAllWindows();
+
+        if (_params->GetGlobalParameters()->GetMenuEnabled())
+          return;
+        else
+          exit(0);
+      }
+    }
   }
 
   void Core::RunModules()
   {
-      (*_capture)();
-      if (!_output->GetCaptureResults()->GetStatus())
-        return;
+    (*_capture)();
+    if (!_output->GetCaptureResults()->GetStatus())
+      return;
 
-      (*_vision)();
-      (*_control)();
-      (*_display)();
-      (*_record)();
+    (*_vision)();
+    (*_control)();
+    (*_display)();
+    (*_record)();
   }
 
   void Core::LogStats()
@@ -80,11 +81,5 @@ namespace Core
 
     if ((int)*_params->GetGlobalParameters()->GetLogLevel() > (int)LogLevel::Warning)
       cout << endl;
-  }
-
-  void Core::Terminate()
-  {
-    system("cls");
-    cv::destroyAllWindows();
   }
 }

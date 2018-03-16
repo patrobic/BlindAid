@@ -33,8 +33,13 @@ namespace Control
       LOG(Warning, "Connecting to controller (port #" + to_string(_params->GetRealtimeParams()->GetSerialPort()) + ")...", "GLOVE");
 
       Connect();
+      int counter = 0;
       while (!_serial->isConnected())
+      {
         Reconnect();
+        if (counter++ >= 3)
+          throw exception("Controller reconnection failed, aborting (too many retries).");
+      }
 
       LOG(Warning, "Connected to controller successfully", "GLOVE");
     }
@@ -97,7 +102,13 @@ namespace Control
       Sleep(5);
       if (_sent == false)
       {
-        do Reconnect();
+        int counter = 0;
+        do 
+        {
+          Reconnect();
+          if (counter++ >= 3)
+            throw exception("Controller reconnection failed, aborting (too many retries).");
+        }
         while (!_serial->isConnected());
 
         LOG(Warning, "Connected to controller successfully", "GLOVE");
