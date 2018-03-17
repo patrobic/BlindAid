@@ -10,8 +10,10 @@ public:
 
 private:
   void PrintMenu();
+  void GetUserInput();
   std::string RequestUserFlag(std::string message);
   std::vector<std::string> ParseUserFlags(std::string message);
 
   Modes _modes;
+  char _in;
 };

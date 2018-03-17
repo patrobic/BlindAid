@@ -17,6 +17,11 @@ namespace Control
 
     }
 
+    Simulate::~Simulate()
+    {
+
+    }
+
     void Simulate::Process()
     {
       _start = steady_clock::now();

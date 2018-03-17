@@ -18,6 +18,11 @@ namespace Control
       ConnectToArduino();
     }
 
+    Realtime::~Realtime()
+    {
+      delete _serial;
+    }
+
     void Realtime::Process()
     {
       _start = steady_clock::now();

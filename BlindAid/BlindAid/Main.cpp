@@ -15,18 +15,12 @@ void main(int argc, char *argv[])
   {
     try
     {
-      // create parameters and config objects
       Core::Parameters params(&globalParams);
-
-      // load/parse configuration
       Configuration config(&params, &logger);
       config.Configure();
 
-      // create core objects
       Core::Data results(&params);
       Core::Core core(&params, NULL, &results, &logger);
-
-      // execute core processing
       core();
     }
     catch (std::exception e)

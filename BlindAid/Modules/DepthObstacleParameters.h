@@ -126,7 +126,7 @@ namespace Vision
         _maximumVibration = 255.f;
         _validRatioThreshold = 0.1f;
         _nearestObstacleOnly = true;
-        _highestVibrationToIgnore = 0.95f;
+        _lessThanMaxToIgnore = 0.1f;
       }
 
       bool Valid()
@@ -198,8 +198,8 @@ namespace Vision
       bool GetNearestObstacleOnly() { return _nearestObstacleOnly; }
       void SetNearestObstacleOnly(bool nearestObstacleOnly) { _nearestObstacleOnly = nearestObstacleOnly; }
 
-      float GetHighestVibrationToIgnore() { return _highestVibrationToIgnore; }
-      void SetHighestVibrationToIgnore(float highestVibrationToIgnore) { _highestVibrationToIgnore = highestVibrationToIgnore; }
+      float GetLessThanMaxToIgnore() { return _lessThanMaxToIgnore; }
+      void SetLessThanMaxToIgnore(float lessThanMaxToIgnore) { _lessThanMaxToIgnore = lessThanMaxToIgnore; }
 
     private:
       // parameters specific to blob detector mode.
@@ -271,7 +271,7 @@ namespace Vision
       bool _nearestObstacleOnly;
 
       // vibration threshold below which non-nearest objects will be ignored.
-      float _highestVibrationToIgnore;
+      float _lessThanMaxToIgnore;
     };
   }
 }

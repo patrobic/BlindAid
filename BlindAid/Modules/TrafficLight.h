@@ -12,6 +12,7 @@ namespace Vision
     {
     public:
       Base(IParameters *params, IData *input, IData *output, Logger *logger);
+      virtual ~Base();
       static Base *Base::MakeTrafficLight(IParameters *params, IData *input, IData *output, Logger *logger);
 
     protected:

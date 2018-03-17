@@ -12,6 +12,7 @@ namespace Control
     {
     public:
       Simulate(IParameters *params, IData *input, IData *output, Logger *logger);
+      ~Simulate();
 
     private:
       void Process();

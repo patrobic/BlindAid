@@ -13,15 +13,40 @@ _modes(params, logger)
 
 void Menu::Configure()
 {
-  char in;
+  PrintMenu();
+  GetUserInput();
+
+  system("cls");
+  return;
+}
+
+void Menu::PrintMenu()
+{
+  system("cls");
+
   cout << "Welcome to BlindAid!\n\n";
+  cout << "  MAIN MENU: Enter the letter of the mode you want to select.\n";
 
-  do {
-    PrintMenu();
+  cout << "\n     REALTIME MODES: realistic operation modes, for final product and demo.\n\n";
+  cout << "\t+====================+\n";
+  for (int i = 2; i < 7; ++i)
+    cout << "\t| " << Messages::messages[i][0] << ": " << setw(16) << left << Messages::messages[i][2] << "| (" << Messages::messages[i][3] << ")\n";
+  cout << "\t+====================+\n";
 
-    in = _getch();
+  cout << "\n     SIMULATE MODES: testing operation modes, for testing and debugging.\n\n";
+  cout << "\t+====================+\n";
+  for (int i = 16; i < 18; ++i)
+    cout << "\t| " << Messages::messages[i][0] << ": " << setw(16) << left << Messages::messages[i][2] << "| (" << Messages::messages[i][3] << ")\n";
+  cout << "\t+====================+\n";
+}
 
-    switch (in)
+void Menu::GetUserInput()
+{
+  while (true)
+  {
+    _in = _getch();
+
+    switch (_in)
     {
     case 'a':
       return;
@@ -48,7 +73,7 @@ void Menu::Configure()
       _modes.LowPerformance();
       _modes.SetConsecutiveCount(vector<string>{"1"});
       return;
-    case 'd':
+    case 'l':
       _modes.SimulateMode(vector<string>{RequestUserFlag("Enter path to simulation images folder")});
       _modes.DisableDepth();
       _modes.EnableDisplay();
@@ -58,29 +83,11 @@ void Menu::Configure()
     case 'm':
       _params->GetGlobalParameters()->_args = ParseUserFlags(RequestUserFlag("Enter command line arguments, then press enter"));
       return;
+    default:
+      if(_in == 27 || _in == 'q' || _in == 'Q')
+        exit(0);
     }
-  } while (in != 27 && in != 'q' && in != 'Q');
-
-  exit(0);
-}
-
-void Menu::PrintMenu()
-{
-  system("cls");
-
-  cout << "  MAIN MENU: Enter the letter of the mode you want to select.\n";
-
-  cout << "\n     REALTIME MODES: realistic operation modes, for final product and demo.\n\n";
-  cout << "\t+====================+\n";
-  for (int i = 2; i < 7; ++i)
-    cout << "\t| " << Messages::messages[i][0] << ": " << setw(16) << left << Messages::messages[i][2] << "| (" << Messages::messages[i][3] << ")\n";
-  cout << "\t+====================+\n";
-
-  cout << "\n     SIMULATE MODES: testing operation modes, for testing and debugging.\n\n";
-  cout << "\t+====================+\n";
-  for (int i = 16; i < 18; ++i)
-    cout << "\t| " << Messages::messages[i][0] << ": " << setw(16) << left << Messages::messages[i][2] << "| (" << Messages::messages[i][3] << ")\n";
-  cout << "\t+====================+\n";
+  }
 }
 
 std::string Menu::RequestUserFlag(std::string message)

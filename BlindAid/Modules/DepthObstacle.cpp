@@ -22,6 +22,11 @@ namespace Vision
       _output->SetHandPosition(_params->GetDefaultCenter());
     }
 
+    Base::~Base()
+    {
+
+    }
+    
     void Base::MaskShadows()
     {
       inRange(*_input->GetDepthImage(), _params->GetMinimumDistance(), _params->GetMaximumDistance(), _maskImage);

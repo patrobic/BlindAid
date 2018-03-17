@@ -10,6 +10,7 @@ namespace Capture
   {
   public:
     Base(IParameters *params, IData *input, IData *output, Logger *logger);
+    virtual ~Base();
     static Base *MakeCapture(Capture::Parameters *params, IData *input, IData *output, Logger *logger);
 
   protected:

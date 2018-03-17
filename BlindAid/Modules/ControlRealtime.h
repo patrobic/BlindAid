@@ -11,6 +11,7 @@ namespace Control
     {
     public:
       Realtime(IParameters *params, IData *input, IData *output, Logger *logger);
+      ~Realtime();
 
     private:
       void Process();

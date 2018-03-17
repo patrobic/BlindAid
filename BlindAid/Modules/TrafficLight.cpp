@@ -14,6 +14,11 @@ namespace Vision
         return new DeepLearning::DeepLearning(params, input, output, logger);
     }
 
+    Base::~Base()
+    {
+
+    }
+    
     Base::Base(IParameters *params, IData *input, IData *output, Logger *logger) : IDetect(params, input, output, logger)
     {
 

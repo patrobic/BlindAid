@@ -9,6 +9,11 @@ namespace Capture
 
   }
 
+  Base::~Base()
+  {
+
+  }
+
   Base *Base::MakeCapture(Capture::Parameters *params, IData *input, IData *output, Logger *logger)
   {
     if (((Capture::Parameters*)params)->GetMode() == Mode::Realtime)

@@ -14,6 +14,7 @@ namespace Vision
     {
     public:
       Base(IParameters *params, IData *input, IData *output, Logger *logger);
+      virtual ~Base();
       static Base *Base::MakeDepthObstacle(IParameters *params, IData *input, IData *output, Logger *logger);
 
     protected:

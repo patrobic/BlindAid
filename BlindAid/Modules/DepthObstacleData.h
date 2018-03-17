@@ -17,7 +17,7 @@ namespace Vision
           _vibration.push_back(Result(params->GetConsecutiveCount()));
         
         _getNearestObstacleOnly = params->GetNearestObstacleOnly();
-
+        _lessThanMaxToIgnore = params->GetLessThanMaxToIgnore();
       }
 
       void Clear()
@@ -55,13 +55,13 @@ namespace Vision
           int maxIndex = 0;
 
           for (int i = 0; i < VERT_REGIONS; ++i)
-            if (_vibration.at(maxIndex).Get() > maximum)
+            if (_vibration.at(i).Get() > maximum)
             {
-              maximum = _vibration.at(maxIndex).Get();
+              maximum = _vibration.at(i).Get();
               maxIndex = i;
             }
 
-          if (index != maxIndex && _vibration.at(index).Get() < /*_params->GetHighestVibrationToIgnore()*/ 0.8f * 255)
+          if (index != maxIndex && maximum - _vibration.at(index).Get() > _lessThanMaxToIgnore * 255)
             return 0;
         }
         return _vibration.at(index).Get();
@@ -104,7 +104,7 @@ namespace Vision
       std::vector<Result> _vibration;
 
       bool _getNearestObstacleOnly = true;
-      int _highestVibrationToIgnore = true;
+      float _lessThanMaxToIgnore = 0;
     };
   }
 }

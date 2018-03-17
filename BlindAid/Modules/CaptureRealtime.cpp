@@ -17,6 +17,11 @@ namespace Capture
       ConnectToCamera();
     }
 
+    Realtime::~Realtime()
+    {
+      _pp->Close();
+    }
+
     void Realtime::Process()
     {
       _start = steady_clock::now();
