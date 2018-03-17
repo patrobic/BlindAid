@@ -42,7 +42,7 @@ namespace Control
       while (!_serial->isConnected())
       {
         Reconnect();
-        if (counter++ >= 3)
+        if (++counter >= NUM_RETRIES)
           throw exception("Controller reconnection failed, aborting (too many retries).");
       }
 
@@ -59,7 +59,7 @@ namespace Control
     {
       LOG(Warning, "Controller connection failed, attempting to reconnect (port #" + to_string(_params->GetRealtimeParams()->GetSerialPort()) + ")...", "GLOVE");
 
-      Sleep(1000);
+      Sleep(RECONNECT_DELAY);
       Connect();
     }
 
@@ -104,20 +104,21 @@ namespace Control
 
     void Realtime::TSendControl()
     {
-      Sleep(5);
-      if (_sent == false)
-      {
-        int counter = 0;
-        do 
-        {
-          Reconnect();
-          if (counter++ >= 3)
-            throw exception("Controller reconnection failed, aborting (too many retries).");
-        }
-        while (!_serial->isConnected());
+      steady_clock::time_point start = steady_clock::now();
 
-        LOG(Warning, "Connected to controller successfully", "GLOVE");
-      }
+      while (duration_cast<duration<double>>(steady_clock::now() - start).count() * 1000 < SEND_DELAY)
+        if (_sent)
+          return;
+
+      int counter = 0;
+      do
+      {
+        Reconnect();
+        if (++counter >= NUM_RETRIES)
+          throw exception("Controller reconnection failed, aborting (too many retries).");
+      } while (!_serial->isConnected());
+
+      LOG(Warning, "Connected to controller successfully", "GLOVE");
     }
   }
 }

@@ -25,6 +25,7 @@ void main(int argc, char *argv[])
     }
     catch (std::exception e)
     {
+      system("cls");
       logger(Warning, e.what(), "MAIN");
     }
   }

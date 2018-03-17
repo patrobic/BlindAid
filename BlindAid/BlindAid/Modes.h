@@ -24,8 +24,9 @@ public:
   void DisableColor();
   void DisableDepth();
 
+  static bool FlagToInt(std::vector<std::string> param, int index, int &number);
+  static bool FlagToString(std::vector<std::string> param, int index, std::string &path);
+  static bool FlagToPath(std::vector<std::string> param, int index, std::string &path);
+
 private:
-  bool FlagToInt(std::vector<std::string> param, int index, int &number);
-  bool FlagToString(std::vector<std::string> param, int index, std::string &path);
-  bool FlagToPath(std::vector<std::string> param, int index, std::string &path);
 };

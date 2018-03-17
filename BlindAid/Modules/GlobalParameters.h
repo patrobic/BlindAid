@@ -4,6 +4,10 @@
 #include "IParameters.h"
 #include "Logger.h"
 
+#define NUM_RETRIES 10
+#define SEND_DELAY 100
+#define RECONNECT_DELAY 1000
+
 enum Type { Color = 1, Depth = 2, Both = Color + Depth };
 
 class GlobalParameters

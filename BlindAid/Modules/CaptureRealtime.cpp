@@ -19,20 +19,15 @@ namespace Capture
 
     Realtime::~Realtime()
     {
-      _pp->Close();
+      
     }
 
     void Realtime::Process()
     {
       _start = steady_clock::now();
 
-      int counter = 0;
       if (_device == NULL || _sample->color == NULL || _sample->depth == NULL)
-      {
         Reconnect();
-        if (counter++ >= 3)
-          throw exception("Controller reconnection failed, aborting (too many retries).");
-      }
       QueryCamera();
       AcquireFrames();
 
@@ -60,11 +55,11 @@ namespace Capture
       {
         LOG(Warning, "Acquisition connection failed, waiting for camera...", "CAMERA");
 
-        Sleep(1000);
+        Sleep(RECONNECT_DELAY);
         InitializeCamera();
         QueryCamera();
 
-        if (counter++ >= 3)
+        if (++counter >= NUM_RETRIES)
           throw exception("Acquisition reconnection failed, aborting (too many retries).");
       }
 

@@ -20,7 +20,8 @@ namespace Vision
 
       DeepLearning::~DeepLearning()
       {
-
+        _input->SetStop(true);
+        delete _processThread;
       }
 
       void DeepLearning::LoadNetwork()

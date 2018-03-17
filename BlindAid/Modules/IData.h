@@ -21,5 +21,5 @@ public:
 
 protected:
   bool _status = true;
-  bool _stop = false;
+  std::atomic<bool> _stop = false;
 };

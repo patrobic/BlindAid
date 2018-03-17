@@ -20,11 +20,11 @@ namespace Core
 
   Core::~Core()
   {
-    delete _capture;
-    delete _vision;
-    delete _control;
-    delete _display;
     delete _record;
+    delete _display;
+    delete _control;
+    delete _vision;
+    delete _capture;
   }
 
   void Core::Process()
@@ -40,10 +40,13 @@ namespace Core
       if (_output->GetCaptureResults()->GetStatus())
         LogStats();
 
-      if (GetAsyncKeyState(VK_ESCAPE) & 0x8000 || _output->GetCaptureResults()->GetStop())
+      if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
+        _output->GetCaptureResults()->SetStop(true);
+
+      if (_output->GetCaptureResults()->GetStop())
       {
         if (_params->GetGlobalParameters()->GetMenuEnabled() && _params->GetMode() == Simulate)
-          system("pause");
+           system("pause");
 
         system("cls");
         cv::destroyAllWindows();
