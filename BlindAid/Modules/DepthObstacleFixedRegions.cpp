@@ -17,6 +17,11 @@ namespace Vision
 
       }
 
+      FixedRegions::~FixedRegions()
+      {
+
+      }
+
       void FixedRegions::Process()
       {
         _start = steady_clock::now();

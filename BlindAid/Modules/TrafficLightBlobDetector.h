@@ -12,6 +12,7 @@ namespace Vision
       {
       public:
         BlobDetector(IParameters *params, IData *input, IData *output, Logger *logger);
+        ~BlobDetector();
 
       private:
         void Process();

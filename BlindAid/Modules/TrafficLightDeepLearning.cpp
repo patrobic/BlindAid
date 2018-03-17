@@ -1,5 +1,7 @@
 #include "TrafficLightDeepLearning.h"
 
+#include <windows.h>
+
 using namespace std;
 using namespace std::chrono;
 using namespace cv;
@@ -21,7 +23,11 @@ namespace Vision
       DeepLearning::~DeepLearning()
       {
         _input->SetStop(true);
-        delete _processThread;
+        if (_params->GetMode() == Realtime)
+        {
+          _processThread->join();
+          delete _processThread;
+        }
       }
 
       void DeepLearning::LoadNetwork()

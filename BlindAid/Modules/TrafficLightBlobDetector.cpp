@@ -18,6 +18,11 @@ namespace Vision
 
       }
 
+      BlobDetector::~BlobDetector()
+      {
+
+      }
+
       void BlobDetector::Process()
       {
         _start = steady_clock::now();

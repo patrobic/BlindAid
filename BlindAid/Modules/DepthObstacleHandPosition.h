@@ -13,6 +13,7 @@ namespace Vision
       {
       public:
         HandPosition(IParameters * params, IData * input, IData * output, Logger *logger);
+        ~HandPosition();
 
       private:
         void Process();

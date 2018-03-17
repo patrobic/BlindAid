@@ -17,6 +17,11 @@ namespace Vision
 
       }
 
+      HandPosition::~HandPosition()
+      {
+
+      }
+
       void HandPosition::Process()
       {
         _start = steady_clock::now();

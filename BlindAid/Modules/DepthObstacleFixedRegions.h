@@ -13,6 +13,7 @@ namespace Vision
       {
       public:
         FixedRegions(IParameters * params, IData * input, IData * output, Logger *logger);
+        ~FixedRegions();
 
       private:
         void Process();
