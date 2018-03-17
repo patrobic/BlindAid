@@ -8,26 +8,25 @@
 
 void main(int argc, char *argv[])
 {
-  GlobalParameters globalParams;
+  GlobalParameters globalParams(std::vector<std::string>(argv, argv + argc), CONFIG);
   Logger logger(globalParams.GetLogLevel());
 
   while (true)
   {
     try
     {
+      // create parameters and config objects
       Core::Parameters params(&globalParams);
+
+      // load/parse configuration
       Configuration config(&params, &logger);
-      config.Configure(std::vector<std::string>(argv, argv + argc), CONFIG);
+      config.Configure();
 
-      if (globalParams.GetMenuEnabled())
-      {
-        Menu menu(&params, &logger);
-        menu.ShowMenu();
-      }
-
+      // create core objects
       Core::Data results(&params);
       Core::Core core(&params, NULL, &results, &logger);
 
+      // execute core processing
       core();
     }
     catch (std::exception e)

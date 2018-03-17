@@ -1,22 +1,20 @@
-#include "ConfigSave.h"
+#include "Save.h"
 
-SaveConfiguration::SaveConfiguration(Core::Parameters *params, Logger *logger) : Class(params, logger)
+Save::Save(Core::Parameters *params, Logger *logger) : Class(params, logger)
 {
 
 }
 
-void SaveConfiguration::Configure(std::string path)
+void Save::Configure()
 {
-  _path = path;
-
   Setting &root = _config.getRoot();
 
   Core(root.add("core", Setting::Type::TypeGroup), _params);
 
-  _config.writeFile(_path.c_str());
+  _config.writeFile((_params->GetGlobalParameters()->GetExePath() + _params->GetGlobalParameters()->_path).c_str());
 }
 
-void SaveConfiguration::Core(Setting &setting, Core::Parameters *parameters)
+void Save::Core(Setting &setting, Core::Parameters *parameters)
 {
   Capture(setting.add("capture", Setting::Type::TypeGroup), _params->GetCaptureParams());
   Record(setting.add("record", Setting::Type::TypeGroup), _params->GetRecordParams());
@@ -25,7 +23,7 @@ void SaveConfiguration::Core(Setting &setting, Core::Parameters *parameters)
   Display(setting.add("display", Setting::Type::TypeGroup), _params->GetDisplayParams());
 }
 
-void SaveConfiguration::Capture(Setting &setting, Capture::Parameters *parameters)
+void Save::Capture(Setting &setting, Capture::Parameters *parameters)
 {
   BaseParams(setting, parameters);
 
@@ -33,23 +31,23 @@ void SaveConfiguration::Capture(Setting &setting, Capture::Parameters *parameter
   CaptureSimulate(setting.add("simulate", Setting::Type::TypeGroup), parameters->GetSimulateParams());
 }
 
-void SaveConfiguration::CaptureRealtime(Setting &setting, Capture::Realtime::Parameters *parameters)
+void Save::CaptureRealtime(Setting &setting, Capture::Realtime::Parameters *parameters)
 {
 
 }
 
-void SaveConfiguration::CaptureSimulate(Setting &setting, Capture::Simulate::Parameters *parameters)
+void Save::CaptureSimulate(Setting &setting, Capture::Simulate::Parameters *parameters)
 {
 
 }
 
-void SaveConfiguration::Record(Setting &setting, Record::Parameters *parameters)
+void Save::Record(Setting &setting, Record::Parameters *parameters)
 {
   BaseParams(setting, parameters);
 
 }
 
-void SaveConfiguration::Vision(Setting &setting, Vision::Parameters *parameters)
+void Save::Vision(Setting &setting, Vision::Parameters *parameters)
 {
   BaseParams(setting, parameters);
 
@@ -57,7 +55,7 @@ void SaveConfiguration::Vision(Setting &setting, Vision::Parameters *parameters)
   SaveTrafficLight(setting.add("trafficlight", Setting::Type::TypeGroup), parameters->GetTrafficLightParams());
 }
 
-void SaveConfiguration::Control(Setting &setting, Control::Parameters *parameters)
+void Save::Control(Setting &setting, Control::Parameters *parameters)
 {
   BaseParams(setting, parameters);
 
@@ -65,29 +63,29 @@ void SaveConfiguration::Control(Setting &setting, Control::Parameters *parameter
   ControlSimulate(setting.add("simulate", Setting::Type::TypeGroup), parameters->GetSimulateParams());
 }
 
-void SaveConfiguration::ControlRealtime(Setting &setting, Control::Realtime::Parameters *parameters)
+void Save::ControlRealtime(Setting &setting, Control::Realtime::Parameters *parameters)
 {
 
 }
 
-void SaveConfiguration::ControlSimulate(Setting &setting, Control::Simulate::Parameters *parameters)
+void Save::ControlSimulate(Setting &setting, Control::Simulate::Parameters *parameters)
 {
 
 }
 
-void SaveConfiguration::Display(Setting &setting, Display::Parameters *parameters)
-{
-  BaseParams(setting, parameters);
-
-}
-
-void SaveConfiguration::SaveDepthObstacle(Setting &setting, Vision::DepthObstacle::Parameters *parameters)
+void Save::Display(Setting &setting, Display::Parameters *parameters)
 {
   BaseParams(setting, parameters);
 
 }
 
-void SaveConfiguration::SaveTrafficLight(Setting &setting, Vision::TrafficLight::Parameters *parameters)
+void Save::SaveDepthObstacle(Setting &setting, Vision::DepthObstacle::Parameters *parameters)
+{
+  BaseParams(setting, parameters);
+
+}
+
+void Save::SaveTrafficLight(Setting &setting, Vision::TrafficLight::Parameters *parameters)
 {
   BaseParams(setting, parameters);
 
@@ -95,17 +93,17 @@ void SaveConfiguration::SaveTrafficLight(Setting &setting, Vision::TrafficLight:
   TrafficLightDeepLearning(setting.add("deeplearning", Setting::Type::TypeGroup), parameters->GetDeepLearningParams());
 }
 
-void SaveConfiguration::TrafficLightBlobDetector(Setting &setting, Vision::TrafficLight::BlobDetector::Parameters *parameters)
+void Save::TrafficLightBlobDetector(Setting &setting, Vision::TrafficLight::BlobDetector::Parameters *parameters)
 {
 
 }
 
-void SaveConfiguration::TrafficLightDeepLearning(Setting &setting, Vision::TrafficLight::DeepLearning::Parameters *parameters)
+void Save::TrafficLightDeepLearning(Setting &setting, Vision::TrafficLight::DeepLearning::Parameters *parameters)
 {
 
 }
 
-void SaveConfiguration::BaseParams(Setting &setting, IParameters *parameters)
+void Save::BaseParams(Setting &setting, IParameters *parameters)
 {
   setting.add("mode", Setting::Type::TypeInt) = _params->GetMode();
   setting.add("toggle", Setting::Type::TypeInt) = _params->GetToggle();

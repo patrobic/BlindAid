@@ -7,26 +7,32 @@
 #pragma comment(lib, "Shlwapi.lib")
 
 Configuration::Configuration(Core::Parameters *params, Logger *logger) : Class(params, logger),
-  _saveConfig(params, logger),
-  _loadConfig(params, logger),
-  _parseConfig(params, logger)
+_save(params, logger),
+_load(params, logger),
+_parse(params, logger),
+_menu(params, logger)
 {
 
 }
 
-void Configuration::Configure(std::vector<std::string> args, std::string path)
+void Configuration::Configure()
 {
-  _path = path;
-  _args = args;
-
   Initialize();
-  LoadFromDisk();
   ParseArguments();
+
+  if (_params->GetGlobalParameters()->GetMenuEnabled())
+  {
+    LoadFromMenu();
+    ParseMenuArguments();
+  }
+
+  if (_params->GetGlobalParameters()->GetLoadFromDisk())
+    LoadFromDisk();
 }
 
-void Configuration::ParseArguments()
+void Configuration::LoadFromMenu()
 {
-  _parseConfig.Configure(_args);
+  _menu.Configure();
 }
 
 void Configuration::LoadFromDisk()
@@ -42,10 +48,20 @@ void Configuration::LoadFromDisk()
   // else ... no configuration exists at all (new installation).
   //    SaveConfiguration(); ... create a file by saving the default configuration specified in each class's Parameters class.
 
-  if (!std::ifstream(_params->GetGlobalParameters()->GetExePath() + _path).good())
-    _saveConfig.Configure(_params->GetGlobalParameters()->GetExePath() + _path);
+  if (!std::ifstream(_params->GetGlobalParameters()->GetExePath() + _params->GetGlobalParameters()->_path).good())
+    _save.Configure();
 
-  _loadConfig.Configure(_params->GetGlobalParameters()->GetExePath() + _path);
+  _load.Configure();
+}
+
+void Configuration::ParseArguments()
+{
+  _parse.Configure();
+}
+
+void Configuration::ParseMenuArguments()
+{
+  _parse.Configure();
 }
 
 void Configuration::Initialize()

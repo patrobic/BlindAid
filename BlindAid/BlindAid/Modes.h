@@ -6,6 +6,7 @@ class Modes : public Class
 {
 public:
   Modes(Core::Parameters *params, Logger *logger);
+  void Configure() = delete;
 
   void GetHelp();
   void BypassMenu();
@@ -17,6 +18,7 @@ public:
   void EnableVerbose(std::vector<std::string> params);
   void LowPerformance();
   void SetComPort(std::vector<std::string> params);
+  void SetConsecutiveCount(std::vector<std::string> params);
   void DepthObstacleMode(std::vector<std::string> params);
   void TrafficLightMode(std::vector<std::string> params);
   void DisableColor();

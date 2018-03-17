@@ -14,6 +14,7 @@ namespace Vision
       {
       public:
         DeepLearning(IParameters *params, IData *input, IData *output, Logger *logger);
+        ~DeepLearning();
 
       private:
         void LoadNetwork();

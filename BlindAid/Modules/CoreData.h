@@ -20,6 +20,15 @@ namespace Core
       _displayResults = new Display::Data();
     }
 
+    ~Data()
+    {
+      delete _captureResults;
+      delete _recordResults;
+      delete _visionResults;
+      delete _controlResults;
+      delete _displayResults;
+    }
+
     void Clear()
     {
     

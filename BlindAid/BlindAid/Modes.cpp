@@ -4,6 +4,8 @@
 #include <Pathcch.h>
 #include <Shlwapi.h>
 
+#include "Messages.h"
+
 #pragma comment(lib, "Shlwapi.lib")
 
 using namespace std;
@@ -15,59 +17,19 @@ Modes::Modes(Core::Parameters *params, Logger *logger) : Class(params, logger)
 
 }
 
-string categories[][3] = {
-  { "COMMAND", "FLAGS", "CATEGORY" },
-  { "blindaid", "-a | -c | -t <path> | -s <path> -r [delay] [path]", "mode selection" },
-  { "", "-d -v [level] -l", "debugging options" },
-  { "", "-p <port>", "connection settings" },
-  { "", "-do {fr | hp} -tl {dl | bd}", "module selection" },
-  { "", "-coloroff | -depthoff", "channel selection" },
-  { "", "-?", "help" }
-};
-
-string messages[][5] = {
-  { "FLAG", "[ARGUMENT]", "DESCRIPTION", "DETAILS", "CHANGES" },
-  { "?", "", "Show Help", "display flag descriptions, then exit", "" },
-  { "a", "", "Realtime Mode", "bypass menu, no user interaction", "Camera ON /Glove ON" },
-  { "c", "", "Camera Only", "disable glove, print control to screen", "Camera ON / Glove OFF" },
-  { "t", "<path>", "Glove Only", "disable camera, load images from disk", "Camera OFF/Glove ON" },
-  { "s", "<path>", "Simulate Mode", "disable performance optimizations", "Camera OFF/Glove OFF" },
-  { "r", "[delay] [path]", "Record Enabled", "save images to disk, 0 for manual", "Record ON" },
-  { "d", "", "Display Images", "show color/depth images to screen", "Display ON" },
-  { "v", "[level]", "Verbose Messages", "print info messages to screen", "Logging ON" },
-  { "l", "", "Low Performance", "disable multi threading optimizations", "Threads OFF" },
-  { "p", "<port #>", "Set COM Port Number", "for Bluetooth glove connection", "" },
-  { "do", "{fr | hp}", "Depth Obstacle Mode", "fixed regions/hand position", "DepthObstacle FR/HP" },
-  { "tl", "{dl | bd}", "Traffic Light Mode", "deep learning/blob detector", "TrafficLight DL/BD" },
-  { "coloroff", "", "Depth Image Only", "disable color stream processing", "Color OFF" },
-  { "depthoff", "", "Color Image Only", "disable depth stream processing", "Depth OFF" }
-};
-
-string scenarios[][4] = {
-  { "COMMAND ", "FLAGS", "DESCRIPTION", "PURPOSE" },
-  { "blindaid", "", "Menu Interface", "manual configuration, via interactive menu" },
-  { "blindaid", "-a", "Realtime Final", "complete experience, for final product demo" }, // -a
-  { "blindaid", "-c", "Capture Only", "to demo without glove, print control to screen" }, // -c
-  { "blindaid", "-t path", "Control Only", "to demo without camera, load images from disk" }, // -t path (-d)
-  { "blindaid", "-s path", "Simulate All", "disable camera and glove, only test software loop" }, // -s (-c -t path)
-  { "blindaid", "-a -d", "Realtime w\\Debug", "full experience w\\image display, low performance" }, // -d
-  { "blindaid", "-c -d", "Capture w\\Debug", "capture only w\\display, to demonstrate processing" }, // -c -d
-  { "blindaid", "-r ms", "Record Images", "save images periodically, or 0 for manual trigger" }, // -r (-c -d)
-};
-
 void Modes::GetHelp()
 {
   cout << "USAGE: Summary of flags by category.\n";
   for (int i = 0; i < 6; ++i)
-    cout << left << "    " << setw(10) << categories[i][0] << "\t[" << setw(50) << (categories[i][1] + "]") << "\t(" << categories[i][2] << ")\n";
+    cout << left << "    " << setw(10) << Messages::categories[i][0] << "\t[" << setw(50) << (Messages::categories[i][1] + "]") << "\t(" << Messages::categories[i][2] << ")\n";
 
   cout << "\nDETAILS: Description of flags and parameters.\n";
   for (int i = 0; i < 15; ++i)
-    cout << left << "    -" << setw(15) << (messages[i][0] + " " + messages[i][1]) << "\t" << setw(23) << messages[i][2] << "\t(" << setw(40) << (messages[i][3] + ")") << (messages[i][4].size() > 0 ? "\t[" + messages[i][4] + "]" : "") << "\n";
+    cout << left << "    -" << setw(15) << (Messages::messages[i][0] + " " + Messages::messages[i][1]) << "\t" << setw(23) << Messages::messages[i][2] << "\t(" << setw(40) << (Messages::messages[i][3] + ")") << (Messages::messages[i][4].size() > 0 ? "\t[" + Messages::messages[i][4] + "]" : "") << "\n";
 
   cout << "\nSCENARIOS: Useful argument combinations.\n";
   for (int i = 0; i < 9; ++i)
-    cout << left << "    " << setw(25) << (scenarios[i][0] + " " + scenarios[i][1]) << "\t" << setw(20) << scenarios[i][2] << "\t(" << scenarios[i][3] << ")\n";
+    cout << left << "    " << setw(25) << (Messages::scenarios[i][0] + " " + Messages::scenarios[i][1]) << "\t" << setw(20) << Messages::scenarios[i][2] << "\t(" << Messages::scenarios[i][3] << ")\n";
 
   system("pause");
   exit(0);
@@ -172,6 +134,20 @@ void Modes::SetComPort(vector<string> params)
   }
   else
     LOG(Warning, "Invalid COM Port (usage: -p #)");
+}
+
+void Modes::SetConsecutiveCount(vector<string> params)
+{
+  int consecutiveCount = 0;
+
+  if (FlagToInt(params, 0, consecutiveCount))
+  {
+    _params->GetVisionParams()->GetDepthObstacleParams()->SetConsecutiveCount(consecutiveCount);
+    _params->GetVisionParams()->GetTrafficLightParams()->SetConsecutiveCount(consecutiveCount);
+    LOG(Warning, "'-cc': Setting Consecutive Count to " + to_string(consecutiveCount));
+  }
+  else
+    LOG(Warning, "Invalid Consecutive Count Value (usage: -cc {count})");
 }
 
 void Modes::DepthObstacleMode(vector<string> params)

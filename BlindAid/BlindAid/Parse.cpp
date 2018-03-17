@@ -1,4 +1,12 @@
-#include "ConfigParse.h"
+#include "Parse.h"
+
+#include <windows.h>
+#include <Pathcch.h>
+#include <Shlwapi.h>
+
+#include "Messages.h"
+
+#pragma comment(lib, "Shlwapi.lib")
 
 using namespace std;
 
@@ -10,16 +18,14 @@ using namespace std;
 
 #define NAME "CONFIG"
 
-ParseConfiguration::ParseConfiguration(Core::Parameters *params, Logger *logger) : Class(params, logger),
+Parse::Parse(Core::Parameters *params, Logger *logger) : Class(params, logger),
 _modes(params, logger)
 {
 
 }
 
-void ParseConfiguration::Configure(std::vector<std::string> args)
+void Parse::Configure()
 {
-  _args = args;
-
   if (CheckFlag("-?"))
     _modes.GetHelp();
 
@@ -53,6 +59,9 @@ void ParseConfiguration::Configure(std::vector<std::string> args)
   if (CheckFlag("-p", 1))
     _modes.SetComPort(_prms);
 
+  if (CheckFlag("-cc", 1))
+    _modes.SetConsecutiveCount(_prms);
+
   if (CheckFlag("-do", 1))
     _modes.DepthObstacleMode(_prms);
 
@@ -66,18 +75,18 @@ void ParseConfiguration::Configure(std::vector<std::string> args)
     _modes.DisableDepth();
 }
 
-bool ParseConfiguration::CheckFlag(const std::string& option, int numParams)
+bool Parse::CheckFlag(const std::string& option, int numParams)
 {
   _prms.clear();
 
-  for (int i = 0; i < _args.size(); ++i)
-    if (_args.at(i) == option)
+  for (int i = 0; i < _params->GetGlobalParameters()->_args.size(); ++i)
+    if (_params->GetGlobalParameters()->_args.at(i) == option)
     {
       _index = i;
 
-      for (int j = 1; j <= numParams && (i + j) < _args.size(); ++j)
-        if (_args.at(i + j)[0] != '-')
-          _prms.push_back(_args.at(i + j));
+      for (int j = 1; j <= numParams && (i + j) < _params->GetGlobalParameters()->_args.size(); ++j)
+        if (_params->GetGlobalParameters()->_args.at(i + j)[0] != '-')
+          _prms.push_back(_params->GetGlobalParameters()->_args.at(i + j));
         else
           break;
 

@@ -4,28 +4,29 @@
 #include <fstream>
 
 #include "Class.h"
-#include "ConfigLoad.h"
-#include "ConfigSave.h"
-#include "ConfigParse.h"
+#include "Menu.h"
+#include "Load.h"
+#include "Save.h"
+#include "Parse.h"
 
 class Configuration : public Class
 {
 public:
   Configuration(Core::Parameters *params, Logger *logger);
-  void Configure(std::vector<std::string> args, std::string path);
+  void Configure();
 
 private:
   void ParseArguments();
+  void LoadFromMenu();
+  void ParseMenuArguments();
   void LoadFromDisk();
 
   void Initialize();
   void SetExePath();
   void SetWindowPosition();
 
-  SaveConfiguration _saveConfig;
-  LoadConfiguration _loadConfig;
-  ParseConfiguration _parseConfig;
-
-  std::vector<std::string> _args;
-  std::string _path;
+  Menu _menu;
+  Save _save;
+  Load _load;
+  Parse _parse;
 };

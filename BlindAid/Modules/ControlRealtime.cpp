@@ -78,23 +78,23 @@ namespace Control
       _message.str("");
       _message << _params->GetRealtimeParams()->GetMessageStart();
 
-      CreateColorMessage();
       CreateDepthMessage();
+      CreateColorMessage();
 
       _message << _params->GetRealtimeParams()->GetMessageEnd();
     }
 
     void Realtime::CreateColorMessage()
     {
-      for (int i = 0; i < 5; ++i)
-        _message << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetVibration((_params->GetHandPolarity() == Control::Parameters::HandPolarity::Left) ? i : (4 - i))->Get();
+      _input->GetTrafficLightResults()->_trafficLightMutex.lock();
+      _message << setw(3) << setfill('0') << ((_input->GetTrafficLightResults()->GetColor() == Vision::TrafficLight::Result::Color::Red) ? _params->GetBeeperIntensity() : 0);
+      _input->GetTrafficLightResults()->_trafficLightMutex.unlock();
     }
 
     void Realtime::CreateDepthMessage()
     {
-      _input->GetTrafficLightResults()->_trafficLightMutex.lock();
-      _message << setw(3) << setfill('0') << ((_input->GetTrafficLightResults()->GetColor() == Vision::TrafficLight::Result::Color::Red) ? _params->GetBeeperIntensity() : 0);
-      _input->GetTrafficLightResults()->_trafficLightMutex.unlock();
+      for (int i = 0; i < 5; ++i)
+        _message << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetVibration((_params->GetHandPolarity() == Control::Parameters::HandPolarity::Left) ? i : (4 - i));
     }
 
     void Realtime::TSendControl()

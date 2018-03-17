@@ -94,24 +94,16 @@ namespace Vision
 
       void Defaults()
       {
-        // MODES: Configuration
-        // FingerRegions: mode = FixedRegions, center = (320, 240), horizontalCoverage = 0.9, verticalCoverage = 0.9, snapToEdges = true
-        // HandHunting: mode = HandPosition, center = (DYNAMIC), horizontalCoverage = 0.5, verticalCoverage = 0.5, snapToEdges = true
-        // HeadProtection: mode = FixedRegions, center = (320, 120), horizontalCoverage = 0.3, verticalCoverage = 0.7, snapToEdges = false
-
         _version = Version::FixedRegions;
 
         _consecutiveCount = 3;
 
         _horizontalRegions = HORZ_REGIONS;
         _verticalRegions = VERT_REGIONS;
-
         _regionHeight = 0.4f;
         _regionWidth = 0.2f;
-
         _horizontalCoverage = 0.9f;
         _verticalCoverage = 0.9f;
-
         _snapToEdges = true;
         _defaultCenter = cv::Point(320, 240);
 
@@ -125,14 +117,6 @@ namespace Vision
           { 1000, 1100, 1200, 1100, 1000 },
           { 1100, 1200, 1300, 1200, 1100 },
           { 1000, 1100, 1200, 1100, 1000 } };
-        // not sensitive
-          //{ 700, 800, 900, 800, 700 },
-          //{ 800, 900, 1000, 900, 800 },
-          //{ 700, 800, 900, 800, 700 } };
-        // very sensitive
-          //{ 1200, 1300, 1400, 1300, 1200 },
-          //{ 1300, 1400, 1500, 1400, 1300 },
-          //{ 1200, 1300, 1400, 1300, 1200 } };
 
         for (int i = 0; i < HORZ_REGIONS; ++i)
           for (int j = 0; j < VERT_REGIONS; ++j)
@@ -140,8 +124,9 @@ namespace Vision
 
         _minimumVibration = 25.f;
         _maximumVibration = 255.f;
-
         _validRatioThreshold = 0.1f;
+        _nearestObstacleOnly = true;
+        _highestVibrationToIgnore = 0.95f;
       }
 
       bool Valid()
@@ -210,6 +195,12 @@ namespace Vision
       float GetValidRatioThreshold() { return _validRatioThreshold; }
       void SetValidRatioThreshold(float validRatioThreshold) { _validRatioThreshold = validRatioThreshold; }
 
+      bool GetNearestObstacleOnly() { return _nearestObstacleOnly; }
+      void SetNearestObstacleOnly(bool nearestObstacleOnly) { _nearestObstacleOnly = nearestObstacleOnly; }
+
+      float GetHighestVibrationToIgnore() { return _highestVibrationToIgnore; }
+      void SetHighestVibrationToIgnore(float highestVibrationToIgnore) { _highestVibrationToIgnore = highestVibrationToIgnore; }
+
     private:
       // parameters specific to blob detector mode.
       FixedRegions::Parameters _fixedRegionsParams;
@@ -275,6 +266,12 @@ namespace Vision
 
       // minimum ratio of non-zero pixels for successful detection.
       float _validRatioThreshold;
+
+      // vibrate the finger of the region with the nearest detection only.
+      bool _nearestObstacleOnly;
+
+      // vibration threshold below which non-nearest objects will be ignored.
+      float _highestVibrationToIgnore;
     };
   }
 }

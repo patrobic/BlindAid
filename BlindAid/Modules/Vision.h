@@ -10,9 +10,9 @@ namespace Vision
   {
   public:
     Vision(IParameters *params, IData *input, IData *output, Logger *logger);
+    ~Vision();
 
   private:
-    void CreateModules();
     void Process();
     void RunModules();
     

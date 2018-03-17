@@ -11,16 +11,20 @@ namespace Core
 {
   Core::Core(IParameters *params, IData *input, IData *output, Logger *logger) : IModule(params, input, output, logger)
   {
-    CreateModules();
-  }
-
-  void Core::CreateModules()
-  {
     _capture = Capture::Base::MakeCapture(_params->GetCaptureParams(), NULL, _output->GetCaptureResults(), _logger);
     _vision = new Vision::Vision(_params->GetVisionParams(), _output->GetCaptureResults(), _output->GetVisionResults(), _logger);
     _control = Control::Base::MakeControl(_params->GetControlParams(), _output->GetVisionResults(), _output->GetCaptureResults(), _logger);
     _display = new Display::Display(_params->GetDisplayParams(), _output->GetVisionResults(), _output->GetCaptureResults(), _logger);
     _record = new Record::Record(_params->GetRecordParams(), _output->GetVisionResults(), _output->GetCaptureResults(), _logger);
+  }
+
+  Core::~Core()
+  {
+    delete _capture;
+    delete _vision;
+    delete _control;
+    delete _display;
+    delete _record;
   }
 
   void Core::Process()

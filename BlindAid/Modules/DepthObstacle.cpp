@@ -102,7 +102,7 @@ namespace Vision
           slope = (_params->GetMaximumVibration() - _params->GetMinimumVibration()) / (_params->GetMinimumDistance() - _params->GetFarthestBound(i, j)); // calculate the slope between nearest and farthest points.
           intensity = max(intensity, (_output->GetDepth(i, j) > _params->GetFarthestBound(i, j)) ? 0.f : max(0.f, _output->GetDepth(i, j) - _params->GetMinimumDistance()) * slope + _params->GetMaximumVibration()); // map the value to a vibration intensity ratio, and the maximum for that finger.
         }
-        _output->GetVibration(i)->Set(intensity);
+        _output->SetVibration(i, intensity);
       }
     }
   }

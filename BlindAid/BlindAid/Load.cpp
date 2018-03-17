@@ -1,23 +1,21 @@
-#include "ConfigLoad.h"
+#include "Load.h"
 
-LoadConfiguration::LoadConfiguration(Core::Parameters *params, Logger *logger) : Class(params, logger)
+Load::Load(Core::Parameters *params, Logger *logger) : Class(params, logger)
 {
 
 }
 
-void LoadConfiguration::Configure(std::string path)
+void Load::Configure()
 {
-  _path = path;
-
   // TODO: exception checking for file exists.
-  _config.readFile(_path.c_str());
+  _config.readFile((_params->GetGlobalParameters()->GetExePath() + _params->GetGlobalParameters()->_path).c_str());
 
   Setting &root = _config.getRoot();
 
   Core(root.lookup("core"), _params);
 }
 
-void LoadConfiguration::Core(Setting &setting, Core::Parameters *parameters)
+void Load::Core(Setting &setting, Core::Parameters *parameters)
 {
   Capture(setting.lookup("capture"), _params->GetCaptureParams());
   Record(setting.lookup("record"), _params->GetRecordParams());
@@ -26,7 +24,7 @@ void LoadConfiguration::Core(Setting &setting, Core::Parameters *parameters)
   Display(setting.lookup("display"), _params->GetDisplayParams());
 }
 
-void LoadConfiguration::Capture(Setting &setting, Capture::Parameters *parameters)
+void Load::Capture(Setting &setting, Capture::Parameters *parameters)
 {
   BaseParams(setting, parameters);
 
@@ -34,24 +32,24 @@ void LoadConfiguration::Capture(Setting &setting, Capture::Parameters *parameter
   CaptureSimulate(setting.lookup("simulate"), parameters->GetSimulateParams());
 }
 
-void LoadConfiguration::CaptureRealtime(Setting &setting, Capture::Realtime::Parameters *parameters)
+void Load::CaptureRealtime(Setting &setting, Capture::Realtime::Parameters *parameters)
 {
 
 }
 
-void LoadConfiguration::CaptureSimulate(Setting &setting, Capture::Simulate::Parameters *parameters)
+void Load::CaptureSimulate(Setting &setting, Capture::Simulate::Parameters *parameters)
 {
 
 }
 
-void LoadConfiguration::Record(Setting &setting, Record::Parameters *parameters)
+void Load::Record(Setting &setting, Record::Parameters *parameters)
 {
   BaseParams(setting, parameters);
 
 
 }
 
-void LoadConfiguration::Vision(Setting &setting, Vision::Parameters *parameters)
+void Load::Vision(Setting &setting, Vision::Parameters *parameters)
 {
   BaseParams(setting, parameters);
 
@@ -59,7 +57,7 @@ void LoadConfiguration::Vision(Setting &setting, Vision::Parameters *parameters)
   LoadTrafficLight(setting.lookup("trafficlight"), parameters->GetTrafficLightParams());
 }
 
-void LoadConfiguration::Control(Setting &setting, Control::Parameters *parameters)
+void Load::Control(Setting &setting, Control::Parameters *parameters)
 {
   BaseParams(setting, parameters);
 
@@ -67,29 +65,29 @@ void LoadConfiguration::Control(Setting &setting, Control::Parameters *parameter
   ControlSimulate(setting.lookup("simulate"), parameters->GetSimulateParams());
 }
 
-void LoadConfiguration::ControlRealtime(Setting &setting, Control::Realtime::Parameters *parameters)
+void Load::ControlRealtime(Setting &setting, Control::Realtime::Parameters *parameters)
 {
 
 }
 
-void LoadConfiguration::ControlSimulate(Setting &setting, Control::Simulate::Parameters *parameters)
+void Load::ControlSimulate(Setting &setting, Control::Simulate::Parameters *parameters)
 {
 
 }
 
-void LoadConfiguration::Display(Setting &setting, Display::Parameters *parameters)
-{
-  BaseParams(setting, parameters);
-
-}
-
-void LoadConfiguration::LoadDepthObstacle(Setting &setting, Vision::DepthObstacle::Parameters *parameters)
+void Load::Display(Setting &setting, Display::Parameters *parameters)
 {
   BaseParams(setting, parameters);
 
 }
 
-void LoadConfiguration::LoadTrafficLight(Setting &setting, Vision::TrafficLight::Parameters *parameters)
+void Load::LoadDepthObstacle(Setting &setting, Vision::DepthObstacle::Parameters *parameters)
+{
+  BaseParams(setting, parameters);
+
+}
+
+void Load::LoadTrafficLight(Setting &setting, Vision::TrafficLight::Parameters *parameters)
 {
   BaseParams(setting, parameters);
 
@@ -97,17 +95,17 @@ void LoadConfiguration::LoadTrafficLight(Setting &setting, Vision::TrafficLight:
   TrafficLightDeepLearning(setting.lookup("deeplearning"), parameters->GetDeepLearningParams());
 }
 
-void LoadConfiguration::TrafficLightBlobDetector(Setting &setting, Vision::TrafficLight::BlobDetector::Parameters *parameters)
+void Load::TrafficLightBlobDetector(Setting &setting, Vision::TrafficLight::BlobDetector::Parameters *parameters)
 {
 
 }
 
-void LoadConfiguration::TrafficLightDeepLearning(Setting &setting, Vision::TrafficLight::DeepLearning::Parameters *parameters)
+void Load::TrafficLightDeepLearning(Setting &setting, Vision::TrafficLight::DeepLearning::Parameters *parameters)
 {
 
 }
 
-void LoadConfiguration::BaseParams(Setting &setting, IParameters *parameters)
+void Load::BaseParams(Setting &setting, IParameters *parameters)
 {
   int mode;
   setting.lookupValue("mode", mode);

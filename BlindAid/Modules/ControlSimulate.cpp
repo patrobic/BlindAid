@@ -38,7 +38,7 @@ namespace Control
         stringstream ss;
         ss << "Vibration values (";
         for (int i = 0; i < 5; ++i)
-          ss << _input->GetDepthObstacleResults()->_names[i].substr(0, 2) << "=" << (int)_input->GetDepthObstacleResults()->GetVibration(i)->Get() << " ";
+          ss << _input->GetDepthObstacleResults()->_names[i].substr(0, 2) << "=" << (int)_input->GetDepthObstacleResults()->GetVibration(i) << " ";
         ss << ")";
 
         LOG(Info, ss.str(), "GLOVE");

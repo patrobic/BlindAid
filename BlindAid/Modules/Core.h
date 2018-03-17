@@ -9,9 +9,9 @@ namespace Core
   {
   public:
     Core(IParameters *params, IData *input, IData *output, Logger *logger);
+    ~Core();
 
   private:
-    void CreateModules();
     void Process();
     void RunModules();
     void LogStats();

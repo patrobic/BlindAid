@@ -18,6 +18,11 @@ namespace Vision
         LoadNetwork();
       }
 
+      DeepLearning::~DeepLearning()
+      {
+        delete _processThread;
+      }
+
       void DeepLearning::LoadNetwork()
       {
         _net = readNetFromTensorflow(_params->GetGlobalParameters()->GetExePath() + "\\model.pb", _params->GetGlobalParameters()->GetExePath() + "\\modeln.pbtxt");
@@ -72,8 +77,8 @@ namespace Vision
         _input->_colorImageMutex.lock();
 
         _output->SetRegion(Rect((int)(_input->GetColorImage()->cols * (1 - _params->GetCenterRegionRatio()) / 2), 0,
-          (int)(_input->GetColorImage()->cols *  _params->GetCenterRegionRatio()),
-          (int)(_input->GetColorImage()->rows*_params->GetUpperRegionRatio())));
+          (int)(_input->GetColorImage()->cols * _params->GetCenterRegionRatio()),
+          (int)(_input->GetColorImage()->rows * _params->GetUpperRegionRatio())));
 
         resize((*_input->GetColorImage())(_output->GetRegion()), _preprocessedImage, _params->GetDeepLearningParams()->GetColorImageSize());
 

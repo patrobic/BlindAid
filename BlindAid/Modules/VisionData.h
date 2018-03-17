@@ -14,6 +14,12 @@ namespace Vision
       _tldResults = new TrafficLight::Data(params->GetTrafficLightParams());
     }
 
+    ~Data()
+    {
+      delete _dodResults;
+      delete _tldResults;
+    }
+
     void Clear() {}
     bool Valid()
     {

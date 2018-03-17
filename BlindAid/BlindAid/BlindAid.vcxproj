@@ -20,22 +20,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Config.cpp" />
-    <ClCompile Include="ConfigLoad.cpp" />
-    <ClCompile Include="ConfigParse.cpp" />
+    <ClCompile Include="Load.cpp" />
+    <ClCompile Include="Modes.cpp" />
+    <ClCompile Include="Parse.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
-    <ClCompile Include="ConfigSave.cpp" />
-    <ClCompile Include="Modes.cpp" />
+    <ClCompile Include="Save.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h" />
-    <ClInclude Include="ConfigParse.h" />
+    <ClInclude Include="Modes.h" />
+    <ClInclude Include="Parse.h" />
     <ClInclude Include="Class.h" />
     <ClInclude Include="Menu.h" />
-    <ClInclude Include="ConfigLoad.h" />
-    <ClInclude Include="ConfigSave.h" />
-    <ClInclude Include="Modes.h" />
+    <ClInclude Include="Load.h" />
+    <ClInclude Include="Save.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Messages.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
