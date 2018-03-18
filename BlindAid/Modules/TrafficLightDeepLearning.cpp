@@ -23,7 +23,7 @@ namespace Vision
       DeepLearning::~DeepLearning()
       {
         _input->SetStop(true);
-        if (_params->GetMode() == Realtime)
+        if (_processThread != NULL)
         {
           _processThread->join();
           delete _processThread;

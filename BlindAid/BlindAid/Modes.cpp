@@ -19,12 +19,19 @@ Modes::Modes(Core::Parameters *params, Logger *logger) : Class(params, logger)
 
 void Modes::GetHelp()
 {
+  system("cls");
+
+  cout << "CONFIGURATION MODES: BlindAid can be launched and configured in 3 ways.\n\
+    Arguments: Launch from command line, configured with no interaction by passing arguments.\n\
+    User Menu: Launch without arguments, configured through a user interactive menu interface.\n\
+    Shortcuts: To simplify mode selection, create desktop shortcuts with argument combinations.\n\n";
+
   cout << "USAGE: Summary of flags by category.\n";
   for (int i = 0; i < 6; ++i)
     cout << left << "    " << setw(10) << Messages::categories[i][0] << "\t[" << setw(50) << (Messages::categories[i][1] + "]") << "\t(" << Messages::categories[i][2] << ")\n";
 
   cout << "\nDETAILS: Description of flags and parameters.\n";
-  for (int i = 0; i < 15; ++i)
+  for (int i = 0; i < 16; ++i)
     cout << left << "    -" << setw(15) << (Messages::messages[i][0] + " " + Messages::messages[i][1]) << "\t" << setw(23) << Messages::messages[i][2] << "\t(" << setw(40) << (Messages::messages[i][3] + ")") << (Messages::messages[i][4].size() > 0 ? "\t[" + Messages::messages[i][4] + "]" : "") << "\n";
 
   cout << "\nSCENARIOS: Useful argument combinations.\n";
@@ -32,7 +39,6 @@ void Modes::GetHelp()
     cout << left << "    " << setw(25) << (Messages::scenarios[i][0] + " " + Messages::scenarios[i][1]) << "\t" << setw(20) << Messages::scenarios[i][2] << "\t(" << Messages::scenarios[i][3] << ")\n";
 
   system("pause");
-  exit(0);
 }
 
 void Modes::BypassMenu()

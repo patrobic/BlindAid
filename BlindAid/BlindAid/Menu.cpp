@@ -13,11 +13,8 @@ _modes(params, logger)
 
 void Menu::Configure()
 {
-  PrintMenu();
   GetUserInput();
-
   system("cls");
-  return;
 }
 
 void Menu::PrintMenu()
@@ -25,17 +22,21 @@ void Menu::PrintMenu()
   system("cls");
 
   cout << "Welcome to BlindAid!\n\n";
-  cout << "  MAIN MENU: Enter the letter of the mode you want to select.\n";
-
-  cout << "\n     REALTIME MODES: realistic operation modes, for final product and demo.\n\n";
+  cout << "    MAIN MENU: Enter the letter of the mode you want to select.\n\n";
   cout << "\t+====================+\n";
-  for (int i = 2; i < 7; ++i)
+  for (int i = 15; i <= 17; ++i)
     cout << "\t| " << Messages::messages[i][0] << ": " << setw(16) << left << Messages::messages[i][2] << "| (" << Messages::messages[i][3] << ")\n";
   cout << "\t+====================+\n";
 
-  cout << "\n     SIMULATE MODES: testing operation modes, for testing and debugging.\n\n";
+  cout << "\n    REALTIME MODES: realistic operation modes, for final product and demo.\n\n";
   cout << "\t+====================+\n";
-  for (int i = 16; i < 18; ++i)
+  for (int i = 1; i <= 5; ++i)
+    cout << "\t| " << Messages::messages[i][0] << ": " << setw(16) << left << Messages::messages[i][2] << "| (" << Messages::messages[i][3] << ")\n";
+  cout << "\t+====================+\n";
+
+  cout << "\n    SIMULATE MODES: testing operation modes, for testing and debugging.\n\n";
+  cout << "\t+====================+\n";
+  for (int i = 18; i <= 19; ++i)
     cout << "\t| " << Messages::messages[i][0] << ": " << setw(16) << left << Messages::messages[i][2] << "| (" << Messages::messages[i][3] << ")\n";
   cout << "\t+====================+\n";
 }
@@ -44,10 +45,15 @@ void Menu::GetUserInput()
 {
   while (true)
   {
+    PrintMenu();
+
     _in = _getch();
 
     switch (_in)
     {
+    case '?':
+      _modes.GetHelp();
+      continue;
     case 'a':
       return;
     case 'c':

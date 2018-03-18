@@ -6,17 +6,16 @@ namespace Messages
 {
   static std::string categories[][3] = {
     { "COMMAND", "FLAGS", "CATEGORY" },
-    { "blindaid", "-a | -c | -t <path> | -s <path> -r [delay] [path]", "mode selection" },
-    { "", "-d -v [level] -l", "debugging options" },
-    { "", "-p <port>", "connection settings" },
-    { "", "-do {fr | hp} -tl {dl | bd}", "module selection" },
-    { "", "-coloroff | -depthoff", "channel selection" },
+    { "blindaid", "-a | -c | -t <path> | -s <path> -r [delay] [path]", "operation mode selection" },
+    { "", "-d -v [level] -l", "debugging performance options" },
+    { "", "-p <port> -cc <count>", "miscellaneous settings" },
+    { "", "-do {fr | hp} -tl {dl | bd}", "processing module selection" },
+    { "", "-coloroff | -depthoff", "image channel selection" },
     { "", "-?", "help" }
   };
 
   static std::string messages[][5] = {
     { "FLAG", "[ARGUMENT]", "DESCRIPTION", "DETAILS", "CHANGES" },
-    { "?", "", "Show Help", "display flag descriptions, then exit", "" },
     { "a", "", "Realtime Mode", "bypass menu, no user interaction", "Camera ON /Glove ON" },
     { "c", "", "Camera Only", "disable glove, print control to screen", "Camera ON / Glove OFF" },
     { "t", "<path>", "Glove Only", "disable camera, load images from disk", "Camera OFF/Glove ON" },
@@ -31,6 +30,9 @@ namespace Messages
     { "tl", "{dl | bd}", "Traffic Light Mode", "deep learning/blob detector", "TrafficLight DL/BD" },
     { "coloroff", "", "Depth Image Only", "disable color stream processing", "Color OFF" },
     { "depthoff", "", "Color Image Only", "disable depth stream processing", "Depth OFF" },
+    { "?", "", "Show Help", "show flag descriptions", "" },
+    { "m", "", "Manual Launch", "user entry of arguments", "" },
+    { "q", "", "Quit Program", "exit main program menu", "" },
     { "o", "", "Depth Obstacle", "test depth by loading from disk", "" },
     { "l", "", "Traffic Light", "test color by loading from disk", "" }
   };
@@ -38,12 +40,12 @@ namespace Messages
   static std::string scenarios[][4] = {
     { "COMMAND ", "FLAGS", "DESCRIPTION", "PURPOSE" },
     { "blindaid", "", "Menu Interface", "manual configuration, via interactive menu" },
-    { "blindaid", "-a", "Realtime Final", "complete experience, for final product demo" }, // -a
-    { "blindaid", "-c", "Capture Only", "to demo without glove, print control to screen" }, // -c
-    { "blindaid", "-t path", "Control Only", "to demo without camera, load images from disk" }, // -t path (-d)
-    { "blindaid", "-s path", "Simulate All", "disable camera and glove, only test software loop" }, // -s (-c -t path)
-    { "blindaid", "-a -d", "Realtime w\\Debug", "full experience w\\image display, low performance" }, // -d
-    { "blindaid", "-c -d", "Capture w\\Debug", "capture only w\\display, to demonstrate processing" }, // -c -d
-    { "blindaid", "-r ms", "Record Images", "save images periodically, or 0 for manual trigger" }, // -r (-c -d)
+    { "blindaid", "-a", "Realtime Final", "complete experience, for final product demo" },
+    { "blindaid", "-c", "Capture Only", "to demo without glove, print control to screen" },
+    { "blindaid", "-t path", "Control Only", "to demo without camera, load images from disk" },
+    { "blindaid", "-s path", "Simulate All", "disable camera and glove, only test software loop" },
+    { "blindaid", "-r ms", "Record Images", "save images periodically, or 0 for manual trigger" },
+    { "blindaid", "-a -d", "Realtime w\\Debug", "full experience w\\image display, low performance" },
+    { "blindaid", "-c -d", "Capture w\\Debug", "capture only w\\display, to demonstrate processing" },
   };
 }
