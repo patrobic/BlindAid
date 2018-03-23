@@ -61,7 +61,7 @@ namespace Vision
               maxIndex = i;
             }
 
-          if (index != maxIndex && maximum - _vibration.at(index).Get() > _lessThanMaxToIgnore * 255)
+          if (index != maxIndex && maximum - _vibration.at(index).Get() > _lessThanMaxToIgnore * 255.f)
             return 0;
         }
         return _vibration.at(index).Get();

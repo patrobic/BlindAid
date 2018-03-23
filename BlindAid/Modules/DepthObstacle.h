@@ -23,7 +23,6 @@ namespace Vision
       void FindMaxInRegions();
       void MapVibrationValues();
 
-      cv::Mat _grayImage;
       cv::Mat _maskImage;
     };
   }

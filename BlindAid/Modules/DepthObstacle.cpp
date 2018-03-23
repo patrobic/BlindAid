@@ -65,9 +65,7 @@ namespace Vision
       const float* ranges[] = { range };
       int channels[] = { 0 };
 
-      float sum = 0;
       float total = 0;
-
       for (int i = 0; i < _params->GetHorizontalRegions(); ++i)
         for (int j = 0; j < _params->GetVerticalRegions(); ++j)
         {
@@ -80,14 +78,13 @@ namespace Vision
 
           normalize(hist, hist, 0, hist.rows, NORM_MINMAX, -1, Mat());
 
-          sum = (float)cv::sum(hist)[0];
           total = 0;
 
           for (int k = 0; k < _params->GetHistogramBins(); ++k)
           {
             total += hist.at<float>(k);
 
-            if (total > sum * _params->GetPercentileToIgnore())
+            if (total > (*_input->GetDepthImage())(_output->GetRegion(j, i)).total() * _params->GetPercentileToIgnore())
             {
               _output->SetDepth(j, i, (int)(_params->GetMinimumDistance() + k * (_params->GetMaximumDistance() - _params->GetMinimumDistance()) / (float)_params->GetHistogramBins()));
               break;

@@ -102,8 +102,8 @@ namespace Vision
         _verticalRegions = VERT_REGIONS;
         _regionHeight = 0.4f;
         _regionWidth = 0.2f;
-        _horizontalCoverage = 0.9f;
-        _verticalCoverage = 0.9f;
+        _horizontalCoverage = 1.f;
+        _verticalCoverage = 1.f;
         _snapToEdges = true;
         _defaultCenter = cv::Point(320, 240);
 

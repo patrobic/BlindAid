@@ -19,7 +19,7 @@ namespace Vision
         _consecutiveCount = params->GetConsecutiveCount();
         _maximumDistance = params->GetMaximumDistance();
         _maximumRadiusDiff = params->GetMaximumRadiusDiff();
-        _confidenceThreshold = params->GetConfidenceThreshold();
+        _confidenceThreshold = params->GetDeepLearningParams()->GetConfidenceThreshold();
       }
 
       void Clear()

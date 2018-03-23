@@ -71,7 +71,7 @@ namespace Vision
         void Defaults()
         {
           _colorImageSize = cv::Size(224, 224);
-          _confidenceThreshold = 0.3f;
+          _confidenceThreshold = 0.7f;
         }
 
         bool Valid()
@@ -86,11 +86,11 @@ namespace Vision
         void SetConfidenceThreshold(float confidenceThreshold) { _confidenceThreshold = confidenceThreshold; }
 
       private:
+        // size of the image sent to the deep learning model.
         cv::Size _colorImageSize;
 
+        // minimum confidence required for a color other than none to be detected.
         float _confidenceThreshold;
-
-        // TODO: deep learning parameters once class is implemented.
       };
     }
 
@@ -110,13 +110,11 @@ namespace Vision
         _deepLearningParams.Defaults();
 
         _version = DeepLearning;
-        _upperRegionRatio = 0.5f;
-        _centerRegionRatio = 0.8f;
-        _consecutiveCount = 4;
+        _upperRegionRatio = 1.f;
+        _centerRegionRatio = 0.75f;
+        _consecutiveCount = 3;
         _maximumDistance = 25;
         _maximumRadiusDiff = 5;
-
-        _confidenceThreshold = 0.9f;
       }
 
       bool Valid()
@@ -146,9 +144,6 @@ namespace Vision
       int GetMaximumRadiusDiff() { return _maximumRadiusDiff; }
       void SetMaximumRadiusDiff(int maximumRadiusDiff) { _maximumRadiusDiff = maximumRadiusDiff; }
 
-      float GetConfidenceThreshold() { return _confidenceThreshold; }
-      void SetConfidenceThreshold(float confidenceThreshold) { _confidenceThreshold = confidenceThreshold; }
-
     private:
       // parameters specific to blob detector mode.
       BlobDetector::Parameters _blobDetectorParams;
@@ -171,9 +166,6 @@ namespace Vision
       //  maximum distance and radius difference thresholds.
       int _maximumDistance;
       int _maximumRadiusDiff;
-
-      // minimum confidence required for a color other than none to be detected.
-      float _confidenceThreshold;
     };
   }
 }
