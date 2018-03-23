@@ -110,13 +110,13 @@ namespace Vision
         _deepLearningParams.Defaults();
 
         _version = DeepLearning;
-        _upperRegionRatio = 0.5f;
-        _centerRegionRatio = 0.8f;
+        _upperRegionRatio = 1.f;
+        _centerRegionRatio = 1.f;
         _consecutiveCount = 4;
         _maximumDistance = 25;
         _maximumRadiusDiff = 5;
 
-        _confidenceThreshold = 0.9f;
+        _confidenceThreshold = 0.7f;
       }
 
       bool Valid()
