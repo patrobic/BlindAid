@@ -18,12 +18,15 @@ namespace Vision
       static Base *Base::MakeDepthObstacle(IParameters *params, IData *input, IData *output, Logger *logger);
 
     protected:
+      void FindMaxInRegions();
       void MaskShadows();
       void SeparateRegions();
-      void FindMaxInRegions();
+      void FindConsecutiveMax();
       void MapVibrationValues();
 
       cv::Mat _maskImage;
+      std::vector<cv::Mat> _lastImages;
+      int _index;
     };
   }
 }

@@ -20,11 +20,30 @@ namespace Vision
     Base::Base(IParameters *params, IData *input, IData *output, Logger *logger) : IDetect(params, input, output, logger)
     {
       _output->SetHandPosition(_params->GetDefaultCenter());
+
+      for (int i = 0; i < _params->GetFrameConsecutiveCount(); ++i)
+        _lastImages.push_back(Mat(640, 480, CV_16UC1));
     }
 
     Base::~Base()
     {
 
+    }
+    
+    void Base::FindConsecutiveMax()
+    {
+      _index = ++_index%_params->GetFrameConsecutiveCount();
+
+      _input->GetDepthImage()->copyTo(_lastImages[_index]);
+
+      for (int i = 0; i < _params->GetFrameConsecutiveCount(); ++i)
+        max(_lastImages[_index], *_input->GetDepthImage(), *_input->GetDepthImage());
+
+      _input->GetDepthImage()->forEach<unsigned short>([&](unsigned short &pixel, const int * position) -> void {
+        for (int i = 0; i < _params->GetFrameConsecutiveCount(); ++i)          
+          if (_lastImages[i].at<unsigned short>(position) == 0)
+            pixel = 0;
+      });
     }
     
     void Base::MaskShadows()
@@ -76,7 +95,7 @@ namespace Vision
           if (validRatio < _params->GetValidRatioThreshold())
             _output->SetDepth(j, i, (int)_params->GetMaximumDistance());
 
-          normalize(hist, hist, 0, hist.rows, NORM_MINMAX, -1, Mat());
+         // normalize(hist, hist, 0, hist.rows, NORM_MINMAX, -1, Mat());
 
           total = 0;
 

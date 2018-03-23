@@ -28,6 +28,9 @@ namespace Vision
 
       float Get()
       {
+        if (_vibration.size() == 1)
+          return _vibration[0];
+
         float intensity = (float)INT_MAX;
 
         for (int i = 0; i < _vibration.size(); ++i)

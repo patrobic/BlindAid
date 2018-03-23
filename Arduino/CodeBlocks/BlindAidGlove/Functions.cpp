@@ -7,6 +7,7 @@ int controlValues[7];
 int analogPins[7] = { 3, 5, 6, 9, 10, 11 };
 unsigned long timeThreshold = 1000;
 unsigned long start = 0;
+int beepPeriod = 100;
 
 void InitializePins()
 {
@@ -65,7 +66,7 @@ void ControlFeedback()
     for(int i = 0; i < 5; ++i)
         analogWrite(analogPins[i+1] , controlValues[i]);
 
-    if((millis() / 250) % 2 == 0)
+    if((millis() / beepPeriod) % 2 == 0)
         analogWrite(analogPins[0], controlValues[5]);
     else
         analogWrite(analogPins[0], 0);

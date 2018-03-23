@@ -97,6 +97,7 @@ namespace Vision
         _version = Version::FixedRegions;
 
         _consecutiveCount = 3;
+        _frameConsecutiveCount = 2;
 
         _horizontalRegions = HORZ_REGIONS;
         _verticalRegions = VERT_REGIONS;
@@ -149,6 +150,9 @@ namespace Vision
 
       int GetConsecutiveCount() { return _consecutiveCount; }
       void SetConsecutiveCount(int consecutiveCount) { _consecutiveCount = consecutiveCount; }
+
+      int GetFrameConsecutiveCount() { return _frameConsecutiveCount; }
+      void SetFrameConsecutiveCount(int consecutiveCount) { _frameConsecutiveCount = consecutiveCount; }
 
       float GetRegionHeight() { return _regionHeight; }
       void SetRegionHeight(float centerRegionHeight) { _regionHeight = centerRegionHeight; }
@@ -219,6 +223,8 @@ namespace Vision
 
       // number of frames for which the farthest object will be chosen.
       int _consecutiveCount;
+
+      int _frameConsecutiveCount;
 
       // height of the central region (for hand hunting mode), other regions evenly distributed in remaining height.
       float _regionHeight;

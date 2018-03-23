@@ -212,6 +212,48 @@ void Modes::DisableDepth()
   LOG(Warning, "'-depthoff': Disabling depth image stream (color processing only)");
 }
 
+void Modes::SetDepthFrameSmoothing(vector<string> params)
+{
+  int consecutiveCount = 0;
+
+  if (FlagToInt(params, 0, consecutiveCount))
+  {
+    _params->GetVisionParams()->GetDepthObstacleParams()->SetFrameConsecutiveCount(consecutiveCount);
+    LOG(Warning, "'-smooth': Setting Frame Smoothing Count to " + to_string(consecutiveCount));
+  }
+  else
+    LOG(Warning, "Invalid Frame Smoothing Count Value (usage: -smooth {count})");
+}
+
+void Modes::SetConfidence(vector<string> params)
+{
+  int confidence = 0;
+
+  if (FlagToInt(params, 0, confidence))
+  {
+    _params->GetVisionParams()->GetTrafficLightParams()->GetDeepLearningParams()->SetConfidenceThreshold(confidence);
+    LOG(Warning, "'-conf': Setting Red Light Confidence Threshold to " + to_string(confidence));
+  }
+  else
+    LOG(Warning, "Invalid Red Light Confidence Threshold Value (usage: -conf {count})");
+}
+
+void Modes::SetRegion(vector<string> params)
+{
+  int height = 0;
+  int width = 0;
+
+  if (FlagToInt(params, 0, height) && FlagToInt(params, 1 , width))
+  {
+    _params->GetVisionParams()->GetTrafficLightParams()->SetUpperRegionRatio(height);
+    _params->GetVisionParams()->GetTrafficLightParams()->SetCenterRegionRatio(width);
+    LOG(Warning, "'-region': Setting Traffic Light Region Dimensions to " + to_string(height) + ", " + to_string(width));
+  }
+  else
+    LOG(Warning, "Invalid Traffic Light Region Dimensions (usage: -region {height, width})");
+}
+
+
 bool Modes::FlagToInt(vector<string> param, int index, int &number)
 {
   if (index >= param.size() || param.at(index).length() == 0)

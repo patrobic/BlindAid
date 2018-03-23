@@ -26,6 +26,7 @@ namespace Vision
       {
         _start = steady_clock::now();
 
+        FindConsecutiveMax();
         MaskShadows();
         SeparateRegions();
         FindMaxInRegions();

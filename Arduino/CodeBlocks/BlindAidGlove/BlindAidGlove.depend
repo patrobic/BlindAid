@@ -418,13 +418,66 @@
 1514844896 source:c:\projects\blindaid\arduino\codeblocksproject\blindaidglove\functions.cpp
 	"Functions.h"
 
-1515181792 source:c:\projects\blindaid\arduino\codeblocks\blindaidglove\blindaidglove.ino
+1521092513 source:c:\projects\blindaid\arduino\codeblocks\blindaidglove\blindaidglove.ino
 	<Arduino.h>
 	"Functions.h"
 
-1520563959 c:\projects\blindaid\arduino\codeblocks\blindaidglove\functions.h
+1521092513 c:\projects\blindaid\arduino\codeblocks\blindaidglove\functions.h
 	<Arduino.h>
 
-1520563959 source:c:\projects\blindaid\arduino\codeblocks\blindaidglove\functions.cpp
+1521829938 source:c:\projects\blindaid\arduino\codeblocks\blindaidglove\functions.cpp
 	"Functions.h"
+
+1371036702 g:\patrick robichaud\downloads\blindaid\codeblocks-arduino-20140626\arduino\hardware\arduino\cores\arduino\arduino.h
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<avr/pgmspace.h>
+	<avr/io.h>
+	<avr/interrupt.h>
+	"binary.h"
+	"WCharacter.h"
+	"WString.h"
+	"HardwareSerial.h"
+	"pins_arduino.h"
+
+1362990550 g:\patrick robichaud\downloads\blindaid\codeblocks-arduino-20140626\arduino\hardware\arduino\cores\arduino\binary.h
+
+1362990550 g:\patrick robichaud\downloads\blindaid\codeblocks-arduino-20140626\arduino\hardware\arduino\cores\arduino\wcharacter.h
+	<ctype.h>
+
+1371036734 g:\patrick robichaud\downloads\blindaid\codeblocks-arduino-20140626\arduino\hardware\arduino\cores\arduino\wstring.h
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<avr/pgmspace.h>
+
+1362990550 g:\patrick robichaud\downloads\blindaid\codeblocks-arduino-20140626\arduino\hardware\arduino\cores\arduino\hardwareserial.h
+	<inttypes.h>
+	"Stream.h"
+	"USBAPI.h"
+
+1371036430 g:\patrick robichaud\downloads\blindaid\codeblocks-arduino-20140626\arduino\hardware\arduino\cores\arduino\stream.h
+	<inttypes.h>
+	"Print.h"
+
+1362990550 g:\patrick robichaud\downloads\blindaid\codeblocks-arduino-20140626\arduino\hardware\arduino\cores\arduino\print.h
+	<inttypes.h>
+	<stdio.h>
+	"WString.h"
+	"Printable.h"
+
+1362990550 g:\patrick robichaud\downloads\blindaid\codeblocks-arduino-20140626\arduino\hardware\arduino\cores\arduino\printable.h
+	<new.h>
+
+1362990550 g:\patrick robichaud\downloads\blindaid\codeblocks-arduino-20140626\arduino\hardware\arduino\cores\arduino\new.h
+	<stdlib.h>
+
+1362990550 g:\patrick robichaud\downloads\blindaid\codeblocks-arduino-20140626\arduino\hardware\arduino\cores\arduino\usbapi.h
+
+1362990550 g:\patrick robichaud\downloads\blindaid\codeblocks-arduino-20140626\arduino\hardware\arduino\variants\eightanaloginputs\pins_arduino.h
+	"../standard/pins_arduino.h"
+
+1362990550 g:\patrick robichaud\downloads\blindaid\codeblocks-arduino-20140626\arduino\hardware\arduino\variants\standard\pins_arduino.h
+	<avr/pgmspace.h>
 

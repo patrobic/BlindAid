@@ -73,6 +73,15 @@ void Parse::Configure()
 
   if (CheckFlag("-depthoff"))
     _modes.DisableDepth();
+
+  if (CheckFlag("-smooth", 1))
+    _modes.SetDepthFrameSmoothing(_prms);
+
+  if (CheckFlag("-conf", 1))
+    _modes.SetConfidence(_prms);
+
+  if (CheckFlag("-region", 2))
+    _modes.SetRegion(_prms);
 }
 
 bool Parse::CheckFlag(const std::string& option, int numParams)
