@@ -90,23 +90,20 @@ namespace Vision
         {
           calcHist(&(*_input->GetDepthImage())(_output->GetRegion(j, i)), 1, channels, _maskImage(_output->GetRegion(j, i)), hist, 1, size, ranges, true, false);
 
-          // handle the case when too many pixels are not detected (distance too far).
-          float validRatio = countNonZero(_maskImage(_output->GetRegion(j, i))) / (float)(*_input->GetDepthImage())(_output->GetRegion(j, i)).total();
-          if (validRatio < _params->GetValidRatioThreshold())
+          if (countNonZero(_maskImage(_output->GetRegion(j, i))) / (float)(*_input->GetDepthImage())(_output->GetRegion(j, i)).total() < _params->GetValidRatioThreshold())
             _output->SetDepth(j, i, (int)_params->GetMaximumDistance());
-
-         // normalize(hist, hist, 0, hist.rows, NORM_MINMAX, -1, Mat());
-
-          total = 0;
-
-          for (int k = 0; k < _params->GetHistogramBins(); ++k)
+          else
           {
-            total += hist.at<float>(k);
-
-            if (total > (*_input->GetDepthImage())(_output->GetRegion(j, i)).total() * _params->GetPercentileToIgnore())
+            total = 0;
+            for (int k = 0; k < _params->GetHistogramBins(); ++k)
             {
-              _output->SetDepth(j, i, (int)(_params->GetMinimumDistance() + k * (_params->GetMaximumDistance() - _params->GetMinimumDistance()) / (float)_params->GetHistogramBins()));
-              break;
+              total += hist.at<float>(k);
+
+              if (total > (*_input->GetDepthImage())(_output->GetRegion(j, i)).total() * _params->GetPercentileToIgnore())
+              {
+                _output->SetDepth(j, i, (int)(_params->GetMinimumDistance() + k * (_params->GetMaximumDistance() - _params->GetMinimumDistance()) / (float)_params->GetHistogramBins()));
+                break;
+              }
             }
           }
         }

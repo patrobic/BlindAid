@@ -97,7 +97,7 @@ namespace Vision
         _version = Version::FixedRegions;
 
         _consecutiveCount = 3;
-        _frameConsecutiveCount = 2;
+        _frameConsecutiveCount = 3;
 
         _horizontalRegions = HORZ_REGIONS;
         _verticalRegions = VERT_REGIONS;
