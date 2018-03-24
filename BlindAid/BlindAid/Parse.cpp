@@ -82,6 +82,15 @@ void Parse::Configure()
 
   if (CheckFlag("-region", 2))
     _modes.SetRegion(_prms);
+
+  if (CheckFlag("-ignore", 1))
+    _modes.SetPercentileToIgnore(_prms);
+
+  if (CheckFlag("-valid", 1))
+    _modes.SetValidRatioThreshold(_prms);
+
+  if (CheckFlag("-delta", 1))
+    _modes.DeltaToIgnore(_prms);
 }
 
 bool Parse::CheckFlag(const std::string& option, int numParams)

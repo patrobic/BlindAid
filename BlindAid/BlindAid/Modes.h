@@ -26,6 +26,9 @@ public:
   void SetDepthFrameSmoothing(std::vector<std::string> params);
   void SetConfidence(std::vector<std::string> params);
   void SetRegion(std::vector<std::string> params);
+  void SetPercentileToIgnore(std::vector<std::string> params);
+  void SetValidRatioThreshold(std::vector<std::string> params);
+  void DeltaToIgnore(std::vector<std::string> params);
 
   static bool FlagToInt(std::vector<std::string> param, int index, int &number);
   static bool FlagToString(std::vector<std::string> param, int index, std::string &path);

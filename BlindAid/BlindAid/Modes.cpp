@@ -253,6 +253,44 @@ void Modes::SetRegion(vector<string> params)
     LOG(Warning, "Invalid Traffic Light Region Dimensions (usage: -region {height, width})");
 }
 
+void Modes::SetPercentileToIgnore(vector<string> params)
+{
+  int ignore = 0;
+
+  if (FlagToInt(params, 0, ignore))
+  {
+    _params->GetVisionParams()->GetDepthObstacleParams()->SetPercentileToIgnor(ignore);
+    LOG(Warning, "'-ignore': Setting Percentile to Ignore to " + to_string(ignore));
+  }
+  else
+    LOG(Warning, "Invalid Percentile to Ignore Value (usage: -ignore {ratio})");
+}
+
+void Modes::SetValidRatioThreshold(vector<string> params)
+{
+  int validRatio = 0;
+
+  if (FlagToInt(params, 0, validRatio))
+  {
+    _params->GetVisionParams()->GetDepthObstacleParams()->SetValidRatioThreshold(validRatio);
+    LOG(Warning, "'-valid': Setting Valid Ratio Threshold to " + to_string(validRatio));
+  }
+  else
+    LOG(Warning, "Invalid Valid Ratio Value (usage: -valid {ratio})");
+}
+
+void Modes::DeltaToIgnore(vector<string> params)
+{
+  int deltaToIgnore = 0;
+
+  if (FlagToInt(params, 0, deltaToIgnore))
+  {
+    _params->GetVisionParams()->GetTrafficLightParams()->GetDeepLearningParams()->SetConfidenceThreshold(deltaToIgnore);
+    LOG(Warning, "'-delta': Setting Delta to Ignore to " + to_string(deltaToIgnore));
+  }
+  else
+    LOG(Warning, "Invalid Delta to Ignore Value (usage: -delta {ratio})");
+}
 
 bool Modes::FlagToInt(vector<string> param, int index, int &number)
 {
