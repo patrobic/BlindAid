@@ -71,7 +71,7 @@ namespace Vision
         void Defaults()
         {
           _colorImageSize = cv::Size(224, 224);
-          _confidenceThreshold = 0.7f;
+          _confidenceThreshold = 0.75f;
         }
 
         bool Valid()

@@ -103,7 +103,7 @@ namespace Vision
         _verticalRegions = VERT_REGIONS;
         _regionHeight = 0.4f;
         _regionWidth = 0.2f;
-        _horizontalCoverage = 1.f;
+        _horizontalCoverage = 0.75f;
         _verticalCoverage = 1.f;
         _snapToEdges = true;
         _defaultCenter = cv::Point(320, 240);
@@ -124,7 +124,7 @@ namespace Vision
             _farthestBound[i][j] = bounds[i][j];
 
         _minimumVibration = 25.f;
-        _maximumVibration = 255.f;
+        _maximumVibration = 192.f;
         _validRatioThreshold = 0.1f;
         _nearestObstacleOnly = true;
         _lessThanMaxToIgnore = 0.1f;
