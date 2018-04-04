@@ -24,7 +24,7 @@ void Menu::PrintMenu()
   cout << "Welcome to BlindAid!\n\n";
   cout << "    MAIN MENU: Enter the letter of the mode you want to select.\n\n";
   cout << "\t+====================+\n";
-  for (int i = 15; i <= 17; ++i)
+  for (int i = 21; i <= 23; ++i)
     cout << "\t| " << Messages::messages[i][0] << ": " << setw(16) << left << Messages::messages[i][2] << "| (" << Messages::messages[i][3] << ")\n";
   cout << "\t+====================+\n";
 
@@ -36,7 +36,7 @@ void Menu::PrintMenu()
 
   cout << "\n    SIMULATE MODES: testing operation modes, for testing and debugging.\n\n";
   cout << "\t+====================+\n";
-  for (int i = 18; i <= 19; ++i)
+  for (int i = 24; i <= 25; ++i)
     cout << "\t| " << Messages::messages[i][0] << ": " << setw(16) << left << Messages::messages[i][2] << "| (" << Messages::messages[i][3] << ")\n";
   cout << "\t+====================+\n";
 }

@@ -31,7 +31,7 @@ void Modes::GetHelp()
     cout << left << "    " << setw(10) << Messages::categories[i][0] << "\t[" << setw(50) << (Messages::categories[i][1] + "]") << "\t(" << Messages::categories[i][2] << ")\n";
 
   cout << "\nDETAILS: Description of flags and parameters.\n";
-  for (int i = 0; i < 16; ++i)
+  for (int i = 0; i < 22; ++i)
     cout << left << "    -" << setw(15) << (Messages::messages[i][0] + " " + Messages::messages[i][1]) << "\t" << setw(23) << Messages::messages[i][2] << "\t(" << setw(40) << (Messages::messages[i][3] + ")") << (Messages::messages[i][4].size() > 0 ? "\t[" + Messages::messages[i][4] + "]" : "") << "\n";
 
   cout << "\nSCENARIOS: Useful argument combinations.\n";
@@ -98,7 +98,6 @@ void Modes::EnableRecord(vector<string> params)
   _params->GetRecordParams()->SetToggle(Enabled);
 
   CaptureOnly();
-  EnableDisplay();
   LOG(Warning, "'-r': Enabling Record (save " + (interval > 0 ? "every " + to_string(interval) + "ms" : "on key press") + " to folder " + _params->GetRecordParams()->GetPath() + ")");
 }
 
@@ -227,9 +226,9 @@ void Modes::SetDepthFrameSmoothing(vector<string> params)
 
 void Modes::SetConfidence(vector<string> params)
 {
-  int confidence = 0;
+  float confidence = 0;
 
-  if (FlagToInt(params, 0, confidence))
+  if (FlagToFloat(params, 0, confidence))
   {
     _params->GetVisionParams()->GetTrafficLightParams()->GetDeepLearningParams()->SetConfidenceThreshold(confidence);
     LOG(Warning, "'-conf': Setting Red Light Confidence Threshold to " + to_string(confidence));
@@ -238,28 +237,49 @@ void Modes::SetConfidence(vector<string> params)
     LOG(Warning, "Invalid Red Light Confidence Threshold Value (usage: -conf {count})");
 }
 
-void Modes::SetRegion(vector<string> params)
+void Modes::SetTLRegion(vector<string> params)
 {
-  int height = 0;
-  int width = 0;
+  float height = 0;
+  float width = 0;
 
-  if (FlagToInt(params, 0, height) && FlagToInt(params, 1 , width))
+  if (FlagToFloat(params, 0 , width))
   {
-    _params->GetVisionParams()->GetTrafficLightParams()->SetUpperRegionRatio(height);
     _params->GetVisionParams()->GetTrafficLightParams()->SetCenterRegionRatio(width);
-    LOG(Warning, "'-region': Setting Traffic Light Region Dimensions to " + to_string(height) + ", " + to_string(width));
+ 
+    if(FlagToFloat(params, 1, height))
+      _params->GetVisionParams()->GetTrafficLightParams()->SetUpperRegionRatio(height);
+
+    LOG(Warning, "'-colordim': Setting Traffic Light Region Dimensions to w=" + to_string(width) + (height != 0? ", h=" + to_string(height):""));
   }
   else
-    LOG(Warning, "Invalid Traffic Light Region Dimensions (usage: -region {height, width})");
+    LOG(Warning, "Invalid Traffic Light Region Dimensions (usage: -colordim {width, height})");
+}
+
+void Modes::SetDORegion(vector<string> params)
+{
+  float height = 0;
+  float width = 0;
+
+  if (FlagToFloat(params, 0, width))
+  {
+    _params->GetVisionParams()->GetDepthObstacleParams()->SetHorizontalCoverage(width);
+
+    if (FlagToFloat(params, 1, height))
+      _params->GetVisionParams()->GetDepthObstacleParams()->SetVerticalCoverage(height);
+
+    LOG(Warning, "'-depthdim': Setting Depth Obstacle Region Dimensions to w=" + to_string(width) + (height != 0 ? ", h=" + to_string(height) : ""));
+  }
+  else
+    LOG(Warning, "Invalid Depth Obstacle Region Dimensions (usage: -depthdim {width, height})");
 }
 
 void Modes::SetPercentileToIgnore(vector<string> params)
 {
-  int ignore = 0;
+  float ignore = 0;
 
-  if (FlagToInt(params, 0, ignore))
+  if (FlagToFloat(params, 0, ignore))
   {
-    _params->GetVisionParams()->GetDepthObstacleParams()->SetPercentileToIgnor(ignore);
+    _params->GetVisionParams()->GetDepthObstacleParams()->SetPercentileToIgnore(ignore);
     LOG(Warning, "'-ignore': Setting Percentile to Ignore to " + to_string(ignore));
   }
   else
@@ -268,28 +288,15 @@ void Modes::SetPercentileToIgnore(vector<string> params)
 
 void Modes::SetValidRatioThreshold(vector<string> params)
 {
-  int validRatio = 0;
+  float validRatio = 0;
 
-  if (FlagToInt(params, 0, validRatio))
+  if (FlagToFloat(params, 0, validRatio))
   {
     _params->GetVisionParams()->GetDepthObstacleParams()->SetValidRatioThreshold(validRatio);
     LOG(Warning, "'-valid': Setting Valid Ratio Threshold to " + to_string(validRatio));
   }
   else
     LOG(Warning, "Invalid Valid Ratio Value (usage: -valid {ratio})");
-}
-
-void Modes::DeltaToIgnore(vector<string> params)
-{
-  int deltaToIgnore = 0;
-
-  if (FlagToInt(params, 0, deltaToIgnore))
-  {
-    _params->GetVisionParams()->GetTrafficLightParams()->GetDeepLearningParams()->SetConfidenceThreshold(deltaToIgnore);
-    LOG(Warning, "'-delta': Setting Delta to Ignore to " + to_string(deltaToIgnore));
-  }
-  else
-    LOG(Warning, "Invalid Delta to Ignore Value (usage: -delta {ratio})");
 }
 
 bool Modes::FlagToInt(vector<string> param, int index, int &number)
@@ -304,6 +311,20 @@ bool Modes::FlagToInt(vector<string> param, int index, int &number)
 
   return true;
 }
+
+bool Modes::FlagToFloat(vector<string> param, int index, float &number)
+{
+  if (index >= param.size() || param.at(index).length() == 0)
+    return false;
+
+  if (param.at(index).find_first_not_of("0123456789.") != string::npos)
+    return false;
+
+  number = atof(param.at(index).c_str());
+
+  return true;
+}
+
 
 bool Modes::FlagToString(vector<string> param, int index, string &str)
 {

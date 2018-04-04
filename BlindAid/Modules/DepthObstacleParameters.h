@@ -179,7 +179,7 @@ namespace Vision
       void SetMaximumDistance(float maxDistance) { _maximumDistance = maxDistance; }
 
       float GetPercentileToIgnore() { return _percentileToIgnore; }
-      void SetPercentileToIgnor(float percentileToIgnore) { _percentileToIgnore = percentileToIgnore; }
+      void SetPercentileToIgnore(float percentileToIgnore) { _percentileToIgnore = percentileToIgnore; }
 
       Polarity GetIntensityPolarity() { return _intensityPolarity; }
       void SetIntensityPolarity(Polarity intensityPolarity) { _intensityPolarity = intensityPolarity; }
