@@ -93,7 +93,7 @@ namespace Control
       _simulateParams.Defaults();
 
       _handPolarity = Right;
-      _beeperIntensity = 150;
+      _beeperIntensity = 100;
     }
 
     bool Valid()

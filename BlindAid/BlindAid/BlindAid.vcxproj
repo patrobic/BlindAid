@@ -34,6 +34,7 @@
     <ClInclude Include="Class.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Load.h" />
+    <ClInclude Include="resource1.h" />
     <ClInclude Include="Save.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Messages.h" />
@@ -48,6 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="BlindAid.rc" />
+    <ResourceCompile Include="BlindAid1.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DD1BF88B-B634-46C9-A80F-FFA17C02A6F0}</ProjectGuid>
