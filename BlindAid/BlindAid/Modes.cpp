@@ -97,7 +97,6 @@ void Modes::EnableRecord(vector<string> params)
 
   _params->GetRecordParams()->SetToggle(Enabled);
 
-  CaptureOnly();
   LOG(Warning, "'-r': Enabling Record (save " + (interval > 0 ? "every " + to_string(interval) + "ms" : "on key press") + " to folder " + _params->GetRecordParams()->GetPath() + ")");
 }
 
