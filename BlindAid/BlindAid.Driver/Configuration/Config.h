@@ -12,7 +12,7 @@
 class Configuration : public Class
 {
 public:
-  Configuration(Core::Parameters *params, Logger *logger);
+  Configuration(Core::CoreParameters *params, Tools::Logger *logger);
   void Configure();
 
 private:

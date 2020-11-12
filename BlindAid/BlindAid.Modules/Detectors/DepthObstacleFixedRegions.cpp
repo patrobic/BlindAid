@@ -12,7 +12,7 @@ namespace Vision
   {
     namespace FixedRegions
     {
-      FixedRegions::FixedRegions(IParameters *params, IData *input, IData *output, Logger *logger) : Base(params, input, output, logger)
+      FixedRegions::FixedRegions(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : Base(params, input, output, logger)
       {
 
       }
@@ -32,7 +32,7 @@ namespace Vision
         FindMaxInRegions();
         MapVibrationValues();
   
-        LOG(Info, "Depth obstacles detected", "FIXEDREG", _start);
+        LOG(Tools::Info, "Depth obstacles detected", "FIXEDREG", _start);
       }
     }
   }

@@ -24,7 +24,7 @@ public:
   void Defaults()
   {
     _exePath = "C:\\BlindAid";
-    _logLevel = LogLevel::Warning;
+    _logLevel = Tools::LogLevel::Warning;
     _loadFromDisk = false;
     _menuEnabled = true;
   }
@@ -32,8 +32,8 @@ public:
   std::string GetExePath() { return _exePath; }
   void SetExePath(std::string executablePath) { _exePath = executablePath; }
 
-  LogLevel *GetLogLevel() { return &_logLevel; }
-  void SetLogLevel(LogLevel logLevel) { _logLevel = logLevel; }
+  Tools::LogLevel *GetLogLevel() { return &_logLevel; }
+  void SetLogLevel(Tools::LogLevel logLevel) { _logLevel = logLevel; }
 
   bool GetMenuEnabled() { return _menuEnabled; }
   void SetMenuEnabled(bool menuEnabled) { _menuEnabled = menuEnabled; }
@@ -53,7 +53,7 @@ private:
   std::string _exePath;
 
   // verbosity of logging system.
-  LogLevel _logLevel;
+  Tools::LogLevel _logLevel;
 
   // activate the user interactive menu.
   bool _menuEnabled;

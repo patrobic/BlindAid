@@ -16,7 +16,7 @@ using namespace cv;
 
 namespace Record
 {
-  Record::Record(IParameters *params, IData *input, IData *output, Logger *logger) : IModule(params, input, output, logger)
+  Record::Record(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : IModule(params, input, output, logger)
   {
 
   }
@@ -51,7 +51,7 @@ namespace Record
       CreateFolder();
       SaveToDisk();
 
-      LOG(Warning, "Images recorded to disk (" + _params->GetPath() + "\\" + _folderName + ")", _start);
+      LOG(Tools::Warning, "Images recorded to disk (" + _params->GetPath() + "\\" + _folderName + ")", _start);
     }
   }
 

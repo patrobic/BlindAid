@@ -1,6 +1,6 @@
 #include "Save.h"
 
-Save::Save(Core::Parameters *params, Logger *logger) : Class(params, logger)
+Save::Save(Core::CoreParameters *params, Tools::Logger *logger) : Class(params, logger)
 {
 
 }
@@ -14,7 +14,7 @@ void Save::Configure()
   _config.writeFile((_params->GetGlobalParameters()->GetExePath() + _params->GetGlobalParameters()->_path).c_str());
 }
 
-void Save::Core(Setting &setting, Core::Parameters *parameters)
+void Save::Core(Setting &setting, Core::CoreParameters *parameters)
 {
   Capture(setting.add("capture", Setting::Type::TypeGroup), _params->GetCaptureParams());
   Record(setting.add("record", Setting::Type::TypeGroup), _params->GetRecordParams());
@@ -23,7 +23,7 @@ void Save::Core(Setting &setting, Core::Parameters *parameters)
   Display(setting.add("display", Setting::Type::TypeGroup), _params->GetDisplayParams());
 }
 
-void Save::Capture(Setting &setting, Capture::Parameters *parameters)
+void Save::Capture(Setting &setting, Capture::CaptureParameters *parameters)
 {
   BaseParams(setting, parameters);
 
@@ -31,23 +31,23 @@ void Save::Capture(Setting &setting, Capture::Parameters *parameters)
   CaptureSimulate(setting.add("simulate", Setting::Type::TypeGroup), parameters->GetSimulateParams());
 }
 
-void Save::CaptureRealtime(Setting &setting, Capture::Realtime::Parameters *parameters)
+void Save::CaptureRealtime(Setting &setting, Capture::Realtime::CaptureRealtimeParameters *parameters)
 {
 
 }
 
-void Save::CaptureSimulate(Setting &setting, Capture::Simulate::Parameters *parameters)
+void Save::CaptureSimulate(Setting &setting, Capture::Simulate::CaptureSimulateParameters *parameters)
 {
 
 }
 
-void Save::Record(Setting &setting, Record::Parameters *parameters)
+void Save::Record(Setting &setting, Record::RecordParameters *parameters)
 {
   BaseParams(setting, parameters);
 
 }
 
-void Save::Vision(Setting &setting, Vision::Parameters *parameters)
+void Save::Vision(Setting &setting, Vision::VisionParameters *parameters)
 {
   BaseParams(setting, parameters);
 
@@ -55,7 +55,7 @@ void Save::Vision(Setting &setting, Vision::Parameters *parameters)
   SaveTrafficLight(setting.add("trafficlight", Setting::Type::TypeGroup), parameters->GetTrafficLightParams());
 }
 
-void Save::Control(Setting &setting, Control::Parameters *parameters)
+void Save::Control(Setting &setting, Control::ControlParameters *parameters)
 {
   BaseParams(setting, parameters);
 
@@ -63,29 +63,41 @@ void Save::Control(Setting &setting, Control::Parameters *parameters)
   ControlSimulate(setting.add("simulate", Setting::Type::TypeGroup), parameters->GetSimulateParams());
 }
 
-void Save::ControlRealtime(Setting &setting, Control::Realtime::Parameters *parameters)
+void Save::ControlRealtime(Setting &setting, Control::Realtime::ControlRealtimeParameters *parameters)
 {
 
 }
 
-void Save::ControlSimulate(Setting &setting, Control::Simulate::Parameters *parameters)
+void Save::ControlSimulate(Setting &setting, Control::Simulate::ControlSimulateParameters *parameters)
 {
 
 }
 
-void Save::Display(Setting &setting, Display::Parameters *parameters)
-{
-  BaseParams(setting, parameters);
-
-}
-
-void Save::SaveDepthObstacle(Setting &setting, Vision::DepthObstacle::Parameters *parameters)
+void Save::Display(Setting &setting, Display::DisplayParameters *parameters)
 {
   BaseParams(setting, parameters);
 
 }
 
-void Save::SaveTrafficLight(Setting &setting, Vision::TrafficLight::Parameters *parameters)
+void Save::SaveDepthObstacle(Setting &setting, Vision::DepthObstacle::DepthObstacleParameters *parameters)
+{
+  BaseParams(setting, parameters);
+
+  DepthObstacleFixedRegions(setting.add("fixedregions", Setting::Type::TypeGroup), parameters->GetFixedRegionsParams());
+  DepthObstacleHandPosition(setting.add("handposition", Setting::Type::TypeGroup), parameters->GetHandPositionParams());
+}
+
+void Save::DepthObstacleFixedRegions(Setting& setting, Vision::DepthObstacle::FixedRegions::FixedRegionsParameters* parameters)
+{
+
+}
+
+void Save::DepthObstacleHandPosition(Setting& setting, Vision::DepthObstacle::HandPosition::HandPositionParameters* parameters)
+{
+
+}
+
+void Save::SaveTrafficLight(Setting &setting, Vision::TrafficLight::TrafficLightParameters *parameters)
 {
   BaseParams(setting, parameters);
 
@@ -93,12 +105,12 @@ void Save::SaveTrafficLight(Setting &setting, Vision::TrafficLight::Parameters *
   TrafficLightDeepLearning(setting.add("deeplearning", Setting::Type::TypeGroup), parameters->GetDeepLearningParams());
 }
 
-void Save::TrafficLightBlobDetector(Setting &setting, Vision::TrafficLight::BlobDetector::Parameters *parameters)
+void Save::TrafficLightBlobDetector(Setting &setting, Vision::TrafficLight::BlobDetector::BlobDetectorParameters *parameters)
 {
 
 }
 
-void Save::TrafficLightDeepLearning(Setting &setting, Vision::TrafficLight::DeepLearning::Parameters *parameters)
+void Save::TrafficLightDeepLearning(Setting &setting, Vision::TrafficLight::DeepLearning::DeepLearningParameters *parameters)
 {
 
 }

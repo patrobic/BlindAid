@@ -13,7 +13,7 @@ namespace Control
 {
   namespace Realtime
   {
-    ControlRealtime::ControlRealtime(IParameters *params, IData *input, IData *output, Logger *logger) : Control(params, input, output, logger)
+    ControlRealtime::ControlRealtime(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : Control(params, input, output, logger)
     {
       ConnectToArduino();
     }
@@ -30,12 +30,12 @@ namespace Control
       CreateMessage();
       SendControl();
 
-      LOG(Info, "Control data sent to glove", _start);
+      LOG(Tools::Info, "Control data sent to glove", _start);
     }
 
     void ControlRealtime::ConnectToArduino()
     {
-      LOG(Warning, "Connecting to controller (port #" + to_string(_params->GetRealtimeParams()->GetSerialPort()) + ")...", "GLOVE");
+      LOG(Tools::Warning, "Connecting to controller (port #" + to_string(_params->GetRealtimeParams()->GetSerialPort()) + ")...", "GLOVE");
 
       Connect();
       int counter = 0;
@@ -46,7 +46,7 @@ namespace Control
           throw exception("Controller reconnection failed, aborting (too many retries).");
       }
 
-      LOG(Warning, "Connected to controller successfully", "GLOVE");
+      LOG(Tools::Warning, "Connected to controller successfully", "GLOVE");
     }
 
     void ControlRealtime::Connect()
@@ -57,7 +57,7 @@ namespace Control
 
     void ControlRealtime::Reconnect()
     {
-      LOG(Warning, "Controller connection failed, attempting to reconnect (port #" + to_string(_params->GetRealtimeParams()->GetSerialPort()) + ")...", "GLOVE");
+      LOG(Tools::Warning, "Controller connection failed, attempting to reconnect (port #" + to_string(_params->GetRealtimeParams()->GetSerialPort()) + ")...", "GLOVE");
 
       Sleep(RECONNECT_DELAY);
       Connect();
@@ -75,7 +75,7 @@ namespace Control
       controlThread.join();
 
       if (bytesSent > 0)
-        LOG(Info, "Sent message '" + string(_message.str().c_str()) + "' (" + to_string(bytesSent * _message.str().length()) + " bytes)", "BT-SEND");
+        LOG(Tools::Info, "Sent message '" + string(_message.str().c_str()) + "' (" + to_string(bytesSent * _message.str().length()) + " bytes)", "BT-SEND");
     }
 
     void ControlRealtime::CreateMessage()
@@ -118,7 +118,7 @@ namespace Control
           throw exception("Controller reconnection failed, aborting (too many retries).");
       } while (!_serial->isConnected());
 
-      LOG(Warning, "Connected to controller successfully", "GLOVE");
+      LOG(Tools::Warning, "Connected to controller successfully", "GLOVE");
     }
   }
 }

@@ -7,7 +7,7 @@ using namespace cv;
 
 namespace Control
 {
-  Control::Control(IParameters *params, IData *input, IData *output, Logger *logger) : IModule(params, input, output, logger)
+  Control::Control(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : IModule(params, input, output, logger)
   {
 
   }
@@ -17,7 +17,7 @@ namespace Control
 
   }
 
-  Control *Control::MakeControl(IParameters *params, IData *input, IData *output, Logger *logger)
+  Control *Control::MakeControl(IParameters *params, IData *input, IData *output, Tools::Logger *logger)
   {
     if (((ControlParameters*)params)->GetMode() == Mode::Realtime)
       return new Realtime::ControlRealtime(params, input, output, logger);

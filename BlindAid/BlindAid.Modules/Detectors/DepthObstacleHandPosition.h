@@ -12,7 +12,7 @@ namespace Vision
       class HandPosition : public Base
       {
       public:
-        HandPosition(IParameters * params, IData * input, IData * output, Logger *logger);
+        HandPosition(IParameters * params, IData * input, IData * output, Tools::Logger *logger);
         ~HandPosition();
 
       private:

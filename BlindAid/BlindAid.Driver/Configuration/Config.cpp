@@ -6,7 +6,7 @@
 
 #pragma comment(lib, "Shlwapi.lib")
 
-Configuration::Configuration(Core::Parameters *params, Logger *logger) : Class(params, logger),
+Configuration::Configuration(Core::CoreParameters *params, Tools::Logger *logger) : Class(params, logger),
 _save(params, logger),
 _load(params, logger),
 _parse(params, logger),

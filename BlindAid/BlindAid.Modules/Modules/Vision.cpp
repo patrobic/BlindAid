@@ -8,7 +8,7 @@ using namespace cv;
 
 namespace Vision
 {
-  Vision::Vision(IParameters *params, IData *input, IData *output, Logger *logger) : IModule(params, input, output, logger)
+  Vision::Vision(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : IModule(params, input, output, logger)
   {
     _depthObstacle = DepthObstacle::Base::MakeDepthObstacle(_params->GetDepthObstacleParams(), _input, _output->GetDepthObstacleResults(), _logger);
     _trafficLight = TrafficLight::Base::MakeTrafficLight(_params->GetTrafficLightParams(), _input, _output->GetTrafficLightResults(), _logger);
@@ -26,7 +26,7 @@ namespace Vision
 
     RunModules();
 
-    LOG(Info, "Image detection processed", _start);
+    LOG(Tools::Info, "Image detection processed", _start);
   }
 
   void Vision::RunModules()

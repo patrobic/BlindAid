@@ -12,7 +12,7 @@ namespace Vision
   {
     namespace HandPosition
     {
-      HandPosition::HandPosition(IParameters *params, IData *input, IData *output, Logger *logger) : Base(params, input, output, logger)
+      HandPosition::HandPosition(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : Base(params, input, output, logger)
       {
 
       }
@@ -32,7 +32,7 @@ namespace Vision
         FindMaxInRegions();
         MapVibrationValues();
       
-        LOG(Info, "Depth obstacles detected", "HANDPOS", _start);
+        LOG(Tools::Info, "Depth obstacles detected", "HANDPOS", _start);
       }
 
       void HandPosition::FindHandPosition()

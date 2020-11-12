@@ -13,7 +13,7 @@ namespace Vision
       class DeepLearning : public Base
       {
       public:
-        DeepLearning(IParameters *params, IData *input, IData *output, Logger *logger);
+        DeepLearning(IParameters *params, IData *input, IData *output, Tools::Logger *logger);
         ~DeepLearning();
 
       private:

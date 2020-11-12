@@ -32,7 +32,7 @@ template<class Params, class Input, class Output>
 class IModule : public IIModule
 {
 public:
-  IModule(IParameters *params, IData *input, IData *output, Logger *logger)
+  IModule(IParameters *params, IData *input, IData *output, Tools::Logger *logger)
   {
     _params = static_cast<Params*>(params);
     _input = static_cast<Input*>(input);
@@ -73,7 +73,7 @@ protected:
   Params *_params;
   Input *_input;
   Output *_output;
-  Logger *_logger;
+  Tools::Logger *_logger;
 
   std::chrono::steady_clock::time_point _start = std::chrono::steady_clock::now();
 };

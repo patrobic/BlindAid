@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Configuration">
+      <UniqueIdentifier>{d9442d77-8d1c-4b44-b332-70f4fec89d4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Menu">
+      <UniqueIdentifier>{996edf25-ac5d-465a-80a3-3874b582c4ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Menu\Header">
+      <UniqueIdentifier>{488877ff-4588-47e8-ade2-12bbd2f1386d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Menu\Source">
+      <UniqueIdentifier>{c18c9cb3-7c7c-4dc1-96e1-1dec9f94411e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Configuration\Source">
+      <UniqueIdentifier>{51ba2cc5-aee7-455e-9e65-e1e0a2046c8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Configuration\Header">
+      <UniqueIdentifier>{13ac770c-484a-4ef2-a5ce-dee678778332}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resources\BlindAid.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\icon.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Configuration\Config.h">
+      <Filter>Configuration\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Configuration\Load.h">
+      <Filter>Configuration\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Configuration\Save.h">
+      <Filter>Configuration\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\Class.h">
+      <Filter>Menu\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\Menu.h">
+      <Filter>Menu\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\Messages.h">
+      <Filter>Menu\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\Modes.h">
+      <Filter>Menu\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\Parse.h">
+      <Filter>Menu\Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Configuration\Config.cpp">
+      <Filter>Configuration\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Configuration\Load.cpp">
+      <Filter>Configuration\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Configuration\Save.cpp">
+      <Filter>Configuration\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu\Menu.cpp">
+      <Filter>Menu\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu\Modes.cpp">
+      <Filter>Menu\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu\Parse.cpp">
+      <Filter>Menu\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+</Project>

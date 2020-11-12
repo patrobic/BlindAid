@@ -8,7 +8,7 @@ namespace Core
   class Core : public IModule<CoreParameters, CoreData, CoreData>
   {
   public:
-    Core(IParameters *params, IData *input, IData *output, Logger *logger);
+    Core(IParameters *params, IData *input, IData *output, Tools::Logger *logger);
     ~Core();
 
   private:

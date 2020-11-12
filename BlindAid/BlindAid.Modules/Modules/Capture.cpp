@@ -4,7 +4,7 @@
 
 namespace Capture
 {
-  Capture::Capture(IParameters *params, IData *input, IData *output, Logger *logger) : IModule(params, input, output, logger)
+  Capture::Capture(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : IModule(params, input, output, logger)
   {
 
   }
@@ -14,7 +14,7 @@ namespace Capture
 
   }
 
-  Capture *Capture::MakeCapture(IParameters *params, IData *input, IData *output, Logger *logger)
+  Capture *Capture::MakeCapture(IParameters *params, IData *input, IData *output, Tools::Logger *logger)
   {
     if (((CaptureParameters*)params)->GetMode() == Mode::Realtime)
       return new Realtime::CaptureRealtime(params, input, output, logger);

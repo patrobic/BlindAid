@@ -12,7 +12,7 @@ namespace Capture
     class CaptureRealtime : public Capture
     {
     public:
-      CaptureRealtime(IParameters *params, IData *input, IData *output, Logger *logger);
+      CaptureRealtime(IParameters *params, IData *input, IData *output, Tools::Logger *logger);
       ~CaptureRealtime();
 
     private:

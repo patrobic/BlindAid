@@ -11,7 +11,7 @@ namespace Vision
       class BlobDetector : public Base
       {
       public:
-        BlobDetector(IParameters *params, IData *input, IData *output, Logger *logger);
+        BlobDetector(IParameters *params, IData *input, IData *output, Tools::Logger *logger);
         ~BlobDetector();
 
       private:

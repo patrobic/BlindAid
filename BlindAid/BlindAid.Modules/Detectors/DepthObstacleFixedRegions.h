@@ -12,7 +12,7 @@ namespace Vision
       class FixedRegions : public Base
       {
       public:
-        FixedRegions(IParameters * params, IData * input, IData * output, Logger *logger);
+        FixedRegions(IParameters * params, IData * input, IData * output, Tools::Logger *logger);
         ~FixedRegions();
 
       private:

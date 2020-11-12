@@ -10,7 +10,7 @@ namespace Capture
     class CaptureSimulate : public Capture
     {
     public:
-      CaptureSimulate(IParameters *params, IData *input, IData *output, Logger *logger);
+      CaptureSimulate(IParameters *params, IData *input, IData *output, Tools::Logger *logger);
       ~CaptureSimulate();
 
     private:

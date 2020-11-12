@@ -9,24 +9,24 @@
 void main(int argc, char *argv[])
 {
   GlobalParameters globalParams(std::vector<std::string>(argv, argv + argc), CONFIG);
-  Logger logger(globalParams.GetLogLevel());
+  Tools::Logger logger(globalParams.GetLogLevel());
 
   while (true)
   {
     try
     {
-      Core::Parameters params(&globalParams);
+      Core::CoreParameters params(&globalParams);
       Configuration config(&params, &logger);
       config.Configure();
 
-      Core::Data results(&params);
+      Core::CoreData results(&params);
       Core::Core core(&params, NULL, &results, &logger);
       core();
     }
     catch (std::exception e)
     {
       system("cls");
-      logger(Warning, e.what(), "MAIN");
+      logger(Tools::Warning, e.what(), "MAIN");
     }
   }
 }

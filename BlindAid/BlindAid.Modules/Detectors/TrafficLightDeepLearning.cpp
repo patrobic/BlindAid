@@ -15,7 +15,7 @@ namespace Vision
   {
     namespace DeepLearning
     {
-      DeepLearning::DeepLearning(IParameters *params, IData *input, IData *output, Logger *logger) : Base(params, input, output, logger)
+      DeepLearning::DeepLearning(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : Base(params, input, output, logger)
       {
         LoadNetwork();
       }
@@ -64,7 +64,7 @@ namespace Vision
         if (_input->GetStop())
           return;
 
-        LOG(Warning, "Traffic lights detected", "DEEPLEAR", _start);
+        LOG(Tools::Warning, "Traffic lights detected", "DEEPLEAR", _start);
       }
 
       void DeepLearning::TProcess()

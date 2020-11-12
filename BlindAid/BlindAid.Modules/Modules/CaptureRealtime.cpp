@@ -12,7 +12,7 @@ namespace Capture
 {
   namespace Realtime
   {
-    CaptureRealtime::CaptureRealtime(IParameters *params, IData *input, IData *output, Logger *logger) : Capture(params, input, output, logger)
+    CaptureRealtime::CaptureRealtime(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : Capture(params, input, output, logger)
     {
       ConnectToCamera();
     }
@@ -31,12 +31,12 @@ namespace Capture
       QueryCamera();
       AcquireFrames();
 
-      LOG(Info, "Images captured from camera", "REALTIME", _start);
+      LOG(Tools::Info, "Images captured from camera", "REALTIME", _start);
     }
 
     void CaptureRealtime::ConnectToCamera()
     {
-      LOG(Warning, "Connecting to acquisition...", "CAMERA");
+      LOG(Tools::Warning, "Connecting to acquisition...", "CAMERA");
 
       Connect();
       Reconnect();
@@ -53,7 +53,7 @@ namespace Capture
       int counter = 0;
       while (_device == NULL || _sample->color == NULL || _sample->depth == NULL)
       {
-        LOG(Warning, "Acquisition connection failed, waiting for camera...", "CAMERA");
+        LOG(Tools::Warning, "Acquisition connection failed, waiting for camera...", "CAMERA");
 
         Sleep(RECONNECT_DELAY);
         InitializeCamera();
@@ -63,7 +63,7 @@ namespace Capture
           throw exception("Acquisition reconnection failed, aborting (too many retries).");
       }
 
-      LOG(Warning, "Connected to camera successfully", "CAMERA");
+      LOG(Tools::Warning, "Connected to camera successfully", "CAMERA");
     }
 
     void CaptureRealtime::InitializeCamera()

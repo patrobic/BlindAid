@@ -8,7 +8,7 @@ using namespace cv;
 
 namespace Display
 {
-  Display::Display(IParameters *params, IData *input, IData *output, Logger *logger) : IModule(params, input, output, logger)
+  Display::Display(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : IModule(params, input, output, logger)
   {
 
   }
@@ -32,7 +32,7 @@ namespace Display
     if (_params->GetMode() == Simulate)
       system("pause");
 
-    LOG(Info, "Results displayed to screen", _start);
+    LOG(Tools::Info, "Results displayed to screen", _start);
   }
 
   void Display::DrawDepthObstacles()

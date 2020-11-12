@@ -1,6 +1,6 @@
 #include "Load.h"
 
-Load::Load(Core::Parameters *params, Logger *logger) : Class(params, logger)
+Load::Load(Core::CoreParameters *params, Tools::Logger *logger) : Class(params, logger)
 {
 
 }
@@ -15,7 +15,7 @@ void Load::Configure()
   Core(root.lookup("core"), _params);
 }
 
-void Load::Core(Setting &setting, Core::Parameters *parameters)
+void Load::Core(Setting &setting, Core::CoreParameters *parameters)
 {
   Capture(setting.lookup("capture"), _params->GetCaptureParams());
   Record(setting.lookup("record"), _params->GetRecordParams());
@@ -24,7 +24,7 @@ void Load::Core(Setting &setting, Core::Parameters *parameters)
   Display(setting.lookup("display"), _params->GetDisplayParams());
 }
 
-void Load::Capture(Setting &setting, Capture::Parameters *parameters)
+void Load::Capture(Setting &setting, Capture::CaptureParameters*parameters)
 {
   BaseParams(setting, parameters);
 
@@ -32,24 +32,24 @@ void Load::Capture(Setting &setting, Capture::Parameters *parameters)
   CaptureSimulate(setting.lookup("simulate"), parameters->GetSimulateParams());
 }
 
-void Load::CaptureRealtime(Setting &setting, Capture::Realtime::Parameters *parameters)
+void Load::CaptureRealtime(Setting &setting, Capture::Realtime::CaptureRealtimeParameters *parameters)
 {
 
 }
 
-void Load::CaptureSimulate(Setting &setting, Capture::Simulate::Parameters *parameters)
+void Load::CaptureSimulate(Setting &setting, Capture::Simulate::CaptureSimulateParameters *parameters)
 {
 
 }
 
-void Load::Record(Setting &setting, Record::Parameters *parameters)
+void Load::Record(Setting &setting, Record::RecordParameters *parameters)
 {
   BaseParams(setting, parameters);
 
 
 }
 
-void Load::Vision(Setting &setting, Vision::Parameters *parameters)
+void Load::Vision(Setting &setting, Vision::VisionParameters *parameters)
 {
   BaseParams(setting, parameters);
 
@@ -57,7 +57,7 @@ void Load::Vision(Setting &setting, Vision::Parameters *parameters)
   LoadTrafficLight(setting.lookup("trafficlight"), parameters->GetTrafficLightParams());
 }
 
-void Load::Control(Setting &setting, Control::Parameters *parameters)
+void Load::Control(Setting &setting, Control::ControlParameters *parameters)
 {
   BaseParams(setting, parameters);
 
@@ -65,29 +65,29 @@ void Load::Control(Setting &setting, Control::Parameters *parameters)
   ControlSimulate(setting.lookup("simulate"), parameters->GetSimulateParams());
 }
 
-void Load::ControlRealtime(Setting &setting, Control::Realtime::Parameters *parameters)
+void Load::ControlRealtime(Setting &setting, Control::Realtime::ControlRealtimeParameters *parameters)
 {
 
 }
 
-void Load::ControlSimulate(Setting &setting, Control::Simulate::Parameters *parameters)
+void Load::ControlSimulate(Setting &setting, Control::Simulate::ControlSimulateParameters *parameters)
 {
 
 }
 
-void Load::Display(Setting &setting, Display::Parameters *parameters)
-{
-  BaseParams(setting, parameters);
-
-}
-
-void Load::LoadDepthObstacle(Setting &setting, Vision::DepthObstacle::Parameters *parameters)
+void Load::Display(Setting &setting, Display::DisplayParameters *parameters)
 {
   BaseParams(setting, parameters);
 
 }
 
-void Load::LoadTrafficLight(Setting &setting, Vision::TrafficLight::Parameters *parameters)
+void Load::LoadDepthObstacle(Setting &setting, Vision::DepthObstacle::DepthObstacleParameters *parameters)
+{
+  BaseParams(setting, parameters);
+
+}
+
+void Load::LoadTrafficLight(Setting &setting, Vision::TrafficLight::TrafficLightParameters *parameters)
 {
   BaseParams(setting, parameters);
 
@@ -95,12 +95,12 @@ void Load::LoadTrafficLight(Setting &setting, Vision::TrafficLight::Parameters *
   TrafficLightDeepLearning(setting.lookup("deeplearning"), parameters->GetDeepLearningParams());
 }
 
-void Load::TrafficLightBlobDetector(Setting &setting, Vision::TrafficLight::BlobDetector::Parameters *parameters)
+void Load::TrafficLightBlobDetector(Setting &setting, Vision::TrafficLight::BlobDetector::BlobDetectorParameters *parameters)
 {
 
 }
 
-void Load::TrafficLightDeepLearning(Setting &setting, Vision::TrafficLight::DeepLearning::Parameters *parameters)
+void Load::TrafficLightDeepLearning(Setting &setting, Vision::TrafficLight::DeepLearning::DeepLearningParameters *parameters)
 {
 
 }

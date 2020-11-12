@@ -10,7 +10,7 @@ namespace Display
   class Display : public IModule<DisplayParameters, Vision::VisionData, Capture::CaptureData>
   {
   public:
-    Display(IParameters *params, IData *input, IData *output, Logger *logger);
+    Display(IParameters *params, IData *input, IData *output, Tools::Logger *logger);
 
   private:
     void Process();

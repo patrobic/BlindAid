@@ -6,10 +6,10 @@ namespace Control
 {
   namespace Realtime
   {
-    class RealtimeControlParameters : public IParameters
+    class ControlRealtimeParameters : public IParameters
     {
     public:
-      RealtimeControlParameters(GlobalParameters *params) : IParameters(params)
+      ControlRealtimeParameters(GlobalParameters *params) : IParameters(params)
       {
         Defaults();
       }
@@ -54,10 +54,10 @@ namespace Control
 
   namespace Simulate
   {
-    class SimulateControlParameters : public IParameters
+    class ControlSimulateParameters : public IParameters
     {
     public:
-      SimulateControlParameters(GlobalParameters *params) : IParameters(params)
+      ControlSimulateParameters(GlobalParameters *params) : IParameters(params)
       {
         Defaults();
       }
@@ -101,8 +101,8 @@ namespace Control
       return true;
     }
 
-    Realtime::RealtimeControlParameters *GetRealtimeParams() { return &_realtimeParams; }
-    Simulate::SimulateControlParameters *GetSimulateParams() { return &_simulateParams; }
+    Realtime::ControlRealtimeParameters *GetRealtimeParams() { return &_realtimeParams; }
+    Simulate::ControlSimulateParameters *GetSimulateParams() { return &_simulateParams; }
 
     HandPolarity GetHandPolarity() { return _handPolarity; }
     void SetHandPolarity(HandPolarity handPolarity) { _handPolarity = handPolarity; }
@@ -112,10 +112,10 @@ namespace Control
 
   private:
     // realtime control parameters.
-    Realtime::RealtimeControlParameters _realtimeParams;
+    Realtime::ControlRealtimeParameters _realtimeParams;
 
     // simulate control parametes.
-    Simulate::SimulateControlParameters _simulateParams;
+    Simulate::ControlSimulateParameters _simulateParams;
 
     // order of the fingers.
     HandPolarity _handPolarity;

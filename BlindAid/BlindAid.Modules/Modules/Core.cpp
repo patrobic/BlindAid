@@ -9,7 +9,7 @@ using namespace std::chrono;
 
 namespace Core
 {
-  Core::Core(IParameters *params, IData *input, IData *output, Logger *logger) : IModule(params, input, output, logger)
+  Core::Core(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : IModule(params, input, output, logger)
   {
     _capture = Capture::Capture::MakeCapture(_params->GetCaptureParams(), NULL, _output->GetCaptureResults(), _logger);
     _vision = new Vision::Vision(_params->GetVisionParams(), _output->GetCaptureResults(), _output->GetVisionResults(), _logger);
@@ -84,9 +84,9 @@ namespace Core
       << setw(6) << setprecision(1) << fixed << _totalTime << "s, rate="
       << setw(5) << setprecision(2) << fixed << _frame / duration_cast<chrono::duration<double>>(steady_clock::now() - _first).count() << "f/s)";
 
-    LOG(Warning, ss.str(), _start);
+    LOG(Tools::Warning, ss.str(), _start);
 
-    if ((int)*_params->GetGlobalParameters()->GetLogLevel() > (int)LogLevel::Warning)
+    if ((int)*_params->GetGlobalParameters()->GetLogLevel() > (int)Tools::LogLevel::Warning)
       cout << endl;
   }
 }

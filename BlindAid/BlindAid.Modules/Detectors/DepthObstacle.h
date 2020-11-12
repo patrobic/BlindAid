@@ -13,9 +13,9 @@ namespace Vision
     class Base : public IDetect<DepthObstacleParameters, Capture::CaptureData, DepthObstacleData>
     {
     public:
-      Base(IParameters *params, IData *input, IData *output, Logger *logger);
+      Base(IParameters *params, IData *input, IData *output, Tools::Logger *logger);
       virtual ~Base();
-      static Base *Base::MakeDepthObstacle(IParameters *params, IData *input, IData *output, Logger *logger);
+      static Base *Base::MakeDepthObstacle(IParameters *params, IData *input, IData *output, Tools::Logger *logger);
 
     protected:
       void FindMaxInRegions();

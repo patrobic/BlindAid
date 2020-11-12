@@ -12,7 +12,7 @@ namespace Control
 {
   namespace Simulate
   {
-    ControlSimulate::ControlSimulate(IParameters *params, IData *input, IData *output, Logger *logger) : Control(params, input, output, logger)
+    ControlSimulate::ControlSimulate(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : Control(params, input, output, logger)
     {
 
     }
@@ -28,7 +28,7 @@ namespace Control
       
       PrintResults();
 
-      LOG(Info, "Control values displayed on screen", "SIMULATE", _start);
+      LOG(Tools::Info, "Control values displayed on screen", "SIMULATE", _start);
     }
 
     void ControlSimulate::PrintResults()
@@ -46,7 +46,7 @@ namespace Control
           ss << _input->GetDepthObstacleResults()->_names[i].substr(0, 2) << "=" << (int)_input->GetDepthObstacleResults()->GetVibration(i) << " ";
         ss << ")";
 
-        LOG(Info, ss.str(), "GLOVE");
+        LOG(Tools::Info, ss.str(), "GLOVE");
     }
 
     void ControlSimulate::PrintTrafficLights()
@@ -70,7 +70,7 @@ namespace Control
         ss << " TrafficLights(" << lights.str() << "Total: " << _input->GetTrafficLightResults()->Get().size() << ")";
       }
 
-      LOG(Info, ss.str(), "AUDIO");
+      LOG(Tools::Info, ss.str(), "AUDIO");
 
       _input->GetTrafficLightResults()->_trafficLightMutex.unlock();
     }

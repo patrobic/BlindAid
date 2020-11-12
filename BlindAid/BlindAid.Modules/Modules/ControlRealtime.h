@@ -10,7 +10,7 @@ namespace Control
     class ControlRealtime : public Control
     {
     public:
-      ControlRealtime(IParameters *params, IData *input, IData *output, Logger *logger);
+      ControlRealtime(IParameters *params, IData *input, IData *output, Tools::Logger *logger);
       ~ControlRealtime();
 
     private:

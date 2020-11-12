@@ -11,7 +11,7 @@ namespace Record
   class Record : public IModule<RecordParameters, Vision::VisionData, Capture::CaptureData>
   {
   public:
-    Record(IParameters *params, IData *input, IData *output, Logger *logger);
+    Record(IParameters *params, IData *input, IData *output, Tools::Logger *logger);
 
     void CreateFolder();
 

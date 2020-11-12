@@ -9,7 +9,7 @@ namespace Vision
   class IDetect : public IModule<Params, Input, Output>
   {
   public:
-    IDetect(IParameters *params, IData *input, IData *output, Logger *logger) : IModule(params, input, output, logger)
+    IDetect(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : IModule(params, input, output, logger)
     {
 
     }

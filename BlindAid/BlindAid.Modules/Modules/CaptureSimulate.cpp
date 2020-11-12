@@ -13,7 +13,7 @@ namespace Capture
 {
   namespace Simulate
   {
-    CaptureSimulate::CaptureSimulate(IParameters *params, IData *input, IData *output, Logger *logger) : Capture(params, input, output, logger)
+    CaptureSimulate::CaptureSimulate(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : Capture(params, input, output, logger)
     {
 
     }
@@ -30,7 +30,7 @@ namespace Capture
       LoadImageFiles();
 
       if (!_output->GetStop())
-        LOG(Info, "Images acquired from disk (" + _colorName + ", " + _depthName + ")", "SIMULATE", _start);
+        LOG(Tools::Info, "Images acquired from disk (" + _colorName + ", " + _depthName + ")", "SIMULATE", _start);
     }
 
     void CaptureSimulate::LoadImageFiles()

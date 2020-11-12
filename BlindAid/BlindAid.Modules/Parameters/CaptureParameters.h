@@ -7,10 +7,10 @@ namespace Capture
 {
   namespace Realtime
   {
-    class RealtimeCaptureParameters : public IParameters
+    class CaptureRealtimeParameters : public IParameters
     {
     public:
-      RealtimeCaptureParameters(GlobalParameters *params) : IParameters(params)
+      CaptureRealtimeParameters(GlobalParameters *params) : IParameters(params)
       {
         Defaults(); 
       }
@@ -43,10 +43,10 @@ namespace Capture
 
   namespace Simulate
   {
-    class SimulateCaptureParameters : public IParameters
+    class CaptureSimulateParameters : public IParameters
     {
     public:
-      SimulateCaptureParameters(GlobalParameters *params) : IParameters(params)
+      CaptureSimulateParameters(GlobalParameters *params) : IParameters(params)
       {
         Defaults();
       }
@@ -96,15 +96,15 @@ namespace Capture
       return true;
     }
 
-    Realtime::RealtimeCaptureParameters *GetRealtimeParams() { return &_realtimeParams; }
+    Realtime::CaptureRealtimeParameters *GetRealtimeParams() { return &_realtimeParams; }
 
-    Simulate::SimulateCaptureParameters *GetSimulateParams() { return &_simulateParams; }
+    Simulate::CaptureSimulateParameters *GetSimulateParams() { return &_simulateParams; }
 
   private:
     // realtime capture parameters.
-    Realtime::RealtimeCaptureParameters _realtimeParams;
+    Realtime::CaptureRealtimeParameters _realtimeParams;
 
     // simulate capture parametes.
-    Simulate::SimulateCaptureParameters _simulateParams;
+    Simulate::CaptureSimulateParameters _simulateParams;
   };
 }

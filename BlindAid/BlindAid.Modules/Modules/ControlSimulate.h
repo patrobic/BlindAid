@@ -11,7 +11,7 @@ namespace Control
     class ControlSimulate : public Control
     {
     public:
-      ControlSimulate(IParameters *params, IData *input, IData *output, Logger *logger);
+      ControlSimulate(IParameters *params, IData *input, IData *output, Tools::Logger *logger);
       ~ControlSimulate();
 
     private:

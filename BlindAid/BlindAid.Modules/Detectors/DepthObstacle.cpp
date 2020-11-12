@@ -9,7 +9,7 @@ namespace Vision
 {
   namespace DepthObstacle
   {
-    Base *Base::MakeDepthObstacle(IParameters *params, IData *input, IData *output, Logger *logger)
+    Base *Base::MakeDepthObstacle(IParameters *params, IData *input, IData *output, Tools::Logger *logger)
     {
       if (((DepthObstacleParameters*)params)->GetVersion() == DepthObstacleParameters::Version::FixedRegions)
         return new FixedRegions::FixedRegions(params, input, output, logger);
@@ -17,7 +17,7 @@ namespace Vision
         return new HandPosition::HandPosition(params, input, output, logger);
     }
 
-    Base::Base(IParameters *params, IData *input, IData *output, Logger *logger) : IDetect(params, input, output, logger)
+    Base::Base(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : IDetect(params, input, output, logger)
     {
       _output->SetHandPosition(_params->GetDefaultCenter());
 
