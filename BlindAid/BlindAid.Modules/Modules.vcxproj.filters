@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Parameters">
+      <UniqueIdentifier>{e9c2f4db-be08-4d0f-95af-778115441091}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{548b12a5-3108-4d72-94e9-17b8e4874500}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules">
+      <UniqueIdentifier>{7bbf3bd4-dc00-415d-8e8b-8c493db44177}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Detectors">
+      <UniqueIdentifier>{faa163a0-cded-41ca-a974-9835cf9260ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Results">
+      <UniqueIdentifier>{653dfcd7-9e65-4681-bfcf-b161889fee6c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Serial.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SerialPort.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\CaptureData.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\ControlData.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\CoreData.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\DepthObstacleData.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\IData.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\TrafficLightData.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\VisionData.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Detectors\DepthObstacle.h">
+      <Filter>Detectors</Filter>
+    </ClInclude>
+    <ClInclude Include="Detectors\DepthObstacleFixedRegions.h">
+      <Filter>Detectors</Filter>
+    </ClInclude>
+    <ClInclude Include="Detectors\DepthObstacleHandPosition.h">
+      <Filter>Detectors</Filter>
+    </ClInclude>
+    <ClInclude Include="Detectors\TrafficLight.h">
+      <Filter>Detectors</Filter>
+    </ClInclude>
+    <ClInclude Include="Detectors\TrafficLightBlobDetector.h">
+      <Filter>Detectors</Filter>
+    </ClInclude>
+    <ClInclude Include="Detectors\TrafficLightDeepLearning.h">
+      <Filter>Detectors</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\BaseCapture.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\BaseControl.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Capture.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\CaptureRealtime.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\CaptureSimulate.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Control.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\ControlRealtime.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\ControlSimulate.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Core.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Display.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\IDetect.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\IModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Logger.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\ModuleCapture.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\ModuleControl.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Record.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\SimulateControl.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Vision.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Parameters\CaptureParameters.h">
+      <Filter>Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="Parameters\ControlParameters.h">
+      <Filter>Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="Parameters\CoreParameters.h">
+      <Filter>Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="Parameters\DepthObstacleParameters.h">
+      <Filter>Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="Parameters\DisplayParams.h">
+      <Filter>Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="Parameters\GlobalParameters.h">
+      <Filter>Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="Parameters\IParameters.h">
+      <Filter>Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="Parameters\RecordParams.h">
+      <Filter>Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="Parameters\TrafficLightParameters.h">
+      <Filter>Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="Parameters\VisionParameters.h">
+      <Filter>Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="Results\DepthObstacleResult.h">
+      <Filter>Results</Filter>
+    </ClInclude>
+    <ClInclude Include="Results\IResult.h">
+      <Filter>Results</Filter>
+    </ClInclude>
+    <ClInclude Include="Results\TrafficLightResult.h">
+      <Filter>Results</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Serial.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SerialPort.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Detectors\DepthObstacle.cpp">
+      <Filter>Detectors</Filter>
+    </ClCompile>
+    <ClCompile Include="Detectors\DepthObstacleFixedRegions.cpp">
+      <Filter>Detectors</Filter>
+    </ClCompile>
+    <ClCompile Include="Detectors\DepthObstacleHandPosition.cpp">
+      <Filter>Detectors</Filter>
+    </ClCompile>
+    <ClCompile Include="Detectors\TrafficLight.cpp">
+      <Filter>Detectors</Filter>
+    </ClCompile>
+    <ClCompile Include="Detectors\TrafficLightBlobDetector.cpp">
+      <Filter>Detectors</Filter>
+    </ClCompile>
+    <ClCompile Include="Detectors\TrafficLightDeepLearning.cpp">
+      <Filter>Detectors</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\BaseCapture.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\BaseControl.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Capture.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\CaptureRealtime.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\CaptureSimulate.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Control.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\ControlRealtime.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\ControlSimulate.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Core.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Display.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Logger.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Record.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Vision.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

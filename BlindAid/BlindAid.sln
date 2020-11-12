@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlindAid", "BlindAid\BlindAid.vcxproj", "{DD1BF88B-B634-46C9-A80F-FFA17C02A6F0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlindAid.Driver", "BlindAid.Driver\BlindAid.vcxproj", "{DD1BF88B-B634-46C9-A80F-FFA17C02A6F0}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4E97E47C-8B4A-4528-A98A-0FE82A8B1675} = {4E97E47C-8B4A-4528-A98A-0FE82A8B1675}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest", "UnitTest\UnitTest.vcxproj", "{47FDFF60-1CE4-4879-A773-21209F8E4302}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlindAid.Test", "BlindAid.Test\UnitTest.vcxproj", "{47FDFF60-1CE4-4879-A773-21209F8E4302}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4E97E47C-8B4A-4528-A98A-0FE82A8B1675} = {4E97E47C-8B4A-4528-A98A-0FE82A8B1675}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Modules", "Modules\Modules.vcxproj", "{4E97E47C-8B4A-4528-A98A-0FE82A8B1675}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlindAid.Modules", "BlindAid.Modules\Modules.vcxproj", "{4E97E47C-8B4A-4528-A98A-0FE82A8B1675}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
