@@ -19,73 +19,74 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Capture.h" />
-    <ClInclude Include="CaptureData.h" />
-    <ClInclude Include="Control.h" />
-    <ClInclude Include="ControlData.h" />
-    <ClInclude Include="ControlParameters.h" />
-    <ClInclude Include="CoreData.h" />
-    <ClInclude Include="CoreParameters.h" />
-    <ClInclude Include="DepthObstacleData.h" />
-    <ClInclude Include="DepthObstacleFixedRegions.h" />
-    <ClInclude Include="DepthObstacleHandPosition.h" />
-    <ClInclude Include="DepthObstacleParameters.h" />
-    <ClInclude Include="DepthObstacleResult.h" />
-    <ClInclude Include="DisplayParams.h" />
-    <ClInclude Include="GlobalParameters.h" />
-    <ClInclude Include="IDetect.h" />
-    <ClInclude Include="IResult.h" />
-    <ClInclude Include="CaptureParameters.h" />
-    <ClInclude Include="Logger.h" />
-    <ClInclude Include="RecordParams.h" />
-    <ClInclude Include="SerialPort.h" />
-    <ClInclude Include="TrafficLight.h" />
-    <ClInclude Include="DepthObstacle.h" />
-    <ClInclude Include="TrafficLightBlobDetector.h" />
-    <ClInclude Include="TrafficLightData.h" />
-    <ClInclude Include="TrafficLightDeepLearning.h" />
-    <ClInclude Include="IModule.h" />
-    <ClInclude Include="IParameters.h" />
-    <ClInclude Include="IData.h" />
-    <ClInclude Include="CaptureRealtime.h" />
-    <ClInclude Include="ControlRealtime.h" />
-    <ClInclude Include="Core.h" />
-    <ClInclude Include="Display.h" />
-    <ClInclude Include="TrafficLightParameters.h" />
-    <ClInclude Include="TrafficLightResult.h" />
-    <ClInclude Include="Vision.h" />
-    <ClInclude Include="Record.h" />
-    <ClInclude Include="Serial.h" />
-    <ClInclude Include="CaptureSimulate.h" />
-    <ClInclude Include="ControlSimulate.h" />
-    <ClInclude Include="VisionData.h" />
-    <ClInclude Include="VisionParameters.h" />
+    <ClInclude Include="Communication/Capture/Capture.h" />
+    <ClInclude Include="Communication/Capture/CaptureData.h" />
+    <ClInclude Include="Communication/Control/Control.h" />
+    <ClInclude Include="Communication/Control/ControlData.h" />
+    <ClInclude Include="Communication/Control/ControlParameters.h" />
+    <ClInclude Include="Core/CoreData.h" />
+    <ClInclude Include="Core/CoreParameters.h" />
+    <ClInclude Include="Processing/DepthObstacle/DepthObstacleData.h" />
+    <ClInclude Include="Processing/DepthObstacle/DepthObstacleFixedRegions.h" />
+    <ClInclude Include="Processing/DepthObstacle/DepthObstacleHandPosition.h" />
+    <ClInclude Include="Processing/DepthObstacle/DepthObstacleParameters.h" />
+    <ClInclude Include="Processing/DepthObstacle/DepthObstacleResult.h" />
+    <ClInclude Include="Utilities/Display/DisplayParams.h" />
+    <ClInclude Include="Core/GlobalParameters.h" />
+    <ClInclude Include="Interfaces/IDetect.h" />
+    <ClInclude Include="Interfaces/IResult.h" />
+    <ClInclude Include="Communication/Capture/CaptureParameters.h" />
+    <ClInclude Include="Utilities/Logger/Logger.h" />
+    <ClInclude Include="Utilities/Record/RecordParams.h" />
+    <ClInclude Include="Communication/Control/Serial/SerialPort.h" />
+    <ClInclude Include="Processing/TrafficLight/TrafficLight.h" />
+    <ClInclude Include="Processing/DepthObstacle/DepthObstacle.h" />
+    <ClInclude Include="Processing/TrafficLight/TrafficLightBlobDetector.h" />
+    <ClInclude Include="Processing/TrafficLight/TrafficLightData.h" />
+    <ClInclude Include="Processing/TrafficLight/TrafficLightDeepLearning.h" />
+    <ClInclude Include="Interfaces/IModule.h" />
+    <ClInclude Include="Interfaces/IParameters.h" />
+    <ClInclude Include="Interfaces/IData.h" />
+    <ClInclude Include="Communication/Capture/CaptureRealtime.h" />
+    <ClInclude Include="Communication/Control/ControlRealtime.h" />
+    <ClInclude Include="Core/Core.h" />
+    <ClInclude Include="Utilities/Display/Display.h" />
+    <ClInclude Include="Processing/TrafficLight/TrafficLightParameters.h" />
+    <ClInclude Include="Processing/TrafficLight/TrafficLightResult.h" />
+    <ClInclude Include="Processing/Vision/Vision.h" />
+    <ClInclude Include="Utilities/Record/Record.h" />
+    <ClInclude Include="Communication/Control/Serial/Serial.h" />
+    <ClInclude Include="Communication/Capture/CaptureSimulate.h" />
+    <ClInclude Include="Communication/Control/ControlSimulate.h" />
+    <ClInclude Include="Processing/Vision/VisionData.h" />
+    <ClInclude Include="Processing/Vision/VisionParameters.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Capture.cpp" />
-    <ClCompile Include="Control.cpp" />
-    <ClCompile Include="DepthObstacleFixedRegions.cpp" />
-    <ClCompile Include="DepthObstacleHandPosition.cpp" />
-    <ClCompile Include="Logger.cpp" />
-    <ClCompile Include="SerialPort.cpp" />
-    <ClCompile Include="TrafficLight.cpp" />
-    <ClCompile Include="DepthObstacle.cpp" />
-    <ClCompile Include="TrafficLightBlobDetector.cpp" />
-    <ClCompile Include="TrafficLightDeepLearning.cpp" />
-    <ClCompile Include="CaptureRealtime.cpp" />
-    <ClCompile Include="ControlRealtime.cpp" />
-    <ClCompile Include="Core.cpp" />
-    <ClCompile Include="Display.cpp" />
-    <ClCompile Include="Vision.cpp" />
-    <ClCompile Include="Record.cpp" />
-    <ClCompile Include="Serial.cpp" />
-    <ClCompile Include="CaptureSimulate.cpp" />
-    <ClCompile Include="ControlSimulate.cpp" />
+    <ClCompile Include="Communication/Capture/Capture.cpp" />
+    <ClCompile Include="Communication/Control/Control.cpp" />
+    <ClCompile Include="Processing/DepthObstacle/DepthObstacleFixedRegions.cpp" />
+    <ClCompile Include="Processing/DepthObstacle/DepthObstacleHandPosition.cpp" />
+    <ClCompile Include="Utilities/Logger/Logger.cpp" />
+    <ClCompile Include="Communication/Control/Serial/SerialPort.cpp" />
+    <ClCompile Include="Processing/TrafficLight/TrafficLight.cpp" />
+    <ClCompile Include="Processing/DepthObstacle/DepthObstacle.cpp" />
+    <ClCompile Include="Processing/TrafficLight/TrafficLightBlobDetector.cpp" />
+    <ClCompile Include="Processing/TrafficLight/TrafficLightDeepLearning.cpp" />
+    <ClCompile Include="Communication/Capture/CaptureRealtime.cpp" />
+    <ClCompile Include="Communication/Control/ControlRealtime.cpp" />
+    <ClCompile Include="Core/Core.cpp" />
+    <ClCompile Include="Utilities/Display/Display.cpp" />
+    <ClCompile Include="Processing/Vision/Vision.cpp" />
+    <ClCompile Include="Utilities/Record/Record.cpp" />
+    <ClCompile Include="Communication/Control/Serial/Serial.cpp" />
+    <ClCompile Include="Communication/Capture/CaptureSimulate.cpp" />
+    <ClCompile Include="Communication/Control/ControlSimulate.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4E97E47C-8B4A-4528-A98A-0FE82A8B1675}</ProjectGuid>
     <RootNamespace>Modules</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <ProjectName>BlindAid.Modules</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

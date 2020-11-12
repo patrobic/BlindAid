@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{3d1eb98a-26df-4ffe-91d7-046ec1e72114}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Processing">
+      <UniqueIdentifier>{18bbf5b9-b47c-4a9c-9164-9afc2603c3f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Communication">
+      <UniqueIdentifier>{93c85791-4d85-4511-88e9-f9742a2eda6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Processing\Vision">
+      <UniqueIdentifier>{1d556976-a05a-4087-a6af-9cc88dcb2695}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Processing\DepthObstacle">
+      <UniqueIdentifier>{7c0c68ed-988a-46f3-9024-f5ee79bb37dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Processing\TrafficLight">
+      <UniqueIdentifier>{9da21069-0d6a-41e1-813e-be9e1ee42b71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Communication\Capture">
+      <UniqueIdentifier>{de207e57-154a-4cbd-8358-508aba8f9b04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Communication\Control">
+      <UniqueIdentifier>{f1e03dd0-b965-4434-967f-a26a579802bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Communication\Control\Serial">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{7c1c44b6-d421-4812-aa05-eacb13f9a685}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Record">
+      <UniqueIdentifier>{c3420f05-647c-4f1a-bc5a-97b22ba71e27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Display">
+      <UniqueIdentifier>{336e6f26-08fc-4e24-b4d7-9dbca7b814a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Logger">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{6dd40888-85a6-4248-9209-1a9f0ad8ae83}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Communication\Control\Serial\Serial.h">
+      <Filter>Communication\Control\Serial</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IData.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IModule.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IParameters.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IResult.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IDetect.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Communication\Control\Serial\SerialPort.h">
+      <Filter>Communication\Control\Serial</Filter>
+    </ClInclude>
+    <ClInclude Include="Communication\Capture\CaptureParameters.h">
+      <Filter>Communication\Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="Communication\Control\ControlParameters.h">
+      <Filter>Communication\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Processing\DepthObstacle\DepthObstacleParameters.h">
+      <Filter>Processing\DepthObstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Processing\Vision\VisionParameters.h">
+      <Filter>Processing\Vision</Filter>
+    </ClInclude>
+    <ClInclude Include="Processing\TrafficLight\TrafficLightParameters.h">
+      <Filter>Processing\TrafficLight</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Display\DisplayParams.h">
+      <Filter>Utilities\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Record\RecordParams.h">
+      <Filter>Utilities\Record</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\CoreParameters.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\GlobalParameters.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Communication\Capture\Capture.h">
+      <Filter>Communication\Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="Communication\Capture\CaptureRealtime.h">
+      <Filter>Communication\Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="Communication\Capture\CaptureSimulate.h">
+      <Filter>Communication\Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="Communication\Control\Control.h">
+      <Filter>Communication\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Communication\Control\ControlRealtime.h">
+      <Filter>Communication\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Communication\Control\ControlSimulate.h">
+      <Filter>Communication\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Core.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Processing\DepthObstacle\DepthObstacle.h">
+      <Filter>Processing\DepthObstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Processing\DepthObstacle\DepthObstacleFixedRegions.h">
+      <Filter>Processing\DepthObstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Processing\DepthObstacle\DepthObstacleHandPosition.h">
+      <Filter>Processing\DepthObstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Display\Display.h">
+      <Filter>Utilities\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Record\Record.h">
+      <Filter>Utilities\Record</Filter>
+    </ClInclude>
+    <ClInclude Include="Processing\TrafficLight\TrafficLight.h">
+      <Filter>Processing\TrafficLight</Filter>
+    </ClInclude>
+    <ClInclude Include="Processing\TrafficLight\TrafficLightBlobDetector.h">
+      <Filter>Processing\TrafficLight</Filter>
+    </ClInclude>
+    <ClInclude Include="Processing\TrafficLight\TrafficLightDeepLearning.h">
+      <Filter>Processing\TrafficLight</Filter>
+    </ClInclude>
+    <ClInclude Include="Processing\Vision\Vision.h">
+      <Filter>Processing\Vision</Filter>
+    </ClInclude>
+    <ClInclude Include="Communication\Capture\CaptureData.h">
+      <Filter>Communication\Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="Communication\Control\ControlData.h">
+      <Filter>Communication\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\CoreData.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Processing\DepthObstacle\DepthObstacleData.h">
+      <Filter>Processing\DepthObstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Processing\DepthObstacle\DepthObstacleResult.h">
+      <Filter>Processing\DepthObstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Processing\TrafficLight\TrafficLightData.h">
+      <Filter>Processing\TrafficLight</Filter>
+    </ClInclude>
+    <ClInclude Include="Processing\TrafficLight\TrafficLightResult.h">
+      <Filter>Processing\TrafficLight</Filter>
+    </ClInclude>
+    <ClInclude Include="Processing\Vision\VisionData.h">
+      <Filter>Processing\Vision</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Logger\Logger.h">
+      <Filter>Utilities\Logger</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Communication\Control\Serial\Serial.cpp">
+      <Filter>Communication\Control\Serial</Filter>
+    </ClCompile>
+    <ClCompile Include="Communication\Control\Serial\SerialPort.cpp">
+      <Filter>Communication\Control\Serial</Filter>
+    </ClCompile>
+    <ClCompile Include="Communication\Capture\Capture.cpp">
+      <Filter>Communication\Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="Communication\Capture\CaptureRealtime.cpp">
+      <Filter>Communication\Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="Communication\Capture\CaptureSimulate.cpp">
+      <Filter>Communication\Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="Communication\Control\Control.cpp">
+      <Filter>Communication\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Communication\Control\ControlRealtime.cpp">
+      <Filter>Communication\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Communication\Control\ControlSimulate.cpp">
+      <Filter>Communication\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Processing\DepthObstacle\DepthObstacle.cpp">
+      <Filter>Processing\DepthObstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Processing\DepthObstacle\DepthObstacleFixedRegions.cpp">
+      <Filter>Processing\DepthObstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Processing\DepthObstacle\DepthObstacleHandPosition.cpp">
+      <Filter>Processing\DepthObstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Processing\TrafficLight\TrafficLight.cpp">
+      <Filter>Processing\TrafficLight</Filter>
+    </ClCompile>
+    <ClCompile Include="Processing\TrafficLight\TrafficLightBlobDetector.cpp">
+      <Filter>Processing\TrafficLight</Filter>
+    </ClCompile>
+    <ClCompile Include="Processing\TrafficLight\TrafficLightDeepLearning.cpp">
+      <Filter>Processing\TrafficLight</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Core.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\Display\Display.cpp">
+      <Filter>Utilities\Display</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\Record\Record.cpp">
+      <Filter>Utilities\Record</Filter>
+    </ClCompile>
+    <ClCompile Include="Processing\Vision\Vision.cpp">
+      <Filter>Processing\Vision</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\Logger\Logger.cpp">
+      <Filter>Utilities\Logger</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
