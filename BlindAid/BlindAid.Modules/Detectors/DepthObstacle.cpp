@@ -11,7 +11,7 @@ namespace Vision
   {
     Base *Base::MakeDepthObstacle(IParameters *params, IData *input, IData *output, Logger *logger)
     {
-      if (((DepthObstacle::Parameters*)params)->GetVersion() == Parameters::Version::FixedRegions)
+      if (((DepthObstacleParameters*)params)->GetVersion() == DepthObstacleParameters::Version::FixedRegions)
         return new FixedRegions::FixedRegions(params, input, output, logger);
       else
         return new HandPosition::HandPosition(params, input, output, logger);

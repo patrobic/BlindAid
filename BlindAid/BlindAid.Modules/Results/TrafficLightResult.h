@@ -8,19 +8,19 @@ namespace Vision
 {
   namespace TrafficLight
   {
-    class Result : public IResult
+    class TrafficLightResult : public IResult
     {
     public:
       enum Color { Red, Green, Yellow, None };
 
-      Result(cv::Point center, float radius, Color color)
+      TrafficLightResult(cv::Point center, float radius, Color color)
       {
         _center = center;
         _radius = radius;
         _confidence[color] = 1;
       }
 
-      Result(float confidence[4])
+      TrafficLightResult(float confidence[4])
       {
         for (int i = 0; i < 4; ++i)
           _confidence[i] = confidence[i];
@@ -81,10 +81,10 @@ namespace Vision
         _count = count;
       }
 
-      void Set(Result result)
+      void Set(TrafficLightResult result)
       {
         for (int i = 0; i < 4; ++i)
-          _confidence[i] = result.GetConfidence((Result::Color)i);
+          _confidence[i] = result.GetConfidence((TrafficLightResult::Color)i);
 
         _count = result.GetCount() + 1;
       }
@@ -102,17 +102,17 @@ namespace Vision
         _confidence[color] = 1.f;
       }
 
-      float CartesianDistance(Result &c2)
+      float CartesianDistance(TrafficLightResult &c2)
       {
         return (float)cv::norm(_center - c2._center);
       }
 
-      float RadiusDifference(Result &c2)
+      float RadiusDifference(TrafficLightResult &c2)
       {
         return abs(_radius - c2._radius);
       }
 
-      bool SameColor(Result &c2)
+      bool SameColor(TrafficLightResult &c2)
       {
         return GetColor() == c2.GetColor();
       }

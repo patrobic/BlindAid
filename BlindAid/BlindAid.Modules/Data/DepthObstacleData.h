@@ -8,13 +8,13 @@ namespace Vision
 {
   namespace DepthObstacle
   {
-    class Data : public IData
+    class DepthObstacleData : public IData
     {
     public:
-      Data(Parameters *params)
+      DepthObstacleData(DepthObstacleParameters *params)
       {
         for (int i = 0; i < 5; ++i)
-          _vibration.push_back(Result(params->GetConsecutiveCount()));
+          _vibration.push_back(DepthObstacleResult(params->GetConsecutiveCount()));
         
         _getNearestObstacleOnly = params->GetNearestObstacleOnly();
         _lessThanMaxToIgnore = params->GetLessThanMaxToIgnore();
@@ -101,7 +101,7 @@ namespace Vision
       cv::Rect _regions[VERT_REGIONS][HORZ_REGIONS];
       int _depth[VERT_REGIONS][HORZ_REGIONS];
       cv::Point _handPosition = cv::Point(0, 0);
-      std::vector<Result> _vibration;
+      std::vector<DepthObstacleResult> _vibration;
 
       bool _getNearestObstacleOnly = true;
       float _lessThanMaxToIgnore = 0;

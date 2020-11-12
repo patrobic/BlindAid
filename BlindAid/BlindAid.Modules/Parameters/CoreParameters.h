@@ -8,10 +8,10 @@
 
 namespace Core
 {
-  class Parameters : public SwitchableParameters
+  class CoreParameters : public SwitchableParameters
   {
   public:
-    Parameters(GlobalParameters *params) : SwitchableParameters(params), _captureParams(params), _recordParams(params), _visionParams(params), _controlParams(params), _displayParams(params)
+    CoreParameters(GlobalParameters *params) : SwitchableParameters(params), _captureParams(params), _recordParams(params), _visionParams(params), _controlParams(params), _displayParams(params)
     {
       Defaults();
     }
@@ -29,11 +29,11 @@ namespace Core
       return true;
     }
 
-    Capture::Parameters *GetCaptureParams() { return &_captureParams; }
-    Record::Parameters *GetRecordParams() { return &_recordParams; }
-    Vision::Parameters *GetVisionParams() { return &_visionParams; }
-    Control::Parameters *GetControlParams() { return &_controlParams; }
-    Display::Parameters *GetDisplayParams() { return &_displayParams; }
+    Capture::CaptureParameters *GetCaptureParams() { return &_captureParams; }
+    Record::RecordParameters *GetRecordParams() { return &_recordParams; }
+    Vision::VisionParameters *GetVisionParams() { return &_visionParams; }
+    Control::ControlParameters *GetControlParams() { return &_controlParams; }
+    Display::DisplayParameters *GetDisplayParams() { return &_displayParams; }
 
     cv::Point GetConsoleWindowPosition() { return _consoleWindowPosition; }
     void SetConsoleWindowPosition(cv::Point point) { _consoleWindowPosition = point; }
@@ -43,11 +43,11 @@ namespace Core
 
 
   private:
-    Capture::Parameters _captureParams;
-    Record::Parameters _recordParams;
-    Vision::Parameters _visionParams;
-    Control::Parameters _controlParams;
-    Display::Parameters _displayParams;
+    Capture::CaptureParameters _captureParams;
+    Record::RecordParameters _recordParams;
+    Vision::VisionParameters _visionParams;
+    Control::ControlParameters _controlParams;
+    Display::DisplayParameters _displayParams;
 
     // position of console window.
     cv::Point _consoleWindowPosition;

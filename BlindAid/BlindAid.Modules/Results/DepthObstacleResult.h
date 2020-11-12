@@ -8,10 +8,10 @@ namespace Vision
 {
   namespace DepthObstacle
   {
-    class Result : public IResult
+    class DepthObstacleResult : public IResult
     {
     public:
-      Result(int size)
+      DepthObstacleResult(int size)
       {
         _vibration.resize(size);
       }

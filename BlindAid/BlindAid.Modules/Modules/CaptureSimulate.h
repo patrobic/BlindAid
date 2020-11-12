@@ -7,11 +7,11 @@ namespace Capture
 {
   namespace Simulate
   {
-    class Simulate : public Base
+    class CaptureSimulate : public Capture
     {
     public:
-      Simulate(IParameters *params, IData *input, IData *output, Logger *logger);
-      ~Simulate();
+      CaptureSimulate(IParameters *params, IData *input, IData *output, Logger *logger);
+      ~CaptureSimulate();
 
     private:
       void Process();

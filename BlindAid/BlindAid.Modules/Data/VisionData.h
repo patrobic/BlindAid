@@ -5,16 +5,16 @@
 
 namespace Vision
 {
-  class Data : public IData
+  class VisionData : public IData
   {
   public:
-    Data(Parameters *params)
+    VisionData(VisionParameters *params)
     {
-      _dodResults = new DepthObstacle::Data(params->GetDepthObstacleParams());
-      _tldResults = new TrafficLight::Data(params->GetTrafficLightParams());
+      _dodResults = new DepthObstacle::DepthObstacleData(params->GetDepthObstacleParams());
+      _tldResults = new TrafficLight::TrafficLightData(params->GetTrafficLightParams());
     }
 
-    ~Data()
+    ~VisionData()
     {
       delete _dodResults;
       delete _tldResults;
@@ -26,15 +26,15 @@ namespace Vision
       return true;
     }
 
-    DepthObstacle::Data *GetDepthObstacleResults() { return _dodResults; }
-    TrafficLight::Data *GetTrafficLightResults() { return _tldResults; }
+    DepthObstacle::DepthObstacleData *GetDepthObstacleResults() { return _dodResults; }
+    TrafficLight::TrafficLightData *GetTrafficLightResults() { return _tldResults; }
 
     cv::Mat *GetDepthOverlayImage() { return &_depthOverlayImage; }
     cv::Mat *GetColorOverlayImage() { return &_colorOverlayImage; }
 
   private:
-    DepthObstacle::Data *_dodResults;
-    TrafficLight::Data *_tldResults;
+    DepthObstacle::DepthObstacleData *_dodResults;
+    TrafficLight::TrafficLightData *_tldResults;
 
     cv::Mat _colorOverlayImage;
     cv::Mat _depthOverlayImage;

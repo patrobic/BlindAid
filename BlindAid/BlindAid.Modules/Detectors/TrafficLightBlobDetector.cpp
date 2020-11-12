@@ -75,7 +75,7 @@ namespace Vision
           for (int j = 0; j < keypoints.size(); j++)
           {
             keypoints[j].pt.x += (int)(_input->GetColorImage()->cols * (1 - _params->GetCenterRegionRatio()) / 2);
-            _output->Set(Result(keypoints[j].pt, keypoints[j].size, (Result::Color)i));
+            _output->Set(TrafficLightResult(keypoints[j].pt, keypoints[j].size, (TrafficLightResult::Color)i));
           }
         }
 

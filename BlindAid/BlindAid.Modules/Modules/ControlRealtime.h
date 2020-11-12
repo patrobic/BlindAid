@@ -7,11 +7,11 @@ namespace Control
 {
   namespace Realtime
   {
-    class Realtime : public Base
+    class ControlRealtime : public Control
     {
     public:
-      Realtime(IParameters *params, IData *input, IData *output, Logger *logger);
-      ~Realtime();
+      ControlRealtime(IParameters *params, IData *input, IData *output, Logger *logger);
+      ~ControlRealtime();
 
     private:
       void Process();

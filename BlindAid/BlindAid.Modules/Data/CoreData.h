@@ -8,19 +8,19 @@
 
 namespace Core
 {
-  class Data : public IData
+  class CoreData : public IData
   {
   public:
-    Data(Parameters *params)
+    CoreData(CoreParameters *params)
     {
-      _captureResults = new Capture::Data();
-      _recordResults = new Record::Data();
-      _visionResults = new Vision::Data(params->GetVisionParams());
-      _controlResults = new Control::Data();
-      _displayResults = new Display::Data();
+      _captureResults = new Capture::CaptureData();
+      _recordResults = new Record::RecordData();
+      _visionResults = new Vision::VisionData(params->GetVisionParams());
+      _controlResults = new Control::ControlData();
+      _displayResults = new Display::DisplayData();
     }
 
-    ~Data()
+    ~CoreData()
     {
       delete _captureResults;
       delete _recordResults;
@@ -39,17 +39,17 @@ namespace Core
       return true;
     }
 
-    Capture::Data *GetCaptureResults() { return _captureResults; }
-    Record::Data *GetRecordResults() { return _recordResults; }
-    Vision::Data *GetVisionResults() { return _visionResults; }
-    Control::Data *GetControlResults() { return _controlResults; }
-    Display::Data *GetDisplayResults() { return _displayResults; }
+    Capture::CaptureData *GetCaptureResults() { return _captureResults; }
+    Record::RecordData *GetRecordResults() { return _recordResults; }
+    Vision::VisionData *GetVisionResults() { return _visionResults; }
+    Control::ControlData *GetControlResults() { return _controlResults; }
+    Display::DisplayData *GetDisplayResults() { return _displayResults; }
 
   private:
-    Capture::Data *_captureResults;
-    Record::Data *_recordResults;
-    Vision::Data *_visionResults;
-    Control::Data *_controlResults;
-    Display::Data *_displayResults;
+    Capture::CaptureData *_captureResults;
+    Record::RecordData *_recordResults;
+    Vision::VisionData *_visionResults;
+    Control::ControlData *_controlResults;
+    Display::DisplayData *_displayResults;
   };
 }

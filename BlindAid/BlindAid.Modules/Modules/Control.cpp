@@ -7,21 +7,21 @@ using namespace cv;
 
 namespace Control
 {
-  Base::Base(IParameters *params, IData *input, IData *output, Logger *logger) : IModule(params, input, output, logger)
+  Control::Control(IParameters *params, IData *input, IData *output, Logger *logger) : IModule(params, input, output, logger)
   {
 
   }
 
-  Base::~Base()
+  Control::~Control()
   {
 
   }
 
-  Base *Base::MakeControl(IParameters *params, IData *input, IData *output, Logger *logger)
+  Control *Control::MakeControl(IParameters *params, IData *input, IData *output, Logger *logger)
   {
-    if (((Control::Parameters*)params)->GetMode() == Mode::Realtime)
-      return new Realtime::Realtime(params, input, output, logger);
+    if (((ControlParameters*)params)->GetMode() == Mode::Realtime)
+      return new Realtime::ControlRealtime(params, input, output, logger);
     else
-      return new Simulate::Simulate(params, input, output, logger);
+      return new Simulate::ControlSimulate(params, input, output, logger);
   }
 }

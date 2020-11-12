@@ -9,10 +9,10 @@ namespace Vision
   {
     namespace BlobDetector
     {
-      class Parameters : public IParameters
+      class BlobDetectorParameters : public IParameters
       {
       public:
-        Parameters(GlobalParameters *params) : IParameters(params)
+        BlobDetectorParameters(GlobalParameters *params) : IParameters(params)
         {
           Defaults();
         }
@@ -60,10 +60,10 @@ namespace Vision
 
     namespace DeepLearning
     {
-      class Parameters : public IParameters
+      class DeepLearningParameters : public IParameters
       {
       public:
-        Parameters(GlobalParameters *params) : IParameters(params)
+        DeepLearningParameters(GlobalParameters *params) : IParameters(params)
         {
           Defaults();
         }
@@ -94,12 +94,12 @@ namespace Vision
       };
     }
 
-    class Parameters : public SwitchableParameters
+    class TrafficLightParameters : public SwitchableParameters
     {
     public:
       enum Version { BlobDetector, DeepLearning };
 
-      Parameters(GlobalParameters *params) : SwitchableParameters(params), _blobDetectorParams(params), _deepLearningParams(params)
+      TrafficLightParameters(GlobalParameters *params) : SwitchableParameters(params), _blobDetectorParams(params), _deepLearningParams(params)
       {
         Defaults();
       }
@@ -122,9 +122,9 @@ namespace Vision
         return true;
       }
 
-      BlobDetector::Parameters *GetBlobDetectorParams() { return &_blobDetectorParams; }
+      BlobDetector::BlobDetectorParameters *GetBlobDetectorParams() { return &_blobDetectorParams; }
 
-      DeepLearning::Parameters *GetDeepLearningParams() { return &_deepLearningParams; }
+      DeepLearning::DeepLearningParameters *GetDeepLearningParams() { return &_deepLearningParams; }
 
       const Version GetVersion() const { return _version; }
       void SetVersion(Version mode) { _version = mode; }
@@ -146,10 +146,10 @@ namespace Vision
 
     private:
       // parameters specific to blob detector mode.
-      BlobDetector::Parameters _blobDetectorParams;
+      BlobDetector::BlobDetectorParameters _blobDetectorParams;
 
       // parameters specific to deep learning mode.
-      DeepLearning::Parameters _deepLearningParams;
+      DeepLearning::DeepLearningParameters _deepLearningParams;
 
       // detection mode to use (CV or AI).
       Version _version;

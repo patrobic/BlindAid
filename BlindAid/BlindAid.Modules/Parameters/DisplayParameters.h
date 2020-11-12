@@ -4,10 +4,10 @@
 
 namespace Display
 {
-  class Parameters : public SwitchableParameters
+  class DisplayParameters : public SwitchableParameters
   {
   public:
-    Parameters(GlobalParameters *params) : SwitchableParameters(params)
+    DisplayParameters(GlobalParameters *params) : SwitchableParameters(params)
     {
       Defaults();
     }

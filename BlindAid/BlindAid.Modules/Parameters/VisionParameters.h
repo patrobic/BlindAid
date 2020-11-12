@@ -7,10 +7,10 @@
 
 namespace Vision
 {
-  class Parameters : public SwitchableParameters
+  class VisionParameters : public SwitchableParameters
   {
   public:
-    Parameters(GlobalParameters *params) : SwitchableParameters(params), _dodParams(params), _tldParams(params)
+    VisionParameters(GlobalParameters *params) : SwitchableParameters(params), _dodParams(params), _tldParams(params)
     {
       Defaults();
     }
@@ -26,14 +26,14 @@ namespace Vision
       return true;
     }
 
-    DepthObstacle::Parameters *GetDepthObstacleParams() { return &_dodParams; }
-    TrafficLight::Parameters *GetTrafficLightParams() { return &_tldParams; }
+    DepthObstacle::DepthObstacleParameters *GetDepthObstacleParams() { return &_dodParams; }
+    TrafficLight::TrafficLightParameters *GetTrafficLightParams() { return &_tldParams; }
 
   private:
     // parameters class for depth obstacle detector.
-    DepthObstacle::Parameters _dodParams;
+    DepthObstacle::DepthObstacleParameters _dodParams;
 
     // parameters class for traffic light detector.
-    TrafficLight::Parameters _tldParams;
+    TrafficLight::TrafficLightParameters _tldParams;
   };
 }

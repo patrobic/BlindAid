@@ -8,7 +8,7 @@ namespace Vision
 {
   namespace TrafficLight
   {
-    class Base : public IDetect<Parameters, Capture::Data, Data>
+    class Base : public IDetect<TrafficLightParameters, Capture::CaptureData, TrafficLightData>
     {
     public:
       Base(IParameters *params, IData *input, IData *output, Logger *logger);

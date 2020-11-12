@@ -1,26 +1,14 @@
 #pragma once
 
-#include "RecordParams.h"
+#include "RecordParameters.h"
 #include "IModule.h"
 #include "Vision.h"
 #include "Capture.h"
+#include "RecordData.h"
 
 namespace Record
 {
-  class Data : public IData
-  {
-  public:
-    void Clear() {}
-    bool Valid()
-    {
-      return true;
-    }
-
-  private:
-
-  };
-
-  class Record : public IModule<Parameters, Vision::Data, Capture::Data>
+  class Record : public IModule<RecordParameters, Vision::VisionData, Capture::CaptureData>
   {
   public:
     Record(IParameters *params, IData *input, IData *output, Logger *logger);

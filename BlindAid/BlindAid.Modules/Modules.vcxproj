@@ -23,17 +23,18 @@
     <ClInclude Include="Data\ControlData.h" />
     <ClInclude Include="Data\CoreData.h" />
     <ClInclude Include="Data\DepthObstacleData.h" />
+    <ClInclude Include="Data\DisplayData.h" />
     <ClInclude Include="Data\IData.h" />
+    <ClInclude Include="Data\RecordData.h" />
     <ClInclude Include="Data\TrafficLightData.h" />
     <ClInclude Include="Data\VisionData.h" />
     <ClInclude Include="Detectors\DepthObstacle.h" />
     <ClInclude Include="Detectors\DepthObstacleFixedRegions.h" />
     <ClInclude Include="Detectors\DepthObstacleHandPosition.h" />
+    <ClInclude Include="Detectors\IDetect.h" />
     <ClInclude Include="Detectors\TrafficLight.h" />
     <ClInclude Include="Detectors\TrafficLightBlobDetector.h" />
     <ClInclude Include="Detectors\TrafficLightDeepLearning.h" />
-    <ClInclude Include="Modules\BaseCapture.h" />
-    <ClInclude Include="Modules\BaseControl.h" />
     <ClInclude Include="Modules\Capture.h" />
     <ClInclude Include="Modules\CaptureRealtime.h" />
     <ClInclude Include="Modules\CaptureSimulate.h" />
@@ -42,29 +43,25 @@
     <ClInclude Include="Modules\ControlSimulate.h" />
     <ClInclude Include="Modules\Core.h" />
     <ClInclude Include="Modules\Display.h" />
-    <ClInclude Include="Modules\IDetect.h" />
     <ClInclude Include="Modules\IModule.h" />
     <ClInclude Include="Modules\Logger.h" />
-    <ClInclude Include="Modules\ModuleCapture.h" />
-    <ClInclude Include="Modules\ModuleControl.h" />
     <ClInclude Include="Modules\Record.h" />
-    <ClInclude Include="Modules\SimulateControl.h" />
     <ClInclude Include="Modules\Vision.h" />
     <ClInclude Include="Parameters\CaptureParameters.h" />
     <ClInclude Include="Parameters\ControlParameters.h" />
     <ClInclude Include="Parameters\CoreParameters.h" />
     <ClInclude Include="Parameters\DepthObstacleParameters.h" />
-    <ClInclude Include="Parameters\DisplayParams.h" />
+    <ClInclude Include="Parameters\DisplayParameters.h" />
     <ClInclude Include="Parameters\GlobalParameters.h" />
     <ClInclude Include="Parameters\IParameters.h" />
-    <ClInclude Include="Parameters\RecordParams.h" />
+    <ClInclude Include="Parameters\RecordParameters.h" />
     <ClInclude Include="Parameters\TrafficLightParameters.h" />
     <ClInclude Include="Parameters\VisionParameters.h" />
     <ClInclude Include="Results\DepthObstacleResult.h" />
     <ClInclude Include="Results\IResult.h" />
     <ClInclude Include="Results\TrafficLightResult.h" />
-    <ClInclude Include="SerialPort.h" />
-    <ClInclude Include="Serial.h" />
+    <ClInclude Include="Utilities\Serial.h" />
+    <ClInclude Include="Utilities\SerialPort.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Detectors\DepthObstacle.cpp" />
@@ -73,8 +70,6 @@
     <ClCompile Include="Detectors\TrafficLight.cpp" />
     <ClCompile Include="Detectors\TrafficLightBlobDetector.cpp" />
     <ClCompile Include="Detectors\TrafficLightDeepLearning.cpp" />
-    <ClCompile Include="Modules\BaseCapture.cpp" />
-    <ClCompile Include="Modules\BaseControl.cpp" />
     <ClCompile Include="Modules\Capture.cpp" />
     <ClCompile Include="Modules\CaptureRealtime.cpp" />
     <ClCompile Include="Modules\CaptureSimulate.cpp" />
@@ -86,13 +81,14 @@
     <ClCompile Include="Modules\Logger.cpp" />
     <ClCompile Include="Modules\Record.cpp" />
     <ClCompile Include="Modules\Vision.cpp" />
-    <ClCompile Include="SerialPort.cpp" />
-    <ClCompile Include="Serial.cpp" />
+    <ClCompile Include="Utilities\Serial.cpp" />
+    <ClCompile Include="Utilities\SerialPort.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4E97E47C-8B4A-4528-A98A-0FE82A8B1675}</ProjectGuid>
     <RootNamespace>Modules</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <ProjectName>BlindAid.Modules</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

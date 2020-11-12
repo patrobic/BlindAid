@@ -8,13 +8,13 @@ namespace Vision
 {
   namespace TrafficLight
   {
-    class Data : public IData
+    class TrafficLightData : public IData
     {
     public:
-      Data(Parameters *params)
+      TrafficLightData(TrafficLightParameters *params)
       {
         float confidence[4] = { 0.f, 0.f, 0.f, 1 };
-        _results.push_back(Result(confidence));
+        _results.push_back(TrafficLightResult(confidence));
 
         _consecutiveCount = params->GetConsecutiveCount();
         _maximumDistance = params->GetMaximumDistance();
@@ -35,22 +35,22 @@ namespace Vision
       std::string _names[4] = { "Red", "Green", "Yellow", "None" };
       cv::Scalar _colors[4] = { cv::Scalar(0, 0, 255), cv::Scalar(0, 255, 0), cv::Scalar(0, 255, 255), cv::Scalar(255, 0, 0) };
 
-      std::vector<Result> *GetAll()
+      std::vector<TrafficLightResult> *GetAll()
       {
         return &_results;
       }
 
-      std::vector<Result> Get()
+      std::vector<TrafficLightResult> Get()
       {
         return FilterByConsecutiveCount();
       }
 
-      float GetConfidence(Result::Color color)
+      float GetConfidence(TrafficLightResult::Color color)
       {
         return _results.at(0).GetConfidence(color);
       }
 
-      Result::Color GetColor()
+      TrafficLightResult::Color GetColor()
       {
         _temp.clear();
         _temp = FilterByConsecutiveCount();
@@ -65,13 +65,13 @@ namespace Vision
             for (int j = 0; j < 4; ++j)
               for (int i = 0; i < _temp.size(); ++i)
                 if (_temp[i].GetColor() == j)
-                  return (Result::Color)j;
+                  return (TrafficLightResult::Color)j;
           }
 
-        return Result::Color::None;
+        return TrafficLightResult::Color::None;
       }
 
-      void Set(Result result)
+      void Set(TrafficLightResult result)
       {
         if (result.GetCenter() == cv::Point(0, 0))
         {
@@ -146,7 +146,7 @@ namespace Vision
       std::mutex _trafficLightMutex;
 
     private:
-      std::vector<Result> FilterByConsecutiveCount()
+      std::vector<TrafficLightResult> FilterByConsecutiveCount()
       {
         _temp.clear();
 
@@ -159,9 +159,9 @@ namespace Vision
         return _temp;
       }
 
-      std::vector<Result> _results;
-      std::vector<Result> _unfiltered;
-      std::vector<Result> _temp;
+      std::vector<TrafficLightResult> _results;
+      std::vector<TrafficLightResult> _unfiltered;
+      std::vector<TrafficLightResult> _temp;
 
       cv::Rect _region;
 

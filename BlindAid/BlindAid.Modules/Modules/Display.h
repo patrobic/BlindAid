@@ -1,25 +1,13 @@
 #pragma once
 
-#include "DisplayParams.h"
+#include "DisplayParameters.h"
 #include "IModule.h"
 #include "Vision.h"
+#include "DisplayData.h"
 
 namespace Display
 {
-  class Data : public IData
-  {
-  public:
-    void Clear() {}
-    bool Valid()
-    {
-      return true;
-    }
-
-  private:
-
-  };
-
-  class Display : public IModule<Parameters, Vision::Data, Capture::Data>
+  class Display : public IModule<DisplayParameters, Vision::VisionData, Capture::CaptureData>
   {
   public:
     Display(IParameters *params, IData *input, IData *output, Logger *logger);

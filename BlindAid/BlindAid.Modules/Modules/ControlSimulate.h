@@ -8,11 +8,11 @@ namespace Control
 {
   namespace Simulate
   {
-    class Simulate : public Base
+    class ControlSimulate : public Control
     {
     public:
-      Simulate(IParameters *params, IData *input, IData *output, Logger *logger);
-      ~Simulate();
+      ControlSimulate(IParameters *params, IData *input, IData *output, Logger *logger);
+      ~ControlSimulate();
 
     private:
       void Process();

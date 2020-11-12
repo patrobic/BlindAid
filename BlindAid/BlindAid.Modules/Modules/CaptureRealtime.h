@@ -9,11 +9,11 @@ namespace Capture
 {
   namespace Realtime
   {
-    class Realtime : public Base
+    class CaptureRealtime : public Capture
     {
     public:
-      Realtime(IParameters *params, IData *input, IData *output, Logger *logger);
-      ~Realtime();
+      CaptureRealtime(IParameters *params, IData *input, IData *output, Logger *logger);
+      ~CaptureRealtime();
 
     private:
       void Process();

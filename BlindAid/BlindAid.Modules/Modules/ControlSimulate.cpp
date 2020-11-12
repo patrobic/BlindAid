@@ -12,17 +12,17 @@ namespace Control
 {
   namespace Simulate
   {
-    Simulate::Simulate(IParameters *params, IData *input, IData *output, Logger *logger) : Base(params, input, output, logger)
+    ControlSimulate::ControlSimulate(IParameters *params, IData *input, IData *output, Logger *logger) : Control(params, input, output, logger)
     {
 
     }
 
-    Simulate::~Simulate()
+    ControlSimulate::~ControlSimulate()
     {
 
     }
 
-    void Simulate::Process()
+    void ControlSimulate::Process()
     {
       _start = steady_clock::now();
       
@@ -31,14 +31,14 @@ namespace Control
       LOG(Info, "Control values displayed on screen", "SIMULATE", _start);
     }
 
-    void Simulate::PrintResults()
+    void ControlSimulate::PrintResults()
     {
       if ((_params->GetGlobalParameters()->GetType() & Color) == Color)
         PrintTrafficLights();
       if ((_params->GetGlobalParameters()->GetType() & Depth) == Depth)
         PrintDepthObstacle();
     }
-    void Simulate::PrintDepthObstacle()
+    void ControlSimulate::PrintDepthObstacle()
     {
         stringstream ss;
         ss << "Vibration values (";
@@ -49,7 +49,7 @@ namespace Control
         LOG(Info, ss.str(), "GLOVE");
     }
 
-    void Simulate::PrintTrafficLights()
+    void ControlSimulate::PrintTrafficLights()
     {
       stringstream lights;
       stringstream ss;
@@ -60,7 +60,7 @@ namespace Control
       if (_input->GetTrafficLightResults()->GetAll()->size() > 0 && _input->GetTrafficLightResults()->GetAll()->at(0).GetCenter() == Point(0, 0))
       {
         for (int i = 0; i < 4; ++i)
-          lights << _input->GetTrafficLightResults()->_names[i].substr(0, 2) << "=" << fixed << setprecision(1) << _input->GetTrafficLightResults()->GetConfidence((Vision::TrafficLight::Result::Color)i) * 100 << "% ";
+          lights << _input->GetTrafficLightResults()->_names[i].substr(0, 2) << "=" << fixed << setprecision(1) << _input->GetTrafficLightResults()->GetConfidence((Vision::TrafficLight::TrafficLightResult::Color)i) * 100 << "% ";
         ss << _input->GetTrafficLightResults()->_names[_input->GetTrafficLightResults()->GetColor()] << " (" << lights.str() << ")";
       }
       else

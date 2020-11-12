@@ -13,17 +13,17 @@ namespace Capture
 {
   namespace Simulate
   {
-    Simulate::Simulate(IParameters *params, IData *input, IData *output, Logger *logger) : Base(params, input, output, logger)
+    CaptureSimulate::CaptureSimulate(IParameters *params, IData *input, IData *output, Logger *logger) : Capture(params, input, output, logger)
     {
 
     }
 
-    Simulate::~Simulate()
+    CaptureSimulate::~CaptureSimulate()
     {
 
     }
 
-    void Simulate::Process()
+    void CaptureSimulate::Process()
     {
       _start = steady_clock::now();
 
@@ -33,7 +33,7 @@ namespace Capture
         LOG(Info, "Images acquired from disk (" + _colorName + ", " + _depthName + ")", "SIMULATE", _start);
     }
 
-    void Simulate::LoadImageFiles()
+    void CaptureSimulate::LoadImageFiles()
     {
       _output->_colorImageMutex.lock();
 
@@ -47,7 +47,7 @@ namespace Capture
       _output->_newColorFrame = true;
     }
 
-    void Simulate::LoadColorStream()
+    void CaptureSimulate::LoadColorStream()
     {
       if (!std::experimental::filesystem::exists(_params->GetSimulateParams()->GetColorSimDataPath() + "\\" + "color_" + to_string(_index) + ".png"))
         _index = 0;
@@ -58,7 +58,7 @@ namespace Capture
           _output->SetStop(true);
     }
 
-    void Simulate::LoadDepthStream()
+    void CaptureSimulate::LoadDepthStream()
     {
       if (!std::experimental::filesystem::exists(_params->GetSimulateParams()->GetColorSimDataPath() + "\\" + "depth_" + to_string(_index) + ".tiff"))
         _index = 0;

@@ -10,7 +10,7 @@ namespace Vision
 {
   namespace DepthObstacle
   {
-    class Base : public IDetect<Parameters, Capture::Data, Data>
+    class Base : public IDetect<DepthObstacleParameters, Capture::CaptureData, DepthObstacleData>
     {
     public:
       Base(IParameters *params, IData *input, IData *output, Logger *logger);

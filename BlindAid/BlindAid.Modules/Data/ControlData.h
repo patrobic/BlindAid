@@ -4,7 +4,7 @@
 
 namespace Control
 {
-  class Data : public IData
+  class ControlData : public IData
   {
   public:
     bool Valid()

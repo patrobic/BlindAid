@@ -74,7 +74,7 @@ namespace Display
 
   void Display::DrawTrafficLightBD()
   {
-    vector<Vision::TrafficLight::Result> result = _input->GetTrafficLightResults()->Get();
+    vector<Vision::TrafficLight::TrafficLightResult> result = _input->GetTrafficLightResults()->Get();
 
     for (int i = 0; i < result.size(); ++i)
     {
@@ -85,15 +85,15 @@ namespace Display
 
   void Display::DrawTrafficLightDL()
   {
-    Vision::TrafficLight::Result first = _input->GetTrafficLightResults()->GetAll()->at(0);
+    Vision::TrafficLight::TrafficLightResult first = _input->GetTrafficLightResults()->GetAll()->at(0);
 
     (*_input->GetColorOverlayImage())(cv::Rect(480, 0, 240, 60)).setTo(Scalar(255, 255, 255));
     putText(*_input->GetColorOverlayImage(), _input->GetTrafficLightResults()->_names[_input->GetTrafficLightResults()->GetColor()], Point(500, 45), FONT_HERSHEY_PLAIN, 3, _input->GetTrafficLightResults()->_colors[_input->GetTrafficLightResults()->GetColor()], 2);
 
     for (int j = 0; j < 4; ++j)
     {
-      (*_input->GetColorOverlayImage())(cv::Rect(j * 120, 0, 120, 60)).setTo(_input->GetTrafficLightResults()->_colors[j] * max(0.25f, first.GetConfidence((Vision::TrafficLight::Result::Color)j)));
-      putText(*_input->GetColorOverlayImage(), to_string(first.GetConfidence((Vision::TrafficLight::Result::Color)j)).substr(0, 4), Point(j * 120 + 10, 45), FONT_HERSHEY_PLAIN, 3, Scalar(255, 255, 255), 2);
+      (*_input->GetColorOverlayImage())(cv::Rect(j * 120, 0, 120, 60)).setTo(_input->GetTrafficLightResults()->_colors[j] * max(0.25f, first.GetConfidence((Vision::TrafficLight::TrafficLightResult::Color)j)));
+      putText(*_input->GetColorOverlayImage(), to_string(first.GetConfidence((Vision::TrafficLight::TrafficLightResult::Color)j)).substr(0, 4), Point(j * 120 + 10, 45), FONT_HERSHEY_PLAIN, 3, Scalar(255, 255, 255), 2);
     }
   }
 

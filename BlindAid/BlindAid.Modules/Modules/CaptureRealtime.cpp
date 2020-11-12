@@ -12,17 +12,17 @@ namespace Capture
 {
   namespace Realtime
   {
-    Realtime::Realtime(IParameters *params, IData *input, IData *output, Logger *logger) : Base(params, input, output, logger)
+    CaptureRealtime::CaptureRealtime(IParameters *params, IData *input, IData *output, Logger *logger) : Capture(params, input, output, logger)
     {
       ConnectToCamera();
     }
 
-    Realtime::~Realtime()
+    CaptureRealtime::~CaptureRealtime()
     {
       
     }
 
-    void Realtime::Process()
+    void CaptureRealtime::Process()
     {
       _start = steady_clock::now();
 
@@ -34,7 +34,7 @@ namespace Capture
       LOG(Info, "Images captured from camera", "REALTIME", _start);
     }
 
-    void Realtime::ConnectToCamera()
+    void CaptureRealtime::ConnectToCamera()
     {
       LOG(Warning, "Connecting to acquisition...", "CAMERA");
 
@@ -42,13 +42,13 @@ namespace Capture
       Reconnect();
     }
 
-    void Realtime::Connect()
+    void CaptureRealtime::Connect()
     {
       InitializeCamera();
       QueryCamera();
     }
 
-    void Realtime::Reconnect()
+    void CaptureRealtime::Reconnect()
     {
       int counter = 0;
       while (_device == NULL || _sample->color == NULL || _sample->depth == NULL)
@@ -66,7 +66,7 @@ namespace Capture
       LOG(Warning, "Connected to camera successfully", "CAMERA");
     }
 
-    void Realtime::InitializeCamera()
+    void CaptureRealtime::InitializeCamera()
     {
       _pp = Intel::RealSense::SenseManager::CreateInstance();
 
@@ -81,7 +81,7 @@ namespace Capture
       *_output->GetDepthImage() = Mat(_params->GetRealtimeParams()->GetDepthResolution(), CV_16U, Mat::AUTO_STEP);
     }
 
-    void Realtime::QueryCamera()
+    void CaptureRealtime::QueryCamera()
     {
       _output->SetStatus(true);
 
@@ -90,7 +90,7 @@ namespace Capture
 
     }
 
-    void Realtime::AcquireFrames()
+    void CaptureRealtime::AcquireFrames()
     {
       _output->_colorImageMutex.lock();
 
@@ -112,7 +112,7 @@ namespace Capture
       _output->_newColorFrame = true;
     }
 
-    void Realtime::GetColorFrame()
+    void CaptureRealtime::GetColorFrame()
     {
       _sample->color->AcquireAccess(Intel::RealSense::ImageAccess::ACCESS_READ, Intel::RealSense::PixelFormat::PIXEL_FORMAT_BGR, &_color);
       _output->GetColorImage()->data = _color.planes[0];
@@ -120,7 +120,7 @@ namespace Capture
       _sample->color->ReleaseAccess(&_color);
     }
 
-    void Realtime::GetDepthFrame()
+    void CaptureRealtime::GetDepthFrame()
     {
       _sample->depth->AcquireAccess(Intel::RealSense::ImageAccess::ACCESS_READ, Intel::RealSense::PixelFormat::PIXEL_FORMAT_DEPTH, &_depth);
       Mat temp = Mat(_params->GetRealtimeParams()->GetDepthResolution(), CV_16U, _depth.planes[0]);

@@ -5,7 +5,7 @@
 
 namespace Core
 {
-  class Core : public IModule<Parameters, Data, Data>
+  class Core : public IModule<CoreParameters, CoreData, CoreData>
   {
   public:
     Core(IParameters *params, IData *input, IData *output, Logger *logger);
@@ -16,10 +16,10 @@ namespace Core
     void RunModules();
     void LogStats();
 
-    Capture::Base *_capture;
+    Capture::Capture *_capture;
     Record::Record *_record;
     Vision::Vision *_vision;
-    Control::Base *_control;
+    Control::Control *_control;
     Display::Display *_display;
 
     int _frame = 0;

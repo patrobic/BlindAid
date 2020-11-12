@@ -9,10 +9,10 @@ namespace Vision
   {
     namespace FixedRegions
     {
-      class Parameters : public IParameters
+      class FixedRegionsParameters : public IParameters
       {
       public:
-        Parameters(GlobalParameters *params) : IParameters(params)
+        FixedRegionsParameters(GlobalParameters *params) : IParameters(params)
         {
           Defaults();
         }
@@ -34,10 +34,10 @@ namespace Vision
 
     namespace HandPosition
     {
-      class Parameters : public IParameters
+      class HandPositionParameters : public IParameters
       {
       public:
-        Parameters(GlobalParameters *params) : IParameters(params)
+        HandPositionParameters(GlobalParameters *params) : IParameters(params)
         {
           Defaults();
         }
@@ -81,13 +81,13 @@ namespace Vision
       };
     }
 
-    class Parameters : public SwitchableParameters
+    class DepthObstacleParameters : public SwitchableParameters
     {
     public:
       enum Version { FixedRegions, HandPosition, Reduced };
       enum Polarity { CloseIsSmall, CloseIsLarge };
 
-      Parameters(GlobalParameters *params) : SwitchableParameters(params), _fixedRegionsParams(params), _handPositionParams(params)
+      DepthObstacleParameters(GlobalParameters *params) : SwitchableParameters(params), _fixedRegionsParams(params), _handPositionParams(params)
       {
         Defaults();
       }
@@ -135,9 +135,9 @@ namespace Vision
         return true;
       }
 
-      FixedRegions::Parameters *GetFixedRegionsParams() { return &_fixedRegionsParams; }
+      FixedRegions::FixedRegionsParameters *GetFixedRegionsParams() { return &_fixedRegionsParams; }
 
-      HandPosition::Parameters *GetHandPositionParams() { return &_handPositionParams; }
+      HandPosition::HandPositionParameters *GetHandPositionParams() { return &_handPositionParams; }
 
       int GetHorizontalRegions() { return _horizontalRegions; }
       void SetHorizontalRegions(int horzRegions) { _horizontalRegions = horzRegions; }
@@ -207,10 +207,10 @@ namespace Vision
 
     private:
       // parameters specific to blob detector mode.
-      FixedRegions::Parameters _fixedRegionsParams;
+      FixedRegions::FixedRegionsParameters _fixedRegionsParams;
 
       // parameters specific to deep learning mode.
-      HandPosition::Parameters _handPositionParams;
+      HandPosition::HandPositionParameters _handPositionParams;
 
       // number of horizontal regions to split the frame in (default is 3: upper, middle and lower).
       int _horizontalRegions;

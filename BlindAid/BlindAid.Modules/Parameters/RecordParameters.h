@@ -4,10 +4,10 @@
 
 namespace Record
 {
-  class Parameters : public SwitchableParameters
+  class RecordParameters : public SwitchableParameters
   {
   public:
-    Parameters(GlobalParameters *params) : SwitchableParameters(params)
+    RecordParameters(GlobalParameters *params) : SwitchableParameters(params)
     {
       Defaults();
     }

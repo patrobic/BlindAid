@@ -6,12 +6,12 @@
 
 namespace Capture
 {
-  class Base : public IModule<Parameters, IData, Data>
+  class Capture : public IModule<CaptureParameters, IData, CaptureData>
   {
   public:
-    Base(IParameters *params, IData *input, IData *output, Logger *logger);
-    virtual ~Base();
-    static Base *MakeCapture(Capture::Parameters *params, IData *input, IData *output, Logger *logger);
+    Capture(IParameters *params, IData *input, IData *output, Logger *logger);
+    virtual ~Capture();
+    static Capture *MakeCapture(IParameters *params, IData *input, IData *output, Logger *logger);
 
   protected:
   };

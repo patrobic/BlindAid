@@ -13,17 +13,17 @@ namespace Control
 {
   namespace Realtime
   {
-    Realtime::Realtime(IParameters *params, IData *input, IData *output, Logger *logger) : Base(params, input, output, logger)
+    ControlRealtime::ControlRealtime(IParameters *params, IData *input, IData *output, Logger *logger) : Control(params, input, output, logger)
     {
       ConnectToArduino();
     }
 
-    Realtime::~Realtime()
+    ControlRealtime::~ControlRealtime()
     {
       delete _serial;
     }
 
-    void Realtime::Process()
+    void ControlRealtime::Process()
     {
       _start = steady_clock::now();
 
@@ -33,7 +33,7 @@ namespace Control
       LOG(Info, "Control data sent to glove", _start);
     }
 
-    void Realtime::ConnectToArduino()
+    void ControlRealtime::ConnectToArduino()
     {
       LOG(Warning, "Connecting to controller (port #" + to_string(_params->GetRealtimeParams()->GetSerialPort()) + ")...", "GLOVE");
 
@@ -49,13 +49,13 @@ namespace Control
       LOG(Warning, "Connected to controller successfully", "GLOVE");
     }
 
-    void Realtime::Connect()
+    void ControlRealtime::Connect()
     {
       delete _serial;
       _serial = new SerialPort(string("\\\\.\\COM" + to_string(_params->GetRealtimeParams()->GetSerialPort())).c_str());
     }
 
-    void Realtime::Reconnect()
+    void ControlRealtime::Reconnect()
     {
       LOG(Warning, "Controller connection failed, attempting to reconnect (port #" + to_string(_params->GetRealtimeParams()->GetSerialPort()) + ")...", "GLOVE");
 
@@ -63,12 +63,12 @@ namespace Control
       Connect();
     }
 
-    void Realtime::SendControl()
+    void ControlRealtime::SendControl()
     {
       int bytesSent = 0;
 
       _sent = false;
-      thread controlThread(&Realtime::TSendControl, this);
+      thread controlThread(&ControlRealtime::TSendControl, this);
       bytesSent = _serial->writeSerialPort(_message.str().c_str(), (int)_message.str().length());
       _sent = true;
 
@@ -78,7 +78,7 @@ namespace Control
         LOG(Info, "Sent message '" + string(_message.str().c_str()) + "' (" + to_string(bytesSent * _message.str().length()) + " bytes)", "BT-SEND");
     }
 
-    void Realtime::CreateMessage()
+    void ControlRealtime::CreateMessage()
     {
       _message.str("");
       _message << _params->GetRealtimeParams()->GetMessageStart();
@@ -89,20 +89,20 @@ namespace Control
       _message << _params->GetRealtimeParams()->GetMessageEnd();
     }
 
-    void Realtime::CreateColorMessage()
+    void ControlRealtime::CreateColorMessage()
     {
       _input->GetTrafficLightResults()->_trafficLightMutex.lock();
-      _message << setw(3) << setfill('0') << ((_input->GetTrafficLightResults()->GetColor() == Vision::TrafficLight::Result::Color::Red) ? _params->GetBeeperIntensity() : 0);
+      _message << setw(3) << setfill('0') << ((_input->GetTrafficLightResults()->GetColor() == Vision::TrafficLight::TrafficLightResult::Color::Red) ? _params->GetBeeperIntensity() : 0);
       _input->GetTrafficLightResults()->_trafficLightMutex.unlock();
     }
 
-    void Realtime::CreateDepthMessage()
+    void ControlRealtime::CreateDepthMessage()
     {
-      for (int i = 0; i < 5; ++i)
-        _message << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetVibration((_params->GetHandPolarity() == Control::Parameters::HandPolarity::Left) ? i : (4 - i));
+     // for (int i = 0; i < 5; ++i)
+        //_message << setw(3) << setfill('0') << (int)_input->GetDepthObstacleResults()->GetVibration((_params->GetHandPolarity() == Control::Parameters::HandPolarity::Left) ? i : (4 - i));
     }
 
-    void Realtime::TSendControl()
+    void ControlRealtime::TSendControl()
     {
       steady_clock::time_point start = steady_clock::now();
 

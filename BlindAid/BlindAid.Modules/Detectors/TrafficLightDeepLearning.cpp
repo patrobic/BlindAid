@@ -110,7 +110,7 @@ namespace Vision
           _confidence[_map[i]] = max(0.f, _result.at<float>(i));
 
         _output->_trafficLightMutex.lock();
-        _output->Set(Result(_confidence));
+        _output->Set(TrafficLightResult(_confidence));
         _output->_trafficLightMutex.unlock();
       }
     }

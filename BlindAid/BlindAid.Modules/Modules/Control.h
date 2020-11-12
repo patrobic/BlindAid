@@ -7,12 +7,12 @@
 
 namespace Control
 {
-  class Base : public IModule<Parameters, Vision::Data, Data>
+  class Control : public IModule<ControlParameters, Vision::VisionData, ControlData>
   {
   public:
-    Base(IParameters *params, IData *input, IData *output, Logger *logger);
-    virtual ~Base();
-    static Base * MakeControl(IParameters * params, IData * input, IData * output, Logger *logger);
+    Control(IParameters *params, IData *input, IData *output, Logger *logger);
+    virtual ~Control();
+    static Control * MakeControl(IParameters * params, IData * input, IData * output, Logger *logger);
 
   protected:
   };

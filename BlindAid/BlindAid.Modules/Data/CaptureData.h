@@ -4,7 +4,7 @@
 
 namespace Capture
 {
-  class Data : public IData
+  class CaptureData : public IData
   {
   public:
     void Clear()

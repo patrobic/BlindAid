@@ -6,10 +6,10 @@ namespace Control
 {
   namespace Realtime
   {
-    class Parameters : public IParameters
+    class RealtimeControlParameters : public IParameters
     {
     public:
-      Parameters(GlobalParameters *params) : IParameters(params)
+      RealtimeControlParameters(GlobalParameters *params) : IParameters(params)
       {
         Defaults();
       }
@@ -54,10 +54,10 @@ namespace Control
 
   namespace Simulate
   {
-    class Parameters : public IParameters
+    class SimulateControlParameters : public IParameters
     {
     public:
-      Parameters(GlobalParameters *params) : IParameters(params)
+      SimulateControlParameters(GlobalParameters *params) : IParameters(params)
       {
         Defaults();
       }
@@ -77,12 +77,12 @@ namespace Control
     };
   }
 
-  class Parameters : public SwitchableParameters
+  class ControlParameters : public SwitchableParameters
   {
   public:
     enum HandPolarity { Left, Right };
 
-    Parameters(GlobalParameters *params) : SwitchableParameters(params), _realtimeParams(params), _simulateParams(params)
+    ControlParameters(GlobalParameters *params) : SwitchableParameters(params), _realtimeParams(params), _simulateParams(params)
     {
       Defaults();
     }
@@ -101,8 +101,8 @@ namespace Control
       return true;
     }
 
-    Realtime::Parameters *GetRealtimeParams() { return &_realtimeParams; }
-    Simulate::Parameters *GetSimulateParams() { return &_simulateParams; }
+    Realtime::RealtimeControlParameters *GetRealtimeParams() { return &_realtimeParams; }
+    Simulate::SimulateControlParameters *GetSimulateParams() { return &_simulateParams; }
 
     HandPolarity GetHandPolarity() { return _handPolarity; }
     void SetHandPolarity(HandPolarity handPolarity) { _handPolarity = handPolarity; }
@@ -112,10 +112,10 @@ namespace Control
 
   private:
     // realtime control parameters.
-    Realtime::Parameters _realtimeParams;
+    Realtime::RealtimeControlParameters _realtimeParams;
 
     // simulate control parametes.
-    Simulate::Parameters _simulateParams;
+    Simulate::SimulateControlParameters _simulateParams;
 
     // order of the fingers.
     HandPolarity _handPolarity;
