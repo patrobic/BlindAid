@@ -22,8 +22,8 @@ jobs:
     - name: Setup VSTest
       uses: darenm/Setup-VSTest@v1.1.1
     - name: Run VSTest
-      working-directory: $\x64\Debug\
-      run: vstest.console.exe /Platform:x64 BlindAid.Test.dll
+     # working-directory: $\x64\Debug\
+      run: vstest.console.exe Blindaid/x64/Debug/BlindAid.Test.dll
 
 #    - name: Build Solution
 #      run: |
