@@ -14,10 +14,10 @@ jobs:
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v1
-    - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.2
+#    - name: Add msbuild to PATH
+#      uses: microsoft/setup-msbuild@v1.0.2
     - name: Build Solution
       run: |
-        echo "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\bin\MSBuild.exe BlindAid/BlindAid.sln"
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe $Env:GITHUB_WORKSPACE/BlindAid/BlindAid.sln"
+       cd “C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\”
+       .\MSBuild.exe $Env:GITHUB_WORKSPACE\BlindAid\BlindAid.sln
     
