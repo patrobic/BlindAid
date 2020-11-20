@@ -148,7 +148,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ProjectDir)..\..\Dependencies\opencv\include;$(ProjectDir)..\..\Dependencies\realsense\include;$(ProjectDir)..\..\Dependencies\python\include;$(ProjectDir)\..\BlindAid.Modules\Parameters;$(ProjectDir)..\BlindAid.Modules\Data;$(ProjectDir)\..\BlindAid.Modules\Results;$(ProjectDir)\..\BlindAid.Modules\Modules;$(ProjectDir)\..\BlindAid.Modules\Detectors;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ProjectDir)..\..\Dependencies\opencv\include;$(ProjectDir)..\..\Dependencies\realsense\include;$(ProjectDir)..\..\Dependencies\python\include;$(ProjectDir)\..\BlindAid.Modules\Parameters;$(ProjectDir)..\BlindAid.Modules\Data;$(ProjectDir)\..\BlindAid.Modules\Results;$(ProjectDir)\..\BlindAid.Modules\Modules;$(ProjectDir)\..\BlindAid.Modules\Detectors;$(ProjectDir)\..\BlindAid.Driver\Menu;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
@@ -161,6 +161,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\BlindAid.Driver\Menu\Modes.cpp" />
     <ClCompile Include="Configuration\TestLoadConfig.cpp" />
     <ClCompile Include="Configuration\TestSaveConfig.cpp" />
     <ClCompile Include="Modules\TestCapture.cpp" />
@@ -171,11 +172,15 @@
     <ClCompile Include="Modules\TestTrafficLight.cpp" />
     <ClCompile Include="Modules\TestVehicle.cpp" />
     <ClCompile Include="Modules\TestVision.cpp" />
+    <ClCompile Include="TestGlobal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BlindAid.Modules\BlindAid.Modules.vcxproj">
       <Project>{4e97e47c-8b4a-4528-a98a-0fe82a8b1675}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\BlindAid.Driver\Menu\Modes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

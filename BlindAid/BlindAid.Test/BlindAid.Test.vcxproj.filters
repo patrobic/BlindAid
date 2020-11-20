@@ -42,5 +42,10 @@
     <ClCompile Include="Modules\TestFace.cpp">
       <Filter>Detectors</Filter>
     </ClCompile>
+    <ClCompile Include="TestGlobal.cpp" />
+    <ClCompile Include="..\BlindAid.Driver\Menu\Modes.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\BlindAid.Driver\Menu\Modes.h" />
   </ItemGroup>
 </Project>

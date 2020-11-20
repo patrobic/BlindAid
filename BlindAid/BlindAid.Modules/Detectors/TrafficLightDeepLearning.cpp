@@ -32,7 +32,7 @@ namespace Vision
 
       void DeepLearning::LoadNetwork()
       {
-        _net = readNetFromTensorflow(_params->GetGlobalParameters()->GetExePath() + "\\model.pb", _params->GetGlobalParameters()->GetExePath() + "\\modeln.pbtxt");
+        _net = readNetFromTensorflow(_params->GetDeepLearningParams()->GetModelPath() + "\\model.pb", _params->GetDeepLearningParams()->GetModelPath() + "\\modeln.pbtxt");
         if (_net.empty())
           throw("Can't load network by using the model file.");
       }

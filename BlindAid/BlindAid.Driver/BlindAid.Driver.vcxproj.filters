@@ -53,10 +53,10 @@
     <ClInclude Include="Menu\Messages.h">
       <Filter>Menu\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Menu\Modes.h">
+    <ClInclude Include="Menu\Parse.h">
       <Filter>Menu\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Menu\Parse.h">
+    <ClInclude Include="Menu\Modes.h">
       <Filter>Menu\Header</Filter>
     </ClInclude>
   </ItemGroup>
@@ -73,12 +73,12 @@
     <ClCompile Include="Menu\Menu.cpp">
       <Filter>Menu\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Menu\Modes.cpp">
-      <Filter>Menu\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Menu\Parse.cpp">
       <Filter>Menu\Source</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Menu\Modes.cpp">
+      <Filter>Menu\Source</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

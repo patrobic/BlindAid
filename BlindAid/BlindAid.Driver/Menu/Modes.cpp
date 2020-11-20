@@ -324,7 +324,6 @@ bool Modes::FlagToFloat(vector<string> param, int index, float &number)
   return true;
 }
 
-
 bool Modes::FlagToString(vector<string> param, int index, string &str)
 {
   if (index >= param.size() || param.at(index).length() == 0)
@@ -343,7 +342,7 @@ bool Modes::FlagToPath(vector<string> param, int index, string &path)
   if (index >= param.size() || param.at(index).length() == 0)
     return false;
 
-  if (!GetFileAttributesA(param.at(index).c_str()) || !FILE_ATTRIBUTE_DIRECTORY || PathIsDirectoryEmpty(param.at(index).c_str()))
+  if (!GetFileAttributesA(param.at(index).c_str()) || !FILE_ATTRIBUTE_DIRECTORY || PathIsDirectoryEmptyA(param.at(index).c_str()))
     return false;
 
   path = param.at(index);

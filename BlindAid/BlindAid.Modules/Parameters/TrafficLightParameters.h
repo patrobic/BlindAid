@@ -72,6 +72,7 @@ namespace Vision
         {
           _colorImageSize = cv::Size(224, 224);
           _confidenceThreshold = 0.75f;
+          _modelPath = "C:\\BlindAid";
         }
 
         bool Valid()
@@ -85,12 +86,18 @@ namespace Vision
         float GetConfidenceThreshold() { return _confidenceThreshold; }
         void SetConfidenceThreshold(float confidenceThreshold) { _confidenceThreshold = confidenceThreshold; }
 
+        std::string GetModelPath() { return _modelPath; }
+        void SetModelPath(std::string modelPath) { _modelPath = modelPath; }
+
       private:
         // size of the image sent to the deep learning model.
         cv::Size _colorImageSize;
 
         // minimum confidence required for a color other than none to be detected.
         float _confidenceThreshold;
+
+        // folder path where deep learning model data is located.
+        std::string _modelPath;
       };
     }
 

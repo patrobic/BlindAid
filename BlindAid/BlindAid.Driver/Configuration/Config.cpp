@@ -78,6 +78,7 @@ void Configuration::SetExePath()
   PathRemoveFileSpec(path);
 
   _params->GetGlobalParameters()->SetExePath(path);
+  _params->GetVisionParams()->GetTrafficLightParams()->GetDeepLearningParams()->SetModelPath(path);
 }
 
 void Configuration::SetWindowPosition()
