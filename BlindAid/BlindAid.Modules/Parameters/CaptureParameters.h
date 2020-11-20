@@ -55,6 +55,8 @@ namespace Capture
       {
         _colorSimDataPath = "";
         _depthSimDataPath = "";
+        _startIndex = 0;
+        _endIndex = INT_MAX;
       }
 
       bool Valid()
@@ -68,12 +70,24 @@ namespace Capture
       std::string GetDepthSimDataPath() { return _depthSimDataPath; }
       void SetDepthSimDataPath(std::string depthSimDataPath) { _depthSimDataPath = depthSimDataPath; }
 
+      int GetStartIndex() { return _startIndex; }
+      void SetStartIndex(int startIndex) { _startIndex = startIndex; }
+
+      int GetEndIndex() { return _endIndex; }
+      void SetEndIndex(int endIndex) { _endIndex = endIndex; }
+
     private:
       // path to color image for simulation.
       std::string _colorSimDataPath;
 
       // path to depth image for simulation.
       std::string _depthSimDataPath;
+
+      // the index of the first image to load in a series.
+      int _startIndex;
+
+      // the index of the last image to load in a series.
+      int _endIndex;
     };
   }
 

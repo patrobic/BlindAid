@@ -8,7 +8,7 @@ namespace Vision
   {
     namespace BlobDetector
     {
-      class BlobDetector : public Base
+      class BlobDetector : public TrafficLight
       {
       public:
         BlobDetector(IParameters *params, IData *input, IData *output, Tools::Logger *logger);

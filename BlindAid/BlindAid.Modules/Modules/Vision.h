@@ -16,7 +16,7 @@ namespace Vision
     void Process();
     void RunModules();
     
-    DepthObstacle::Base *_depthObstacle;
-    TrafficLight::Base *_trafficLight;
+    DepthObstacle::DepthObstacle *_depthObstacle;
+    TrafficLight::TrafficLight *_trafficLight;
   };
 }

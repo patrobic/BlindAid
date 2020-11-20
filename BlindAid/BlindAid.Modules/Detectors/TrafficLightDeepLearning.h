@@ -10,7 +10,7 @@ namespace Vision
   {
     namespace DeepLearning
     {
-      class DeepLearning : public Base
+      class DeepLearning : public TrafficLight
       {
       public:
         DeepLearning(IParameters *params, IData *input, IData *output, Tools::Logger *logger);

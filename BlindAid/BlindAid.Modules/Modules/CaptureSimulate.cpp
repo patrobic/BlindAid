@@ -5,6 +5,7 @@
 
 using namespace std;
 using namespace std::chrono;
+using namespace std::experimental::filesystem;
 using namespace cv;
 
 #define NAME "CAPTURE"
@@ -15,7 +16,7 @@ namespace Capture
   {
     CaptureSimulate::CaptureSimulate(IParameters* params, IData* input, IData* output, Tools::Logger* logger) : Capture(params, input, output, logger)
     {
-
+      _index = _params->GetSimulateParams()->GetStartIndex();
     }
 
     CaptureSimulate::~CaptureSimulate()
@@ -49,23 +50,23 @@ namespace Capture
 
     void CaptureSimulate::LoadColorStream()
     {
-      if (!std::experimental::filesystem::exists(_params->GetSimulateParams()->GetColorSimDataPath() + "\\" + "color_" + to_string(_index) + ".png"))
-        _index = 0;
+      if (!exists(_params->GetSimulateParams()->GetColorSimDataPath() + "\\" + "color_" + to_string(_index) + ".png"))
+        _index = _params->GetSimulateParams()->GetStartIndex();
 
       _colorName = "color_" + to_string(_index) + ".png";
       *_output->GetColorImage() = imread(_params->GetSimulateParams()->GetColorSimDataPath() + "\\" + _colorName);
-      if (_output->GetColorImage()->cols == 0 || _output->GetColorImage()->rows == 0)
+      if (_output->GetColorImage()->cols == 0 || _output->GetColorImage()->rows == 0 || _index >= _params->GetSimulateParams()->GetEndIndex())
         _output->SetStop(true);
     }
 
     void CaptureSimulate::LoadDepthStream()
     {
-      if (!std::experimental::filesystem::exists(_params->GetSimulateParams()->GetColorSimDataPath() + "\\" + "depth_" + to_string(_index) + ".tiff"))
-        _index = 0;
+      if (!exists(_params->GetSimulateParams()->GetColorSimDataPath() + "\\" + "depth_" + to_string(_index) + ".tiff"))
+        _index = _params->GetSimulateParams()->GetStartIndex();
 
       _depthName = "depth_" + to_string(_index) + ".tiff";
       *_output->GetDepthImage() = imread(_params->GetSimulateParams()->GetDepthSimDataPath() + "\\" + _depthName, IMREAD_UNCHANGED);
-      if (_output->GetDepthImage()->cols == 0 || _output->GetDepthImage()->rows == 0)
+      if (_output->GetDepthImage()->cols == 0 || _output->GetDepthImage()->rows == 0 || _index >= _params->GetSimulateParams()->GetEndIndex())
         _output->SetStop(true);
     }
   }

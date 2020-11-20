@@ -9,7 +9,7 @@ namespace Vision
 {
   namespace DepthObstacle
   {
-    Base *Base::MakeDepthObstacle(IParameters *params, IData *input, IData *output, Tools::Logger *logger)
+    DepthObstacle *DepthObstacle::MakeDepthObstacle(IParameters *params, IData *input, IData *output, Tools::Logger *logger)
     {
       if (((DepthObstacleParameters*)params)->GetVersion() == DepthObstacleParameters::Version::FixedRegions)
         return new FixedRegions::FixedRegions(params, input, output, logger);
@@ -17,20 +17,20 @@ namespace Vision
         return new HandPosition::HandPosition(params, input, output, logger);
     }
 
-    Base::Base(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : IDetect(params, input, output, logger)
+    DepthObstacle::DepthObstacle(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : IDetect(params, input, output, logger)
     {
       _output->SetHandPosition(_params->GetDefaultCenter());
 
       for (int i = 0; i < _params->GetFrameConsecutiveCount(); ++i)
-        _lastImages.push_back(Mat(640, 480, CV_16UC1));
+        _lastImages.push_back(Mat(468, 628, CV_16UC1));
     }
 
-    Base::~Base()
+    DepthObstacle::~DepthObstacle()
     {
 
     }
     
-    void Base::FindConsecutiveMax()
+    void DepthObstacle::FindConsecutiveMax()
     {
       _index = ++_index%_params->GetFrameConsecutiveCount();
 
@@ -46,12 +46,12 @@ namespace Vision
       });
     }
     
-    void Base::MaskShadows()
+    void DepthObstacle::MaskShadows()
     {
       inRange(*_input->GetDepthImage(), _params->GetMinimumDistance(), _params->GetMaximumDistance(), _maskImage);
     }
 
-    void Base::SeparateRegions()
+    void DepthObstacle::SeparateRegions()
     {
       Point tl;
       Point br;
@@ -76,7 +76,7 @@ namespace Vision
         }
     }
 
-    void Base::FindMaxInRegions()
+    void DepthObstacle::FindMaxInRegions()
     {
       Mat hist;
       int size[] = { _params->GetHistogramBins() };
@@ -109,7 +109,7 @@ namespace Vision
         }
     }
 
-    void Base::MapVibrationValues()
+    void DepthObstacle::MapVibrationValues()
     {
       float slope = 0.f;
       for (int i = 0; i < VERT_REGIONS; ++i)

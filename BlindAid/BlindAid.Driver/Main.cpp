@@ -9,7 +9,7 @@
 void main(int argc, char *argv[])
 {
   GlobalParameters globalParams(std::vector<std::string>(argv, argv + argc), CONFIG);
-  Tools::Logger logger(globalParams.GetLogLevel());
+  Tools::Logger logger(&std::cout, globalParams.GetLogLevel());
 
   while (true)
   {

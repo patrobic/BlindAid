@@ -51,7 +51,7 @@ namespace Core
         system("cls");
         cv::destroyAllWindows();
 
-        if (_params->GetGlobalParameters()->GetMenuEnabled())
+        if (_params->GetGlobalParameters()->GetMenuEnabled() || _params->GetMode() == Simulate)
           return;
         else
           exit(0);

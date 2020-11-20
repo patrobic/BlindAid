@@ -12,7 +12,7 @@ namespace Vision
   {
     namespace BlobDetector
     {
-      BlobDetector::BlobDetector(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : Base(params, input, output, logger),
+      BlobDetector::BlobDetector(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : TrafficLight(params, input, output, logger),
         _h(_hsvChannels[0]), _s(_hsvChannels[1]), _v(_hsvChannels[2]), _b(_bgrChannels[0]), _g(_bgrChannels[1]), _r(_bgrChannels[2])
       {
 

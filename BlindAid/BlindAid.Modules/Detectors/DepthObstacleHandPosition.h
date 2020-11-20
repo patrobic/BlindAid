@@ -9,7 +9,7 @@ namespace Vision
   {
     namespace HandPosition
     {
-      class HandPosition : public Base
+      class HandPosition : public DepthObstacle
       {
       public:
         HandPosition(IParameters * params, IData * input, IData * output, Tools::Logger *logger);

@@ -3,6 +3,7 @@
 #include <mutex>
 #include <chrono>
 #include <sstream>
+#include <ostream>
 
 namespace Tools
 {
@@ -23,8 +24,9 @@ namespace Tools
 	class Logger
 	{
 	public:
-		Logger(LogLevel* maxLevel)
+		Logger(std::ostream* stream, LogLevel* maxLevel)
 		{
+			_stream = stream;
 			_maxLevel = maxLevel;
 		}
 
@@ -33,6 +35,8 @@ namespace Tools
 
 	private:
 		void Log(LogLevel level, std::string message, std::string name, std::chrono::steady_clock::time_point start, std::string subName, bool time);
+
+		std::ostream* _stream;
 
 		LogLevel* _maxLevel;
 

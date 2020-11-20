@@ -12,7 +12,7 @@ namespace Vision
   {
     namespace FixedRegions
     {
-      FixedRegions::FixedRegions(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : Base(params, input, output, logger)
+      FixedRegions::FixedRegions(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : DepthObstacle(params, input, output, logger)
       {
 
       }

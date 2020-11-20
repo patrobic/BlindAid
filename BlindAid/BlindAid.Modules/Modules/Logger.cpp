@@ -42,7 +42,7 @@ namespace Tools
             ss << "\n";
 
             _printMutex.lock();
-            cout << ss.str();
+            (*_stream) << ss.str();
             _printMutex.unlock();
         }
     }

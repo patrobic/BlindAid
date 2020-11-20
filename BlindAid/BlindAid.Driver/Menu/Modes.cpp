@@ -74,6 +74,7 @@ void Modes::SimulateMode(vector<string> params)
 
   if (FlagToPath(params, 0, path))
   {
+    _params->SetMode(Simulate);
     _params->GetControlParams()->SetMode(Simulate);
     _params->GetCaptureParams()->SetMode(Simulate);
     _params->GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(path);

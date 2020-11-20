@@ -12,7 +12,7 @@ namespace Vision
   {
     namespace HandPosition
     {
-      HandPosition::HandPosition(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : Base(params, input, output, logger)
+      HandPosition::HandPosition(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : DepthObstacle(params, input, output, logger)
       {
 
       }

@@ -10,8 +10,8 @@ namespace Vision
 {
   Vision::Vision(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : IModule(params, input, output, logger)
   {
-    _depthObstacle = DepthObstacle::Base::MakeDepthObstacle(_params->GetDepthObstacleParams(), _input, _output->GetDepthObstacleResults(), _logger);
-    _trafficLight = TrafficLight::Base::MakeTrafficLight(_params->GetTrafficLightParams(), _input, _output->GetTrafficLightResults(), _logger);
+    _depthObstacle = DepthObstacle::DepthObstacle::MakeDepthObstacle(_params->GetDepthObstacleParams(), _input, _output->GetDepthObstacleResults(), _logger);
+    _trafficLight = TrafficLight::TrafficLight::MakeTrafficLight(_params->GetTrafficLightParams(), _input, _output->GetTrafficLightResults(), _logger);
   }
 
   Vision::~Vision()

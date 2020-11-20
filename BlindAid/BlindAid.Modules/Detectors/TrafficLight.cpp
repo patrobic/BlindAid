@@ -6,7 +6,7 @@ namespace Vision
 {
   namespace TrafficLight
   {
-    Base *Base::MakeTrafficLight(IParameters *params, IData *input, IData *output, Tools::Logger *logger)
+    TrafficLight *TrafficLight::MakeTrafficLight(IParameters *params, IData *input, IData *output, Tools::Logger *logger)
     {
       if (((TrafficLightParameters*)params)->GetVersion() == TrafficLightParameters::Version::BlobDetector)
         return new BlobDetector::BlobDetector(params, input, output, logger);
@@ -14,12 +14,12 @@ namespace Vision
         return new DeepLearning::DeepLearning(params, input, output, logger);
     }
 
-    Base::~Base()
+    TrafficLight::~TrafficLight()
     {
 
     }
     
-    Base::Base(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : IDetect(params, input, output, logger)
+    TrafficLight::TrafficLight(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : IDetect(params, input, output, logger)
     {
 
     }

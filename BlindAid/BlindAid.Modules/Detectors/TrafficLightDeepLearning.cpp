@@ -15,7 +15,7 @@ namespace Vision
   {
     namespace DeepLearning
     {
-      DeepLearning::DeepLearning(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : Base(params, input, output, logger)
+      DeepLearning::DeepLearning(IParameters *params, IData *input, IData *output, Tools::Logger *logger) : TrafficLight(params, input, output, logger)
       {
         LoadNetwork();
       }

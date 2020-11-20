@@ -9,7 +9,7 @@ namespace Vision
   {
     namespace FixedRegions
     {
-      class FixedRegions : public Base
+      class FixedRegions : public DepthObstacle
       {
       public:
         FixedRegions(IParameters * params, IData * input, IData * output, Tools::Logger *logger);
