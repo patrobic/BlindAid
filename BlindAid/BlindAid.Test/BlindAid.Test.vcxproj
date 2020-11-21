@@ -162,17 +162,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\BlindAid.Driver\Menu\Modes.cpp" />
-    <ClCompile Include="Configuration\TestLoadConfig.cpp" />
-    <ClCompile Include="Configuration\TestSaveConfig.cpp" />
-    <ClCompile Include="Modules\TestCapture.cpp" />
-    <ClCompile Include="Modules\TestControl.cpp" />
-    <ClCompile Include="Modules\TestCore.cpp" />
+    <ClCompile Include="Modules\TestAll.cpp" />
+    <ClCompile Include="Modules\TestBase.cpp" />
     <ClCompile Include="Modules\TestDepthObstacle.cpp" />
-    <ClCompile Include="Modules\TestFace.cpp" />
     <ClCompile Include="Modules\TestTrafficLight.cpp" />
-    <ClCompile Include="Modules\TestVehicle.cpp" />
-    <ClCompile Include="Modules\TestVision.cpp" />
-    <ClCompile Include="TestGlobal.cpp" />
+    <ClCompile Include="Modules\TestTrafficLightOld.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BlindAid.Modules\BlindAid.Modules.vcxproj">
@@ -181,6 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\BlindAid.Driver\Menu\Modes.h" />
+    <ClInclude Include="Modules\TestBase.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

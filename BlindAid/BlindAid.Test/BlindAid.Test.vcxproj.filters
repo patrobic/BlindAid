@@ -1,51 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Modules">
-      <UniqueIdentifier>{d2064ae8-2c8e-4ba3-9633-7dea745d30ad}</UniqueIdentifier>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{4f2ffcb5-1a9e-4389-886d-765061b3491a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Detectors">
+    <Filter Include="Modules">
       <UniqueIdentifier>{ffeb4e6a-df1a-4da3-b144-dd3a249f6667}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Config">
-      <UniqueIdentifier>{ecc92343-fbc9-4cac-943b-0b19d7ec6e51}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Configuration\TestLoadConfig.cpp">
-      <Filter>Config</Filter>
-    </ClCompile>
-    <ClCompile Include="Configuration\TestSaveConfig.cpp">
-      <Filter>Config</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\TestCapture.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\TestControl.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\TestCore.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\TestVision.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\TestDepthObstacle.cpp">
-      <Filter>Detectors</Filter>
+      <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\TestTrafficLight.cpp">
-      <Filter>Detectors</Filter>
+      <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\TestVehicle.cpp">
-      <Filter>Detectors</Filter>
+    <ClCompile Include="Modules\TestTrafficLightOld.cpp">
+      <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\TestFace.cpp">
-      <Filter>Detectors</Filter>
+    <ClCompile Include="..\BlindAid.Driver\Menu\Modes.cpp">
+      <Filter>Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="TestGlobal.cpp" />
-    <ClCompile Include="..\BlindAid.Driver\Menu\Modes.cpp" />
+    <ClCompile Include="Modules\TestAll.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\TestBase.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\BlindAid.Driver\Menu\Modes.h" />
+    <ClInclude Include="..\BlindAid.Driver\Menu\Modes.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\TestBase.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

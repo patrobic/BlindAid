@@ -5,19 +5,20 @@ using namespace cv;
 using namespace experimental::filesystem;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-#define CLASS "TestTrafficLight"
+#define CLASS "TestAll"
 
 namespace UnitTest
 {
-  TEST_CLASS(TestTrafficLight), public TestBase
+  TEST_CLASS(TestAll), public TestBase
   {
   public:
-    TEST_METHOD(TrafficLight10Test)
+    TestAll()
+    {
+    }
+
+    TEST_METHOD(Global10Test)
     {
       params.GetCaptureParams()->GetSimulateParams()->SetEndIndex(10);
-
-      modes.DisableDepth();
-      modes.SetConsecutiveCount(vector<string>{"1"});
 
       Core::Core core(&params, NULL, &results, &logger);
       core();
@@ -26,13 +27,10 @@ namespace UnitTest
       Assert::IsTrue(pass);
     }
 
-    TEST_METHOD(TrafficLight100Test)
+    TEST_METHOD(Global100Test)
     {
       params.GetCaptureParams()->GetSimulateParams()->SetEndIndex(100);
 
-      modes.DisableDepth();
-      modes.SetConsecutiveCount(vector<string>{"1"});
-
       Core::Core core(&params, NULL, &results, &logger);
       core();
 
@@ -40,13 +38,11 @@ namespace UnitTest
       Assert::IsTrue(pass);
     }
 
-    TEST_METHOD(TrafficLightDisplay10Test)
+    TEST_METHOD(GlobalDisplay10Test)
     {
       params.GetCaptureParams()->GetSimulateParams()->SetEndIndex(10);
 
-      modes.DisableDepth();
       modes.EnableDisplay();
-      modes.SetConsecutiveCount(vector<string>{"1"});
       params.GetDisplayParams()->SetMode(Mode::Realtime);
 
       Core::Core core(&params, NULL, &results, &logger);
@@ -56,13 +52,11 @@ namespace UnitTest
       Assert::IsTrue(pass);
     }
 
-    TEST_METHOD(TrafficLightDisplay100Test)
+    TEST_METHOD(GlobalDisplay100Test)
     {
       params.GetCaptureParams()->GetSimulateParams()->SetEndIndex(100);
 
-      modes.DisableDepth();
       modes.EnableDisplay();
-      modes.SetConsecutiveCount(vector<string>{"1"});
       params.GetDisplayParams()->SetMode(Mode::Realtime);
 
       Core::Core core(&params, NULL, &results, &logger);
