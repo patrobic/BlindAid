@@ -28,6 +28,7 @@ jobs:
       run: vstest.console.exe Blindaid/x64/Release/BlindAid.Test.dll
              
     - name: Declare Variables
+      if: always()
       id: vars
       shell: bash
       run: |
@@ -36,6 +37,7 @@ jobs:
        echo "::set-output name=commit::$(git rev-parse --short HEAD)"
 
     - name: Generate Artifacts
+      if: always()
       uses: actions/upload-artifact@v2.2.1
       with:
         name: "${{steps.vars.outputs.repo}}.${{steps.vars.outputs.branch}}.${{steps.vars.outputs.commit}}"
