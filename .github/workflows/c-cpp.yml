@@ -24,9 +24,17 @@ jobs:
       uses: darenm/Setup-VSTest@v1.1.1
     - name: Run Tests
       run: vstest.console.exe Blindaid/x64/Release/BlindAid.Test.dll
-      
+    
+    - name: Get Variables
+      run: |
+       echo "::set-env name=REPO::$(echo ${{github.event.repository.name}})"
+       echo "::set-env name=BRANCH::$(echo ${GITHUB_REF##*/})"
+       echo "::set-env name=COMMIT::$(echo $(git rev-parse --short "$GITHUB_SHA"))"
+
+    
     - name: Generate Artifacts
       uses: actions/upload-artifact@v2.2.1
       with:
-       name: "${{github.event.repository.name}}.${{GITHUB_REF#refs/heads/}}.${{GITHUB_SHA}}"
-       path: BlindAid/x64/Release
+        name: "${REPO}.${BRANCH}.${COMMIT}."
+  #     name: "${{github.event.repository.name}}.${{GITHUB_REF#refs/heads/}}.${{GITHUB_SHA}}"
+        path: BlindAid/x64/Release
