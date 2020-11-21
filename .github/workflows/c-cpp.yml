@@ -28,5 +28,5 @@ jobs:
     - name: Generate Artifacts
       uses: actions/upload-artifact@v2.2.1
       with:
-       name: BlindAid
+       name: "BlindAid.${GITHUB_REF#refs/heads/}.${GITHUB_SHA}"
        path: BlindAid/x64/Release
