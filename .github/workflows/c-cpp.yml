@@ -15,7 +15,7 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v1
       
-    - name: Add MSBuild to PATH
+    - name: Setup MsBuild
       uses: microsoft/setup-msbuild@v1.0.2
     - name: Build Solution
       run: msbuild.exe .\BlindAid\BlindAid.sln /property:Configuration=Release /property:Platform=x64
@@ -25,23 +25,23 @@ jobs:
     - name: Run Tests
       run: vstest.console.exe Blindaid/x64/Release/BlindAid.Test.dll
       
-    - name: Declare some variables
+#    - name: Declare Variables
+#      id: vars
+#      shell: bash
+#      run: |
+#        echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+#        echo "::set-output name=commit::$(git rev-parse --short HEAD)"
+       
+    - name: Declare Variables
       id: vars
       shell: bash
       run: |
-        echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        echo "::set-output name=commit::$(git rev-parse --short HEAD)"
-       
-  #  - name: Get Variables
-  #    run: |
-  #     echo "::set-env name=REPO::$(echo ${{github.event.repository.name}})"
-  #     echo "::set-env name=BRANCH::$(echo ${GITHUB_REF##*/})"
-  #     echo "::set-env name=COMMIT::$(echo $(git rev-parse --short "$GITHUB_SHA"))"
+       echo "::set-output name=repo::$(echo ${{github.event.repository.name}})"
+       echo "::set-output name=branch::$(echo ${GITHUB_REF##*/})"
+       echo "::set-output name=commit::$(echo $(git rev-parse --short HEAD))"
 
-    
     - name: Generate Artifacts
       uses: actions/upload-artifact@v2.2.1
       with:
-        name: "${{ github.event.repository.name }}.${{ steps.vars.outputs.branch }}.${{ steps.vars.outputs.commit }}"
-  #     name: "${{github.event.repository.name}}.${{GITHUB_REF#refs/heads/}}.${{GITHUB_SHA}}"
+        name: "${{steps.vars.outputs.repo}}.${{steps.vars.outputs.branch}}.${{steps.vars.outputs.commit}}"
         path: BlindAid/x64/Release
