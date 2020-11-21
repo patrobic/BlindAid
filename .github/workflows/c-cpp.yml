@@ -28,5 +28,5 @@ jobs:
     - name: Generate Artifacts
       uses: actions/upload-artifact@v2.2.1
       with:
-       name: "${{github.repository}}.${{github.ref}}.${{github.sha}}"
+       name: "${{github.event.repository.name}}.${GITHUB_REF##*/}"
        path: BlindAid/x64/Release
