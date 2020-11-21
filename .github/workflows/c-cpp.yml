@@ -24,21 +24,14 @@ jobs:
       uses: darenm/Setup-VSTest@v1.1.1
     - name: Run Tests
       run: vstest.console.exe Blindaid/x64/Release/BlindAid.Test.dll
-      
-#    - name: Declare Variables
-#      id: vars
-#      shell: bash
-#      run: |
-#        echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-#        echo "::set-output name=commit::$(git rev-parse --short HEAD)"
-       
+             
     - name: Declare Variables
       id: vars
       shell: bash
       run: |
-       echo "::set-output name=repo::$(echo ${{github.event.repository.name}})"
-       echo "::set-output name=branch::$(echo ${GITHUB_REF##*/})"
-       echo "::set-output name=commit::$(echo $(git rev-parse --short HEAD))"
+       echo "::set-output name=repo::${{github.event.repository.name}}"
+       echo "::set-output name=branch::${GITHUB_REF##*/}"
+       echo "::set-output name=commit::$(git rev-parse --short HEAD)"
 
     - name: Generate Artifacts
       uses: actions/upload-artifact@v2.2.1
