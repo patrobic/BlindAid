@@ -1,7 +1,9 @@
 #include "TestHelper.h"
 
+#include <filesystem>
+
 using namespace std;
-using namespace experimental::filesystem;
+using namespace filesystem;
 
 UnitTest::TestHelper::TestHelper() :
   logger(&stream, &level),

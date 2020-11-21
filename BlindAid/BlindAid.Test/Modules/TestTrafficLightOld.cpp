@@ -1,8 +1,10 @@
 #include "TestHelper.h"
 
+#include <filesystem>
+
 using namespace std;
 using namespace cv;
-using namespace experimental::filesystem;
+using namespace filesystem;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 #define PATH "\\..\\..\\Data\\Test\\"
@@ -72,7 +74,7 @@ namespace UnitTest
       {
         float score = 0;
 
-        experimental::filesystem::path p = experimental::filesystem::current_path();
+        path p = current_path();
         string t = p.string() + "\\..\\..\\..\\Data\\Test\\" + testData.at(i)._colorPath;
         // TODO: relative path here!!! (to new BlindAid.Data submodule repo)
         params.GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(p.string() + PATH + testData.at(i)._colorPath);
