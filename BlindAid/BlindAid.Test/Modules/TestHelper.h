@@ -28,7 +28,7 @@ namespace UnitTest
   {
   public:
 
-    Tools::LogLevel level = Tools::LogLevel::Info;
+    Tools::LogLevel level = Tools::LogLevel::Error;
     Tools::Logger logger;
 
     GlobalParameters global;
