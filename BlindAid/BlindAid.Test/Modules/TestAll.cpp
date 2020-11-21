@@ -1,68 +1,65 @@
-#include "TestBase.h"
+#include "TestHelper.h"
 
 using namespace std;
-using namespace cv;
-using namespace experimental::filesystem;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 #define CLASS "TestAll"
 
 namespace UnitTest
 {
-  TEST_CLASS(TestAll), public TestBase
+  TEST_CLASS(TestAll)
   {
   public:
-    TestAll()
+    TestHelper _testHelper;
+
+    void Setup(int numImages, bool display = false)
     {
+      _testHelper.params.GetCaptureParams()->GetSimulateParams()->SetEndIndex(numImages);
+
+      if (display)
+      {
+        _testHelper.modes.EnableDisplay();
+        _testHelper.params.GetDisplayParams()->SetMode(Mode::Realtime);
+      }
     }
 
     TEST_METHOD(Global10Test)
     {
-      params.GetCaptureParams()->GetSimulateParams()->SetEndIndex(10);
+      Setup(10);
 
-      Core::Core core(&params, NULL, &results, &logger);
-      core();
+      _testHelper.RunCore();
 
-      bool pass = AreStringsEqual(CLASS, string(__func__) + ".txt");
+      bool pass = _testHelper.AreStringsEqual(CLASS, string(__func__));
       Assert::IsTrue(pass);
     }
 
     TEST_METHOD(Global100Test)
     {
-      params.GetCaptureParams()->GetSimulateParams()->SetEndIndex(100);
+      Setup(100);
 
-      Core::Core core(&params, NULL, &results, &logger);
-      core();
+      _testHelper.RunCore();
 
-      bool pass = AreStringsEqual(CLASS, string(__func__) + ".txt");
+      bool pass = _testHelper.AreStringsEqual(CLASS, string(__func__));
       Assert::IsTrue(pass);
     }
 
     TEST_METHOD(GlobalDisplay10Test)
     {
-      params.GetCaptureParams()->GetSimulateParams()->SetEndIndex(10);
+      Setup(10, true);
 
-      modes.EnableDisplay();
-      params.GetDisplayParams()->SetMode(Mode::Realtime);
+      _testHelper.RunCore();
 
-      Core::Core core(&params, NULL, &results, &logger);
-      core();
-
-      bool pass = AreStringsEqual(CLASS, string(__func__) + ".txt");
+      bool pass = _testHelper.AreStringsEqual(CLASS, string(__func__));
       Assert::IsTrue(pass);
     }
 
     TEST_METHOD(GlobalDisplay100Test)
     {
-      params.GetCaptureParams()->GetSimulateParams()->SetEndIndex(100);
+      Setup(100, true);
 
-      modes.EnableDisplay();
-      params.GetDisplayParams()->SetMode(Mode::Realtime);
+      _testHelper.RunCore();
 
-      Core::Core core(&params, NULL, &results, &logger);
-      core();
-
-      bool pass = AreStringsEqual(CLASS, string(__func__) + ".txt");
+      bool pass = _testHelper.AreStringsEqual(CLASS, string(__func__));
       Assert::IsTrue(pass);
     }
   };

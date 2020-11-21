@@ -46,7 +46,7 @@ namespace Control
           ss << _input->GetDepthObstacleResults()->_names[i].substr(0, 2) << "=" << (int)_input->GetDepthObstacleResults()->GetVibration(i) << " ";
         ss << ")";
 
-        LOG(Tools::Info, ss.str(), "GLOVE");
+        LOG(Tools::Test, ss.str(), "GLOVE");
     }
 
     void ControlSimulate::PrintTrafficLights()
@@ -70,7 +70,7 @@ namespace Control
         ss << " TrafficLights(" << lights.str() << "Total: " << _input->GetTrafficLightResults()->Get().size() << ")";
       }
 
-      LOG(Tools::Info, ss.str(), "AUDIO");
+      LOG(Tools::Test, ss.str(), "AUDIO");
 
       _input->GetTrafficLightResults()->_trafficLightMutex.unlock();
     }

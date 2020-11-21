@@ -24,7 +24,7 @@
     <ClCompile Include="Modules\TestAll.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\TestBase.cpp">
+    <ClCompile Include="Modules\TestHelper.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,7 +32,7 @@
     <ClInclude Include="..\BlindAid.Driver\Menu\Modes.h">
       <Filter>Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Modules\TestBase.h">
+    <ClInclude Include="Modules\TestHelper.h">
       <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>

@@ -20,6 +20,28 @@ namespace Tools
 
     void Logger::Log(LogLevel level, string message, string name, steady_clock::time_point start, string subName, bool time)
     {
+      if (level == LogLevel::Test)
+      {
+        stringstream ss;
+
+        ss.clear();
+        ss << "[" << setw(7) << left << _levels[level].c_str() << "] ";
+        ss << "[" << setw(8) << right << name.c_str();
+
+        if (subName.size() > 0)
+          ss << "/" << setw(8) << left << subName.c_str() << "] ";
+        else
+          ss << setw(11) << "] ";
+
+        ss << setw(79) << left << message.c_str();
+        
+        ss << "\n";
+        
+        _printMutex.lock();
+        (*_stream) << ss.str();
+        _printMutex.unlock();
+      }
+
         if (level <= *_maxLevel)
         {
             duration<double> dur = duration_cast<duration<double>>(steady_clock::now() - start);
@@ -42,7 +64,7 @@ namespace Tools
             ss << "\n";
 
             _printMutex.lock();
-            (*_stream) << ss.str();
+            cout << ss.str();
             _printMutex.unlock();
         }
     }

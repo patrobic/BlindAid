@@ -1,4 +1,4 @@
-#include "TestBase.h"
+#include "TestHelper.h"
 
 using namespace std;
 using namespace cv;
@@ -9,7 +9,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTest
 {
-  TEST_CLASS(TestTrafficLightOld), public TestBase
+  TEST_CLASS(TestTrafficLightOld)
   {
   public:
     struct TestData
@@ -28,6 +28,9 @@ namespace UnitTest
       vector<int> _distance;
     };
 
+    BEGIN_TEST_METHOD_ATTRIBUTE(MultipleImages)
+    TEST_IGNORE()
+    END_TEST_METHOD_ATTRIBUTE()
     TEST_METHOD(MultipleImages)
     {
       float maxDeviation = 10;

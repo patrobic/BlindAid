@@ -1,3 +1,5 @@
+#pragma once
+
 #include "CppUnitTest.h"
 
 #include <vector>
@@ -22,9 +24,10 @@
 
 namespace UnitTest
 {
-  class TestBase
+  class TestHelper
   {
   public:
+
     Tools::LogLevel level = Tools::LogLevel::Info;
     Tools::Logger logger;
 
@@ -39,9 +42,9 @@ namespace UnitTest
 
     std::stringstream stream;
 
-    TestBase();
+    TestHelper();
 
-  protected:
+    void RunCore();
 
     bool AreStringsEqual(std::string className, std::string fileName);
   };

@@ -1,74 +1,68 @@
-#include "TestBase.h"
+#include "TestHelper.h"
 
 using namespace std;
-using namespace cv;
-using namespace experimental::filesystem;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 #define CLASS "TestDepthObstacle"
 
 namespace UnitTest
 {
-  TEST_CLASS(TestDepthObstacle), public TestBase
+  TEST_CLASS(TestDepthObstacle)
   {
   public:
+    TestHelper _testHelper;
+    
+    void Setup(int numImages, bool display = false)
+    {
+      _testHelper.params.GetCaptureParams()->GetSimulateParams()->SetEndIndex(numImages);
+
+      _testHelper.modes.DisableColor();
+      _testHelper.modes.SetConsecutiveCount(vector<string>{"1"});
+
+      if (display)
+      {
+        _testHelper.modes.EnableDisplay();
+        _testHelper.params.GetDisplayParams()->SetMode(Mode::Realtime);
+      }
+    }
+    
     TEST_METHOD(DepthObstacle10Test)
     {
-      params.GetCaptureParams()->GetSimulateParams()->SetEndIndex(10);
+      Setup(10);
 
-      modes.DisableColor();
-      modes.SetConsecutiveCount(vector<string>{"1"});
+      _testHelper.RunCore();
 
-      Core::Core core(&params, NULL, &results, &logger);
-      core();
-
-      bool pass = AreStringsEqual(CLASS, string(__func__) + ".txt");
+      bool pass = _testHelper.AreStringsEqual(CLASS, string(__func__));
       Assert::IsTrue(pass);
     }
 
     TEST_METHOD(DepthObstacle100Test)
     {
-      params.GetCaptureParams()->GetSimulateParams()->SetEndIndex(100);
+      Setup(100);
 
-      modes.DisableColor();
-      modes.SetConsecutiveCount(vector<string>{"1"});
+      _testHelper.RunCore();
 
-      Core::Core core(&params, NULL, &results, &logger);
-      core();
-
-      bool pass = AreStringsEqual(CLASS, string(__func__) + ".txt");
+      bool pass = _testHelper.AreStringsEqual(CLASS, string(__func__));
       Assert::IsTrue(pass);
     }
 
     TEST_METHOD(DepthObstacleDisplay10Test)
     {
-      params.GetCaptureParams()->GetSimulateParams()->SetEndIndex(10);
+      Setup(10, true);
 
-      modes.DisableColor();
-      modes.EnableDisplay();
-      modes.SetConsecutiveCount(vector<string>{"1"});
-      params.GetDisplayParams()->SetMode(Mode::Realtime);
+      _testHelper.RunCore();
 
-      Core::Core core(&params, NULL, &results, &logger);
-      core();
-
-      bool pass = AreStringsEqual(CLASS, string(__func__) + ".txt");
+      bool pass = _testHelper.AreStringsEqual(CLASS, string(__func__));
       Assert::IsTrue(pass);
     }
 
     TEST_METHOD(DepthObstacleDisplay100Test)
     {
-      params.GetCaptureParams()->GetSimulateParams()->SetEndIndex(100);
+      Setup(100, true);
 
-      modes.DisableColor();
-      modes.EnableDisplay();
-      modes.SetConsecutiveCount(vector<string>{"1"});
-      params.GetDisplayParams()->SetMode(Mode::Realtime);
+      _testHelper.RunCore();
 
-      Core::Core core(&params, NULL, &results, &logger);
-      core();
-
-      bool pass = AreStringsEqual(CLASS, string(__func__) + ".txt");
+      bool pass = _testHelper.AreStringsEqual(CLASS, string(__func__));
       Assert::IsTrue(pass);
     }
   };

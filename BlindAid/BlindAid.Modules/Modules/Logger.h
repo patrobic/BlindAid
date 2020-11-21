@@ -7,7 +7,7 @@
 
 namespace Tools
 {
-	enum LogLevel { Error, Warning, Info };
+	enum LogLevel { Error, Warning, Info, Test };
 
 #pragma warning(disable : 4003)
 #pragma warning(disable : 4005)
@@ -42,6 +42,6 @@ namespace Tools
 
 		std::mutex _printMutex;
 
-		std::string _levels[3] = { "ERROR", "WARNING", "INFO" };
+		std::string _levels[4] = { "ERROR", "WARNING", "INFO", "TEST" };
 	};
 }

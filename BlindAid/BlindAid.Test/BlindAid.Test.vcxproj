@@ -163,8 +163,8 @@
   <ItemGroup>
     <ClCompile Include="..\BlindAid.Driver\Menu\Modes.cpp" />
     <ClCompile Include="Modules\TestAll.cpp" />
-    <ClCompile Include="Modules\TestBase.cpp" />
     <ClCompile Include="Modules\TestDepthObstacle.cpp" />
+    <ClCompile Include="Modules\TestHelper.cpp" />
     <ClCompile Include="Modules\TestTrafficLight.cpp" />
     <ClCompile Include="Modules\TestTrafficLightOld.cpp" />
   </ItemGroup>
@@ -175,7 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\BlindAid.Driver\Menu\Modes.h" />
-    <ClInclude Include="Modules\TestBase.h" />
+    <ClInclude Include="Modules\TestHelper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
