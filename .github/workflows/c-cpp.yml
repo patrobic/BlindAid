@@ -39,4 +39,6 @@ jobs:
       uses: actions/upload-artifact@v2.2.1
       with:
         name: "${{steps.vars.outputs.repo}}.${{steps.vars.outputs.branch}}.${{steps.vars.outputs.commit}}"
-        path: BlindAid/x64/Release
+        path: |
+         BlindAid/x64/Release
+         Data/Result
