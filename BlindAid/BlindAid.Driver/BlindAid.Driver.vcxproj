@@ -127,7 +127,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\Dependencies\opencv\x64\Debug\lib;$(ProjectDir)..\..\Dependencies\libconfig\x64\Debug\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\Debug\lib;$(ProjectDir)..\..\Dependencies\python\x64\Debug\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);opencv_world340d.lib;libconfig.lib;libpxc_d.lib;Python36_d.lib</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);opencv_world450d.lib;libconfig.lib;libpxc_d.lib;Python36_d.lib</AdditionalDependencies>
       <ImportLibrary>
       </ImportLibrary>
       <IgnoreSpecificDefaultLibraries>libcmtd.lib</IgnoreSpecificDefaultLibraries>
@@ -176,7 +176,7 @@ xcopy /d /y /s /r "$(ProjectDir)\..\Resources\MachineLearning\model*" "$(OutDir)
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\Dependencies\opencv\x64\Release\lib;$(ProjectDir)..\..\Dependencies\libconfig\x64\Release\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\Release\lib;$(ProjectDir)..\..\Dependencies\python\x64\Release\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);opencv_world340.lib;libconfig.lib;libpxc.lib;python36.lib</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);opencv_world450.lib;libconfig.lib;libpxc.lib;python36.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>

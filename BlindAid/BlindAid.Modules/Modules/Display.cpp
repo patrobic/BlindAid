@@ -40,7 +40,7 @@ namespace Display
     {
       _output->GetDepthImage()->convertTo(*_input->GetDepthOverlayImage(), CV_8UC1, 1.f / 8.f, -0.5 / 8.f);
       if (_input->GetDepthOverlayImage()->channels() == 1)
-        cvtColor(*_input->GetDepthOverlayImage(), *_input->GetDepthOverlayImage(), CV_GRAY2BGR);
+        cvtColor(*_input->GetDepthOverlayImage(), *_input->GetDepthOverlayImage(), COLOR_GRAY2BGR);
 
       Rect rect;
       for (int j = 0; j < VERT_REGIONS; ++j)

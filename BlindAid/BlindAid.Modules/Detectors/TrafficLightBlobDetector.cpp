@@ -38,7 +38,7 @@ namespace Vision
 
       void BlobDetector::CreateHsvImage()
       {
-        cvtColor(*_input->GetColorImage(), *_input->GetHsvImage(), CV_BGR2HSV);
+        cvtColor(*_input->GetColorImage(), *_input->GetHsvImage(), COLOR_BGR2HSV);
       }
 
       void BlobDetector::MaskColors()
