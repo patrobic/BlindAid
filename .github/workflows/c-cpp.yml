@@ -17,18 +17,10 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
     - name: Build Solution
-      run: msbuild.exe .\BlindAid\BlindAid.sln
+      run: msbuild.exe .\BlindAid\BlindAid.sln /property:Configuration=Release /property:Platform=x64
     
-    - name: Setup VSTest
+    - name: Setup Tests
       uses: darenm/Setup-VSTest@v1.1.1
-    - name: Run VSTest
-     # working-directory: $\x64\Debug\
-      run: vstest.console.exe Blindaid/x64/Debug/BlindAid.Test.dll
-
-#    - name: Build Solution
-#      run: |
-#       cd “C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\”
-#       .\MSBuild.exe $Env:GITHUB_WORKSPACE\BlindAid\BlindAid.sln
-
-# - name: Run Tests
-# - name: Generate Artifacts
+    - name: Run Tests
+      run: vstest.console.exe Blindaid/x64/Release/BlindAid.Test.dll
+#   - name: Generate Artifacts
