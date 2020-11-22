@@ -77,6 +77,9 @@ void Modes::SimulateMode(vector<string> params)
     _params->SetMode(Simulate);
     _params->GetControlParams()->SetMode(Simulate);
     _params->GetCaptureParams()->SetMode(Simulate);
+    _params->GetVisionParams()->SetMode(Simulate);
+    _params->GetVisionParams()->GetTrafficLightParams()->SetMode(Simulate);
+    _params->GetVisionParams()->GetDepthObstacleParams()->SetMode(Simulate);
     _params->GetCaptureParams()->GetSimulateParams()->SetDepthSimDataPath(path);
     _params->GetCaptureParams()->GetSimulateParams()->SetColorSimDataPath(path);
     LOG(Tools::Warning, "'-s': Simulating All (camera and glove disabled).");
