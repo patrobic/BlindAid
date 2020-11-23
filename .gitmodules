@@ -1,3 +1,7 @@
-[submodule "Data"]
-	path = Data
+[submodule "BlindAid.Data"]
+	path = Projects/BlindAid.Data
 	url = https://github.com/patrobic/BlindAid.Data
+[submodule "BlindAid.Glove"]
+	path = BlindAid.Glove
+	url = https://github.com/patrobic/BlindAid.Glove.git
+	branch = main

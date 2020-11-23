@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resources\BlindAid.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Configuration\Config.h" />
+    <ClInclude Include="Configuration\Load.h" />
+    <ClInclude Include="Configuration\Save.h" />
+    <ClInclude Include="Menu\Class.h" />
+    <ClInclude Include="Menu\Menu.h" />
+    <ClInclude Include="Menu\Messages.h" />
+    <ClInclude Include="Menu\Modes.h" />
+    <ClInclude Include="Menu\Parse.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Configuration\Config.cpp" />
+    <ClCompile Include="Configuration\Load.cpp" />
+    <ClCompile Include="Configuration\Save.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Menu\Menu.cpp" />
+    <ClCompile Include="Menu\Modes.cpp" />
+    <ClCompile Include="Menu\Parse.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BlindAid.Modules\BlindAid.Modules.vcxproj">
+      <Project>{4e97e47c-8b4a-4528-a98a-0fe82a8b1675}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DD1BF88B-B634-46C9-A80F-FFA17C02A6F0}</ProjectGuid>
+    <RootNamespace>BlindAid</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <ProjectName>BlindAid.Driver</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(IncludePath);$(ProjectDir)\..\BlindAid.Dependencies\opencv\include;$(ProjectDir)\..\BlindAid.Dependencies\libconfig\include;$(ProjectDir)\..\BlindAid.Dependencies\realsense\include;$(ProjectDir)\..\BlindAid.Dependencies\python\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(ProjectDir)..\..\Dependencies\opencv\x64\Debug\lib;$(ProjectDir)..\..\Dependencies\libconfig\x64\lib;$(ProjectDir)..\..\Dependencies\realsense\x64\Debug\lib;$(ProjectDir)..\..\Dependencies\python\x64\Debug\lib</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\BlindAid.Dependencies\opencv\include;$(ProjectDir)\..\BlindAid.Dependencies\libconfig\include;$(ProjectDir)\..\BlindAid.Dependencies\realsense\include;$(ProjectDir)\..\BlindAid.Dependencies\python\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(ProjectDir)\..\BlindAid.Dependencies\opencv\x64\Release\lib;$(ProjectDir)\..\BlindAid.Dependencies\libconfig\x64\Release\lib;$(ProjectDir)\..\BlindAid.Dependencies\realsense\x64\Release\lib;$(ProjectDir)\..\BlindAid.Dependencies\python\x64\Release\lib</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>;$(ProjectDir)\Menu;$(ProjectDir)\Configuration</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(ProjectDir)\..\BlindAid.Dependencies\opencv\include;$(ProjectDir)\..\BlindAid.Dependencies\libconfig\include;$(ProjectDir)\..\BlindAid.Dependencies\realsense\include;$(ProjectDir)\..\BlindAid.Dependencies\python\include;$(ProjectDir)\Menu;$(ProjectDir)\Configuration;$(ProjectDir)\..\BlindAid.Modules\Parameters;$(ProjectDir)\..\BlindAid.Modules\Data;$(ProjectDir)\..\BlindAid.Modules\Results;$(ProjectDir)\..\BlindAid.Modules\Modules;$(ProjectDir)\..\BlindAid.Modules\Detectors</AdditionalIncludeDirectories>
+      <BrowseInformation>true</BrowseInformation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\BlindAid.Dependencies\opencv\x64\Debug\lib;$(ProjectDir)\..\BlindAid.Dependencies\libconfig\x64\Debug\lib;$(ProjectDir)\..\BlindAid.Dependencies\realsense\x64\Debug\lib;$(ProjectDir)\..\BlindAid.Dependencies\python\x64\Debug\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);opencv_world450d.lib;libconfig.lib;libpxc_d.lib;Python36_d.lib</AdditionalDependencies>
+      <ImportLibrary>
+      </ImportLibrary>
+      <IgnoreSpecificDefaultLibraries>libcmtd.lib</IgnoreSpecificDefaultLibraries>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
+      <DelayLoadDLLs>libconfig++.dll;libpxccpp2c.dll;opencv_world450d.dll;python3_d.dll;python36_d.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\opencv\x64\Debug\bin\*.dll" "$(OutDir)\bin\"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\libconfig\x64\Debug\bin\*.dll" "$(OutDir)\bin\"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\realsense\x64\Debug\bin\*.dll" "$(OutDir)\bin\"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\python\x64\Debug\bin\*.dll" "$(OutDir)\bin\"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\misc\x64\Debug\bin\*.dll" "$(OutDir)\bin\"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Resources\Audio\*.wav" "$(OutDir)\wav\"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Resources\MachineLearning\model*" "$(OutDir)\ml\"</Command>
+    </PostBuildEvent>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>;$(ProjectDir)\Menu;$(ProjectDir)\Configuration</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\BlindAid.Dependencies\opencv\include;$(ProjectDir)\..\BlindAid.Dependencies\libconfig\include;$(ProjectDir)\..\BlindAid.Dependencies\realsense\include;$(ProjectDir)\..\BlindAid.Dependencies\python\include;$(ProjectDir)\Menu;$(ProjectDir)\Configuration;$(ProjectDir)\..\BlindAid.Modules\Parameters;$(ProjectDir)\..\BlindAid.Modules\Data;$(ProjectDir)\..\BlindAid.Modules\Results;$(ProjectDir)\..\BlindAid.Modules\Modules;$(ProjectDir)\..\BlindAid.Modules\Detectors</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\BlindAid.Dependencies\opencv\x64\Release\lib;$(ProjectDir)\..\BlindAid.Dependencies\libconfig\x64\Release\lib;$(ProjectDir)\..\BlindAid.Dependencies\realsense\x64\Release\lib;$(ProjectDir)\..\BlindAid.Dependencies\python\x64\Release\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);opencv_world450.lib;libconfig.lib;libpxc.lib;python36.lib</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
+      <DelayLoadDLLs>libconfig++.dll;libpxccpp2c.dll;opencv_world450.dll;python3.dll;python36.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\opencv\x64\Release\bin\*.dll" "$(OutDir)\bin\"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\libconfig\x64\Release\bin\*.dll" "$(OutDir)\bin\"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\realsense\x64\Release\bin\*.dll" "$(OutDir)\bin\"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\python\x64\Release\bin\*.dll" "$(OutDir)\bin\"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\misc\x64\Release\bin\*.dll" "$(OutDir)\bin\"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Resources\Audio\*.wav" "$(OutDir)\wav\"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Resources\MachineLearning\model*" "$(OutDir)\ml\"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
