@@ -21,12 +21,12 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
     - name: Build Solution
       run: msbuild.exe .\BlindAid\BlindAid.sln /property:Configuration=Release /property:Platform=x64
-      	
+      
     - name: Setup Tests
       uses: darenm/Setup-VSTest@v1.1.1
     - name: Run Tests
       run: vstest.console.exe Blindaid/x64/Release/BlindAid.Test.dll
-      	
+      
     - name: Generate Artifacts
       uses: actions/upload-artifact@v2.2.1
       if: failure()
@@ -35,4 +35,3 @@ jobs:
         paths: |
          Projects/BlindAid.Data/Result/*
          Projects/BlindAid.Data/Reference/*
-         
