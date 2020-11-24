@@ -33,5 +33,5 @@ jobs:
       with:
         name: "${{steps.vars.outputs.repo}}.${{steps.vars.outputs.branch}}.${{steps.vars.outputs.commit}}"
         path: |
-         Projects/BlindAid.Data/Result/*
-         Projects/BlindAid.Data/Reference/*
+         Projects/BlindAid.Data/Result
+         Projects/BlindAid.Data/Reference
