@@ -42,5 +42,6 @@ jobs:
         path: |
          x64/Release/**/*.exe
          x64/Release/**/*.dll
+         x64/Release/**/*.lib
          x64/Release/ml/*
          x64/Release/wav/*
