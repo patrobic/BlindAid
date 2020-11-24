@@ -1,0 +1,47 @@
+name: Generate Artifact [main]
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v1
+      with: 
+        submodules: recursive
+
+    - name: Setup MsBuild
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Build Solution
+      run: msbuild.exe .\BlindAid.sln /property:Configuration=Release /property:Platform=x64
+
+    - name: Setup Tests
+      uses: darenm/Setup-VSTest@v1.1.1
+    - name: Run Tests
+      run: vstest.console.exe x64/Release/BlindAid.Test.dll
+
+    - name: Declare Variables
+      id: vars
+      shell: bash
+      run: |
+       echo "::set-output name=repo::${{github.event.repository.name}}"
+       echo "::set-output name=branch::${GITHUB_REF##*/}"
+       echo "::set-output name=commit::$(git rev-parse --short HEAD)"
+
+    - name: Generate Artifacts
+      uses: actions/upload-artifact@v2.2.1
+      with:
+        name: "${{steps.vars.outputs.repo}}.${{steps.vars.outputs.branch}}.${{steps.vars.outputs.commit}}"
+        path: |
+         x64/Release/**/*.exe
+         x64/Release/**/*.dll
+         x64/Release/ml/*
+         x64/Release/wav/*
+		 

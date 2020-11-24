@@ -16,9 +16,9 @@ UnitTest::TestHelper::TestHelper() :
 
   global.SetMenuEnabled(false);
 
-  modes.SimulateMode(vector<string>{ path + SOURCE });
+  modes.SimulateMode(vector<string>{ path + SOURCE + "\\Concordia" });
 
-  params.GetVisionParams()->GetTrafficLightParams()->GetDeepLearningParams()->SetModelPath(path + MODEL);
+  params.GetVisionParams()->GetTrafficLightParams()->GetDeepLearningParams()->SetModelPath(path);
 }
 
 void UnitTest::TestHelper::RunCore()

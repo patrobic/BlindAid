@@ -8,8 +8,6 @@
 
 void main(int argc, char *argv[])
 {
-  bool x = SetDllDirectory("bin");
-
   GlobalParameters globalParams(std::vector<std::string>(argv, argv + argc), CONFIG);
   Tools::Logger logger(&std::cout, globalParams.GetLogLevel());
 

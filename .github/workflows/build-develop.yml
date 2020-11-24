@@ -1,10 +1,10 @@
-name: C/C++ CI
+name: Execute Tests [develop]
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ develop ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ develop ]
 
 jobs:
   build:
@@ -26,21 +26,12 @@ jobs:
       uses: darenm/Setup-VSTest@v1.1.1
     - name: Run Tests
       run: vstest.console.exe Blindaid/x64/Release/BlindAid.Test.dll
-             
-    - name: Declare Variables
-      if: always()
-      id: vars
-      shell: bash
-      run: |
-       echo "::set-output name=repo::${{github.event.repository.name}}"
-       echo "::set-output name=branch::${GITHUB_REF##*/}"
-       echo "::set-output name=commit::$(git rev-parse --short HEAD)"
-
+	  
     - name: Generate Artifacts
-      if: always()
       uses: actions/upload-artifact@v2.2.1
+      if: failure()
       with:
         name: "${{steps.vars.outputs.repo}}.${{steps.vars.outputs.branch}}.${{steps.vars.outputs.commit}}"
-        path: |
-         BlindAid/x64/Release
-         Data/Result
+        paths: |
+         Projects/BlindAid.Data/Result/*
+         Projects/BlindAid.Data/Reference/*

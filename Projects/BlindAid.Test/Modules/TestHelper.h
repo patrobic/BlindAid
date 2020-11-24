@@ -13,14 +13,12 @@
 #include <CoreData.h>
 #include <Core.h>
 #include "IParameters.h"
-#include "../../BlindAid.Driver/Menu/Modes.h"
 #include "Logger.h"
+#include "../../BlindAid.Driver/Menu/Modes.h"
 
-#define MODEL "\\..\\BlindAid.Resources\\MachineLearning"
-
-#define SOURCE "\\..\\BlindAid.Data\\Source"
-#define RESULT "\\..\\BlindAid.Data\\Result"
-#define REFERENCE "\\..\\BlindAid.Data\\Reference"
+#define SOURCE "\\..\\..\\Projects\\BlindAid.Data\\Source"
+#define RESULT "\\..\\..\\Projects\\BlindAid.Data\\Result"
+#define REFERENCE "\\..\\..\\Projects\\BlindAid.Data\\Reference"
 
 namespace UnitTest
 {

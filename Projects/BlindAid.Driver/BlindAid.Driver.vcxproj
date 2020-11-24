@@ -133,14 +133,15 @@
       <IgnoreSpecificDefaultLibraries>libcmtd.lib</IgnoreSpecificDefaultLibraries>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
-      <DelayLoadDLLs>libconfig++.dll;libpxccpp2c.dll;opencv_world450d.dll;python3_d.dll;python36_d.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\opencv\x64\Debug\bin\*.dll" "$(OutDir)\bin\"
-xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\libconfig\x64\Debug\bin\*.dll" "$(OutDir)\bin\"
-xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\realsense\x64\Debug\bin\*.dll" "$(OutDir)\bin\"
-xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\python\x64\Debug\bin\*.dll" "$(OutDir)\bin\"
-xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\misc\x64\Debug\bin\*.dll" "$(OutDir)\bin\"
+      <Command>xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\opencv\x64\Debug\bin\*.dll" "$(OutDir)"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\libconfig\x64\Debug\bin\*.dll" "$(OutDir)"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\realsense\x64\Debug\bin\*.dll" "$(OutDir)"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\python\x64\Debug\bin\*.dll" "$(OutDir)"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\misc\x64\Debug\bin\*.dll" "$(OutDir)"
 xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Resources\Audio\*.wav" "$(OutDir)\wav\"
 xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Resources\MachineLearning\model*" "$(OutDir)\ml\"</Command>
     </PostBuildEvent>
@@ -179,14 +180,15 @@ xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Resources\MachineLearning\model*" "
       <AdditionalLibraryDirectories>$(ProjectDir)\..\BlindAid.Dependencies\opencv\x64\Release\lib;$(ProjectDir)\..\BlindAid.Dependencies\libconfig\x64\Release\lib;$(ProjectDir)\..\BlindAid.Dependencies\realsense\x64\Release\lib;$(ProjectDir)\..\BlindAid.Dependencies\python\x64\Release\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);opencv_world450.lib;libconfig.lib;libpxc.lib;python36.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
-      <DelayLoadDLLs>libconfig++.dll;libpxccpp2c.dll;opencv_world450.dll;python3.dll;python36.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\opencv\x64\Release\bin\*.dll" "$(OutDir)\bin\"
-xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\libconfig\x64\Release\bin\*.dll" "$(OutDir)\bin\"
-xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\realsense\x64\Release\bin\*.dll" "$(OutDir)\bin\"
-xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\python\x64\Release\bin\*.dll" "$(OutDir)\bin\"
-xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\misc\x64\Release\bin\*.dll" "$(OutDir)\bin\"
+      <Command>xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\opencv\x64\Release\bin\*.dll" "$(OutDir)"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\libconfig\x64\Release\bin\*.dll" "$(OutDir)"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\realsense\x64\Release\bin\*.dll" "$(OutDir)"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\python\x64\Release\bin\*.dll" "$(OutDir)"
+xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Dependencies\misc\x64\Release\bin\*.dll" "$(OutDir)"
 xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Resources\Audio\*.wav" "$(OutDir)\wav\"
 xcopy /d /y /s /r "$(ProjectDir)\..\BlindAid.Resources\MachineLearning\model*" "$(OutDir)\ml\"</Command>
     </PostBuildEvent>
